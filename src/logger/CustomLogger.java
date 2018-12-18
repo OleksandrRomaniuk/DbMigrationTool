@@ -39,3 +39,4 @@ public class CustomLogger {
         rootLogger.addHandler(fileHandler);
     }
 }
+

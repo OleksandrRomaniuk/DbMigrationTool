@@ -67,5 +67,5 @@ public class XmlSerializer implements Serializer<String, String> {
         StreamResult result = new StreamResult(file);
         transformer.transform(domSource, result);
     }
-
 }
+

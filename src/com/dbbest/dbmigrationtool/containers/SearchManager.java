@@ -48,3 +48,4 @@ public abstract class SearchManager {
         return false;
     }
 }
+

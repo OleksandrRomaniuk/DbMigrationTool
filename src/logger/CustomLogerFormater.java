@@ -27,3 +27,4 @@ public class CustomLogerFormater extends Formatter {
             + record.getMessage() + "\n";
     }
 }
+

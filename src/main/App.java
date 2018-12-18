@@ -89,3 +89,4 @@ public class App {
         logger.log(Level.INFO, "Vertical passage search has been completed.");
     }
 }
+

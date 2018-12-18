@@ -13,3 +13,4 @@ public interface Serializer<V1, V2> {
 
     void writeFile(String targetFileUrl) throws SerializingException;
 }
+

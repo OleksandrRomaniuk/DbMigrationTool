@@ -40,3 +40,4 @@ public class HorizontalPassageSearchManager extends SearchManager {
         }
     }
 }
+

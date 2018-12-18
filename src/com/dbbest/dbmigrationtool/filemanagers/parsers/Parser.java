@@ -15,3 +15,4 @@ public interface Parser {
 
     Validator getFileValidator();
 }
+

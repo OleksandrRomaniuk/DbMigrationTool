@@ -12,3 +12,4 @@ public class SerializingException extends Exception {
         super(message);
     }
 }
+

@@ -14,3 +14,4 @@ public class CustomLoggerFilter implements Filter {
         return record.getLevel().intValue() >= Level.INFO.intValue();
     }
 }
+
