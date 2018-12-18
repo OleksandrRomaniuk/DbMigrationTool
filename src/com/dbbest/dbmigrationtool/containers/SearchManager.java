@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The SearchManager is the abstract base class of all classes which perform searches in trees which are saved in the container.
+ */
 public abstract class SearchManager {
 
     private Container<String, String> rootContainer;

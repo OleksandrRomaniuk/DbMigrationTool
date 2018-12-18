@@ -8,6 +8,11 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * A manager which performs reading a container and writing a file with a predefined serializer.
+ * @param <V1> the type of the value of containers.
+ * @param <V2> the type of the value of attributes.
+ */
 public class SerializingManager<V1, V2> {
     private static final Logger logger = Logger.getLogger("Serializing logger");
     private Container<V1, V2> container;
@@ -23,6 +28,12 @@ public class SerializingManager<V1, V2> {
         this.serializer = serializer;
     }
 
+    /**
+     * A method which triggers the process of serialization.
+     * @param targetFile the url of a file to write.
+     * @throws SerializingException will be thrown
+     if any checked exceptions are encountered during the serialization process.
+     */
     public void writeFile(String targetFile) throws SerializingException {
 
         if (container == null) {

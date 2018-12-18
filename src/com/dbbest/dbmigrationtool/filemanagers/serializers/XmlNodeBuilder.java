@@ -1,16 +1,18 @@
 package com.dbbest.dbmigrationtool.filemanagers.serializers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
 
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+/**
+ * This class works out a single container of a tree. It transforms a container to an element of xml document.
+ */
 public class XmlNodeBuilder {
     private Document document;
     private Element parentElement;
@@ -21,12 +23,21 @@ public class XmlNodeBuilder {
         this.container = container;
     }
 
+    /**
+     * @param document the document retrieved from the xml serializer to put elements got from the container.
+     * @param container the container which is treated by the node builder.
+     * @param parentElement the element created from the parent container.
+     */
     public XmlNodeBuilder(Document document, Container<String, String> container, Element parentElement) {
         this.document = document;
         this.container = container;
         this.parentElement = parentElement;
     }
 
+    /**
+     * This method triggers the process of getting data from a container and creating a respective element.
+     * @return the object on which the method was evoked.
+     */
     public XmlNodeBuilder build() {
         if (parentElement == null) {
             parentElement = setElementNode();
@@ -56,7 +67,8 @@ public class XmlNodeBuilder {
     }
 
     private boolean isTextNode(Container<String, String> container) {
-        if (!container.hasName() && !meetCdataRegex(container.getValue()) && !container.hasAttributes() && !container.hasChildren()) {
+        if (!container.hasName() && !meetCdataRegex(container.getValue())
+            && !container.hasAttributes() && !container.hasChildren()) {
             return true;
         } else {
             return false;
@@ -64,7 +76,8 @@ public class XmlNodeBuilder {
     }
 
     private boolean isCdataNode(Container<String, String> container) {
-        if (!container.hasName() && meetCdataRegex(container.getValue()) && !container.hasAttributes() && !container.hasChildren()) {
+        if (!container.hasName() && meetCdataRegex(container.getValue())
+            && !container.hasAttributes() && !container.hasChildren()) {
             return true;
         } else {
             return false;

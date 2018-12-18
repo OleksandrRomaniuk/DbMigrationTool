@@ -6,6 +6,9 @@ import java.util.GregorianCalendar;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
+/**
+ * A custom logger which defines a format of messages written by loggers.
+ */
 public class CustomLogerFormater extends Formatter {
     @Override
     public String format(LogRecord record) {

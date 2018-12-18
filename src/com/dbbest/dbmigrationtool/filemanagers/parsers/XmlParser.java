@@ -4,17 +4,21 @@ import com.dbbest.dbmigrationtool.containers.Container;
 import com.dbbest.dbmigrationtool.document.validator.Validator;
 import com.dbbest.dbmigrationtool.document.validator.XmlValidator;
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+/**
+ * A class which implements the interface Parser and realizes the whole cycle of parsing.
+ * from the validation of a file to creating a tree.
+ */
 public class XmlParser implements Parser {
 
     private static final Logger logger = Logger.getLogger("Parsing logger");

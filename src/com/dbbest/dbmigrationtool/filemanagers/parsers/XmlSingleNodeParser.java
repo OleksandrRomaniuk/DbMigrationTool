@@ -1,16 +1,20 @@
 package com.dbbest.dbmigrationtool.filemanagers.parsers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+/**
+ * A class which carries out the parsing of a single node.
+ * It is used by other classes to parse and create an appropriate container based on a node.
+ * The class accepts the following three types of nodes: Element_node, Cdata_section_node and Text_node.
+ */
 public class XmlSingleNodeParser {
 
     private Container<String, String> container;
@@ -31,6 +35,10 @@ public class XmlSingleNodeParser {
         return node;
     }
 
+    /**
+     * A method which triggers the process of parsing of a node.
+     * @return the method returns the object on which it was evoked. From the returned object the container can be got.
+     */
     public XmlSingleNodeParser parse() {
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             setElementNode();

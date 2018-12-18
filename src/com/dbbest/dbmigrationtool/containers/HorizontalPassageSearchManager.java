@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ *An extension of the SearchManager class. Realizes the method search.
+ * Search is performed with the horizontal passage.
+ */
 public class HorizontalPassageSearchManager extends SearchManager {
 
     public HorizontalPassageSearchManager(Container<String, String> rootContainer) {

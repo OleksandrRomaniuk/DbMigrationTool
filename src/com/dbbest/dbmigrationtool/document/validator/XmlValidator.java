@@ -2,8 +2,6 @@ package com.dbbest.dbmigrationtool.document.validator;
 
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
 import com.google.gson.Gson;
-import org.w3c.dom.Document;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +11,11 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.w3c.dom.Document;
 
+/**
+ * Implements the interface validator. Realises validation of an xml file and returns a document got from the parsing of the file.
+ */
 public class XmlValidator implements Validator {
 
     private static final Logger logger = Logger.getLogger("Parsing logger");

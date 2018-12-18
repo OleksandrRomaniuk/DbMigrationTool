@@ -9,20 +9,26 @@ import com.dbbest.dbmigrationtool.filemanagers.ParsingManager;
 import com.dbbest.dbmigrationtool.filemanagers.SerializingManager;
 import com.dbbest.dbmigrationtool.filemanagers.parsers.XmlParser;
 import com.dbbest.dbmigrationtool.filemanagers.serializers.XmlSerializer;
-import logger.CustomLogger;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import logger.CustomLogger;
 
-
+/**
+ * A class which proceeds console commands and evokes appropriate classes and methods.
+ */
 public class App {
 
 
     private static final Logger logger = Logger.getLogger("App logger");
 
-    public static void main(String[] args) throws SerializingException {
+    /**
+     * The method retrieves commands and performs respective procedures.
+     *
+     * @param args an array of console commands to be processed.
+     */
+    public static void main(String[] args) {
 
         try {
             CustomLogger logger = new CustomLogger();
@@ -42,15 +48,18 @@ public class App {
                         container = app.parse(args[++i]);
                     } else if (args[i].equals("-write")) {
                         app.write(args[++i], container);
-                    } else if (args[i].equals("-search")) {
-                        app.search(args[++i], container);
-                    } else {
-                        logger.log(Level.INFO, "Can not recognize the command.");
                     }
+                } else if (args[i].equals("-search")) {
+                    app.search(args[++i], container);
+                } else {
+                    logger.log(Level.INFO, "Can not recognize the command.");
                 }
             }
+
         } catch (ParsingException e) {
-            System.out.println(e.getMessage());
+            logger.log(Level.SEVERE, e.getMessage());
+        } catch (SerializingException e) {
+            logger.log(Level.SEVERE, e.getMessage());
         }
 
     }

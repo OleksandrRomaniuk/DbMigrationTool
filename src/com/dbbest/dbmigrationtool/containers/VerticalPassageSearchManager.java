@@ -3,6 +3,10 @@ package com.dbbest.dbmigrationtool.containers;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *An extension of the SearchManager class. Realizes the method search.
+ * Search is performed with the vertical passage.
+ */
 public class VerticalPassageSearchManager extends SearchManager {
 
     public VerticalPassageSearchManager(Container<String, String> rootContainer) {
