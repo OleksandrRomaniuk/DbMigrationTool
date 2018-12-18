@@ -35,12 +35,10 @@ public class XmlSerializer implements Serializer<String, String> {
     public void writeFile(String targetFileUrl) throws SerializingException {
         try {
             if (container != null) {
-                System.out.println("--------------------------");
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document document = builder.newDocument();
                 document = setTreeToDocument(document, container);
-                System.out.println(document.getDocumentElement().getNodeName());
                 writeNewFile(document, targetFileUrl);
             }
         } catch (ParserConfigurationException exception) {

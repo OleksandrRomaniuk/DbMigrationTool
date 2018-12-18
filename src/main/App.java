@@ -81,8 +81,6 @@ public class App {
     }
 
     private void search(String text, Container<String, String> container) {
-        System.out.println(text);
-        System.out.println(container == null);
         HorizontalPassageSearchManager horSearchManager = new HorizontalPassageSearchManager(container);
         List<Container<String, String>> listOfFoundItems = horSearchManager.search(text);
         logger.log(Level.INFO, "Horizontal passage search has been completed.");

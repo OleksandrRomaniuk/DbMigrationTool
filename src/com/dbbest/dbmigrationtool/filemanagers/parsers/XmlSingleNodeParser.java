@@ -70,14 +70,12 @@ public class XmlSingleNodeParser {
 
     private void setContainerName() {
         if (node.getNodeName() != null) {
-            System.out.println("Node name - " + node.getNodeName() + " - " + node.getNodeType());
             container.setName(node.getNodeName());
         }
     }
 
     private void setContainerValue(String value) {
         if (value != null) {
-            System.out.println("Node value - " + node.getNodeValue());
             container.setValue(value);
         }
     }
@@ -88,7 +86,6 @@ public class XmlSingleNodeParser {
             Map<String, String> attributes = new HashMap();
             for (int i = 0; i < attributesMap.getLength(); i++) {
                 Node atrNode = attributesMap.item(i);
-                System.out.println("Node attributes: " + atrNode.getNodeName() + " - " + atrNode.getNodeValue());
                 attributes.put(atrNode.getNodeName(), atrNode.getNodeValue());
             }
             container.setAttributes(attributes);

@@ -106,10 +106,8 @@ public class XmlNodeBuilder {
     }
 
     private Element setElementNode() {
-        System.out.println(container.getName());
         Element elementNode = document.createElement(container.getName());
         if (container.hasValue()) {
-            System.out.println(container.getValue());
             elementNode.setNodeValue(container.getValue());
         }
         if (container.hasAttributes()) {
@@ -122,13 +120,11 @@ public class XmlNodeBuilder {
     }
 
     private Text setTextElement() {
-        System.out.println(container.getValue());
         Text textNode = document.createTextNode(container.getValue());
         return textNode;
     }
 
     private CDATASection setCdataNode() {
-        System.out.println(container.getValue());
         CDATASection cdataSection = document.createCDATASection(container.getValue());
         return cdataSection;
     }
