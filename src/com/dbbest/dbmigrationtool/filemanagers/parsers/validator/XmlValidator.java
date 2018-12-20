@@ -1,4 +1,4 @@
-package com.dbbest.dbmigrationtool.document.validator;
+package com.dbbest.dbmigrationtool.filemanagers.parsers.validator;
 
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
 import com.google.gson.Gson;
@@ -9,8 +9,7 @@ import java.io.FileReader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 import org.w3c.dom.Document;
 
 /**
@@ -18,30 +17,21 @@ import org.w3c.dom.Document;
  */
 public class XmlValidator implements Validator {
 
-    private static final Logger logger = Logger.getLogger("Parsing logger");
 
     @Override
     public Document validate(String targetFileUrl) throws ParsingException {
         try {
             if (targetFileUrl == null) {
-                String message = "The file url has not been set in the xml validator. "
-                    + "Please set the file url before evoking the method";
-                logger.log(Level.SEVERE, message);
-                throw new ParsingException(message);
+                throw new ParsingException("The file url has not been set in the xml validator. "
+                    + "Please set the file url before evoking the method");
             } else if (!Files.exists(Paths.get(targetFileUrl))) {
                 throw new NoSuchFileException("Can not find the XML file to parse. The file does not exist");
             } else if (!checkExtension(targetFileUrl)) {
-                String message = "The extension of the file is not supported";
-                logger.log(Level.SEVERE, message);
-                throw new ParsingException(message);
+                throw new ParsingException("The extension of the file is not supported");
             } else {
                 return validateXml(new File(targetFileUrl));
             }
-        } catch (NoSuchFileException exception) {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
-            throw new ParsingException(exception);
-        } catch (FileNotFoundException exception) {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
+        } catch (NoSuchFileException | FileNotFoundException exception) {
             throw new ParsingException(exception);
         }
     }
@@ -51,7 +41,7 @@ public class XmlValidator implements Validator {
     }
 
     private boolean checkExtension(String url) throws FileNotFoundException {
-        String path = "Extensions.json";
+        String path = "resources/XmlExtensions.json";
         BufferedReader bufferedReader = null;
         bufferedReader = new BufferedReader(new FileReader(path));
         Gson gson = new Gson();

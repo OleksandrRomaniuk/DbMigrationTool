@@ -1,6 +1,7 @@
 package main;
 
 import com.dbbest.dbmigrationtool.containers.Container;
+import com.dbbest.dbmigrationtool.containers.DbList;
 import com.dbbest.dbmigrationtool.containers.HorizontalPassageSearchManager;
 import com.dbbest.dbmigrationtool.containers.VerticalPassageSearchManager;
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
@@ -19,7 +20,6 @@ import logger.CustomLogger;
  * A class which proceeds console commands and evokes appropriate classes and methods.
  */
 public class App {
-
 
     private static final Logger logger = Logger.getLogger("App logger");
 
@@ -41,7 +41,7 @@ public class App {
 
         try {
             App app = new App();
-            Container<String, String> container = null;
+            Container<String> container = null;
             for (int i = 0; i < args.length; i++) {
                 if (args[i].startsWith("-")) {
                     if (args[i].equals("-parse")) {
@@ -50,7 +50,7 @@ public class App {
                         app.write(args[++i], container);
                     }
                 } else if (args[i].equals("-search")) {
-                    app.search(args[++i], container);
+                    //app.search(args[++i], container);
                 } else {
                     logger.log(Level.INFO, "Can not recognize the command.");
                 }
@@ -72,21 +72,21 @@ public class App {
         return parsingManager.getContainer();
     }
 
-    private void write(String fileName, Container<String, String> container) throws SerializingException {
-        SerializingManager<String, String> serializingManager = new SerializingManager();
+    private void write(String fileName, Container<String> container) throws SerializingException {
+        SerializingManager<String> serializingManager = new SerializingManager();
         serializingManager.setContainer(container);
         serializingManager.setSerializer(new XmlSerializer());
         serializingManager.writeFile(fileName);
         logger.log(Level.INFO, "The file has been written");
     }
-
-    private void search(String text, Container<String, String> container) {
+/**
+    private void search(String text, Container<String> container) {
         HorizontalPassageSearchManager horSearchManager = new HorizontalPassageSearchManager(container);
-        List<Container<String, String>> listOfFoundItems = horSearchManager.search(text);
+        DbList listOfFoundItems = horSearchManager.search(text);
         logger.log(Level.INFO, "Horizontal passage search has been completed.");
         VerticalPassageSearchManager verticalPassageSearchManager = new VerticalPassageSearchManager(container);
-        List<Container<String, String>> listOfFoundItms = verticalPassageSearchManager.search(text);
+        DbList listOfFoundItms = verticalPassageSearchManager.search(text);
         logger.log(Level.INFO, "Vertical passage search has been completed.");
-    }
+    }*/
 }
 

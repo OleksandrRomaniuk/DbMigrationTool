@@ -1,8 +1,10 @@
 package com.dbbest.dbmigrationtool.containers;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  *An extension of the SearchManager class. Realizes the method search.
@@ -10,33 +12,54 @@ import java.util.List;
  */
 public class HorizontalPassageSearchManager extends SearchManager {
 
-    public HorizontalPassageSearchManager(Container<String, String> rootContainer) {
+    public HorizontalPassageSearchManager(Container rootContainer) {
         super(rootContainer);
     }
 
     @Override
-    public List search(String enteredText) {
-
-        List<Container<String, String>> list = new ArrayList();
+    public DbList searchInNames(String enteredText) {
+        DbList list = new ListOfChildren();
         list.add(getRootContainer());
-        searchElementInContainerByHoriaontalPassage(enteredText, list);
+        searchElementInContainerByHorizontalPassage(getPredicateByName(), list);
         return getListOfFoundElements();
     }
 
-    private void searchElementInContainerByHoriaontalPassage(String enteredText, List<Container<String, String>> containers) {
-        List<Container<String, String>> allChildrenOfNextLevel = new LinkedList();
+    @Override
+    public DbList searchInValues(String enteredText) {
+        DbList list = new ListOfChildren();
+        list.add(getRootContainer());
+        searchElementInContainerByHorizontalPassage(getPredicateByValue(), list);
+        return getListOfFoundElements();
+    }
 
-        for (Container<String, String> con : containers) {
-            checkIfContains(enteredText, con);
-            if (con.hasChildren()) {
-                for (Container<String, String> cont : con.getChildren()) {
+    @Override
+    public DbList searchInKeyValues(String enteredText) {
+        DbList list = new ListOfChildren();
+        list.add(getRootContainer());
+        searchElementInContainerByHorizontalPassage(getPredicateByKeyValue(), list);
+        return getListOfFoundElements();
+    }
+
+    private void searchElementInContainerByHorizontalPassage(Predicate<Container> predicate, DbList containers) {
+        DbList allChildrenOfNextLevel = new ListOfChildren();
+
+        Container[] listOfFoundItems = (Container[]) Arrays.stream((Container[])containers.toArray()).filter(predicate).toArray();
+
+        for (Container container:listOfFoundItems) {
+            addFoundItemToList(container);
+        }
+
+        for (Object con : containers) {
+
+            if (((Container) con).hasChildren()) {
+                for (Object cont : ((Container) con).getChildren()) {
                     allChildrenOfNextLevel.add(cont);
                 }
             }
         }
 
         if (!allChildrenOfNextLevel.isEmpty()) {
-            searchElementInContainerByHoriaontalPassage(enteredText, allChildrenOfNextLevel);
+            searchElementInContainerByHorizontalPassage(predicate, allChildrenOfNextLevel);
         }
     }
 }

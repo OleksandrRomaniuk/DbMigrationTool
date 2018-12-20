@@ -10,20 +10,18 @@ import java.util.logging.Logger;
 
 /**
  * A manager which performs reading a container and writing a file with a predefined serializer.
- * @param <V1> the type of the value of containers.
- * @param <V2> the type of the value of attributes.
+ * @param <V> the type of the value of containers.
  */
-public class SerializingManager<V1, V2> {
-    private static final Logger logger = Logger.getLogger("Serializing logger");
-    private Container<V1, V2> container;
-    private Serializer<V1, V2> serializer;
+public class SerializingManager<V> {
+    private Container<V> container;
+    private Serializer<V> serializer;
 
-    public void setContainer(Container<V1, V2> container) {
+    public void setContainer(Container<V> container) {
 
         this.container = container;
     }
 
-    public void setSerializer(Serializer<V1, V2> serializer) {
+    public void setSerializer(Serializer<V> serializer) {
 
         this.serializer = serializer;
     }
@@ -37,17 +35,11 @@ public class SerializingManager<V1, V2> {
     public void writeFile(String targetFile) throws SerializingException {
 
         if (container == null) {
-            String message = "The container has not been set. Please set container before evoking the method.";
-            logger.log(Level.SEVERE, message);
-            throw new SerializingException(message);
+            throw new SerializingException("The container has not been set. Please set container before evoking the method.");
         } else if (serializer == null) {
-            String message = "The serializer has not been set. Please set serializer before evoking the method.";
-            logger.log(Level.SEVERE, message);
-            throw new SerializingException(message);
+            throw new SerializingException("The serializer has not been set. Please set serializer before evoking the method.");
         } else if (new File(targetFile).exists()) {
-            String message = "Such file already exists. Please enter another name.";
-            logger.log(Level.SEVERE, message);
-            throw new SerializingException(message);
+            throw new SerializingException("Such file already exists. Please enter another name.");
         }
         serializer.setContainer(container);
         serializer.writeFile(targetFile);

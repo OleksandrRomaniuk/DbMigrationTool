@@ -1,12 +1,9 @@
 package com.dbbest.dbmigrationtool.filemanagers.parsers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
-import com.dbbest.dbmigrationtool.document.validator.Validator;
-import com.dbbest.dbmigrationtool.document.validator.XmlValidator;
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.dbbest.dbmigrationtool.filemanagers.parsers.validator.Validator;
+import com.dbbest.dbmigrationtool.filemanagers.parsers.validator.XmlValidator;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
@@ -21,36 +18,13 @@ import org.w3c.dom.NodeList;
  */
 public class XmlParser implements Parser {
 
-    private static final Logger logger = Logger.getLogger("Parsing logger");
-
-    private Container<String, String> container;
-    private Validator validator;
-
-    public XmlParser() {
-    }
-
     @Override
-    public Container<String, String> getContainer() {
+    public Container<String> parse(String targetFileUrl) throws ParsingException {
 
-        return container;
-    }
-
-    @Override
-    public Validator getFileValidator() {
-        if (validator == null) {
-            validator = new XmlValidator();
-        }
-        return validator;
-    }
-
-    @Override
-    public Container<String, String> parse(Document document) throws ParsingException {
-
+        Document document = new XmlValidator().validate(targetFileUrl);
         normalize(document);
         Node node = getNode(document);
-        container = new XmlSingleNodeParser(new Container<String, String>(), node)
-            .parse()
-            .getContainer();
+        Container<String> container = new XmlSingleNodeParser().parse(new Container<String>(), node);
         return container;
     }
 
@@ -58,9 +32,7 @@ public class XmlParser implements Parser {
         if (document != null) {
             return getRootNode(document);
         } else {
-            String message = "Can not get the docuemnt. The document is null";
-            logger.log(Level.SEVERE, message);
-            throw new ParsingException(message);
+            throw new ParsingException("Can not get the document. The document is null");
         }
     }
 
@@ -83,7 +55,6 @@ public class XmlParser implements Parser {
             }
             return document;
         } catch (XPathExpressionException exception) {
-            logger.log(Level.SEVERE, exception.getMessage());
             throw new ParsingException(exception);
         }
     }

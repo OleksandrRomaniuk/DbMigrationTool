@@ -1,7 +1,7 @@
 package com.dbbest.dbmigrationtool.filemanagers.serializers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
-import java.util.List;
+import com.dbbest.dbmigrationtool.containers.DbList;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,9 +16,9 @@ import org.w3c.dom.Text;
 public class XmlNodeBuilder {
     private Document document;
     private Element parentElement;
-    private Container<String, String> container;
+    private Container<String> container;
 
-    public XmlNodeBuilder(Document document, Container<String, String> container) {
+    public XmlNodeBuilder(Document document, Container<String> container) {
         this.document = document;
         this.container = container;
     }
@@ -28,7 +28,7 @@ public class XmlNodeBuilder {
      * @param container the container which is treated by the node builder.
      * @param parentElement the element created from the parent container.
      */
-    public XmlNodeBuilder(Document document, Container<String, String> container, Element parentElement) {
+    public XmlNodeBuilder(Document document, Container<String> container, Element parentElement) {
         this.document = document;
         this.container = container;
         this.parentElement = parentElement;
@@ -58,30 +58,18 @@ public class XmlNodeBuilder {
         return parentElement;
     }
 
-    private boolean isElementNode(Container<String, String> container) {
-        if (container.hasName()) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean isElementNode(Container<String> container) {
+        return container.hasName();
     }
 
-    private boolean isTextNode(Container<String, String> container) {
-        if (!container.hasName() && !meetCdataRegex(container.getValue())
-            && !container.hasAttributes() && !container.hasChildren()) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean isTextNode(Container<String> container) {
+        return !container.hasName() && !meetCdataRegex(container.getValue())
+            && !container.hasAttributes() && !container.hasChildren();
     }
 
-    private boolean isCdataNode(Container<String, String> container) {
-        if (!container.hasName() && meetCdataRegex(container.getValue())
-            && !container.hasAttributes() && !container.hasChildren()) {
-            return true;
-        } else {
-            return false;
-        }
+    private boolean isCdataNode(Container<String> container) {
+        return !container.hasName() && meetCdataRegex(container.getValue())
+            && !container.hasAttributes() && !container.hasChildren();
     }
 
     public Document getDocument() {
@@ -89,20 +77,13 @@ public class XmlNodeBuilder {
     }
 
     private boolean meetCdataRegex(String nodeValue) {
-        if (matchs(nodeValue)) {
-            return true;
-        } else {
-            return false;
-        }
+        return matchs(nodeValue);
     }
 
     private boolean matchs(String input) {
         Pattern pattern = Pattern.compile("<|&|\\'.*\\'|\\\".*\\\"");
         Matcher matcher = pattern.matcher(input);
-        if (matcher.find()) {
-            return true;
-        }
-        return false;
+        return matcher.find();
     }
 
     private Element setElementNode() {
@@ -131,17 +112,17 @@ public class XmlNodeBuilder {
 
     private void setNodeAttributes(Element element) {
         if (container.hasAttributes()) {
-            Map<String, String> attributes = container.getAttributes();
-            for (Map.Entry<String, String> entry : attributes.entrySet()) {
-                element.setAttribute(entry.getKey(), entry.getValue());
+            Map<String, Object> attributes = container.getAttributes();
+            for (Map.Entry<String, Object> entry : attributes.entrySet()) {
+                element.setAttribute(entry.getKey(), String.valueOf(entry.getValue()));
             }
         }
     }
 
     private void setChildNodes(Element element) {
-        List<Container<String, String>> childContainers = container.getChildren();
-        for (Container<String, String> childContainer : childContainers) {
-            new XmlNodeBuilder(document, childContainer, element).build();
+        DbList childContainers = container.getChildren();
+        for (Object childContainer : childContainers) {
+            new XmlNodeBuilder(document, (Container<String>) childContainer, element).build();
         }
     }
 }

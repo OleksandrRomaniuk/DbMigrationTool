@@ -21,12 +21,11 @@ import org.w3c.dom.Document;
  * Realisable serializer implementation of the interface serializer
  * The class manages the whole process of serialisation from reading a tree from a container to writing it to an xml file.
  */
-public class XmlSerializer implements Serializer<String, String> {
-    private static final Logger logger = Logger.getLogger("Serilising logger");
-    private Container<String, String> container;
+public class XmlSerializer implements Serializer<String> {
+    private Container<String> container;
 
     @Override
-    public void setContainer(Container<String, String> container) {
+    public void setContainer(Container<String> container) {
 
         this.container = container;
     }
@@ -40,20 +39,15 @@ public class XmlSerializer implements Serializer<String, String> {
                 Document document = builder.newDocument();
                 document = setTreeToDocument(document, container);
                 writeNewFile(document, targetFileUrl);
+            } else {
+                throw new SerializingException("The container has not been set");
             }
-        } catch (ParserConfigurationException exception) {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
-            throw new SerializingException(exception);
-        } catch (TransformerConfigurationException exception) {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
-            throw new SerializingException(exception);
-        } catch (TransformerException exception) {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
+        } catch (ParserConfigurationException | TransformerException exception) {
             throw new SerializingException(exception);
         }
     }
 
-    private Document setTreeToDocument(Document document, Container<String, String> container) {
+    private Document setTreeToDocument(Document document, Container<String> container) {
         return new XmlNodeBuilder(document, container).build().getDocument();
     }
 

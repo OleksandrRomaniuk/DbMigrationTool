@@ -1,9 +1,9 @@
 package com.dbbest.dbmigrationtool.filemanagers.parsers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
-import java.util.ArrayList;
+import com.dbbest.dbmigrationtool.containers.DbList;
+import com.dbbest.dbmigrationtool.containers.ListOfChildren;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.NamedNodeMap;
@@ -17,73 +17,77 @@ import org.w3c.dom.NodeList;
  */
 public class XmlSingleNodeParser {
 
-    private Container<String, String> container;
-    private Node node;
-
-    public XmlSingleNodeParser(Container<String, String> container, Node node) {
-        this.container = container;
-        this.node = node;
-    }
-
-    public Container<String, String> getContainer() {
+    /**
+     * A method which triggers the process of parsing of a node.
+     * @return the method returns the object on which it was evoked. From the returned object the container can be got.
+     */
+    public Container<String> parse(Container<String> container, Node node) {
+        if (node.getNodeType() == Node.ELEMENT_NODE) {
+            setElementNode(container, node);
+        } else if (node.getNodeType() == Node.CDATA_SECTION_NODE) {
+            setCdataNode(container, node);
+        } else if (node.getNodeType() == Node.TEXT_NODE) {
+            setTextNode(container, node);
+        }
 
         return container;
-    }
-
-    public Node getNode() {
-
-        return node;
     }
 
     /**
      * A method which triggers the process of parsing of a node.
      * @return the method returns the object on which it was evoked. From the returned object the container can be got.
      */
-    public XmlSingleNodeParser parse() {
+    public Container<String> parse(Container<String> container, Container<String> parentContainer, Node node) {
+        setParentContainer(container, parentContainer);
         if (node.getNodeType() == Node.ELEMENT_NODE) {
-            setElementNode();
+            setElementNode(container, node);
         } else if (node.getNodeType() == Node.CDATA_SECTION_NODE) {
-            setCdataNode();
+            setCdataNode(container, node);
         } else if (node.getNodeType() == Node.TEXT_NODE) {
-            setTextNode();
+            setTextNode(container, node);
         }
 
-        return this;
+        return container;
     }
 
-    private void setElementNode() {
-        setContainerName();
-        setContainerValue(node.getNodeValue());
-        setAttributes();
-        setListOfBoxedChildren(node);
+    private void setElementNode(Container<String> container, Node node) {
+
+        setContainerName(container, node);
+        setContainerValue(container, node.getNodeValue());
+        setAttributes(container, node);
+        setListOfBoxedChildren(container, node);
     }
 
-    private void setTextNode() {
-
-        setContainerValue(node.getTextContent());
+    private void setTextNode(Container<String> container, Node node) {
+        setContainerValue(container, node.getTextContent());
     }
 
-    private void setCdataNode() {
-
-        setContainerValue(((CharacterData) node).getData());
+    private void setCdataNode(Container<String> container, Node node) {
+        setContainerValue(container, ((CharacterData) node).getData());
     }
 
-    private void setContainerName() {
+    private void setParentContainer(Container<String> container, Container<String> parentContainer) {
+        if (parentContainer != null) {
+            container.setParent(parentContainer);
+        }
+    }
+
+    private void setContainerName(Container<String> container, Node node) {
         if (node.getNodeName() != null) {
             container.setName(node.getNodeName());
         }
     }
 
-    private void setContainerValue(String value) {
+    private void setContainerValue(Container<String> container, String value) {
         if (value != null) {
             container.setValue(value);
         }
     }
 
-    private void setAttributes() {
+    private void setAttributes(Container<String> container, Node node) {
         if (node.hasChildNodes()) {
             NamedNodeMap attributesMap = node.getAttributes();
-            Map<String, String> attributes = new HashMap();
+            Map<String, Object> attributes = new HashMap();
             for (int i = 0; i < attributesMap.getLength(); i++) {
                 Node atrNode = attributesMap.item(i);
                 attributes.put(atrNode.getNodeName(), atrNode.getNodeValue());
@@ -92,15 +96,13 @@ public class XmlSingleNodeParser {
         }
     }
 
-    private void setListOfBoxedChildren(Node node) {
+    private void setListOfBoxedChildren(Container<String> container, Node node) {
         if (node.hasChildNodes()) {
-            List<Container<String, String>> listOfChildren = new ArrayList();
+            DbList listOfChildren = new ListOfChildren();
             NodeList childList = node.getChildNodes();
             for (int i = 0; i < childList.getLength(); i++) {
                 Node child = childList.item(i);
-                Container<String, String> childContainer = new XmlSingleNodeParser(new Container<String, String>(), child)
-                    .parse()
-                    .getContainer();
+                Container<String> childContainer = new XmlSingleNodeParser().parse(new Container<String>(), container, child);
 
                 listOfChildren.add(childContainer);
                 container.setChildren(listOfChildren);

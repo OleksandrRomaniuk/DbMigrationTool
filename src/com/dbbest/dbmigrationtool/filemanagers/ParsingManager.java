@@ -11,7 +11,6 @@ import org.w3c.dom.Document;
  * A manager which performs a parsing of a file using a predefined parser.
  */
 public class ParsingManager {
-    private static final Logger logger = Logger.getLogger("Parsing logger");
     private Parser parser;
     private Container container;
 
@@ -27,12 +26,9 @@ public class ParsingManager {
      */
     public void parse(String targetFileUrl) throws ParsingException {
         if (parser != null) {
-            Document document = parser.getFileValidator().validate(targetFileUrl);
-            container = parser.parse(document);
+            container = parser.parse(targetFileUrl);
         } else {
-            String message = "The parser has not been set. Please set a parser before parsing the file.";
-            logger.log(Level.SEVERE, message);
-            throw new ParsingException(message);
+            throw new ParsingException("The parser has not been set. Please set a parser before parsing the file.");
         }
     }
 

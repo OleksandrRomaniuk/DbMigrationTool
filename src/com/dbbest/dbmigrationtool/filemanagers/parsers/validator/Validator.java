@@ -1,4 +1,4 @@
-package com.dbbest.dbmigrationtool.document.validator;
+package com.dbbest.dbmigrationtool.filemanagers.parsers.validator;
 
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
 import org.w3c.dom.Document;

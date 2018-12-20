@@ -1,4 +1,4 @@
-package com.dbbest.dbmigrationtool.document.validator;
+package com.dbbest.dbmigrationtool.filemanagers.parsers.validator;
 
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
 
@@ -19,7 +19,6 @@ import org.xml.sax.SAXParseException;
  * An xml file is parsed while validating it.
  */
 public class XmlValidationFactory {
-    private static final Logger logger = Logger.getLogger("Parsing logger");
 
     /**
      * The method validates and parses an xml file. If the file is validated and parsed without exceptions a document is returned.
@@ -38,14 +37,7 @@ public class XmlValidationFactory {
             Document document = builder.parse(file);
             document.normalize();
             return document;
-        } catch (ParserConfigurationException exception) {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
-            throw new ParsingException(exception);
-        } catch (SAXException exception) {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
-            throw new ParsingException(exception);
-        } catch (IOException exception) {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
+        } catch (ParserConfigurationException | SAXException | IOException exception) {
             throw new ParsingException(exception);
         }
     }
@@ -53,16 +45,13 @@ public class XmlValidationFactory {
     private class SimpleErrorHandler implements ErrorHandler {
 
         public void error(SAXParseException exception) throws SAXException {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
         }
 
         public void fatalError(SAXParseException exception) throws SAXException {
-            logger.log(Level.SEVERE, exception.getMessage(), exception);
         }
 
         @Override
         public void warning(SAXParseException exception) throws SAXException {
-            logger.log(Level.WARNING, exception.getMessage(), exception);
         }
     }
 }
