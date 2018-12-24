@@ -1,0 +1,133 @@
+SEVERE 12-14-2018 11:37:19 || XmlParser.normalize() : Can not trim white lines and line breaks.
+SEVERE 12-14-2018 11:37:19 || SerializingManager.writeFile() : The container has not been set. Please set container before evoking the method.
+SEVERE 12-14-2018 11:38:27 || XmlParser.normalize() : javax.xml.transform.TransformerException: Le contexte ne peut pas être NULL lorsque lopération en dépend.
+SEVERE 12-14-2018 11:38:27 || SerializingManager.writeFile() : The container has not been set. Please set container before evoking the method.
+SEVERE 12-14-2018 13:03:03 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-14-2018 13:03:11 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-14-2018 20:05:17 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-14-2018 22:09:11 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-14-2018 22:09:44 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-14-2018 22:11:59 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-14-2018 22:14:01 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-14-2018 22:23:07 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-14-2018 22:28:20 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-15-2018 22:54:36 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-16-2018 00:02:35 || App.main() : The application started
+INFO 12-16-2018 00:03:11 || App.main() : The application started
+INFO 12-16-2018 00:04:08 || App.main() : The application started
+INFO 12-16-2018 00:04:50 || App.main() : The application started
+INFO 12-16-2018 00:05:02 || App.main() : The application started
+INFO 12-16-2018 00:06:01 || App.main() : The application started
+INFO 12-16-2018 00:06:40 || App.main() : The application started
+INFO 12-16-2018 00:06:53 || App.main() : The application started
+INFO 12-16-2018 00:07:23 || App.main() : The application started
+INFO 12-16-2018 17:55:19 || App.main() : The application started
+INFO 12-16-2018 17:55:19 || App.parse() : The file has been parsed
+SEVERE 12-16-2018 17:55:19 || SerializingManager.writeFile() : The container has not been set. Please set container before evoking the method.
+INFO 12-16-2018 17:59:18 || App.main() : The application started
+INFO 12-16-2018 17:59:18 || App.parse() : The file has been parsed
+SEVERE 12-16-2018 17:59:18 || SerializingManager.writeFile() : The container has not been set. Please set container before evoking the method.
+INFO 12-16-2018 17:59:57 || App.main() : The application started
+INFO 12-16-2018 17:59:58 || App.parse() : The file has been parsed
+INFO 12-16-2018 17:59:58 || App.write() : The file has been written
+INFO 12-16-2018 18:01:14 || App.main() : The application started
+INFO 12-16-2018 18:01:15 || App.parse() : The file has been parsed
+SEVERE 12-16-2018 18:01:15 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+INFO 12-16-2018 18:04:02 || App.main() : The application started
+INFO 12-16-2018 18:04:02 || App.parse() : The file has been parsed
+INFO 12-16-2018 18:04:02 || App.main() : Can not recognize the command.
+SEVERE 12-16-2018 18:04:02 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+INFO 12-16-2018 18:05:38 || App.main() : The application started
+SEVERE 12-16-2018 18:05:38 || XmlValidator.validate() : Can not find the XML file to parse. The file does not exist
+INFO 12-16-2018 18:06:22 || App.main() : The application started
+INFO 12-16-2018 18:06:22 || App.parse() : The file has been parsed
+INFO 12-16-2018 18:06:22 || App.main() : Can not recognize the command.
+INFO 12-16-2018 18:06:22 || App.write() : The file has been written
+INFO 12-16-2018 18:08:16 || App.main() : The application started
+INFO 12-16-2018 18:08:17 || App.parse() : The file has been parsed
+INFO 12-16-2018 18:08:17 || App.main() : Can not recognize the command.
+INFO 12-16-2018 18:08:17 || App.write() : The file has been written
+INFO 12-16-2018 18:09:53 || App.main() : The application started
+INFO 12-16-2018 18:12:21 || App.main() : The application started
+INFO 12-16-2018 18:12:21 || App.main() : Can not recognize the command.
+INFO 12-16-2018 18:13:04 || App.main() : The application started
+INFO 12-16-2018 18:13:04 || App.main() : Can not recognize the command.
+INFO 12-16-2018 18:13:24 || App.main() : The application started
+INFO 12-16-2018 18:13:37 || App.main() : The application started
+INFO 12-16-2018 18:13:37 || App.parse() : The file has been parsed
+INFO 12-16-2018 18:15:29 || App.main() : The application started
+INFO 12-16-2018 18:15:30 || App.parse() : The file has been parsed
+INFO 12-16-2018 18:15:50 || App.main() : The application started
+INFO 12-16-2018 18:15:50 || App.parse() : The file has been parsed
+INFO 12-16-2018 19:50:59 || App.main() : The application started
+INFO 12-16-2018 19:50:59 || App.parse() : The file has been parsed
+INFO 12-16-2018 19:52:59 || App.main() : The application started
+INFO 12-16-2018 19:52:59 || App.parse() : The file has been parsed
+INFO 12-16-2018 19:55:11 || App.main() : The application started
+INFO 12-16-2018 19:55:12 || App.parse() : The file has been parsed
+INFO 12-16-2018 19:56:01 || App.main() : The application started
+INFO 12-16-2018 19:56:01 || App.parse() : The file has been parsed
+INFO 12-16-2018 19:58:34 || App.main() : The application started
+INFO 12-16-2018 19:58:35 || App.parse() : The file has been parsed
+INFO 12-16-2018 20:01:57 || App.main() : The application started
+INFO 12-16-2018 20:01:58 || App.parse() : The file has been parsed
+INFO 12-16-2018 20:04:21 || App.main() : The application started
+INFO 12-16-2018 20:04:21 || App.parse() : The file has been parsed
+INFO 12-16-2018 20:22:41 || App.main() : The application started
+INFO 12-16-2018 20:22:41 || App.parse() : The file has been parsed
+INFO 12-16-2018 20:23:35 || App.main() : The application started
+INFO 12-16-2018 20:23:36 || App.parse() : The file has been parsed
+INFO 12-16-2018 20:23:36 || App.search() : Horizontal passage search has been completed.
+INFO 12-16-2018 20:23:36 || App.search() : Vertical passage search has been completed.
+INFO 12-16-2018 20:23:36 || App.write() : The file has been written
+INFO 12-16-2018 20:37:25 || App.main() : The application started
+INFO 12-16-2018 20:37:25 || App.parse() : The file has been parsed
+INFO 12-16-2018 20:37:25 || App.search() : Horizontal passage search has been completed.
+INFO 12-16-2018 20:37:25 || App.search() : Vertical passage search has been completed.
+INFO 12-16-2018 20:37:25 || App.write() : The file has been written
+INFO 12-17-2018 10:22:58 || App.main() : The application started
+INFO 12-17-2018 10:22:58 || App.parse() : The file has been parsed
+INFO 12-17-2018 10:22:58 || App.search() : Horizontal passage search has been completed.
+INFO 12-17-2018 10:22:58 || App.search() : Vertical passage search has been completed.
+INFO 12-17-2018 10:22:58 || App.write() : The file has been written
+INFO 12-17-2018 10:36:46 || App.main() : The application started
+INFO 12-17-2018 10:36:46 || App.parse() : The file has been parsed
+INFO 12-17-2018 10:36:46 || App.search() : Horizontal passage search has been completed.
+INFO 12-17-2018 10:36:46 || App.search() : Vertical passage search has been completed.
+SEVERE 12-17-2018 10:36:46 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+INFO 12-17-2018 15:21:54 || App.main() : The application started
+INFO 12-17-2018 15:21:54 || App.parse() : The file has been parsed
+INFO 12-17-2018 15:21:54 || App.search() : Horizontal passage search has been completed.
+INFO 12-17-2018 15:21:54 || App.search() : Vertical passage search has been completed.
+SEVERE 12-17-2018 15:21:54 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+INFO 12-18-2018 02:31:40 || App.main() : The application started
+INFO 12-18-2018 02:31:40 || App.parse() : The file has been parsed
+INFO 12-18-2018 02:31:40 || App.main() : Can not recognize the command.
+SEVERE 12-18-2018 02:31:40 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-18-2018 02:31:40 || App.main() : Such file already exists. Please enter another name.
+INFO 12-18-2018 02:31:46 || App.main() : The application started
+INFO 12-18-2018 02:31:46 || App.parse() : The file has been parsed
+INFO 12-18-2018 02:31:46 || App.main() : Can not recognize the command.
+SEVERE 12-18-2018 02:31:46 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-18-2018 02:31:46 || App.main() : Such file already exists. Please enter another name.
+INFO 12-18-2018 02:32:38 || App.main() : The application started
+INFO 12-18-2018 02:32:38 || App.parse() : The file has been parsed
+INFO 12-18-2018 02:32:38 || App.main() : Can not recognize the command.
+INFO 12-18-2018 02:32:38 || App.write() : The file has been written
+INFO 12-19-2018 13:39:12 || App.main() : The application started
+INFO 12-19-2018 13:39:12 || App.parse() : The file has been parsed
+INFO 12-19-2018 13:39:12 || App.main() : Can not recognize the command.
+INFO 12-19-2018 13:39:12 || App.write() : The file has been written
+INFO 12-19-2018 14:10:55 || App.main() : The application started
+INFO 12-19-2018 14:10:55 || App.parse() : The file has been parsed
+INFO 12-19-2018 14:10:55 || App.main() : Can not recognize the command.
+SEVERE 12-19-2018 14:10:55 || SerializingManager.writeFile() : Such file already exists. Please enter another name.
+SEVERE 12-19-2018 14:10:55 || App.main() : Such file already exists. Please enter another name.
+INFO 12-21-2018 12:16:58 || App.main() : The application started
+INFO 12-21-2018 12:18:01 || App.main() : The application started
+INFO 12-21-2018 12:18:01 || App.main() : Can not recognize the command.
+SEVERE 12-21-2018 12:18:01 || ParsingException.<init>() : Can not find the XML file to parse. The file does not exist
+SEVERE 12-21-2018 12:18:01 || App.main() : java.nio.file.NoSuchFileException: Can not find the XML file to parse. The file does not exist
+INFO 12-21-2018 12:19:57 || App.main() : The application started
+INFO 12-21-2018 12:19:57 || App.parse() : The file has been parsed
+INFO 12-21-2018 12:19:57 || App.write() : The file has been written

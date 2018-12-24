@@ -1,0 +1,17 @@
+<!--
+This file specifies which classes and/or warning types to ignore.
+-->
+<FindBugsFilter>
+  <Match>
+    <Or>
+      <Priority value="2"/>
+      <Priority value="3"/>
+    </Or>
+  </Match>
+  <Match>
+    <Class name="~.*Test.*$" />
+  </Match>
+  <Match>
+    <Class name="~.Stubbed*" />
+  </Match>
+</FindBugsFilter>
