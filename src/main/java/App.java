@@ -1,9 +1,4 @@
-package main;
-
-import com.dbbest.dbmigrationtool.containers.Container;
-import com.dbbest.dbmigrationtool.containers.DbList;
-import com.dbbest.dbmigrationtool.containers.HorizontalPassageSearchManager;
-import com.dbbest.dbmigrationtool.containers.VerticalPassageSearchManager;
+import com.dbbest.dbmigrationtool.containers.*;
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
 import com.dbbest.dbmigrationtool.exceptions.SerializingException;
 import com.dbbest.dbmigrationtool.filemanagers.ParsingManager;
@@ -30,6 +25,16 @@ public class App {
      */
     public static void main(String[] args) {
 
+        DbList<Container> list = new ListOfChildren();
+        Container con1 = new Container();
+        con1.setName("child1");
+        Container con2 = new Container();
+        con1.setName("child2");
+        list.add(con1);
+        list.add(con1);
+        for (Object container: list.toArray())
+            System.out.println(((Container)container).getName());
+/*
         try {
             CustomLogger logger = new CustomLogger();
             logger.setup();
@@ -61,10 +66,11 @@ public class App {
         } catch (SerializingException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-
+*/
     }
 
     private Container parse(String fileName) throws ParsingException {
+        System.out.println("parse " + fileName);
         ParsingManager parsingManager = new ParsingManager();
         parsingManager.setParser(new XmlParser());
         parsingManager.parse(fileName);
@@ -73,6 +79,7 @@ public class App {
     }
 
     private void write(String fileName, Container<String> container) throws SerializingException {
+        System.out.println("write " + fileName);
         SerializingManager<String> serializingManager = new SerializingManager();
         serializingManager.setContainer(container);
         serializingManager.setSerializer(new XmlSerializer());
