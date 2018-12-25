@@ -10,8 +10,8 @@ import java.util.logging.Level;
 public class CommandHorizontalSearchByValue extends CommandSearch {
 
 
-    public CommandHorizontalSearchByValue(String text, Container<String> containerToSearchIn) {
-        super(text, containerToSearchIn);
+    public CommandHorizontalSearchByValue(String text) {
+        super(text);
     }
 
     @Override

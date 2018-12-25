@@ -27,5 +27,20 @@ public class SerializingException extends Exception {
         super(message);
         logger.log(Level.SEVERE, message);
     }
+
+    public SerializingException(Level level, Exception exception) {
+
+        super(exception);
+        logger.log(level, exception.getMessage(), exception);
+    }
+
+    /**
+     * @param message the message of the exception thrown.
+     */
+    public SerializingException(Level level, String message) {
+
+        super(message);
+        logger.log(level, message);
+    }
 }
 

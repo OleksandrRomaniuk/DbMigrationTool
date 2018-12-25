@@ -29,10 +29,6 @@ public class CommandRead implements Command {
         builtContainer = parsingManager.getContainer();
     }
 
-    public Container getBuiltContainer() {
-        return builtContainer;
-    }
-
     @Override
     public String getCommandLine() {
         return commandLine;
@@ -41,5 +37,9 @@ public class CommandRead implements Command {
     @Override
     public void setCommandLine(String commandLine) {
         this.commandLine = commandLine;
+    }
+
+    public Container getBuiltContainer() {
+        return builtContainer;
     }
 }

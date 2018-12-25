@@ -13,9 +13,8 @@ public abstract class CommandSearch implements Command {
     private List<Container> listOfFoundItems;
     private String commandLine;
 
-    public CommandSearch(String text, Container<String> containerToSearchIn) {
+    public CommandSearch(String text) {
         this.text = text;
-        this.containerToSearchIn = containerToSearchIn;
     }
 
     public abstract void execute();
@@ -44,5 +43,9 @@ public abstract class CommandSearch implements Command {
     @Override
     public void setCommandLine(String commandLine) {
         this.commandLine = commandLine;
+    }
+
+    public void setContainerToSearchIn(Container<String> containerToSearchIn) {
+        this.containerToSearchIn = containerToSearchIn;
     }
 }

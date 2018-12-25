@@ -11,13 +11,11 @@ import java.util.logging.Logger;
 public class CommandWrite implements Command {
 
     private static final Logger logger = Logger.getLogger("Command logger");
-
     private Container containerToWrite;
     private String fileName;
     private String commandLine;
 
-    public CommandWrite(String fileName, Container<String> containerToWrite) {
-        this.containerToWrite = containerToWrite;
+    public CommandWrite(String fileName) {
         this.fileName = fileName;
     }
 
@@ -38,5 +36,9 @@ public class CommandWrite implements Command {
     @Override
     public void setCommandLine(String commandLine) {
         this.commandLine = commandLine;
+    }
+
+    public void setContainerToWrite(Container containerToWrite) {
+        this.containerToWrite = containerToWrite;
     }
 }

@@ -27,5 +27,15 @@ public class ContainerException extends Exception {
         logger.log(Level.SEVERE, message);
     }
 
+    public ContainerException(Level level, Exception exception) {
 
+        super(exception);
+        logger.log(level, exception.getMessage(), exception);
+    }
+
+    public ContainerException(Level level, String message) {
+
+        super(message);
+        logger.log(level, message);
+    }
 }

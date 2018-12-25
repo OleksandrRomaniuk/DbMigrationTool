@@ -25,24 +25,6 @@ public class App {
      */
     public static void main(String[] args) {
 
-        DbList<Container> list = new ListOfChildren();
-        Container con1 = new Container();
-        con1.setName("child1");
-        Container con2 = new Container();
-        con1.setName("child2");
-        list.add(con1);
-        list.add(con1);
-        for (Object container: list.toArray())
-            System.out.println(((Container)container).getName());
-/*
-        try {
-            CustomLogger logger = new CustomLogger();
-            logger.setup();
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, e.getMessage());
-        }
-
-        logger.log(Level.INFO, "The application started");
 
         try {
             App app = new App();
@@ -66,7 +48,7 @@ public class App {
         } catch (SerializingException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-*/
+
     }
 
     private Container parse(String fileName) throws ParsingException {

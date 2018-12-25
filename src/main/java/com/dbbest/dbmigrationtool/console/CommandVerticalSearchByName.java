@@ -7,8 +7,8 @@ import java.util.logging.Level;
 
 public class CommandVerticalSearchByName extends CommandSearch {
 
-    public CommandVerticalSearchByName(String text, Container<String> containerToSearchIn) {
-        super(text, containerToSearchIn);
+    public CommandVerticalSearchByName(String text) {
+        super(text);
     }
 
     @Override
