@@ -1,5 +1,19 @@
-*.log
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# Intellij
+.idea/
 *.iml
-*.ipr
 *.iws
-.idea
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
+build/
+

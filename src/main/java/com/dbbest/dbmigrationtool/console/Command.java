@@ -5,4 +5,8 @@ import com.dbbest.dbmigrationtool.exceptions.SerializingException;
 
 public interface Command {
     void execute() throws ParsingException, SerializingException;
+
+    void setCommandLine(String commandLine);
+
+    String getCommandLine();
 }

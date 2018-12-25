@@ -14,6 +14,7 @@ public class CommandWrite implements Command {
 
     private Container containerToWrite;
     private String fileName;
+    private String commandLine;
 
     public CommandWrite(String fileName, Container<String> containerToWrite) {
         this.containerToWrite = containerToWrite;
@@ -27,5 +28,15 @@ public class CommandWrite implements Command {
         serializingManager.setSerializer(new XmlSerializer());
         serializingManager.writeFile(fileName);
         logger.log(Level.INFO, "The file has been written");
+    }
+
+    @Override
+    public String getCommandLine() {
+        return commandLine;
+    }
+
+    @Override
+    public void setCommandLine(String commandLine) {
+        this.commandLine = commandLine;
     }
 }

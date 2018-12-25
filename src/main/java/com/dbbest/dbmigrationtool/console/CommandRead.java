@@ -13,8 +13,8 @@ public class CommandRead implements Command {
     private static final Logger logger = Logger.getLogger("Command logger");
 
     private String fileName;
-
     private Container builtContainer;
+    private String commandLine;
 
     public CommandRead(String fileName) {
         this.fileName = fileName;
@@ -31,5 +31,15 @@ public class CommandRead implements Command {
 
     public Container getBuiltContainer() {
         return builtContainer;
+    }
+
+    @Override
+    public String getCommandLine() {
+        return commandLine;
+    }
+
+    @Override
+    public void setCommandLine(String commandLine) {
+        this.commandLine = commandLine;
     }
 }

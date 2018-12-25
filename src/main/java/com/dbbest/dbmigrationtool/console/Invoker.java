@@ -1,17 +1,46 @@
 package com.dbbest.dbmigrationtool.console;
 
-import com.dbbest.dbmigrationtool.containers.Container;
+import com.dbbest.dbmigrationtool.exceptions.ParsingException;
+import com.dbbest.dbmigrationtool.exceptions.SerializingException;
 
-import java.util.function.Predicate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public abstract class Invoker {
+public class Invoker {
+
+    private static final Logger logger = Logger.getLogger("Command logger");
 
     private Command command;
-    private final Predicate<Container> predicate;
+    private List<Command> commandList = new ArrayList();
 
-    protected Invoker(Predicate<Container> predicate) {
-        this.predicate = predicate;
+    public void add(Command command) {
+        commandList.add(command);
     }
 
-    public abstract void invokeCommand();
+    public void remove(int index) {
+        commandList.remove(index);
+    }
+
+    public void execute() {
+        for (Command command : commandList) {
+            if (executeCommand(command)) {
+                continue;
+            } else {
+                break;
+            }
+        }
+
+    }
+
+    private boolean executeCommand(Command command) {
+        try {
+            command.execute();
+        } catch (ParsingException | SerializingException exception) {
+            logger.log(Level.SEVERE, "Command " + command.getCommandLine() + " could not be executed. The program stoped execution of programs.");
+            return false;
+        }
+        return true;
+    }
 }
