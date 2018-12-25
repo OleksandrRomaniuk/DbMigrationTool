@@ -6,6 +6,7 @@ import java.util.Iterator;
 
 /**
  * Resizable implementation of the dbList and ListIterable interfaces.
+ * @param <T> the type of elements of the list.
  */
 public class ListOfChildren<T> implements DbList<T>, ListIterable<T> {
 
@@ -28,6 +29,9 @@ public class ListOfChildren<T> implements DbList<T>, ListIterable<T> {
         }
     }
 
+    /**
+     * @return returns true if the list has no elements.
+     */
     public boolean isEmpty() {
 
         if (list == null || list.length == 0) {
@@ -88,7 +92,8 @@ public class ListOfChildren<T> implements DbList<T>, ListIterable<T> {
 
     @Override
     public Object[] toArray() {
-        /*(Class<T[]> instanceClass) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        /*(Class<T[]> instanceClass) throws NoSuchMethodException, IllegalAccessException,
+        InvocationTargetException, InstantiationException {
         T[] test = instanceClass.getDeclaredConstructor(instanceClass).newInstance();
         test[0] = (T) 1;*/
 

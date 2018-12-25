@@ -1,6 +1,8 @@
 package com.dbbest.dbmigrationtool.containers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -20,10 +22,8 @@ public abstract class SearchManager {
         public boolean test(Container container) {
             if (!container.hasName()) {
                 return false;
-            } else if (String.valueOf(container.getName()).toLowerCase().contains(enteredText.toLowerCase())) {
-                return true;
             } else {
-                return false;
+                return (String.valueOf(container.getName()).toLowerCase().contains(enteredText.toLowerCase()));
             }
         }
     };

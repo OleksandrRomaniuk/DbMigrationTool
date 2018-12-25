@@ -12,7 +12,6 @@ public class App {
 
     /**
      * The method retrieves commands and performs respective procedures.
-     *
      * @param args an array of console commands to be processed.
      */
     public static void main(String[] args) {

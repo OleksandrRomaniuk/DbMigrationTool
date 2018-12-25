@@ -28,6 +28,10 @@ public class SerializingException extends Exception {
         logger.log(Level.SEVERE, message);
     }
 
+    /**
+     * @param level the level of severity of the exception.
+     * @param exception the exception originally thrown.
+     */
     public SerializingException(Level level, Exception exception) {
 
         super(exception);

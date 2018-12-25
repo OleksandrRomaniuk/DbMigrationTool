@@ -28,6 +28,10 @@ public class ParsingException extends Exception {
         logger.log(Level.SEVERE, message);
     }
 
+    /**
+     * @param level the level of severity of the exception.
+     * @param exception the exception originally thrown.
+     */
     public ParsingException(Level level, Exception exception) {
 
         super(exception);

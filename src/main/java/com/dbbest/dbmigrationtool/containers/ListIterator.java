@@ -4,6 +4,7 @@ import java.util.Iterator;
 
 /**
  * An interface which does navigation in a list.
+ * @param <T> the type of elements of the list.
  */
 public interface ListIterator<T> extends Iterator  {
 
