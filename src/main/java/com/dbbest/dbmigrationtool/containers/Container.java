@@ -3,6 +3,7 @@ package com.dbbest.dbmigrationtool.containers;
 import com.dbbest.dbmigrationtool.exceptions.ContainerException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -204,5 +205,29 @@ public class Container<V> {
         }
 
         return true;
+    }
+
+    public List<Container> searchInTreeHorizontalSearchInNames(String textToSearch) {
+        return new HorizontalPassageSearchManager(this).searchInNames(textToSearch);
+    }
+
+    public List<Container> searchInTreeHorizontalSearchInValues(String textToSearch) {
+        return new HorizontalPassageSearchManager(this).searchInValues(textToSearch);
+    }
+
+    public List<Container> searchInTreeHorizontalSearchInKeyValues(String textToSearch) {
+        return new HorizontalPassageSearchManager(this).searchInKeyValues(textToSearch);
+    }
+
+    public List<Container> searchInTreeVerticalSearchInNames(String textToSearch) {
+        return new VerticalPassageSearchManager(this).searchInNames(textToSearch);
+    }
+
+    public List<Container> searchInTreeVerticalSearchInValues(String textToSearch) {
+        return new VerticalPassageSearchManager(this).searchInValues(textToSearch);
+    }
+
+    public List<Container> searchInTreeVerticalSearchInKeyValues(String textToSearch) {
+        return new VerticalPassageSearchManager(this).searchInKeyValues(textToSearch);
     }
 }
