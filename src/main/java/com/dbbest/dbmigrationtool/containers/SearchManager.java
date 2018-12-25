@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * The SearchManager is the abstract base class of all classes which perform searches in trees which are saved in the container.
@@ -96,12 +95,6 @@ public abstract class SearchManager {
     }
 
     protected void searchInContainers(Predicate<Container> predicate, List<Container> containers) {
-        /*
-        List<Container> listOfContainers = new ArrayList();
-        for (Container container: containers) {
-            listOfContainers.add(container);
-        }
-*/
         containers.stream().filter(predicate).forEach(this::addFoundItemToList);
 
     }
