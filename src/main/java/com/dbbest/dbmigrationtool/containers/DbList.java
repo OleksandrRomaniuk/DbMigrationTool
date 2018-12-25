@@ -2,6 +2,7 @@ package com.dbbest.dbmigrationtool.containers;
 
 /**
  *A list which may contain any element of the parametrized type T.
+ * @param <T> the type of elements of the list.
  */
 public interface DbList<T> extends Iterable<T>, ListIterable<T>  {
 

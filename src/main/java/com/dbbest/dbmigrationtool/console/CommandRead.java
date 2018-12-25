@@ -8,6 +8,9 @@ import com.dbbest.dbmigrationtool.filemanagers.parsers.XmlParser;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * A class of the command of reading an xml file.
+ */
 public class CommandRead implements Command {
 
     private static final Logger logger = Logger.getLogger("Command logger");
@@ -41,5 +44,9 @@ public class CommandRead implements Command {
 
     public Container getBuiltContainer() {
         return builtContainer;
+    }
+
+    public void setBuiltContainer(Container builtContainer) {
+        this.builtContainer = builtContainer;
     }
 }

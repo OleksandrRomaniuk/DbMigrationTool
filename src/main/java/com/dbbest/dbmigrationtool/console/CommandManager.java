@@ -7,9 +7,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * A class which manages work with commands.
+ */
 public class CommandManager {
+
     private Invoker invoker = new Invoker();
 
+    /**
+     * Adds command lines to work out.
+     * @param commandLine command line which should be worked out.
+     * @throws CommandException exception thrown during treatment of the commandline.
+     */
     public void addCommands(String[] commandLine) throws CommandException {
 
         List<String> listOfCommands = getListOfCommands(commandLine);
@@ -23,18 +32,27 @@ public class CommandManager {
         invoker.execute();
     }
 
-    private List<String> getListOfCommands(String[] commandLine) {
+    private List<String> getListOfCommands(String[] commandLine) throws CommandException {
         List<String> commands = new ArrayList();
-        int previousFoundBeginingOfCommand = 0;
-        for (int i = 0; i < commandLine.length; i++) {
-            if (commandLine[i].trim().startsWith("-")) {
-                StringBuilder singleCommad = new StringBuilder();
-                for (int j = previousFoundBeginingOfCommand; j < previousFoundBeginingOfCommand; j++) {
-                    singleCommad.append(commandLine[j] + " ");
+        StringBuilder cl = new StringBuilder();
+
+        for (String element : commandLine) {
+            cl.append(element + " ");
+        }
+
+        String[] commandsSplit = cl.toString().trim().split("-");
+        String pattern = "-\\S*\\s*\\S*\\z";
+        for (String element : commandsSplit) {
+            if (element.length() > 0) {
+                if (matchs("-" + element.trim(), pattern)) {
+                    commands.add("-" + element.trim());
+                } else {
+                    throw new CommandException("Incorrect command format.");
                 }
-                commands.add(singleCommad.toString().trim());
+
             }
         }
+
         return commands;
     }
 
@@ -45,58 +63,73 @@ public class CommandManager {
     }
 
     private void addToInvoker(String singleCommand) throws CommandException {
-        String pattern = "-.*\\s.*";
-
-        if (!matchs(singleCommand, pattern)) {
+        String pattern = "-\\S*\\s*\\S*\\z";
+        if (!matchs(singleCommand.trim(), pattern)) {
             throw new CommandException("The command " + singleCommand + " was not recognized.");
         }
-
         String[] singleCommandWords = singleCommand.split("\\s");
 
         switch (singleCommandWords[0].trim()) {
             case "-read":
-
                 CommandRead commandRead = new CommandRead(singleCommandWords[1].trim());
+                commandRead.setCommandLine(singleCommand);
                 invoker.add(commandRead);
                 break;
 
             case "-write":
-                CommandRead commandWrite = new CommandRead(singleCommandWords[1].trim());
+                CommandWrite commandWrite = new CommandWrite(singleCommandWords[1].trim());
                 invoker.add(commandWrite);
+                commandWrite.setCommandLine(singleCommand);
                 break;
 
             case "-searchHorizontalName":
-                CommandHorizontalSearchByName commandHorizontalSearchByName = new CommandHorizontalSearchByName(singleCommandWords[1].trim());
+                CommandHorizontalSearchByName commandHorizontalSearchByName =
+                    new CommandHorizontalSearchByName(singleCommandWords[1].trim());
                 invoker.add(commandHorizontalSearchByName);
+                commandHorizontalSearchByName.setCommandLine(singleCommand);
                 break;
 
             case "-searchHorizontalValue":
-                CommandHorizontalSearchByValue commandHorizontalSearchByValue = new CommandHorizontalSearchByValue(singleCommandWords[1].trim());
+                CommandHorizontalSearchByValue commandHorizontalSearchByValue =
+                    new CommandHorizontalSearchByValue(singleCommandWords[1].trim());
                 invoker.add(commandHorizontalSearchByValue);
+                commandHorizontalSearchByValue.setCommandLine(singleCommand);
                 break;
 
             case "-searchHorizontalKeyValue":
-                CommandHorizontalSearchByKeyValue commandHorizontalSearchByKeyValue = new CommandHorizontalSearchByKeyValue(singleCommandWords[1].trim());
+                CommandHorizontalSearchByKeyValue commandHorizontalSearchByKeyValue =
+                    new CommandHorizontalSearchByKeyValue(singleCommandWords[1].trim());
                 invoker.add(commandHorizontalSearchByKeyValue);
+                commandHorizontalSearchByKeyValue.setCommandLine(singleCommand);
                 break;
 
             case "-searchVerticalName":
-                CommandVerticalSearchByName commandVerticalSearchByName = new CommandVerticalSearchByName(singleCommandWords[1].trim());
+                CommandVerticalSearchByName commandVerticalSearchByName =
+                    new CommandVerticalSearchByName(singleCommandWords[1].trim());
                 invoker.add(commandVerticalSearchByName);
+                commandVerticalSearchByName.setCommandLine(singleCommand);
                 break;
 
             case "-searchVerticalValue":
-                CommandVerticalSearchByValue commandVerticalSearchByValue = new CommandVerticalSearchByValue(singleCommandWords[1].trim());
+                CommandVerticalSearchByValue commandVerticalSearchByValue =
+                    new CommandVerticalSearchByValue(singleCommandWords[1].trim());
                 invoker.add(commandVerticalSearchByValue);
+                commandVerticalSearchByValue.setCommandLine(singleCommand);
                 break;
 
             case "-searchVerticalKeyValue":
-                CommandVerticalSearchByKeyValue commandVerticalSearchByKeyValue = new CommandVerticalSearchByKeyValue(singleCommandWords[1].trim());
+                CommandVerticalSearchByKeyValue commandVerticalSearchByKeyValue =
+                    new CommandVerticalSearchByKeyValue(singleCommandWords[1].trim());
                 invoker.add(commandVerticalSearchByKeyValue);
+                commandVerticalSearchByKeyValue.setCommandLine(singleCommand);
                 break;
-            // You can have any number of case statements.
-            default: // Optional
+
+            default:
                 throw new CommandException("The command " + singleCommand + " was not recognized.");
         }
+    }
+
+    public Invoker getInvoker() {
+        return invoker;
     }
 }

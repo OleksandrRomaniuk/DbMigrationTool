@@ -5,6 +5,9 @@ import com.dbbest.dbmigrationtool.containers.Container;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * An abstract class of the command of search in the container.
+ */
 public abstract class CommandSearch implements Command {
 
     protected static final Logger logger = Logger.getLogger("Command logger");

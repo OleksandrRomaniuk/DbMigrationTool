@@ -8,15 +8,18 @@ import com.dbbest.dbmigrationtool.exceptions.SerializingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Invoker {
 
     private List<Command> commandList = new ArrayList();
+    private List<Container> listOfFoundElements;
     private Container containerBuilt;
 
+
     public void add(Command command) {
-        commandList.add(command);
+        if (command != null) {
+            commandList.add(command);
+        }
     }
 
     public void remove(int index) {
@@ -32,18 +35,21 @@ public class Invoker {
     private void executeCommand(Command command) throws CommandException {
         try {
 
-            command.execute();
             if (command instanceof CommandRead) {
+                command.execute();
                 containerBuilt = ((CommandRead) command).getBuiltContainer();
             } else if (command instanceof CommandWrite) {
                 if (containerBuilt != null) {
                     ((CommandWrite) command).setContainerToWrite(containerBuilt);
+                    command.execute();
                 } else {
                     throw new CommandException(Level.SEVERE, "No Container found to serialize.");
                 }
             } else if (command instanceof CommandSearch) {
                 if (containerBuilt != null) {
                     ((CommandSearch) command).setContainerToSearchIn(containerBuilt);
+                    command.execute();
+                    listOfFoundElements = ((CommandSearch) command).getListOfFoundItems();
                 } else {
                     throw new CommandException(Level.SEVERE, "No Container found to search in.");
                 }
@@ -51,5 +57,13 @@ public class Invoker {
         } catch (ParsingException | SerializingException exception) {
             throw new CommandException(Level.SEVERE, "Command " + command.getCommandLine() + " could not be executed. The program stoped execution of programs.");
         }
+    }
+
+    public Container getContainerBuilt() {
+        return containerBuilt;
+    }
+
+    public List<Container> getListOfFoundElements() {
+        return listOfFoundElements;
     }
 }

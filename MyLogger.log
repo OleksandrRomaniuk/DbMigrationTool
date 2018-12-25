@@ -131,3 +131,123 @@ SEVERE 12-21-2018 12:18:01 || App.main() : java.nio.file.NoSuchFileException: Ca
 INFO 12-21-2018 12:19:57 || App.main() : The application started
 INFO 12-21-2018 12:19:57 || App.parse() : The file has been parsed
 INFO 12-21-2018 12:19:57 || App.write() : The file has been written
+INFO 12-25-2018 16:40:50 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 16:40:50 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 16:40:50 || CommandHorizontalSearchByKeyValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 16:40:50 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 16:40:50 || CommandVerticalSearchByName.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 16:40:50 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 16:40:50 || CommandHorizontalSearchByName.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 16:40:50 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 16:40:50 || CommandVerticalSearchByKeyValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 16:40:50 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 16:40:50 || CommandVerticalSearchByValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 16:40:50 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 16:40:50 || CommandWrite.execute() : The file has been written
+INFO 12-25-2018 16:40:50 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 16:40:50 || CommandHorizontalSearchByValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandHorizontalSearchByKeyValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandVerticalSearchByName.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandHorizontalSearchByName.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandVerticalSearchByKeyValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandVerticalSearchByValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandWrite.execute() : The file has been written
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:14:32 || CommandHorizontalSearchByValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandHorizontalSearchByKeyValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandVerticalSearchByName.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandHorizontalSearchByName.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandVerticalSearchByKeyValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandVerticalSearchByValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandWrite.execute() : The file has been written
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:16:59 || CommandHorizontalSearchByValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandHorizontalSearchByKeyValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandVerticalSearchByName.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandHorizontalSearchByName.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandVerticalSearchByKeyValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandVerticalSearchByValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandWrite.execute() : The file has been written
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:19:03 || CommandHorizontalSearchByValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandHorizontalSearchByKeyValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandVerticalSearchByName.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandHorizontalSearchByName.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandVerticalSearchByKeyValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandVerticalSearchByValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandWrite.execute() : The file has been written
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:29:19 || CommandHorizontalSearchByValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandHorizontalSearchByKeyValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandVerticalSearchByName.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandHorizontalSearchByName.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandVerticalSearchByKeyValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandVerticalSearchByValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandWrite.execute() : The file has been written
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 17:31:35 || CommandHorizontalSearchByValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 17:41:25 || CommandRead.execute() : The file has been parsed
+SEVERE 12-25-2018 17:41:25 || CommandException.<init>() : Incorrect command format.
+SEVERE 12-25-2018 17:41:25 || CommandException.<init>() : Incorrect command format.
+SEVERE 12-25-2018 17:41:25 || CommandException.<init>() : Incorrect command format.
+SEVERE 12-25-2018 17:41:25 || CommandException.<init>() : Incorrect command format.
+SEVERE 12-25-2018 17:41:25 || CommandException.<init>() : Incorrect command format.
+SEVERE 12-25-2018 17:41:25 || CommandException.<init>() : Incorrect command format.
+SEVERE 12-25-2018 17:41:25 || CommandException.<init>() : Incorrect command format.
+SEVERE 12-25-2018 17:41:25 || CommandException.<init>() : Incorrect command format.
+INFO 12-25-2018 18:21:18 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 18:21:18 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 18:21:18 || CommandHorizontalSearchByKeyValue.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 18:21:18 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 18:21:18 || CommandVerticalSearchByName.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 18:21:18 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 18:21:18 || CommandHorizontalSearchByName.execute() : Horizontal passage search has been completed.
+INFO 12-25-2018 18:21:18 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 18:21:18 || CommandVerticalSearchByKeyValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 18:21:18 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 18:21:18 || CommandVerticalSearchByValue.execute() : Vertical passage search has been completed.
+INFO 12-25-2018 18:21:18 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 18:21:18 || CommandWrite.execute() : The file has been written
+SEVERE 12-25-2018 18:21:18 || CommandException.<init>() : Incorrect command format.
+INFO 12-25-2018 18:21:18 || CommandRead.execute() : The file has been parsed
+INFO 12-25-2018 18:21:18 || CommandHorizontalSearchByValue.execute() : Horizontal passage search has been completed.

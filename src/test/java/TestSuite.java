@@ -1,3 +1,4 @@
+import com.dbbest.dbmigrationtool.console.CommandManagerTest;
 import com.dbbest.dbmigrationtool.containers.*;
 import com.dbbest.dbmigrationtool.containers.ContainerTest;
 import com.dbbest.dbmigrationtool.containers.HorizontalPassageSearchManagerTest;
@@ -27,7 +28,8 @@ import org.junit.runners.Suite;
     SerializingManagerTest.class, ContainerTest.class,
     HorizontalPassageSearchManagerTest.class, VerticalPassageSearchManagerTest.class,
     ListOfChildrenTest.class, XmlParserTest.class, XmlSingleNodeParserTest.class,
-    CustomLogerFormaterTest.class, CustomLoggerFilterTest.class, CustomLoggerTest.class})
+    CustomLogerFormaterTest.class, CustomLoggerFilterTest.class, CustomLoggerTest.class,
+    CommandManagerTest.class})
 public class TestSuite {
 
     @Before

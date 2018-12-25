@@ -5,6 +5,9 @@ import com.dbbest.dbmigrationtool.containers.HorizontalPassageSearchManager;
 
 import java.util.logging.Level;
 
+/**
+ * A class which carries out search in key values with horizontal passage.
+ */
 public class CommandHorizontalSearchByKeyValue extends CommandSearch {
 
     public CommandHorizontalSearchByKeyValue(String text) {

@@ -8,6 +8,9 @@ import com.dbbest.dbmigrationtool.filemanagers.serializers.XmlSerializer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * A class of the command of writing an xml file from the container.
+ */
 public class CommandWrite implements Command {
 
     private static final Logger logger = Logger.getLogger("Command logger");

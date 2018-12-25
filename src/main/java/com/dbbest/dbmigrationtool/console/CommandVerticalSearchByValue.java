@@ -5,6 +5,9 @@ import com.dbbest.dbmigrationtool.containers.VerticalPassageSearchManager;
 
 import java.util.logging.Level;
 
+/**
+ * A class of the command of search in values of the container with vertical passage.
+ */
 public class CommandVerticalSearchByValue extends CommandSearch {
 
     public CommandVerticalSearchByValue(String text) {

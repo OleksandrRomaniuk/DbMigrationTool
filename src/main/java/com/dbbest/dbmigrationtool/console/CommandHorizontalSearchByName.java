@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * A class which carries out search in names with horizontal passage.
+ */
 public class CommandHorizontalSearchByName extends CommandSearch {
 
     public CommandHorizontalSearchByName(String text) {

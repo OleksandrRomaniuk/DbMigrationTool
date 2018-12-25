@@ -7,6 +7,9 @@ import com.dbbest.dbmigrationtool.exceptions.SerializingException;
 
 import java.util.logging.Level;
 
+/**
+ * A class which carries out search in values with horizontal passage.
+ */
 public class CommandHorizontalSearchByValue extends CommandSearch {
 
 
