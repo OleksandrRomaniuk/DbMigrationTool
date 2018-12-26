@@ -1,5 +1,6 @@
-package logger;
+package dbmigrationtool.logger;
 
+import logger.CustomLogerFormater;
 import org.junit.Assert;
 import org.junit.Test;
 

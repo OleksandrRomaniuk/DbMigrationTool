@@ -1,6 +1,7 @@
-package com.dbbest.dbmigrationtool.filemanagers.parsers;
+package dbmigrationtool.filemanagers.parsers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
+import com.dbbest.dbmigrationtool.filemanagers.parsers.XmlSingleNodeParser;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;

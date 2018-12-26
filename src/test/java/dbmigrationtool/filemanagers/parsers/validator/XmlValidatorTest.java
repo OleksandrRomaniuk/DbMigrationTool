@@ -1,6 +1,7 @@
-package com.dbbest.dbmigrationtool.filemanagers.parsers.validator;
+package dbmigrationtool.filemanagers.parsers.validator;
 
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
+import com.dbbest.dbmigrationtool.filemanagers.parsers.validator.XmlValidator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

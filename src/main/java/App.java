@@ -6,7 +6,9 @@ import java.util.logging.Logger;
 /**
  * A class which proceeds console commands and evokes appropriate classes and methods.
  */
-public class App {
+public final class App {
+
+    private App() {}
 
     private static final Logger logger = Logger.getLogger("App logger");
 

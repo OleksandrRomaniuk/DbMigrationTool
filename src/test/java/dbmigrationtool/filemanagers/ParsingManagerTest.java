@@ -1,8 +1,9 @@
-package com.dbbest.dbmigrationtool.filemanagers;
+package dbmigrationtool.filemanagers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
 import com.dbbest.dbmigrationtool.containers.DbList;
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
+import com.dbbest.dbmigrationtool.filemanagers.ParsingManager;
 import com.dbbest.dbmigrationtool.filemanagers.parsers.XmlParser;
 import org.junit.After;
 import org.junit.Assert;

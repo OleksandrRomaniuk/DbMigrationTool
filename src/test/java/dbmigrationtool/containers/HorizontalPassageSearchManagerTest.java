@@ -1,5 +1,9 @@
-package com.dbbest.dbmigrationtool.containers;
+package dbmigrationtool.containers;
 
+import com.dbbest.dbmigrationtool.containers.Container;
+import com.dbbest.dbmigrationtool.containers.DbList;
+import com.dbbest.dbmigrationtool.containers.HorizontalPassageSearchManager;
+import com.dbbest.dbmigrationtool.containers.ListOfChildren;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

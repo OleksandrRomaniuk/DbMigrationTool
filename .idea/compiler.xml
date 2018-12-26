@@ -6,10 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="DBbest" />
+        <module name="console" />
+        <module name="core" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="10">
+      <module name="console" target="10" />
+      <module name="core" target="10" />
       <module name="DBbest" target="10" />
     </bytecodeTargetLevel>
   </component>

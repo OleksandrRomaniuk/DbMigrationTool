@@ -1,5 +1,6 @@
-package com.dbbest.dbmigrationtool.containers;
+package dbmigrationtool.containers;
 
+import com.dbbest.dbmigrationtool.containers.Container;
 import com.dbbest.dbmigrationtool.exceptions.ContainerException;
 import org.junit.After;
 import org.junit.Assert;

@@ -1,7 +1,8 @@
-package com.dbbest.dbmigrationtool.filemanagers.serializers;
+package dbmigrationtool.filemanagers.serializers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
 import com.dbbest.dbmigrationtool.filemanagers.parsers.validator.XmlValidator;
+import com.dbbest.dbmigrationtool.filemanagers.serializers.XmlNodeBuilder;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

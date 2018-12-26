@@ -1,4 +1,4 @@
-package com.dbbest.dbmigrationtool.filemanagers.parsers;
+package dbmigrationtool.filemanagers.parsers;
 
 import com.dbbest.dbmigrationtool.containers.Container;
 import com.dbbest.dbmigrationtool.exceptions.ParsingException;
