@@ -1,16 +1,23 @@
 package com.dbbest.consolexmlmanager;
 
 public enum Commands implements DbCommands {
-    READ("-read"), WRITE("-write");
+    READ("-read", 1), WRITE("-write", 3), SEARCH("-search", 2);
 
-    private String command;
+    private final String command;
+    private final int priority;
 
     @Override
     public String getCommand() {
         return this.command;
     }
 
-    Commands(String command) {
+    @Override
+    public int getPriority() {
+        return priority;
+    }
+
+    Commands(String command, int priority) {
         this.command = command;
+        this.priority = priority;
     }
 }

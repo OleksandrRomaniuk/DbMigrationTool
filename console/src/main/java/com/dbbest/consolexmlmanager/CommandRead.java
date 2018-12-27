@@ -1,7 +1,6 @@
 package com.dbbest.consolexmlmanager;
 
 
-import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.filemanagers.ParsingManager;
 import com.dbbest.xmlmanager.filemanagers.parsers.XmlParser;
@@ -18,9 +17,11 @@ public class CommandRead implements Command {
 
     private String fileName;
     private Context context = Context.getInstance();
+    private final int priority;
 
-    public CommandRead(String fileName) {
+    public CommandRead(String fileName, int priority) {
         this.fileName = fileName;
+        this.priority = priority;
     }
 
     @Override
@@ -30,5 +31,10 @@ public class CommandRead implements Command {
         parsingManager.parse(fileName);
         logger.log(Level.INFO, "The file has been parsed");
         context.setBuiltContainer(parsingManager.getContainer());
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 }

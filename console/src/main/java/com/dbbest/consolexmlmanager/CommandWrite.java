@@ -1,7 +1,6 @@
 package com.dbbest.consolexmlmanager;
 
 
-import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.exceptions.SerializingException;
 import com.dbbest.xmlmanager.filemanagers.SerializingManager;
 import com.dbbest.xmlmanager.filemanagers.serializers.XmlSerializer;
@@ -17,9 +16,11 @@ public class CommandWrite implements Command {
     private static final Logger logger = Logger.getLogger("Command logger");
     private String fileName;
     private Context context = Context.getInstance();
+    private final int priority;
 
-    public CommandWrite(String fileName) {
+    public CommandWrite(String fileName, int priority) {
         this.fileName = fileName;
+        this.priority = priority;
     }
 
     @Override
@@ -29,5 +30,10 @@ public class CommandWrite implements Command {
         serializingManager.setSerializer(new XmlSerializer());
         serializingManager.writeFile(fileName);
         logger.log(Level.INFO, "The file has been written");
+    }
+
+    @Override
+    public int getPriority() {
+        return priority;
     }
 }
