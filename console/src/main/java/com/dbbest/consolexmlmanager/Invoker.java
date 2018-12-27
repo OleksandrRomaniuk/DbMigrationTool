@@ -2,17 +2,20 @@ package com.dbbest.consolexmlmanager;
 
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.exceptions.SerializingException;
 
 import java.util.PriorityQueue;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A class which contains all commands and operates with them.
  */
 public class Invoker {
 
+    private static final Logger logger = Logger.getLogger("Command logger");
     private PriorityQueue<Command> priorityQueueCommands = new PriorityQueue();
 
     /**
@@ -21,6 +24,8 @@ public class Invoker {
     public void add(Command command) {
         if (command != null) {
             priorityQueueCommands.add(command);
+        } else  {
+            logger.log(Level.INFO, "Can not add a null command.");
         }
     }
 
@@ -41,11 +46,8 @@ public class Invoker {
 
         try {
             command.execute();
-        } catch (ParsingException e) {
-            e.printStackTrace();
-        } catch (SerializingException exception) {
-            throw new CommandException(Level.SEVERE, "Command " + command.getClass()
-                + " could not be executed. The program stoped execution of programs.");
+        } catch (ParsingException | ContainerException | SerializingException e) {
+            throw new CommandException(Level.SEVERE, e.getMessage());
         }
     }
 }
