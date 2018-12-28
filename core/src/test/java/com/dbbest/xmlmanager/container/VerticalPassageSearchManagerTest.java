@@ -1,5 +1,6 @@
 package com.dbbest.xmlmanager.container;
 
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class VerticalPassageSearchManagerTest {
 
 
     @Before
-    public void createContainer() {
+    public void createContainer() throws ContainerException {
         container = new Container();
         container.setName("test");
         DbList<Container<String>> children = new ListOfChildren();
@@ -91,7 +92,7 @@ public class VerticalPassageSearchManagerTest {
     @Test
     public void shouldFindKeyValueInContainers() {
         VerticalPassageSearchManager verticalPassageSearchManager = new VerticalPassageSearchManager(container);
-        List<Container> listActual = verticalPassageSearchManager.searchInKeyValues("child4AttrKey");
+        List<Container> listActual = verticalPassageSearchManager.searchInKeyValues("child4AttrKey", "child4AttrValue");
         DbList<Container> listExpected = new ListOfChildren();
         listExpected.add(child4);
         listExpected.add(child6);

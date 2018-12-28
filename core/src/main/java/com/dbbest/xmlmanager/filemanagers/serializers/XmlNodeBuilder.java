@@ -1,11 +1,12 @@
 package com.dbbest.xmlmanager.filemanagers.serializers;
 
+import com.dbbest.xmlmanager.container.Container;
+import com.dbbest.xmlmanager.container.DbList;
+
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.dbbest.xmlmanager.container.Container;
-import com.dbbest.xmlmanager.container.DbList;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

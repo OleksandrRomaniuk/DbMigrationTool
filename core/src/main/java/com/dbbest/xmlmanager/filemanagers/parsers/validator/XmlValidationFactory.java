@@ -1,13 +1,11 @@
 package com.dbbest.xmlmanager.filemanagers.parsers.validator;
 
-
+import com.dbbest.xmlmanager.exceptions.ParsingException;
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
-import com.dbbest.xmlmanager.exceptions.ParsingException;
 import org.w3c.dom.Document;
 import org.xml.sax.ErrorHandler;
 import org.xml.sax.SAXException;

@@ -1,7 +1,9 @@
 package com.dbbest.xmlmanager;
 
+import com.dbbest.consolexmlmanager.CommandManager;
 import com.dbbest.consolexmlmanager.CommandRead;
 import com.dbbest.consolexmlmanager.CommandWrite;
+import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.exceptions.SerializingException;
@@ -17,19 +19,21 @@ import java.util.List;
 
 public class IntegrationTest {
 
+    String expectedXml = "src/test/resources/TestFile.xml";
+    String actualXml = "src/test/resources/TestFileResultedFromIntegrationTest.xml";
+
     @Test
-    public void shouldReadXmlFileThenWriteFileAfterComparesTwoFileAndAsksTesterToValidateDifferences() throws ParsingException, SerializingException, IOException, SAXException {
+    public void shouldReadXmlFileThenWriteFileAfterComparesTwoFileAndAsksTesterToValidateDifferences() throws ParsingException, SerializingException, IOException, SAXException, CommandException {
 
-        String expectedXml = "src/test/resources/TestFile.xml";
-        String actualXml = "src/test/resources/TestFileResultedFromIntegrationTest.xml";
+        String[] commandLine = new String[4];
+        commandLine[0] = "-read";
+        commandLine[1] = expectedXml;
+        commandLine[2] = "-write";
+        commandLine[3] = actualXml;
 
-        CommandRead commandRead = new CommandRead(expectedXml);
-        commandRead.execute();
-        Container container = commandRead.getBuiltContainer();
-
-        CommandWrite commandWrite = new CommandWrite(actualXml);
-        commandWrite.setContainerToWrite(container);
-        commandWrite.execute();
+        CommandManager commandManager = new CommandManager();
+        commandManager.addCommands(commandLine);
+        commandManager.execute();
 
         BufferedReader expectedXmlContent = new BufferedReader(new FileReader(new File(expectedXml)));
         BufferedReader actualXmlContent = new BufferedReader(new FileReader(new File(actualXml)));
@@ -46,7 +50,7 @@ public class IntegrationTest {
 
     @After
     public void deleteFile() {
-        File testFile = new File("src/test/resources/TestFileResultedFromIntegrationTest.xml");
+        File testFile = new File(actualXml);
         testFile.delete();
     }
 }

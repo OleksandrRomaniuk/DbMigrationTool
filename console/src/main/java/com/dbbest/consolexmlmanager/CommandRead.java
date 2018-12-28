@@ -1,6 +1,6 @@
 package com.dbbest.consolexmlmanager;
 
-
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.filemanagers.ParsingManager;
 import com.dbbest.xmlmanager.filemanagers.parsers.XmlParser;
@@ -25,7 +25,7 @@ public class CommandRead implements Command {
     }
 
     @Override
-    public void execute() throws ParsingException {
+    public void execute() throws ParsingException, ContainerException {
         ParsingManager parsingManager = new ParsingManager();
         parsingManager.setParser(new XmlParser());
         parsingManager.parse(fileName);

@@ -19,7 +19,7 @@ public final class App {
      * @param args an array of console commands to be processed.
      */
     public static void main(String[] args) {
-        /*
+
         CommandManager commandManager = new CommandManager();
         try {
             commandManager.addCommands(args);
@@ -30,8 +30,7 @@ public final class App {
             commandManager.execute();
         } catch (CommandException e) {
             e.printStackTrace();
-        }*/
-        System.out.println(Commands.READ.getCommand());
+        }
     }
 }
 

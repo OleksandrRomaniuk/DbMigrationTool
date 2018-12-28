@@ -1,6 +1,7 @@
 package com.dbbest.xmlmanager.filemanagers;
 
 import com.dbbest.xmlmanager.container.Container;
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.filemanagers.parsers.Parser;
 
@@ -21,7 +22,7 @@ public class ParsingManager {
      * @throws ParsingException the method throws a parsing exception
         if any checked exception was identified during the parsing process.
      */
-    public void parse(String targetFileUrl) throws ParsingException {
+    public void parse(String targetFileUrl) throws ParsingException, ContainerException {
         if (parser != null) {
             container = parser.parse(targetFileUrl);
         } else {

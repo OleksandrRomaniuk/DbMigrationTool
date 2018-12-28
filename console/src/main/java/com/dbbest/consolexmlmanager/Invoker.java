@@ -1,6 +1,5 @@
 package com.dbbest.consolexmlmanager;
 
-
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.xmlmanager.exceptions.ContainerException;
 import com.dbbest.xmlmanager.exceptions.ParsingException;

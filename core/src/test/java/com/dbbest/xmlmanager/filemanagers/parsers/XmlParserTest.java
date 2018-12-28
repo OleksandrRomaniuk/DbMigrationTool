@@ -1,6 +1,7 @@
 package com.dbbest.xmlmanager.filemanagers.parsers;
 
 import com.dbbest.xmlmanager.container.Container;
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.exceptions.SerializingException;
 import org.junit.Assert;
@@ -20,7 +21,7 @@ public class XmlParserTest {
     }
 
     @Test
-    public void shouldParseValidFile() throws ParsingException, SerializingException {
+    public void shouldParseValidFile() throws ParsingException, SerializingException, ContainerException {
         String filePathToValidFile = "src/test/resources/validFile.xml";
 
         Container<String> actualContainer = actualContainer = testInstance.parse(filePathToValidFile);
@@ -30,7 +31,7 @@ public class XmlParserTest {
     }
 
     @Test(expected = ParsingException.class)
-    public void shouldThrowExceptionIfFileIsInvalid() throws ParsingException {
+    public void shouldThrowExceptionIfFileIsInvalid() throws ParsingException, ContainerException {
         String filePathToInvalidFile = "src/test/resources/invalidFile.xml";
 
         Container<String> actualContainer = testInstance.parse(filePathToInvalidFile);
@@ -59,7 +60,7 @@ public class XmlParserTest {
                 print((Container) childContainer);
     }
 
-    private Container<String> getExpectedContainer() throws SerializingException {
+    private Container<String> getExpectedContainer() throws SerializingException, ContainerException {
         Container<String> expectedContainer = new Container();
         expectedContainer.setName("root");
         expectedContainer.setAttributes(new HashMap());

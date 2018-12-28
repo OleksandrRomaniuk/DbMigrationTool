@@ -1,11 +1,11 @@
 package com.dbbest.xmlmanager.filemanagers.parsers;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
+import com.dbbest.xmlmanager.exceptions.ContainerException;
+import java.util.HashMap;
+import java.util.Map;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -22,7 +22,7 @@ public class XmlSingleNodeParser {
      * A method which triggers the process of parsing of a node.
      * @return the method returns the object on which it was evoked. From the returned object the container can be got.
      */
-    public Container<String> parse(Container<String> container, Node node) {
+    public Container<String> parse(Container<String> container, Node node) throws ContainerException {
         if (node.getNodeType() == Node.ELEMENT_NODE) {
             setElementNode(container, node);
         } else if (node.getNodeType() == Node.CDATA_SECTION_NODE) {
@@ -38,13 +38,14 @@ public class XmlSingleNodeParser {
      * A method which triggers the process of parsing of a node.
      * @return the method returns the object on which it was evoked. From the returned object the container can be got.
      */
-    public Container<String> parse(Container<String> container, Container<String> parentContainer, Node node) {
+    public Container<String> parse(Container<String> container,
+                                   Container<String> parentContainer, Node node) throws ContainerException {
         setParentContainer(container, parentContainer);
 
         return parse(container, node);
     }
 
-    private void setElementNode(Container<String> container, Node node) {
+    private void setElementNode(Container<String> container, Node node) throws ContainerException {
 
         setContainerName(container, node);
         setContainerValue(container, node.getNodeValue());
@@ -52,11 +53,11 @@ public class XmlSingleNodeParser {
         setListOfBoxedChildren(container, node);
     }
 
-    private void setTextNode(Container<String> container, Node node) {
+    private void setTextNode(Container<String> container, Node node) throws ContainerException {
         setContainerValue(container, node.getTextContent());
     }
 
-    private void setCdataNode(Container<String> container, Node node) {
+    private void setCdataNode(Container<String> container, Node node) throws ContainerException {
         setContainerValue(container, ((CharacterData) node).getData());
     }
 
@@ -72,7 +73,7 @@ public class XmlSingleNodeParser {
         }
     }
 
-    private void setContainerValue(Container<String> container, String value) {
+    private void setContainerValue(Container<String> container, String value) throws ContainerException {
         if (value != null) {
             container.setValue(value);
         }
@@ -90,7 +91,7 @@ public class XmlSingleNodeParser {
         }
     }
 
-    private void setListOfBoxedChildren(Container<String> container, Node node) {
+    private void setListOfBoxedChildren(Container<String> container, Node node) throws ContainerException {
         if (node.hasChildNodes()) {
             DbList listOfChildren = new ListOfChildren();
             NodeList childList = node.getChildNodes();

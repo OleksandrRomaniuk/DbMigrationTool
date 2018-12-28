@@ -1,0 +1,4 @@
+<root>
+    <child1 id="bk106">test</child1>
+    <child2><![CDATA[<message>test text 1</message>]]></child2>
+</root>

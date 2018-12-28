@@ -1,6 +1,5 @@
 package com.dbbest.xmlmanager.container;
 
-import com.dbbest.xmlmanager.exceptions.ContainerException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -145,7 +144,7 @@ public class Container<V> {
      * @return returns true if the current element has a parent.
      */
     public boolean hasParent() {
-        return  (parent != null);
+        return (parent != null);
     }
 
     /**
@@ -161,51 +160,6 @@ public class Container<V> {
         attributes.put(key, value);
     }
 
-    /**
-     * Checks if the tree is valid.
-     */
-    public boolean treeIsValid() throws ContainerException {
-        if (this.getName() == null && this.getValue() == null) {
-            throw new ContainerException("Both name and value of the container are null.");
-        } else if (this.getName() != null && this.getValue() != null) {
-            throw new ContainerException("Both name and value of the container can not be not nut values.");
-        } else if (this.hasAttributes() && !this.hasName()) {
-            throw new ContainerException("The container can not contain attributes with no name value.");
-        }
-
-        attributesAreValid();
-
-        childrenAreValid();
-
-        return true;
-    }
-
-    private boolean childrenAreValid() throws ContainerException {
-        if (this.hasChildren()) {
-            for (Object child : this.getChildren()) {
-                ((Container)child).treeIsValid();
-                if (!((Container) child).hasParent()) {
-                    throw new ContainerException("The child has no parent.");
-                } else if (!((Container) child).getParent().equals(this)) {
-                    throw new ContainerException("The parent of the child is not equal to its actual parent.");
-                }
-            }
-        }
-        return true;
-    }
-
-    private boolean attributesAreValid() throws ContainerException {
-        if (this.hasAttributes()) {
-            for (Map.Entry<String, Object> entry : this.getAttributes().entrySet()) {
-                if (entry.getKey() == null && entry.getValue() == null) {
-                    throw new ContainerException("Both the key and value of the container are null.");
-                }
-            }
-        }
-
-        return true;
-    }
-
     public List<Container> searchInTreeHorizontalSearchInNames(String textToSearch) {
         return new HorizontalPassageSearchManager(this).searchInNames(textToSearch);
     }
@@ -214,8 +168,8 @@ public class Container<V> {
         return new HorizontalPassageSearchManager(this).searchInValues(textToSearch);
     }
 
-    public List<Container> searchInTreeHorizontalSearchInKeyValues(String textToSearch) {
-        return new HorizontalPassageSearchManager(this).searchInKeyValues(textToSearch);
+    public List<Container> searchInTreeHorizontalSearchInKeyValues(String attributeKey, String attributeValue) {
+        return new HorizontalPassageSearchManager(this).searchInKeyValues(attributeKey, attributeValue);
     }
 
     public List<Container> searchInTreeVerticalSearchInNames(String textToSearch) {
@@ -226,7 +180,7 @@ public class Container<V> {
         return new VerticalPassageSearchManager(this).searchInValues(textToSearch);
     }
 
-    public List<Container> searchInTreeVerticalSearchInKeyValues(String textToSearch) {
-        return new VerticalPassageSearchManager(this).searchInKeyValues(textToSearch);
+    public List<Container> searchInTreeVerticalSearchInKeyValues(String attributeKey, String attributeValue) {
+        return new VerticalPassageSearchManager(this).searchInKeyValues(attributeKey, attributeValue);
     }
 }

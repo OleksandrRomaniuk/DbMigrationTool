@@ -52,7 +52,7 @@ public class ContainerTest {
     }
 
     @Test
-    public void methodHasValueShouldReturnFalseBeforeValueSetAndTrueAfterValueSet() {
+    public void methodHasValueShouldReturnFalseBeforeValueSetAndTrueAfterValueSet() throws ContainerException {
         Container testContainer = new Container();
         Assert.assertEquals(testContainer.hasValue(), false);
         testContainer.setValue("test");
@@ -94,7 +94,7 @@ public class ContainerTest {
     }
 
     @Test
-    public void methodAddChildShouldAddChildToListOfChildrenAddedChildShouldBeEqualToOriginallyAddedObject() {
+    public void methodAddChildShouldAddChildToListOfChildrenAddedChildShouldBeEqualToOriginallyAddedObject() throws ContainerException {
         Container testChildContainer1 = new Container();
         testChildContainer1.setValue("test");
         container.addChild(testChildContainer1);
@@ -113,25 +113,5 @@ public class ContainerTest {
         Container testChildContainer2 = new Container();
         testChildContainer2.addAttribute("testKeyAttr", "testValueAttr");
         Assert.assertEquals(testChildContainer2.getAttributes().get("testKeyAttr"), "testValueAttr");
-    }
-
-    @Test
-    public void methodTreeIsValidShouldReturnTrueForContainer() throws ContainerException {
-        Container testContainerTreeValidTest = new Container();
-        testContainerTreeValidTest.setName("root");
-        Container child = new Container();
-        child.setValue("test");
-        child.setParent(testContainerTreeValidTest);
-        testContainerTreeValidTest.addChild(child);
-        Assert.assertEquals(testContainerTreeValidTest.treeIsValid(), true);
-
-    }
-
-    @Test(expected = ContainerException.class)
-    public void methodTreeIsValidShouldThrowContainerException() throws ContainerException {
-        Container containerTest = new Container();
-        containerTest.setName("root");
-        containerTest.setValue("testValue");
-        containerTest.treeIsValid();
     }
 }

@@ -33,8 +33,8 @@ public class HorizontalPassageSearchManager extends SearchManager {
     }
 
     @Override
-    public List<Container> searchInKeyValues(String enteredText) {
-        super.setEnteredText(enteredText);
+    public List<Container> searchInKeyValues(String attributeKey, String attributeValue) {
+        super.setAttributes(attributeKey, attributeValue);
         List<Container> list = new ArrayList();
         list.add(getRootContainer());
         searchElementInContainerByHorizontalPassage(getPredicateByKeyValue(), list);

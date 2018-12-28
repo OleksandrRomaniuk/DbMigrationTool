@@ -15,6 +15,8 @@ public abstract class SearchManager {
     private List<Container> listOfFoundElements = new ArrayList();
 
     private String enteredText;
+    private String attributeKey;
+    private String attributeValue;
 
     private Predicate<Container> predicateByName = new Predicate<Container>() {
         @Override
@@ -32,7 +34,7 @@ public abstract class SearchManager {
     private Predicate<Container> predicateByValue = new Predicate<Container>() {
         @Override
         public boolean test(Container container) {
-            return (container.hasValue() && String.valueOf(container.getValue()).toLowerCase().contains(enteredText.toLowerCase()));
+            return (container.hasValue() && String.valueOf(container.getValue()).toLowerCase().equals(enteredText.toLowerCase()));
         }
     };
     //container -> container.hasValue() && String.valueOf(container.getValue()).toLowerCase().contains(enteredText.toLowerCase());
@@ -43,7 +45,8 @@ public abstract class SearchManager {
             if (container.hasAttributes()) {
                 Map<String, Object> attr = container.getAttributes();
                 for (Map.Entry<String, Object> entry: attr.entrySet()) {
-                    if (entry.getKey().toLowerCase().contains(enteredText.toLowerCase())) {
+                    if (entry.getKey().toLowerCase().equals(attributeKey.toLowerCase())
+                        && entry.getValue().toString().toLowerCase().equals(attributeValue.toLowerCase())) {
                         return true;
                     }
                 }
@@ -72,7 +75,7 @@ public abstract class SearchManager {
 
     public abstract List<Container> searchInValues(String enteredText);
 
-    public abstract List<Container> searchInKeyValues(String enteredText);
+    public abstract List<Container> searchInKeyValues(String attributeKey, String attributeValue);
 
     public String getEnteredText() {
         return enteredText;
@@ -96,7 +99,11 @@ public abstract class SearchManager {
 
     protected void searchInContainers(Predicate<Container> predicate, List<Container> containers) {
         containers.stream().filter(predicate).forEach(this::addFoundItemToList);
+    }
 
+    public void setAttributes(String attributeKey, String attributeValue) {
+        this.attributeKey = attributeKey;
+        this.attributeValue = attributeValue;
     }
 }
 

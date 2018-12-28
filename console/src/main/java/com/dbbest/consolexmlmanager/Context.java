@@ -4,7 +4,10 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
-public class Context {
+/**
+ * Supporting class used to keep all data used by different classes.
+ */
+public final class Context {
 
     private String fileName;
     private Container builtContainer;
@@ -12,12 +15,15 @@ public class Context {
     private static Context instance;
     private List<Container> listOfFoundElements;
 
-    private Context() {
-    }
+    private Context() {}
 
+    /**
+     * @return returns the instance of the class.
+     */
     public static Context getInstance() {
         if (instance == null) {
-            return new Context();
+            instance = new Context();
+            return instance;
         } else {
             return instance;
         }

@@ -2,6 +2,7 @@ package com.dbbest.xmlmanager.filemanagers;
 
 import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.container.DbList;
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.filemanagers.parsers.XmlParser;
 import org.junit.Assert;
@@ -10,7 +11,7 @@ import org.junit.Test;
 public class ParsingManagerTest {
 
     @Test
-    public void shouldParseXmlFileAndReturnValidContainer() throws ParsingException {
+    public void shouldParseXmlFileAndReturnValidContainer() throws ParsingException, ContainerException {
         ParsingManager parsingManager = new ParsingManager();
         parsingManager.setParser(new XmlParser());
         parsingManager.parse("src/test/resources/validFile.xml");
@@ -23,7 +24,7 @@ public class ParsingManagerTest {
     }
 
     @Test(expected = ParsingException.class)
-    public void shouldThrowParsingException() throws ParsingException {
+    public void shouldThrowParsingException() throws ParsingException, ContainerException {
         ParsingManager parsingManager = new ParsingManager();
         parsingManager.parse("src/test/resources/validFile.xml");
     }

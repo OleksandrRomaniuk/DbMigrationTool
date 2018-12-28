@@ -1,6 +1,7 @@
 package com.dbbest.xmlmanager.filemanagers.parsers;
 
 import com.dbbest.xmlmanager.container.Container;
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.filemanagers.parsers.validator.XmlValidator;
 import javax.xml.xpath.XPath;
@@ -19,7 +20,7 @@ import org.w3c.dom.NodeList;
 public class XmlParser implements Parser {
 
     @Override
-    public Container<String> parse(String targetFileUrl) throws ParsingException {
+    public Container<String> parse(String targetFileUrl) throws ParsingException, ContainerException {
 
         Document document = new XmlValidator().validate(targetFileUrl);
         normalize(document);

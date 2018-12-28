@@ -15,9 +15,9 @@ public interface Command extends Comparable<Command> {
     @Override
     default int compareTo(Command command) {
         if (this.getPriority() < command.getPriority()) {
-            return 1;
-        } else if (this.getPriority() > command.getPriority()) {
             return -1;
+        } else if (this.getPriority() > command.getPriority()) {
+            return 1;
         } else {
             return 0;
         }

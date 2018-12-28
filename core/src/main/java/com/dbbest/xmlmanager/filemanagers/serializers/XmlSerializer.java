@@ -1,5 +1,7 @@
 package com.dbbest.xmlmanager.filemanagers.serializers;
 
+import com.dbbest.xmlmanager.container.Container;
+import com.dbbest.xmlmanager.exceptions.SerializingException;
 import java.io.File;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -11,9 +13,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import com.dbbest.xmlmanager.container.Container;
-import com.dbbest.xmlmanager.exceptions.SerializingException;
 import org.w3c.dom.Document;
 
 /**

@@ -2,6 +2,7 @@ package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.xmlmanager.container.Container;
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import com.dbbest.xmlmanager.exceptions.ParsingException;
 import com.dbbest.xmlmanager.filemanagers.ParsingManager;
 import com.dbbest.xmlmanager.filemanagers.parsers.XmlParser;
@@ -39,12 +40,12 @@ public class CommandManagerTest {
         commandLine[1] = "src/test/resources/validFile.xml";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        Container testContainer = commandManager.getInvoker().getContainerBuilt();
+        Container testContainer = commandManager.getContext().getBuiltContainer();
         Assert.assertEquals(testContainer.getName(), "root");
     }
 
     @Test
-    public void shouldReadAndThenWriteValidFile() throws CommandException, ParsingException {
+    public void shouldReadAndThenWriteValidFile() throws CommandException, ParsingException, ContainerException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[4];
         commandLine[0] = "-read";
@@ -53,7 +54,7 @@ public class CommandManagerTest {
         commandLine[3] = "commandManagerTestFile.xml";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        Container testContainerExpected = commandManager.getInvoker().getContainerBuilt();
+        Container testContainerExpected = commandManager.getContext().getBuiltContainer();
         ParsingManager parsingManager = new ParsingManager();
         parsingManager.setParser(new XmlParser());
         parsingManager.parse("commandManagerTestFile.xml");
@@ -64,97 +65,106 @@ public class CommandManagerTest {
     @Test
     public void shouldFindElementSearchHorizontalName() throws CommandException {
         CommandManager commandManager = new CommandManager();
-        String[] commandLine = new String[4];
+        String[] commandLine = new String[5];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
-        commandLine[2] = "-searchHorizontalName";
-        commandLine[3] = "child";
+        commandLine[2] = "-search";
+        commandLine[3] = "h/n";
+        commandLine[4] = "child";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        List<Container> listOfFoundElements = commandManager.getInvoker().getListOfFoundElements();
+        List<Container> listOfFoundElements = commandManager.getContext().getListOfFoundElements();
         Assert.assertEquals(listOfFoundElements.size(), 2);
     }
 
     @Test
     public void shouldFindElementSearchHorizontalValue() throws CommandException {
         CommandManager commandManager = new CommandManager();
-        String[] commandLine = new String[4];
+        String[] commandLine = new String[5];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
-        commandLine[2] = "-searchHorizontalValue";
-        commandLine[3] = "text";
+        commandLine[2] = "-search";
+        commandLine[3] = "h/v";
+        commandLine[4] = "test";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        List<Container> listOfFoundElements = commandManager.getInvoker().getListOfFoundElements();
-        Assert.assertEquals(listOfFoundElements.size(), 2);
+        List<Container> listOfFoundElements = commandManager.getContext().getListOfFoundElements();
+        Assert.assertEquals(listOfFoundElements.size(), 1);
     }
 
     @Test
     public void shouldFindElementSearchHorizontalKeyValue() throws CommandException {
         CommandManager commandManager = new CommandManager();
-        String[] commandLine = new String[4];
+        String[] commandLine = new String[6];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
-        commandLine[2] = "-searchHorizontalKeyValue";
-        commandLine[3] = "id";
+        commandLine[2] = "-search";
+        commandLine[3] = "h/a";
+        commandLine[4] = "id";
+        commandLine[5] = "bk106";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        List<Container> listOfFoundElements = commandManager.getInvoker().getListOfFoundElements();
+        List<Container> listOfFoundElements = commandManager.getContext().getListOfFoundElements();
         Assert.assertEquals(listOfFoundElements.size(), 1);
     }
 
     @Test
     public void shouldFindElementSearchVerticalName() throws CommandException {
         CommandManager commandManager = new CommandManager();
-        String[] commandLine = new String[4];
+        String[] commandLine = new String[5];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
-        commandLine[2] = "-searchVerticalName";
-        commandLine[3] = "root";
+        commandLine[2] = "-search";
+        commandLine[3] = "v/n";
+        commandLine[4] = "root";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        List<Container> listOfFoundElements = commandManager.getInvoker().getListOfFoundElements();
+        List<Container> listOfFoundElements = commandManager.getContext().getListOfFoundElements();
         Assert.assertEquals(listOfFoundElements.size(), 1);
     }
 
     @Test
     public void shouldFindElementSearchVerticalValue() throws CommandException {
         CommandManager commandManager = new CommandManager();
-        String[] commandLine = new String[4];
+        String[] commandLine = new String[5];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
-        commandLine[2] = "-searchVerticalValue";
-        commandLine[3] = "text";
+        commandLine[2] = "-search";
+        commandLine[3] = "v/v";
+        commandLine[4] = "test";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        List<Container> listOfFoundElements = commandManager.getInvoker().getListOfFoundElements();
-        Assert.assertEquals(listOfFoundElements.size(), 2);
+        List<Container> listOfFoundElements = commandManager.getContext().getListOfFoundElements();
+        Assert.assertEquals(listOfFoundElements.size(), 1);
     }
 
     @Test
     public void shouldFindElementSearchVerticalKeyValue() throws CommandException {
         CommandManager commandManager = new CommandManager();
-        String[] commandLine = new String[4];
+        String[] commandLine = new String[6];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
-        commandLine[2] = "-searchVerticalKeyValue";
-        commandLine[3] = "id";
+        commandLine[2] = "-search";
+        commandLine[3] = "v/a";
+        commandLine[4] = "id";
+        commandLine[5] = "bk106";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        List<Container> listOfFoundElements = commandManager.getInvoker().getListOfFoundElements();
+        List<Container> listOfFoundElements = commandManager.getContext().getListOfFoundElements();
         Assert.assertEquals(listOfFoundElements.size(), 1);
     }
 
     @Test(expected = CommandException.class)
     public void shouldThrowCommandException() throws CommandException {
         CommandManager commandManager = new CommandManager();
-        String[] commandLine = new String[4];
+        String[] commandLine = new String[5];
         commandLine[0] = "read";
         commandLine[1] = "src/test/resources/validFile.xml";
-        commandLine[2] = "searchVerticalKeyValue";
-        commandLine[3] = "id";
+        commandLine[2] = "search";
+        commandLine[3] = "fff";
+        commandLine[4] = "id";
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        List<Container> listOfFoundElements = commandManager.getInvoker().getListOfFoundElements();
+        List<Container> listOfFoundElements = commandManager.getContext().getListOfFoundElements();
     }
 }

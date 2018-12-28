@@ -1,6 +1,7 @@
 package com.dbbest.xmlmanager.filemanagers.parsers;
 
 import com.dbbest.xmlmanager.container.Container;
+import com.dbbest.xmlmanager.exceptions.ContainerException;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;
@@ -27,7 +28,7 @@ public class XmlSingleNodeParserTest {
     }
 
     @Test
-    public void shouldReturnContainerWithNameAndValue() {
+    public void shouldReturnContainerWithNameAndValue() throws ContainerException {
         Mockery cnt = new Mockery();
         final Node node = cnt.mock(Node.class);
         cnt.checking(new Expectations(){{
@@ -49,7 +50,7 @@ public class XmlSingleNodeParserTest {
     }
 
     @Test
-    public void shouldReturnContainerWithAttributes() {
+    public void shouldReturnContainerWithAttributes() throws ContainerException {
         Mockery cnt = new Mockery();
         final Node node = cnt.mock(Node.class);
 
@@ -96,7 +97,7 @@ public class XmlSingleNodeParserTest {
 
 
     @Test
-    public void shouldInvokeMethodSetCdataNodeAndSetCorrectlyValueToContainer() {
+    public void shouldInvokeMethodSetCdataNodeAndSetCorrectlyValueToContainer() throws ContainerException {
 
         Mockery cnt = new Mockery();
         final CharacterData node = cnt.mock(CharacterData.class);
@@ -113,7 +114,7 @@ public class XmlSingleNodeParserTest {
     }
 
     @Test
-    public void shouldInvokeMethodsetTextNodeAndSetCorrectlyValueToContainer() {
+    public void shouldInvokeMethodsetTextNodeAndSetCorrectlyValueToContainer() throws ContainerException {
 
         Node node = mock(Node.class);
         when(node.getNodeType()).thenReturn((short)3);

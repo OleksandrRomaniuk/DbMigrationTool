@@ -33,8 +33,8 @@ public class VerticalPassageSearchManager extends SearchManager {
     }
 
     @Override
-    public List searchInKeyValues(String enteredText) {
-        super.setEnteredText(enteredText);
+    public List searchInKeyValues(String attributeKey, String attributeValue) {
+        super.setAttributes(attributeKey, attributeValue);
         List list = new ArrayList();
         list.add(getRootContainer());
         searchElementInContainerByVerticalPassage(getPredicateByKeyValue(), list);

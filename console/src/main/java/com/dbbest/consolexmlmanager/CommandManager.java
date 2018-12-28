@@ -13,8 +13,10 @@ import java.util.regex.Pattern;
 public class CommandManager {
 
     private Invoker invoker = new Invoker();
+    private Context context = Context.getInstance();
     private final String patternReadAndWriteCommand = "-\\S*\\s*\\S*\\z";
-    private final String patternSearchCommand = "-\\S*\\s*\\S*s*\\S*\\z";
+    private final String patternSearchCommandNameOrValue = "-\\S*\\s*\\S*\\s*\\S*\\z";
+    private final String patternSearchCommandAttributes = "-\\S*\\s*\\S*\\s*\\S*\\s*\\S*\\z";
 
     /**
      * Adds command lines to work out.
@@ -47,12 +49,12 @@ public class CommandManager {
         for (String element : commandsSplit) {
             if (element.length() > 0) {
                 if (matchs("-" + element.trim(), patternReadAndWriteCommand)
-                    || matchs("-" + element.trim(), patternSearchCommand)) {
+                    || matchs("-" + element.trim(), patternSearchCommandNameOrValue)
+                    || matchs("-" + element.trim(), patternSearchCommandAttributes)) {
                     commands.add("-" + element.trim());
                 } else {
-                    throw new CommandException("Incorrect command format.");
+                    throw new CommandException("Incorrect command format: -" + element.trim());
                 }
-
             }
         }
 
@@ -66,25 +68,24 @@ public class CommandManager {
     }
 
     private void addToInvoker(String singleCommand) throws CommandException {
+
         if (!matchs(singleCommand.trim(), patternReadAndWriteCommand)
-            || matchs("-" + singleCommand.trim(), patternSearchCommand)) {
+            && !matchs(singleCommand.trim(), patternSearchCommandNameOrValue)
+            && !matchs(singleCommand.trim(), patternSearchCommandAttributes)) {
             throw new CommandException("The command " + singleCommand + " was not recognized.");
         }
+
         String[] singleCommandWords = singleCommand.split("\\s");
 
-        if (singleCommandWords[0].trim().equals(Commands.READ.getCommand())) {
-            invoker.add(new CommandRead(singleCommandWords[1].trim(), Commands.READ.getPriority()));
-        } else if (singleCommandWords[0].trim().equals(Commands.WRITE.getCommand())) {
-            invoker.add(new CommandWrite(singleCommandWords[1].trim(), Commands.WRITE.getPriority()));
-        } else if (singleCommandWords[0].trim().equals(Commands.SEARCH.getCommand())) {
-            invoker.add(new CommandSearch(singleCommandWords[1].trim(),
-                singleCommandWords[2].trim(), Commands.SEARCH.getPriority()));
-        } else {
-            throw new CommandException("The command " + singleCommand + " was not recognized.");
-        }
+        invoker.add(Commands.valueOf(singleCommandWords[0].trim().substring(1).toUpperCase())
+            .getCommand(singleCommand.trim()));
     }
 
     public Invoker getInvoker() {
         return invoker;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

@@ -1,6 +1,5 @@
 package com.dbbest.xmlmanager.filemanagers.serializers;
 
-
 import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.exceptions.SerializingException;
 
