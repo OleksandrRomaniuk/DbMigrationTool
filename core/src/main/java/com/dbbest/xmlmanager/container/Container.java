@@ -1,8 +1,11 @@
 package com.dbbest.xmlmanager.container;
 
+import com.dbbest.xmlmanager.exceptions.ContainerException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * An object which contains a structured tree of names and values. The object maps names to values.
@@ -92,40 +95,80 @@ public class Container<V> {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    /**
+     * @param name the name to be set bto the container.
+     * @throws ContainerException the exception to thrown if the name is not null.
+     */
+    public void setName(String name) throws ContainerException {
+        if (this.name != null) {
+            throw new ContainerException(Level.SEVERE, "The value is not null.");
+        } else {
+            this.name = name;
+        }
     }
 
     public V getValue() {
         return value;
     }
 
-    public void setValue(V value) {
-        this.value = value;
+    /**
+     * @param value the value to be set to the container.
+     * @throws ContainerException the exception to be thrown if the value is not null.
+     */
+    public void setValue(V value) throws ContainerException {
+        if (this.value != null) {
+            throw new ContainerException(Level.SEVERE, "The value is not null.");
+        } else {
+            this.value = value;
+        }
     }
 
     public Map<String, Object> getAttributes() {
         return attributes;
     }
 
-    public void setAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
+    /**
+     * @param attributes the attributes to be set.
+     * @throws ContainerException the axception to be thrown if the attributes are not null.
+     */
+    public void setAttributes(Map<String, Object> attributes) throws ContainerException {
+        if (this.attributes != null) {
+            throw new ContainerException(Level.SEVERE, "The attributes are not null.");
+        } else {
+            this.attributes = attributes;
+        }
     }
 
     public DbList<Container<V>> getChildren() {
         return children;
     }
 
-    public void setChildren(DbList<Container<V>> children) {
-        this.children = children;
+    /**
+     * @param children the list of children to be set.
+     * @throws ContainerException the exception to be thrown if the list of children is not null.
+     */
+    public void setChildren(DbList<Container<V>> children) throws ContainerException {
+        if (this.children != null) {
+            throw new ContainerException(Level.SEVERE, "The list of children is not null.");
+        } else {
+            this.children = children;
+        }
     }
 
     public Container<V> getParent() {
         return parent;
     }
 
-    public void setParent(Container<V> parent) {
-        this.parent = parent;
+    /**
+     * @param parent the parent to be set to the container.
+     * @throws ContainerException the exception to be thrown if the parent is not null.
+     */
+    public void setParent(Container<V> parent) throws ContainerException {
+        if (this.parent != null) {
+            throw new ContainerException(Level.SEVERE, "The parent of the container is not null.");
+        } else {
+            this.parent = parent;
+        }
     }
 
     /**

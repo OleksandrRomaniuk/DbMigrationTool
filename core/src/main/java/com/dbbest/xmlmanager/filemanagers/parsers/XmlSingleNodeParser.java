@@ -61,13 +61,13 @@ public class XmlSingleNodeParser {
         setContainerValue(container, ((CharacterData) node).getData());
     }
 
-    private void setParentContainer(Container<String> container, Container<String> parentContainer) {
+    private void setParentContainer(Container<String> container, Container<String> parentContainer) throws ContainerException {
         if (parentContainer != null) {
             container.setParent(parentContainer);
         }
     }
 
-    private void setContainerName(Container<String> container, Node node) {
+    private void setContainerName(Container<String> container, Node node) throws ContainerException {
         if (node.getNodeName() != null) {
             container.setName(node.getNodeName());
         }
@@ -79,7 +79,7 @@ public class XmlSingleNodeParser {
         }
     }
 
-    private void setAttributes(Container<String> container, Node node) {
+    private void setAttributes(Container<String> container, Node node) throws ContainerException {
         if (node.hasChildNodes()) {
             NamedNodeMap attributesMap = node.getAttributes();
             Map<String, Object> attributes = new HashMap();
