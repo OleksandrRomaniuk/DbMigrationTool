@@ -1,7 +1,7 @@
 package com.dbbest.xmlmanager.filemanagers.parsers;
 
 import com.dbbest.xmlmanager.container.Container;
-import com.dbbest.xmlmanager.exceptions.ContainerException;
+import com.dbbest.exceptions.ContainerException;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.After;

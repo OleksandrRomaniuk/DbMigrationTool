@@ -3,7 +3,7 @@ package com.dbbest.xmlmanager.filemanagers.parsers;
 import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
-import com.dbbest.xmlmanager.exceptions.ContainerException;
+import com.dbbest.exceptions.ContainerException;
 import java.util.HashMap;
 import java.util.Map;
 import org.w3c.dom.CharacterData;

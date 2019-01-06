@@ -1,6 +1,6 @@
 package com.dbbest.xmlmanager.filemanagers.parsers.validator;
 
-import com.dbbest.xmlmanager.exceptions.ParsingException;
+import com.dbbest.exceptions.ParsingException;
 import com.google.gson.Gson;
 import java.io.BufferedReader;
 import java.io.File;

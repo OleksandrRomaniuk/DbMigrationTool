@@ -1,6 +1,6 @@
 package com.dbbest.xmlmanager.filemanagers.parsers.validator;
 
-import com.dbbest.xmlmanager.exceptions.ParsingException;
+import com.dbbest.exceptions.ParsingException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

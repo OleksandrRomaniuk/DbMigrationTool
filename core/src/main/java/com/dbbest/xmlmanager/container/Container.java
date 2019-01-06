@@ -1,6 +1,6 @@
 package com.dbbest.xmlmanager.container;
 
-import com.dbbest.xmlmanager.exceptions.ContainerException;
+import com.dbbest.exceptions.ContainerException;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.logging.Level;
  */
 public class Container<V> {
 
-    private DbList<Container<V>> children;
+    private List<Container<V>> children;
     private String name;
     private V value;
     private Map<String, Object> attributes;
@@ -48,7 +48,7 @@ public class Container<V> {
      *                   The value is parametrized by V2.
      * @param children   represents the list of child elements of the type Container.
      */
-    public Container(String name, V value, Map<String, Object> attributes, DbList<Container<V>> children) {
+    public Container(String name, V value, Map<String, Object> attributes, List<Container<V>> children) {
         this(name, value, attributes);
         this.children = children;
         this.value = value;
@@ -139,7 +139,7 @@ public class Container<V> {
         }
     }
 
-    public DbList<Container<V>> getChildren() {
+    public List<Container<V>> getChildren() {
         return children;
     }
 
@@ -147,7 +147,7 @@ public class Container<V> {
      * @param children the list of children to be set.
      * @throws ContainerException the exception to be thrown if the list of children is not null.
      */
-    public void setChildren(DbList<Container<V>> children) throws ContainerException {
+    public void setChildren(List<Container<V>> children) throws ContainerException {
         if (this.children != null) {
             throw new ContainerException(Level.SEVERE, "The list of children is not null.");
         } else {

@@ -1,9 +1,9 @@
 package com.dbbest.xmlmanager.filemanagers.parsers;
 
 import com.dbbest.xmlmanager.container.Container;
-import com.dbbest.xmlmanager.exceptions.ContainerException;
-import com.dbbest.xmlmanager.exceptions.ParsingException;
-import com.dbbest.xmlmanager.exceptions.SerializingException;
+import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.ParsingException;
+import com.dbbest.exceptions.SerializingException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

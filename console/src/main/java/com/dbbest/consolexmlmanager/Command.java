@@ -1,8 +1,8 @@
 package com.dbbest.consolexmlmanager;
 
-import com.dbbest.xmlmanager.exceptions.ContainerException;
-import com.dbbest.xmlmanager.exceptions.ParsingException;
-import com.dbbest.xmlmanager.exceptions.SerializingException;
+import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.ParsingException;
+import com.dbbest.exceptions.SerializingException;
 
 /**
  * This interface represents command for each particular operation with xml.

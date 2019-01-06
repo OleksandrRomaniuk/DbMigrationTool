@@ -1,6 +1,6 @@
 package com.dbbest.xmlmanager.container;
 
-import com.dbbest.xmlmanager.exceptions.ContainerException;
+import com.dbbest.exceptions.ContainerException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

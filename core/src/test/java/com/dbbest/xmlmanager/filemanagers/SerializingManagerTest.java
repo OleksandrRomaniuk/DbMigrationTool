@@ -1,7 +1,7 @@
 package com.dbbest.xmlmanager.filemanagers;
 
 import com.dbbest.xmlmanager.container.Container;
-import com.dbbest.xmlmanager.exceptions.SerializingException;
+import com.dbbest.exceptions.SerializingException;
 import com.dbbest.xmlmanager.filemanagers.serializers.XmlSerializer;
 import org.junit.After;
 import org.junit.Assert;

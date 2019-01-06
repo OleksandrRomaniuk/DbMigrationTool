@@ -1,6 +1,6 @@
 package com.dbbest.consolexmlmanager;
 
-import com.dbbest.xmlmanager.exceptions.SerializingException;
+import com.dbbest.exceptions.SerializingException;
 import com.dbbest.xmlmanager.filemanagers.SerializingManager;
 import com.dbbest.xmlmanager.filemanagers.serializers.XmlSerializer;
 

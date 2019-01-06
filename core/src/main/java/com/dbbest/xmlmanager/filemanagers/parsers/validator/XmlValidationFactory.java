@@ -1,6 +1,6 @@
 package com.dbbest.xmlmanager.filemanagers.parsers.validator;
 
-import com.dbbest.xmlmanager.exceptions.ParsingException;
+import com.dbbest.exceptions.ParsingException;
 import java.io.File;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;

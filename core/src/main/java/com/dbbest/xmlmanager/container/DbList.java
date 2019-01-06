@@ -1,10 +1,12 @@
 package com.dbbest.xmlmanager.container;
 
+import java.util.List;
+
 /**
  *A list which may contain any element of the parametrized type T.
  * @param <T> the type of elements of the list.
  */
-public interface DbList<T> extends Iterable<T>, ListIterable<T>  {
+public interface DbList<T> {
 
     /**
      * Checks if the list is empty.
@@ -16,7 +18,7 @@ public interface DbList<T> extends Iterable<T>, ListIterable<T>  {
      * Appends the specified element to the end of this list.
      * @param element the specified element to be added.
      */
-    void add(T element);
+    boolean add(T element);
 
     /**
      * Removes all of the elements from this list.
@@ -54,7 +56,7 @@ public interface DbList<T> extends Iterable<T>, ListIterable<T>  {
      * @param list the list of elements to be checked if are contained in the list.
      * @return true if this list contains all of the elements of the specified list.
      */
-    boolean containsAll(DbList<T> list);
+    boolean containsAll(List<T> list);
 
     T item(int index);
 

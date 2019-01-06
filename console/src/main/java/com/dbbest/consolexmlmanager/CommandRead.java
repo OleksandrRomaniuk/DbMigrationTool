@@ -1,7 +1,7 @@
 package com.dbbest.consolexmlmanager;
 
-import com.dbbest.xmlmanager.exceptions.ContainerException;
-import com.dbbest.xmlmanager.exceptions.ParsingException;
+import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.ParsingException;
 import com.dbbest.xmlmanager.filemanagers.ParsingManager;
 import com.dbbest.xmlmanager.filemanagers.parsers.XmlParser;
 

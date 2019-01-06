@@ -1,9 +1,9 @@
 package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
-import com.dbbest.xmlmanager.exceptions.ContainerException;
-import com.dbbest.xmlmanager.exceptions.ParsingException;
-import com.dbbest.xmlmanager.exceptions.SerializingException;
+import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.ParsingException;
+import com.dbbest.exceptions.SerializingException;
 
 import java.util.PriorityQueue;
 import java.util.logging.Level;
