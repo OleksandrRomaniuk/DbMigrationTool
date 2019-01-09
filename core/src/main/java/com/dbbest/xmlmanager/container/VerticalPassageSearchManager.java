@@ -48,7 +48,7 @@ public class VerticalPassageSearchManager extends SearchManager {
         for (Container con : containers) {
             if (con.hasChildren()) {
                 List<Container> children = new ArrayList();
-                DbList<Container> childList = con.getChildren();
+                List<Container> childList = con.getChildren();
                 for (Container child: childList) {
                     children.add(child);
                 }

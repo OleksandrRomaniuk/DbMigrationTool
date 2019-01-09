@@ -5,6 +5,7 @@ import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
 import com.dbbest.exceptions.ContainerException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.w3c.dom.CharacterData;
 import org.w3c.dom.NamedNodeMap;
@@ -93,7 +94,7 @@ public class XmlSingleNodeParser {
 
     private void setListOfBoxedChildren(Container<String> container, Node node) throws ContainerException {
         if (node.hasChildNodes()) {
-            DbList listOfChildren = new ListOfChildren();
+            List listOfChildren = new ListOfChildren();
             NodeList childList = node.getChildNodes();
             for (int i = 0; i < childList.getLength(); i++) {
                 Node child = childList.item(i);

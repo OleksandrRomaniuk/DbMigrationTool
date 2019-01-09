@@ -8,6 +8,8 @@ import com.dbbest.xmlmanager.filemanagers.parsers.XmlParser;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.List;
+
 public class ParsingManagerTest {
 
     @Test
@@ -17,10 +19,10 @@ public class ParsingManagerTest {
         parsingManager.parse("src/test/resources/validFile.xml");
         Container container = parsingManager.getContainer();
         Assert.assertEquals(container.getName(), "root");
-        DbList children = container.getChildren();
-        Container leaf1 = ((Container)((Container)children.item(0)).getChildren().item(0));
+        List children = container.getChildren();
+        Container leaf1 = ((Container)((Container)children.get(0)).getChildren().get(0));
         Assert.assertEquals(leaf1.getValue(), "test text 1");
-        Assert.assertEquals(((Container)children.item(0)).getAttributes().get("id"), "bk106");
+        Assert.assertEquals(((Container)children.get(0)).getAttributes().get("id"), "bk106");
     }
 
     @Test(expected = ParsingException.class)

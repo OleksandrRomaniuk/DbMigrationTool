@@ -3,6 +3,7 @@ package com.dbbest.xmlmanager.filemanagers.serializers;
 import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.container.DbList;
 
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -118,7 +119,7 @@ public class XmlNodeBuilder {
     }
 
     private void setChildNodes(Element element) {
-        DbList childContainers = container.getChildren();
+        List childContainers = container.getChildren();
         for (Object childContainer : childContainers) {
             new XmlNodeBuilder(document, (Container<String>) childContainer, element).build();
         }

@@ -11,6 +11,7 @@ import java.io.File;
  * @param <V> the type of the value of containers.
  */
 public class SerializingManager<V> {
+
     private Container<V> container;
     private Serializer<V> serializer;
 
@@ -41,6 +42,14 @@ public class SerializingManager<V> {
         }
         serializer.setContainer(container);
         serializer.writeFile(targetFile);
+    }
+
+    public Container<V> getContainer() {
+        return container;
+    }
+
+    public Serializer<V> getSerializer() {
+        return serializer;
     }
 }
 

@@ -73,7 +73,7 @@ public class ContainerTest {
 
     @Test
     public void methodGetValueShouldReturnSetValue() {
-        Container testChildContainer1 = (Container) container.getChildren().item(0);
+        Container testChildContainer1 = (Container) container.getChildren().get(0);
         Assert.assertEquals(testChildContainer1.getValue(), "testValue");
     }
 
@@ -84,13 +84,13 @@ public class ContainerTest {
 
     @Test
     public void methodGetChildrenShouldReturnSetValue() {
-        Assert.assertEquals(container.getChildren().item(0), childContainer1);
-        Assert.assertEquals(container.getChildren().item(1), childContainer2);
+        Assert.assertEquals(container.getChildren().get(0), childContainer1);
+        Assert.assertEquals(container.getChildren().get(1), childContainer2);
     }
 
     @Test
     public void methodGetParentShouldReturnSetValue() {
-        Assert.assertEquals(((Container)container.getChildren().item(0)).getParent(), container);
+        Assert.assertEquals(((Container)container.getChildren().get(0)).getParent(), container);
     }
 
     @Test
@@ -98,12 +98,12 @@ public class ContainerTest {
         Container testChildContainer1 = new Container();
         testChildContainer1.setValue("test");
         container.addChild(testChildContainer1);
-        Assert.assertEquals(container.getChildren().item(2), testChildContainer1);
+        Assert.assertEquals(container.getChildren().get(2), testChildContainer1);
     }
 
     @Test
     public void methodHasParentShouldReturnFalseForContainerAndTrueForChild() {
-        Container child = ((Container)container.getChildren().item(0));
+        Container child = ((Container)container.getChildren().get(0));
         Assert.assertEquals(child.hasParent(), true);
         Assert.assertEquals(container.hasParent(), false);
     }

@@ -1,11 +1,12 @@
-package com.dbbest.database;
+package com.dbbest.databasemanager.connectionbuilder.PropertyFileManager;
 
+import com.dbbest.databasemanager.connectionbuilder.ConnectionConfiguration;
+import com.dbbest.databasemanager.connectionbuilder.ContainerElementsNames;
 import com.dbbest.exceptions.ConnectionException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.exceptions.SerializingException;
 import com.dbbest.xmlmanager.container.Container;
-import com.dbbest.xmlmanager.filemanagers.SerializingManager;
 import com.dbbest.xmlmanager.filemanagers.serializers.XmlSerializer;
 
 import java.util.List;
@@ -58,7 +59,7 @@ public class ConnectionPropertiesEditor {
             return false;
         } else {
             connectionProperties.getChildren().remove(foundProperties.get(0));
-            SerializingManager serializingManager = new SerializingManager();
+            ConnectionPropertiesSerializer serializingManager = new ConnectionPropertiesSerializer();
             serializingManager.setSerializer(new XmlSerializer());
             serializingManager.setContainer(connectionProperties);
             serializingManager.writeFile((fileName != null && !fileName.trim().isEmpty()) ? fileName : defaultConfigFileName);
@@ -108,7 +109,7 @@ public class ConnectionPropertiesEditor {
             Container connectionPropertiesContainer = buildNewConnectionPropertiesContainer(connectionName,
                 url, driver, login, password);
             connectionProperties.addChild(connectionPropertiesContainer);
-            SerializingManager serializingManager = new SerializingManager();
+            ConnectionPropertiesSerializer serializingManager = new ConnectionPropertiesSerializer();
             serializingManager.setSerializer(new XmlSerializer());
             serializingManager.setContainer(connectionProperties);
             serializingManager.writeFile((fileName != null && !fileName.trim().isEmpty()) ? fileName : defaultConfigFileName);

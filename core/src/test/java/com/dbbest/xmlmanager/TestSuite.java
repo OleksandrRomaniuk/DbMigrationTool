@@ -1,5 +1,8 @@
 package com.dbbest.xmlmanager;
 
+import com.dbbest.databasemanager.ConnectionPropertiesEditorTest;
+import com.dbbest.databasemanager.ConnectionPropertiesManagerTest;
+import com.dbbest.databasemanager.SimpleConnectionBuilderTest;
 import com.dbbest.xmlmanager.container.ContainerTest;
 import com.dbbest.xmlmanager.container.HorizontalPassageSearchManagerTest;
 import com.dbbest.xmlmanager.container.ListOfChildrenTest;
@@ -28,7 +31,8 @@ import org.junit.runners.Suite;
     HorizontalPassageSearchManagerTest.class, VerticalPassageSearchManagerTest.class,
     ListOfChildrenTest.class, XmlParserTest.class, XmlSingleNodeParserTest.class,
     CustomLogerFormaterTest.class, CustomLoggerFilterTest.class, CustomLoggerTest.class,
-    IntegrationTest.class})
+    IntegrationTest.class, ConnectionPropertiesEditorTest.class, ConnectionPropertiesManagerTest.class,
+    SimpleConnectionBuilderTest.class})
 public class TestSuite {
 
     @Before

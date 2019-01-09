@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><Connections><mysqlDb1><url url="url"><![CDATA[
+            jdbc:mysql://localhost:3306/sourceit?allowPublicKeyRetrieval=true&useSSL=false
+        ]]></url><driver DatabaseType="mysql">com.mysql.cj.jdbc.Driver</driver><password password="password">Ilovemylife101088</password><username username="username">root</username></mysqlDb1><mysqlDb11><url url="url">
+            test1Url
+        </url><driver DatabaseType="mysql">test1Driver</driver><password password="password">test1Password</password><username username="username">test1Username</username></mysqlDb11></Connections>

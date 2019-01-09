@@ -1,7 +1,7 @@
-package com.dbbest.database;
+package com.dbbest.databasemanager.connectionbuilder;
 
 public enum ContainerElementsNames {
-    DRIVER("driver"), URL("url"), LOGIN("login"), PASSWORD("password");
+    DRIVER("driver"), URL("url"), LOGIN("username"), PASSWORD("password");
 
     private String element;
 

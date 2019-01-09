@@ -50,7 +50,7 @@ public class HorizontalPassageSearchManager extends SearchManager {
         for (Container con : containers) {
             if (con.hasChildren()) {
 
-                DbList<Container> childList = con.getChildren();
+                List<Container> childList = con.getChildren();
 
                 for (Container cont : childList) {
 

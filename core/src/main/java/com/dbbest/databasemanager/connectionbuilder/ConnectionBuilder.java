@@ -1,4 +1,4 @@
-package com.dbbest.database;
+package com.dbbest.databasemanager.connectionbuilder;
 
 import com.dbbest.exceptions.ConnectionException;
 import com.dbbest.exceptions.ContainerException;

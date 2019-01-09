@@ -4,6 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 public class ListOfChildrenTest {
 
     DbList<String> listToTest;
@@ -90,13 +92,13 @@ public class ListOfChildrenTest {
         test.add("one");
         test.add("two");
         test.add("three");
-        DbList test1 = new ListOfChildren();
+        List test1 = new ListOfChildren();
         test1.add("one");
         test1.add("two");
         test1.add("three");
 
         Assert.assertEquals(test.containsAll(test1), true);
-        DbList test2 = new ListOfChildren();
+        List test2 = new ListOfChildren();
         test2.add("one");
         test2.add("two");
         test2.add("four");
@@ -125,7 +127,7 @@ public class ListOfChildrenTest {
 
     @Test
     public void iteratorShouldReturnTrueInFirstCaseAndFalseInSecond() {
-        DbList test = new ListOfChildren();
+        List test = new ListOfChildren();
         test.add("one");
         test.add("two");
         test.add("three");
@@ -139,19 +141,19 @@ public class ListOfChildrenTest {
 
     @Test
     public void shouldRemoveSecondElement() {
-        DbList test = new ListOfChildren();
+        List test = new ListOfChildren();
         test.add("one");
         test.add("two");
         test.add("three");
         test.iterator().next();
         test.iterator().remove();
-        Assert.assertEquals(test.item(1), "three");
+        Assert.assertEquals(((ListOfChildren) test).item(1), "three");
         Assert.assertEquals(test.size(), 2);
     }
 
     @Test
     public void shouldMoveToSecondElementAndThenToThird() {
-        DbList test = new ListOfChildren();
+        List test = new ListOfChildren();
         test.add("one");
         test.add("two");
         test.add("three");
@@ -162,6 +164,6 @@ public class ListOfChildrenTest {
         test.listIterator().previous();
         test.listIterator().previous();
         test.listIterator().set("four");
-        Assert.assertEquals(test.item(1), "four");
+        Assert.assertEquals(((ListOfChildren) test).item(1), "four");
     }
 }

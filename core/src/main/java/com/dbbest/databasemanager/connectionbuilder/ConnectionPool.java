@@ -1,4 +1,4 @@
-package com.dbbest.database;
+package com.dbbest.databasemanager.connectionbuilder;
 
 import com.dbbest.exceptions.ConnectionException;
 import java.util.logging.Level;
@@ -14,7 +14,7 @@ import org.apache.commons.pool.impl.GenericObjectPool;
  */
 public class ConnectionPool {
 
-    private static GenericObjectPool gPool = null;
+    private GenericObjectPool connectionPool = null;
 
     /**
      * @param jdbcDriver the driver of the connection to the DB.
@@ -29,13 +29,13 @@ public class ConnectionPool {
 
         try {
             Class.forName(jdbcDriver);
-            gPool = new GenericObjectPool();
-            gPool.setMaxActive(5);
-            gPool.setMaxIdle(5);
-            gPool.setMaxWait(10000);
+            connectionPool = new GenericObjectPool();
+            connectionPool.setMaxActive(5);
+            connectionPool.setMaxIdle(5);
+            connectionPool.setMaxWait(10000);
             ConnectionFactory cf = new DriverManagerConnectionFactory(dbUrl, userName, password);
-            PoolableConnectionFactory pcf = new PoolableConnectionFactory(cf, gPool, null, null, false, true);
-            return new PoolingDataSource(gPool);
+            PoolableConnectionFactory pcf = new PoolableConnectionFactory(cf, connectionPool, null, null, false, true);
+            return new PoolingDataSource(connectionPool);
 
         } catch (ClassNotFoundException e) {
             throw new ConnectionException(Level.SEVERE, e);
@@ -43,11 +43,11 @@ public class ConnectionPool {
     }
 
     public DataSource getDataSource() {
-        return new PoolingDataSource(gPool);
+        return new PoolingDataSource(connectionPool);
     }
 
     public GenericObjectPool getConnectionPool() {
-        return gPool;
+        return connectionPool;
     }
 }
 

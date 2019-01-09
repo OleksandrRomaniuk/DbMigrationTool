@@ -23,7 +23,7 @@ public class VerticalPassageSearchManagerTest {
     public void createContainer() throws ContainerException {
         container = new Container();
         container.setName("test");
-        DbList<Container<String>> children = new ListOfChildren();
+        List<Container<String>> children = new ListOfChildren();
         container.setChildren(children);
 
         child1 = new Container();
