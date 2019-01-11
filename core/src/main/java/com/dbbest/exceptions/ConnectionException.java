@@ -39,6 +39,17 @@ public class ConnectionException extends Exception {
 
     /**
      * @param level the level of the exception.
+     * @param exception the exception which originally was thrown.
+     * @param message the custom message of the exception.
+     */
+    public ConnectionException(Level level, Exception exception, String message) {
+
+        super(exception);
+        logger.log(level, message, exception);
+    }
+
+    /**
+     * @param level the level of the exception.
      * @param message the message of the exception thrown.
      */
     public ConnectionException(Level level, String message) {
