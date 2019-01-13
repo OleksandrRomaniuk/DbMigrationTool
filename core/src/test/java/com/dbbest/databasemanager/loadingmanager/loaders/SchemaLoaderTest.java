@@ -1,7 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
-import com.dbbest.databasemanager.loadingmanager.constants.ConstantListsBuilder;
 import com.dbbest.exceptions.ConnectionException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -10,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
-
-import static org.junit.Assert.*;
 
 public class SchemaLoaderTest {
 

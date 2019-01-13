@@ -1,6 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
-import com.dbbest.databasemanager.loadingmanager.constants.ConstantListsBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.TagNamesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.enumsattributes.TableAttributes;
@@ -28,7 +27,7 @@ public class TableLoader implements Loaders {
 
             while (resultSet.next()) {
                 Container table = new Container();
-                table.setName(resultSet.getString(ConstantListsBuilder.TableAttributes.TABLE_NAME.getElement()));
+                table.setName(resultSet.getString(TableAttributes.TABLE_NAME.getElement()));
                 childContainerWithTables.addChild(table);
             }
         } catch (SQLException e) {
@@ -61,7 +60,6 @@ public class TableLoader implements Loaders {
         } catch (SQLException e) {
             throw new ConnectionException(Level.SEVERE, e);
         }
-
     }
 
     @Override
