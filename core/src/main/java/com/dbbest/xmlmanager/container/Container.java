@@ -1,5 +1,6 @@
 package com.dbbest.xmlmanager.container;
 
+import com.dbbest.databasemanager.loadingmanager.constants.TagNamesConstants;
 import com.dbbest.exceptions.ContainerException;
 
 import java.util.HashMap;
@@ -141,6 +142,15 @@ public class Container<V> {
 
     public List<Container<V>> getChildren() {
         return children;
+    }
+
+    public Container<V> getChildByName(String childName) throws ContainerException {
+        for (Container child: children) {
+            if (child.getName().equals(childName)) {
+                return child;
+            }
+        }
+        throw new ContainerException(Level.SEVERE, "Can not find the container with the name " + childName);
     }
 
     /**

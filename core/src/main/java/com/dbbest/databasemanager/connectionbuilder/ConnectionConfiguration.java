@@ -11,7 +11,7 @@ import com.dbbest.xmlmanager.filemanagers.parsers.XmlParser;
  */
 public class ConnectionConfiguration {
 
-    private final String defaultConfigFileName = "ConnectionProperties.xml";
+    private final String defaultConfigFileName = "src\\main\\resources\\ConnectionProperties.xml";
 
     public Container initConfig() throws ParsingException, ContainerException {
         return this.initConfig(null);
