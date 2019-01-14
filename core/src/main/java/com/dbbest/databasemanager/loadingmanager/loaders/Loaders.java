@@ -7,9 +7,9 @@ import com.dbbest.xmlmanager.container.Container;
 import java.sql.Connection;
 
 public interface Loaders {
-    void lazyLoad(Connection connection, Container container) throws DatabaseException, ContainerException;
+    void lazyLoad(Connection connection, Container tree) throws DatabaseException, ContainerException;
 
-    void detailedLoad(Connection connection, Container container) throws DatabaseException, ContainerException ;
+    void detailedLoad(Connection connection, Container tree) throws DatabaseException, ContainerException ;
 
-    void fullLoad(Connection connection, Container container);
+    void fullLoad(Connection connection, Container tree);
 }

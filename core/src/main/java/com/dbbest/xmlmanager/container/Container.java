@@ -144,7 +144,7 @@ public class Container<V> {
     }
 
     public Container<V> getChildByName(String childName) throws ContainerException {
-        for (Container child: children) {
+        for (Container child : children) {
             if (child.getName().equals(childName)) {
                 return child;
             }
