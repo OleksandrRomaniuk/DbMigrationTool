@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
-import com.dbbest.exceptions.ConnectionException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.After;
@@ -26,7 +26,7 @@ public class SchemaLoaderTest {
     }
 
     @Test
-    public void lazyLoad() throws ConnectionException, ContainerException {
+    public void lazyLoad() throws DatabaseException, ContainerException {
 
         Container container = new Container();
         SchemaLoader schemaLoader = new SchemaLoader();

@@ -2,7 +2,7 @@ package com.dbbest.databasemanager;
 
 import com.dbbest.databasemanager.connectionbuilder.PropertyFileManager.ConnectionPropertiesEditor;
 import com.dbbest.databasemanager.connectionbuilder.PropertyFileManager.ConnectionPropertiesManager;
-import com.dbbest.exceptions.ConnectionException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.exceptions.SerializingException;
@@ -18,7 +18,7 @@ public class ConnectionPropertiesEditorTest {
     }
 
     @Test
-    public void shouldAddNewConnectionPropertiesToFileAndThenRemoveThem() throws ConnectionException, ContainerException, ParsingException, SerializingException {
+    public void shouldAddNewConnectionPropertiesToFileAndThenRemoveThem() throws DatabaseException, ContainerException, ParsingException, SerializingException {
         String conName = "ConnectionPropertiesEditorTestConnectionName";
         String conUrl = "ConnectionPropertiesEditorTestUrl";
         String conDriver = "ConnectionPropertiesEditorTestDriver";

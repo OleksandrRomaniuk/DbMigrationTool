@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.reflectionutil;
 
-import com.dbbest.exceptions.ConnectionException;
+import com.dbbest.exceptions.DatabaseException;
 
 import java.io.File;
 import java.lang.annotation.Annotation;
@@ -11,7 +11,7 @@ import java.util.logging.Level;
 
 public class AnnotationScanner {
 
-    public void scanElements() throws ConnectionException {
+    public void scanElements() throws DatabaseException {
         try {
             //Get the package name from configuration file
             String packageName = readConfig();
@@ -44,7 +44,7 @@ public class AnnotationScanner {
                 classList.add(repoClass);
             }
         } catch (ClassNotFoundException e) {
-            throw new ConnectionException(Level.SEVERE, e);
+            throw new DatabaseException(Level.SEVERE, e);
         }
     }
 

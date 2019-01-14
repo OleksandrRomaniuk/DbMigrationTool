@@ -2,7 +2,7 @@ package com.dbbest.databasemanager.connectionbuilder.PropertyFileManager;
 
 import com.dbbest.databasemanager.connectionbuilder.ConnectionConfiguration;
 import com.dbbest.databasemanager.connectionbuilder.ContainerElementsNames;
-import com.dbbest.exceptions.ConnectionException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.exceptions.SerializingException;
@@ -20,7 +20,7 @@ public class ConnectionPropertiesEditor {
     private static final Logger logger = Logger.getLogger("Connection logger");
 
     public boolean remove(String connectionName)
-        throws ParsingException, ContainerException, ConnectionException, SerializingException {
+        throws ParsingException, ContainerException, DatabaseException, SerializingException {
         return remove(null, connectionName);
     }
 
@@ -30,11 +30,11 @@ public class ConnectionPropertiesEditor {
      * @return returns true if the element was successfully removed.
      * @throws ParsingException throws the parsing exception at parsing the connection properties file.
      * @throws ContainerException throws the container exception at removing the element.
-     * @throws ConnectionException throws the connection exception at validation transaction.
+     * @throws DatabaseException throws the connection exception at validation transaction.
      * @throws SerializingException throws the parsing exception at writing the connection properties file.
      */
     public boolean remove(String fileName, String connectionName)
-        throws ParsingException, ContainerException, ConnectionException, SerializingException {
+        throws ParsingException, ContainerException, DatabaseException, SerializingException {
         Container connectionProperties;
         if (fileName != null && !fileName.trim().isEmpty()) {
             connectionProperties = new ConnectionConfiguration().initConfig(fileName);
@@ -48,11 +48,11 @@ public class ConnectionPropertiesEditor {
 
     private boolean removeElement(Container connectionProperties, String connectionName,
                                   String fileName, String defaultConfigFileName)
-        throws ConnectionException, SerializingException {
+        throws DatabaseException, SerializingException {
 
         List<Container> foundProperties = connectionProperties.searchInTreeHorizontalSearchInNames(connectionName);
         if (foundProperties.size() > 1) {
-            throw new ConnectionException("There are several connections with the same name "
+            throw new DatabaseException("There are several connections with the same name "
                 + connectionName + " in the connection properties file.");
         } else if (foundProperties.size() < 1) {
             logger.log(Level.SEVERE, "The connection with the name " + connectionName + " was not found.");
@@ -68,7 +68,7 @@ public class ConnectionPropertiesEditor {
     }
 
     public boolean add(String connectionName, String url, String driver, String login, String password)
-        throws ParsingException, ContainerException, ConnectionException, SerializingException {
+        throws ParsingException, ContainerException, DatabaseException, SerializingException {
         return this.add(null, connectionName, url, driver, login, password);
     }
 
@@ -82,11 +82,11 @@ public class ConnectionPropertiesEditor {
      * @return returns true if the element was successfully added.
      * @throws ParsingException throws the parsing exception at parsing the connection properties file.
      * @throws ContainerException throws the container exception at removing the element.
-     * @throws ConnectionException throws the connection exception at validation transaction.
+     * @throws DatabaseException throws the connection exception at validation transaction.
      * @throws SerializingException throws the parsing exception at writing the connection properties file.
      */
     public boolean add(String fileName, String connectionName, String url, String driver, String login, String password)
-        throws ParsingException, ContainerException, ConnectionException, SerializingException {
+        throws ParsingException, ContainerException, DatabaseException, SerializingException {
         Container connectionProperties;
         if (fileName != null && !fileName.trim().isEmpty()) {
             connectionProperties = new ConnectionConfiguration().initConfig(fileName);
@@ -100,10 +100,10 @@ public class ConnectionPropertiesEditor {
 
     private boolean addElement(Container connectionProperties, String connectionName, String url, String driver,
                                String login, String password, String fileName, String defaultConfigFileName)
-                                throws ConnectionException, SerializingException, ContainerException {
+                                throws DatabaseException, SerializingException, ContainerException {
         List<Container> foundProperties = connectionProperties.searchInTreeHorizontalSearchInNames(connectionName);
         if (foundProperties.size() > 0) {
-            throw new ConnectionException("A connection with the name "
+            throw new DatabaseException("A connection with the name "
                 + connectionName + " already exists.");
         } else {
             Container connectionPropertiesContainer = buildNewConnectionPropertiesContainer(connectionName,

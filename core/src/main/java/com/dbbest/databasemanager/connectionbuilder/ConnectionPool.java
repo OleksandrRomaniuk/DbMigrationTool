@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.connectionbuilder;
 
-import com.dbbest.exceptions.ConnectionException;
+import com.dbbest.exceptions.DatabaseException;
 import java.util.logging.Level;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp.ConnectionFactory;
@@ -22,10 +22,10 @@ public class ConnectionPool {
      * @param userName   the loggin used to connect to the DB.
      * @param password   the password used to connect to the DB.
      * @return returns the DataSource object.
-     * @throws ConnectionException the connection thrown if connection failed.
+     * @throws DatabaseException the connection thrown if connection failed.
      */
     @SuppressWarnings("unused")
-    public DataSource setUpPool(String jdbcDriver, String dbUrl, String userName, String password) throws ConnectionException {
+    public DataSource setUpPool(String jdbcDriver, String dbUrl, String userName, String password) throws DatabaseException {
 
         try {
             Class.forName(jdbcDriver);
@@ -38,7 +38,7 @@ public class ConnectionPool {
             return new PoolingDataSource(connectionPool);
 
         } catch (ClassNotFoundException e) {
-            throw new ConnectionException(Level.SEVERE, e);
+            throw new DatabaseException(Level.SEVERE, e);
         }
     }
 

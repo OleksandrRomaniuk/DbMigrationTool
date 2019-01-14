@@ -1,9 +1,10 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.TagNamesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.enumsattributes.TableAttributes;
-import com.dbbest.exceptions.ConnectionException;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.tags.SchemaCategoriesTagNameConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -17,81 +18,55 @@ import java.util.logging.Level;
 public class TableLoader implements Loaders {
 
     @Override
-    public void lazyLoad(Connection connection, Container container) throws ConnectionException, ContainerException {
+    public void lazyLoad(Connection connection, Container tree) throws DatabaseException, ContainerException {
         try {
-            validateContainer(container);
-            ResultSet resultSet = connection.getMetaData()
-                .getTables(container.getName(), null, "%", new String[] {"TABLE"});
+            if (new ContainerValidator().ifSchemaContainsCategoryTables(tree)) {
+                ResultSet resultSet = connection.getMetaData()
+                    .getTables(tree.getName(), null, "%", new String[] {"TABLE"});
 
-            Container childContainerWithTables = container.getChildByName(TagNamesConstants.Tables.getElement());
+                Container childContainerWithTables = tree.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement());
 
-            while (resultSet.next()) {
-                Container table = new Container();
-                table.setName(resultSet.getString(TableAttributes.TABLE_NAME.getElement()));
-                childContainerWithTables.addChild(table);
+                while (resultSet.next()) {
+                    Container table = new Container();
+                    table.setName(resultSet.getString(TableAttributes.TABLE_NAME.getElement()));
+                    childContainerWithTables.addChild(table);
+                    for (TableCategoriesTagNameCategories tagName : TableCategoriesTagNameCategories.values()) {
+                        Container tableCategory = new Container();
+                        tableCategory.setName(tagName.getElement());
+                        table.addChild(tableCategory);
+                    }
+                }
             }
         } catch (SQLException e) {
-            throw new ConnectionException(Level.SEVERE, e, "Can not get the list of tables.");
+            throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }
     }
 
     @Override
-    public void detailedLoad(Connection connection, Container container) throws ConnectionException, ContainerException {
+    public void detailedLoad(Connection connection, Container tree) throws DatabaseException, ContainerException {
 
         try {
-            validateContainer(container);
+            if (new ContainerValidator().ifThereAreTablesInCategoryTables(tree)) {
+                List<Container> tables = tree.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement()).getChildren();
+                for (Container table : tables) {
+                    String informationSchemataSelectAllQuery =
+                        String.format(MySqlQueriesConstants.TableInformationSchemaSelectAll.getQuery(),
+                            tree.getName(), table.getName());
+                    PreparedStatement preparedStatement = connection.prepareStatement(informationSchemataSelectAllQuery);
+                    ResultSet resultSet = preparedStatement.executeQuery();
 
-            for (Container tableContainer : getTables(container)) {
-                String informationSchemataSelectAllQuery =
-                    String.format(MySqlQueriesConstants.TableInformationSchemaSelectAll.getQuery(),
-                        container.getName(), tableContainer.getName());
-
-                PreparedStatement preparedStatement = connection.prepareStatement(informationSchemataSelectAllQuery);
-                ResultSet resultSet = preparedStatement.executeQuery();
-
-                Container table = new Container();
-                table.setName(resultSet.getString(TableAttributes.TABLE_NAME.getElement()));
-                tableContainer.addChild(table);
-
-                for (TableAttributes attributeKey : TableAttributes.values()) {
-                    table.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+                    for (TableAttributes attributeKey : TableAttributes.values()) {
+                        table.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+                    }
                 }
             }
         } catch (SQLException e) {
-            throw new ConnectionException(Level.SEVERE, e);
+            throw new DatabaseException(Level.SEVERE, e);
         }
     }
 
     @Override
     public void fullLoad(Connection connection, Container container) {
 
-    }
-
-    private List<Container> getTables(Container container) throws ConnectionException {
-        List<Container> shemaChildren = container.getChildren();
-        for (Container child : shemaChildren) {
-            if (child.getName().trim().equals(TagNamesConstants.Tables.getElement())) {
-                return child.getChildren();
-            }
-        }
-        throw new ConnectionException(Level.SEVERE, "Have not found Tables in the con ainer");
-    }
-
-    private void validateContainer(Container container) throws ConnectionException {
-        if (container.getName() == null || container.getName().trim().isEmpty()) {
-            throw new ConnectionException(Level.SEVERE, "The container does not contain the name.");
-        } else {
-            List<Container> shemaChildren = container.getChildren();
-            boolean result = false;
-            for (Container child : shemaChildren) {
-                if (child.getName().trim().equals(TagNamesConstants.Tables.getElement())) {
-                    result = true;
-                }
-            }
-            if (!result) {
-                throw new ConnectionException(Level.SEVERE, "The container does not contain the chile "
-                    + TagNamesConstants.Tables.getElement());
-            }
-        }
     }
 }

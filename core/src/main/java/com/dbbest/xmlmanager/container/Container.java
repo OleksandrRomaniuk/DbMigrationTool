@@ -1,6 +1,5 @@
 package com.dbbest.xmlmanager.container;
 
-import com.dbbest.databasemanager.loadingmanager.constants.TagNamesConstants;
 import com.dbbest.exceptions.ContainerException;
 
 import java.util.HashMap;

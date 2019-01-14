@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.enumsattributes;
+package com.dbbest.databasemanager.loadingmanager.constants.attributes;
 
 public enum SchemaAttributes {
     SCHEMA_CATALOG_NAME("CATALOG_NAME"), SCHEMA_NAME("SCHEMA_NAME"), SCHEMA_DEFAULT_CHARACTER_SET_NAME("DEFAULT_CHARACTER_SET_NAME"),
