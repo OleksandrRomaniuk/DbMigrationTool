@@ -42,10 +42,10 @@ public class ForeignKeyLoader implements Loaders {
 
     @Override
     public void detailedLoad(Connection connection, Container fkContainer) throws DatabaseException, ContainerException {
+        if (fkContainer.getName() == null || fkContainer.getName().trim().isEmpty()) {
+            throw new ContainerException(Level.SEVERE, "The foreign key container does not contain the name");
+        }
         try {
-            if (fkContainer.getName() == null || fkContainer.getName().trim().isEmpty()) {
-                throw new ContainerException(Level.SEVERE, "The foreign key container does not contain the name");
-            }
             String query =
                 String.format(MySqlQueriesConstants.ForeignKeyInformationSchemaSelectAll.getQuery(),
                     fkContainer.getParent().getParent().getParent().getParent().getName(),
