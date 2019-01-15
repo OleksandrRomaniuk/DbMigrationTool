@@ -7,7 +7,7 @@ import java.util.logging.Logger;
  * A class of checked exception which is thrown if any checked exceptions were encountered at the connection module.
  */
 public class DatabaseException extends Exception {
-    private static final Logger logger = Logger.getLogger("Connection logger");
+    private static final Logger logger = Logger.getLogger("Database logger");
 
     /**
      * @param exception the exception which is thrown at the connection module.
