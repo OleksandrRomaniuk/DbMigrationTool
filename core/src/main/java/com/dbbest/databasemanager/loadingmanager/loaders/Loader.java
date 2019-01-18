@@ -6,10 +6,10 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.sql.Connection;
 
-public interface Loaders {
+public interface Loader {
     void lazyLoad(Connection connection, Container tree) throws DatabaseException, ContainerException;
 
     void detailedLoad(Connection connection, Container tree) throws DatabaseException, ContainerException ;
 
-    void fullLoad(Connection connection, Container tree);
+    void fullLoad(Connection connection, Container tree) throws DatabaseException, ContainerException;
 }

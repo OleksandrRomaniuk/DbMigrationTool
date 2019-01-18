@@ -1,9 +1,8 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderTypeEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.ColumnAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
-import com.dbbest.databasemanager.loadingmanager.support.ContainerValidator;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -16,7 +15,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ColumnLoader implements Loaders {
+@com.dbbest.databasemanager.loadingmanager.annotations.Loader(LoaderTypeEnum.TableColumn)
+public class TableColumnLoader implements Loader {
     private static final Logger logger = Logger.getLogger("Database logger");
 
     @Override
@@ -26,7 +26,7 @@ public class ColumnLoader implements Loaders {
                 throw new ContainerException(Level.SEVERE, "The container with the column category does not contain the name.");
             }
 
-            ResultSet resultSet = connection.getMetaData().getColumns(categoryColumnsContainer.getName(),
+            ResultSet resultSet = connection.getMetaData().getColumns(categoryColumnsContainer.getParent().getParent().getParent().getName(),
                 null, categoryColumnsContainer.getParent().getName(), null);
 
             while (resultSet.next()) {
@@ -49,22 +49,30 @@ public class ColumnLoader implements Loaders {
         try {
             String query =
                 String.format(MySqlQueriesConstants.ColumnInformationSchemaSelectAll.getQuery(),
-                    columnContainer.getParent().getParent().getParent().getName(),
-                    columnContainer.getParent().getName(), columnContainer.getName());
+                    columnContainer.getParent().getParent().getParent().getParent().getName(),
+                    columnContainer.getParent().getParent().getName(),
+                    columnContainer.getName());
+
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
-
-            for (ColumnAttributes attributeKey : ColumnAttributes.values()) {
-                columnContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+            if (resultSet.next()) {
+                for (ColumnAttributes attributeKey : ColumnAttributes.values()) {
+                    columnContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+                }
             }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
 
-
     @Override
-    public void fullLoad(Connection connection, Container container) {
-
+    public void fullLoad(Connection connection, Container categoryColumnsContainer) throws DatabaseException, ContainerException {
+        lazyLoad(connection, categoryColumnsContainer);
+        List<Container> columns = categoryColumnsContainer.getChildren();
+        if (columns != null && !columns.isEmpty()) {
+            for (Container column : columns) {
+                detailedLoad(connection, column);
+            }
+        }
     }
 }

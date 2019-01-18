@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderTypeEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.StoredProceduresAndFunctionsAttributes;
 import com.dbbest.exceptions.ContainerException;
@@ -11,9 +12,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 
-public class FunctionLoader implements Loaders {
+@com.dbbest.databasemanager.loadingmanager.annotations.Loader(LoaderTypeEnum.Function)
+public class FunctionLoader implements Loader {
     @Override
     public void lazyLoad(Connection connection, Container functionCategoryContainer) throws DatabaseException, ContainerException {
         if (functionCategoryContainer.getName() == null || functionCategoryContainer.getName().trim().isEmpty()) {
@@ -21,10 +24,10 @@ public class FunctionLoader implements Loaders {
         }
         try {
             ResultSet functions = connection.getMetaData().getFunctions((String) functionCategoryContainer
-                .getParent().getAttributes().get(SchemaAttributes.SCHEMA_CATALOG_NAME.getElement()), null, null);
+                .getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME.getElement()), null, null);
             while (functions.next()) {
                 Container storedProcedure = new Container();
-                storedProcedure.setName(functions.getString(StoredProceduresAndFunctionsAttributes.SPECIFIC_NAME.getElement());
+                storedProcedure.setName(functions.getString(StoredProceduresAndFunctionsAttributes.SPECIFIC_NAME.getElement()));
                 functionCategoryContainer.addChild(storedProcedure);
             }
         } catch (SQLException e) {
@@ -47,8 +50,10 @@ public class FunctionLoader implements Loaders {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            for (StoredProceduresAndFunctionsAttributes attributeKey : StoredProceduresAndFunctionsAttributes.values()) {
-                functionContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+            if (resultSet.next()) {
+                for (StoredProceduresAndFunctionsAttributes attributeKey : StoredProceduresAndFunctionsAttributes.values()) {
+                    functionContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+                }
             }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -56,7 +61,14 @@ public class FunctionLoader implements Loaders {
     }
 
     @Override
-    public void fullLoad(Connection connection, Container tree) {
-
+    public void fullLoad(Connection connection, Container functionsCategoryContainer) throws DatabaseException, ContainerException {
+        lazyLoad(connection, functionsCategoryContainer);
+        List<Container> functions = functionsCategoryContainer.getChildren();
+        if (functions != null && !functions.isEmpty()) {
+            for (Container storedProcedure : functions) {
+                detailedLoad(connection, storedProcedure);
+                new ProcedureFunctionParameteresLoader().fullLoad(connection, storedProcedure);
+            }
+        }
     }
 }

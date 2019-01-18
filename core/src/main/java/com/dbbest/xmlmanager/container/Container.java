@@ -156,10 +156,16 @@ public class Container<V> {
      * @param children the list of children to be set.
      * @throws ContainerException the exception to be thrown if the list of children is not null.
      */
+
     public void setChildren(List<Container<V>> children) throws ContainerException {
         if (this.children != null) {
             throw new ContainerException(Level.SEVERE, "The list of children is not null.");
         } else {
+            for (Container child: children) {
+                if (child.getParent() == null) {
+                    child.setParent(this);
+                }
+            }
             this.children = children;
         }
     }
@@ -188,6 +194,13 @@ public class Container<V> {
     public void addChild(Container<V> container) {
         if (children == null) {
             children = new ListOfChildren();
+        }
+        if (container.getParent() == null) {
+            try {
+                container.setParent(this);
+            } catch (ContainerException e) {
+                e.printStackTrace();
+            }
         }
         children.add(container);
     }

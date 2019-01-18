@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.annotations;
 
-import com.dbbest.databasemanager.loadingmanager.constants.DatabaseTypesEnum;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.DatabaseTypesEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

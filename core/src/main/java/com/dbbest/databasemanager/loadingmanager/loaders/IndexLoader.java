@@ -1,8 +1,8 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderTypeEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.IndexAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class IndexLoader implements Loaders {
-    private static final Logger logger = Logger.getLogger("Database logger");
+@com.dbbest.databasemanager.loadingmanager.annotations.Loader(LoaderTypeEnum.Index)
+public class IndexLoader implements Loader {
 
     @Override
     public void lazyLoad(Connection connection, Container indexCategory) throws DatabaseException, ContainerException {
@@ -25,13 +25,29 @@ public class IndexLoader implements Loaders {
             throw new ContainerException(Level.SEVERE, "The container with Index category does not contain the name.");
         }
         try {
-            ResultSet indexes = connection.getMetaData().getIndexInfo(null, null, indexCategory.getParent().getName(), false, false);
+            String query =
+                String.format(MySqlQueriesConstants.IndexesSelectAllName.getQuery(),
+                    indexCategory.getParent().getParent().getParent().getName(),
+                    indexCategory.getParent().getName());
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                Container index = new Container();
+                index.setName(resultSet.getString(IndexAttributes.INDEX_NAME.getElement()));
+                indexCategory.addChild(index);
+            }
+            /*
+            ResultSet indexes = connection.getMetaData().getIndexInfo(null,
+                indexCategory.getParent().getParent().getParent().getName(),
+                indexCategory.getParent().getName(), false, false);
 
             while (indexes.next()) {
                 Container index = new Container();
                 index.setName(indexes.getString(IndexAttributes.INDEX_NAME.getElement()));
                 indexCategory.addChild(index);
             }
+            */
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -50,17 +66,24 @@ public class IndexLoader implements Loaders {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            for (IndexAttributes attributeKey : IndexAttributes.values()) {
-                indexContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+            if (resultSet.next()) {
+                for (IndexAttributes attributeKey : IndexAttributes.values()) {
+                    indexContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+                }
             }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
 
-
     @Override
-    public void fullLoad(Connection connection, Container container) {
-
+    public void fullLoad(Connection connection, Container indexCategory) throws DatabaseException, ContainerException {
+        lazyLoad(connection, indexCategory);
+        List<Container> indexes = indexCategory.getChildren();
+        if (indexes != null && !indexes.isEmpty()) {
+            for (Container index : indexes) {
+                detailedLoad(connection, index);
+            }
+        }
     }
 }

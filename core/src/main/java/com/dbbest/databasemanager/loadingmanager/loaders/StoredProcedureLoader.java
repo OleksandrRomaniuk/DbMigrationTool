@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderTypeEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.StoredProceduresAndFunctionsAttributes;
 import com.dbbest.exceptions.ContainerException;
@@ -11,9 +12,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 
-public class StoredProcedureLoader implements Loaders {
+@com.dbbest.databasemanager.loadingmanager.annotations.Loader(LoaderTypeEnum.Stored_Procedure)
+public class StoredProcedureLoader implements Loader {
     @Override
     public void lazyLoad(Connection connection, Container storedProceduresCategoryContainer) throws DatabaseException, ContainerException {
         if (storedProceduresCategoryContainer.getName() == null || storedProceduresCategoryContainer.getName().trim().isEmpty()) {
@@ -21,11 +24,14 @@ public class StoredProcedureLoader implements Loaders {
         }
         try {
             ResultSet storedProcedures = connection.getMetaData().getProcedures((String) storedProceduresCategoryContainer
-                .getParent().getAttributes().get(SchemaAttributes.SCHEMA_CATALOG_NAME.getElement()), null, null);
+                .getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME.getElement()), "%", "%");
+
             while (storedProcedures.next()) {
-                Container storedProcedure = new Container();
-                storedProcedure.setName(storedProcedures.getString(StoredProceduresAndFunctionsAttributes.SPECIFIC_NAME.getElement());
-                storedProceduresCategoryContainer.addChild(storedProcedure);
+                if (Integer.parseInt(storedProcedures.getString("PROCEDURE_TYPE")) == 1) {
+                    Container storedProcedure = new Container();
+                    storedProcedure.setName(storedProcedures.getString(StoredProceduresAndFunctionsAttributes.SPECIFIC_NAME.getElement()));
+                    storedProceduresCategoryContainer.addChild(storedProcedure);
+                }
             }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -47,8 +53,10 @@ public class StoredProcedureLoader implements Loaders {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            for (StoredProceduresAndFunctionsAttributes attributeKey : StoredProceduresAndFunctionsAttributes.values()) {
-                storedProcedure.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+            if (resultSet.next()) {
+                for (StoredProceduresAndFunctionsAttributes attributeKey : StoredProceduresAndFunctionsAttributes.values()) {
+                    storedProcedure.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+                }
             }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -56,7 +64,14 @@ public class StoredProcedureLoader implements Loaders {
     }
 
     @Override
-    public void fullLoad(Connection connection, Container tree) {
-
+    public void fullLoad(Connection connection, Container storedProceduresCategoryContainer) throws DatabaseException, ContainerException {
+        lazyLoad(connection, storedProceduresCategoryContainer);
+        List<Container> storedProcedures = storedProceduresCategoryContainer.getChildren();
+        if (storedProcedures != null && !storedProcedures.isEmpty()) {
+            for (Container storedProcedure : storedProcedures) {
+                detailedLoad(connection, storedProcedure);
+                new ProcedureFunctionParameteresLoader().fullLoad(connection, storedProcedure);
+            }
+        }
     }
 }
