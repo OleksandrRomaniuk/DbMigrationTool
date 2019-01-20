@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.SchemaCategoriesTagNameConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
 import com.dbbest.exceptions.ContainerException;
@@ -76,7 +77,7 @@ public class TriggerLoaderTest {
         schemaContainer1.setName("sakila");
         schemaLoader1.fullLoad(connection, schemaContainer1);
         Container procCategory = schemaContainer1.getChildByName(SchemaCategoriesTagNameConstants.Stored_Procedures.getElement());
-
+/*
         Container procedure = procCategory.getChildByName("film_in_stock");
         List<Container> parameters = procedure.getChildren();
 
@@ -88,8 +89,18 @@ public class TriggerLoaderTest {
             }
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
+*/
 
+        SchemaLoader schemaLoader2 = new SchemaLoader();
+        Container schemaContainer2 = new Container();
+        schemaContainer2.setName("sakila");
+        schemaLoader1.fullLoad(connection, schemaContainer2);
+        Container tableContainer = schemaContainer2.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement()).getChildByName("address");
 
+        Map<String, String> attributes = tableContainer.getAttributes();
 
+        for(Map.Entry<String, String> entry: attributes.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
     }
 }
