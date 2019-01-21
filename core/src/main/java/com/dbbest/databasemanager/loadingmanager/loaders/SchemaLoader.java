@@ -39,7 +39,7 @@ public class SchemaLoader implements Loader {
                 throw new ContainerException(Level.SEVERE, "The schema container does not contain the schema name");
             }
             String informationSchemataSelectAllQuery =
-                String.format(MySqlQueriesConstants.INFORMATIONSCHEMASELECTALL.getQuery(), connection.getCatalog());
+                String.format(MySqlQueriesConstants.IinformationSchemaSelectAll.getQuery(), connection.getCatalog());
             PreparedStatement preparedStatement = connection.prepareStatement(informationSchemataSelectAllQuery);
             ResultSet schemaAttributes = preparedStatement.executeQuery();
 

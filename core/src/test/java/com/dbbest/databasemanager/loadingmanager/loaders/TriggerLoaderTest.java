@@ -90,17 +90,35 @@ public class TriggerLoaderTest {
             System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         }
 */
+/*
+        SchemaLoader schemaLoader2 = new SchemaLoader();
+        Container schemaContainer2 = new Container();
+        schemaContainer2.setName("sakila");
+        schemaLoader1.fullLoad(connection, schemaContainer2);
+        Container columnContainer = schemaContainer2.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement())
+            .getChildByName("address").getChildByName(TableCategoriesTagNameCategories.Columns.getElement()).getChildByName("address_id");
+
+        Map<String, String> attributes = columnContainer.getAttributes();
+
+        for(Map.Entry<String, String> entry: attributes.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
+        }
+*/
 
         SchemaLoader schemaLoader2 = new SchemaLoader();
         Container schemaContainer2 = new Container();
         schemaContainer2.setName("sakila");
         schemaLoader1.fullLoad(connection, schemaContainer2);
-        Container tableContainer = schemaContainer2.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement()).getChildByName("address");
-
+        Container tableContainer = schemaContainer2.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement())
+            .getChildByName("address");
+/*
         Map<String, String> attributes = tableContainer.getAttributes();
 
         for(Map.Entry<String, String> entry: attributes.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
+        */
+
+        //Container indexContainer = tableContainer
     }
 }
