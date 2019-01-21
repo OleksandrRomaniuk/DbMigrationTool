@@ -1,8 +1,9 @@
-package com.dbbest.xmlmanager;
+package com.dbbest.databasemanager;
 
 import com.dbbest.databasemanager.ConnectionPropertiesEditorTest;
 import com.dbbest.databasemanager.ConnectionPropertiesManagerTest;
 import com.dbbest.databasemanager.SimpleConnectionBuilderTest;
+import com.dbbest.xmlmanager.IntegrationTest;
 import com.dbbest.xmlmanager.container.ContainerTest;
 import com.dbbest.xmlmanager.container.HorizontalPassageSearchManagerTest;
 import com.dbbest.xmlmanager.container.ListOfChildrenTest;

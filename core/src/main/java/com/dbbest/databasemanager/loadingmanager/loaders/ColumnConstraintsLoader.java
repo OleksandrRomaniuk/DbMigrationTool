@@ -2,7 +2,6 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.FkAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.KeyColumnUsageAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableConstraintAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.ColumnTagNameConstants;
 import com.dbbest.exceptions.ContainerException;
@@ -28,10 +27,9 @@ public class ColumnConstraintsLoader implements Loader {
             columnContainer.addChild(constraintCategory);
 
             String query =
-                String.format(MySqlQueriesConstants.KeyColumnUSageConstarintsSelectAll.getQuery(),
+                String.format(MySqlQueriesConstants.TableConstraintsSelectAll.getQuery(),
                     columnContainer.getParent().getParent().getParent().getParent().getName(),
-                    columnContainer.getParent().getParent().getName(),
-                    columnContainer.getName());
+                    columnContainer.getParent().getParent().getName());
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -39,7 +37,8 @@ public class ColumnConstraintsLoader implements Loader {
                 Container constraintContainer = new Container();
                 constraintContainer.setName(resultSet.getString(TableConstraintAttributes.CONSTRAINT_NAME.getElement()));
                 constraintCategory.addChild(constraintContainer);
-                for (FkAttributes attributeKey : FkAttributes.values()) {
+
+                for (TableConstraintAttributes attributeKey : TableConstraintAttributes.values()) {
                     constraintContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
                 }
             }
@@ -57,16 +56,23 @@ public class ColumnConstraintsLoader implements Loader {
 
         try {
             String query =
-                String.format(MySqlQueriesConstants.TableConstraintsSelectAll.getQuery(),
+                String.format(MySqlQueriesConstants.KeyColumnUSageConstarintsSelectAll.getQuery(),
                     constraintContainer.getParent().getParent().getParent().getParent().getParent().getParent().getName(),
                     constraintContainer.getParent().getParent().getParent().getParent().getName(),
+                    constraintContainer.getParent().getParent().getName(),
                     constraintContainer.getName());
 
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                constraintContainer.addAttribute(KeyColumnUsageAttributes.CONSTRAINT_TYPE.getElement(),
-                    resultSet.getString(KeyColumnUsageAttributes.CONSTRAINT_TYPE.getElement()));
+
+            while (resultSet.next()) {
+                Container constraint = new Container();
+                constraint.setName(resultSet.getString(FkAttributes.CONSTRAINT_NAME.getElement()));
+                constraintContainer.addChild(constraint);
+
+                for (FkAttributes attributeKey : FkAttributes.values()) {
+                    constraint.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+                }
             }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);

@@ -72,6 +72,8 @@ public class TableColumnLoader implements Loader {
         if (columns != null && !columns.isEmpty()) {
             for (Container column : columns) {
                 detailedLoad(connection, column);
+                ColumnConstraintsLoader columnConstraintsLoader = new ColumnConstraintsLoader();
+                columnConstraintsLoader.fullLoad(connection, column);
             }
         }
     }
