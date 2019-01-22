@@ -75,6 +75,7 @@ public class TableLoader implements Loader {
                 new IndexLoader().fullLoad(connection, table.getChildByName(TableCategoriesTagNameCategories.Indexes.getElement()));
                 new ForeignKeyLoader().fullLoad(connection, table.getChildByName(TableCategoriesTagNameCategories.Foreign_Keys.getElement()));
                 new TriggerLoader().fullLoad(connection, table.getChildByName(TableCategoriesTagNameCategories.Triggers.getElement()));
+                new ConstraintsLoader().fullLoad(connection, table.getChildByName(TableCategoriesTagNameCategories.ConstraintCategory.getElement()));
             }
         }
     }

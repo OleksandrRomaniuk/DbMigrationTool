@@ -2,7 +2,7 @@ package com.dbbest.databasemanager.loadingmanager.constants.tags;
 
 public enum  TableCategoriesTagNameCategories {
     Columns("Columns"), Indexes("Indexes"), Foreign_Keys("Foreign Keys"),
-    Triggers("Triggers");
+    Triggers("Triggers"), ConstraintCategory("Constraints");
 
     private String element;
 

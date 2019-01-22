@@ -14,11 +14,14 @@ public class TablePrinter implements Printer {
         StringBuilder query = new StringBuilder();
         query.append("CREATE TABLE IF NOT EXISTS " + tableContainer.getAttributes().get(TableAttributes.TABLE_SCHEMA.getElement())
             + "." + tableContainer.getAttributes().get(TableAttributes.TABLE_NAME.getElement()));
-
         query.append(" (\n");
         TableColumnPrinter tableColumnPrinter = new TableColumnPrinter();
         query.append(tableColumnPrinter.execute(tableContainer
             .getChildByName(TableCategoriesTagNameCategories.Columns.getElement())));
+        query.append(new IndexPrinterHelper().execute(tableContainer));
+        query.append(new PrimaryKeyPrinterHelper().execute(tableContainer));
+        query.append(new UniquePrinterHelper().execute(tableContainer));
+
         query.append(")\n");
 
         query.append(getTableOptions(tableContainer));
