@@ -9,6 +9,7 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.List;
 
 public class ForeignKeyPrinterHelper implements Printer {
+
     @Override
     public String execute(Container tableContainer) throws ContainerException {
 
@@ -31,7 +32,7 @@ public class ForeignKeyPrinterHelper implements Printer {
     private String printForeignKey(Container fkContainer) {
         StringBuilder query = new StringBuilder();
         List<Container> listOfFkChildren = fkContainer.getChildren();
-        query.append("FOREIGN KEY " + getName(fkContainer) + getColumns(listOfFkChildren) + " REFERENCES " + getReference(listOfFkChildren) + "\n");
+        query.append("FOREIGN KEY" + getName(fkContainer) + getColumns(listOfFkChildren) + getReference(listOfFkChildren) + "\n");
         return query.toString();
     }
 
@@ -63,7 +64,7 @@ public class ForeignKeyPrinterHelper implements Printer {
         }
         query.deleteCharAt(query.length() - 1);
         query.deleteCharAt(query.length() - 1);
-        query.append(")");
+        query.append("),");
         return query.toString();
     }
 

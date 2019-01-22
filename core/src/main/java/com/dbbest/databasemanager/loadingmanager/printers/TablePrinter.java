@@ -21,9 +21,8 @@ public class TablePrinter implements Printer {
         query.append(new IndexPrinterHelper().execute(tableContainer));
         query.append(new PrimaryKeyPrinterHelper().execute(tableContainer));
         query.append(new UniquePrinterHelper().execute(tableContainer));
-
+        query.append(new ForeignKeyPrinterHelper().execute(tableContainer));
         query.append(")\n");
-
         query.append(getTableOptions(tableContainer));
 
 
