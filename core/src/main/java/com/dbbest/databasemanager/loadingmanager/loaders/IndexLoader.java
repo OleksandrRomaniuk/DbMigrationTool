@@ -62,14 +62,18 @@ public class IndexLoader implements Loader {
             String query =
                 String.format(MySqlQueriesConstants.IndexInformationSchemaSelectAll.getQuery(),
                     indexContainer.getParent().getParent().getParent().getParent().getName(),
-                    indexContainer.getParent().getParent().getName(), indexContainer.getName());
+                    indexContainer.getParent().getParent().getName(),
+                    indexContainer.getName());
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            if (resultSet.next()) {
+            while (resultSet.next()) {
+                Container index = new Container();
+                index.setName(resultSet.getString(IndexAttributes.INDEX_NAME.getElement()));
                 for (IndexAttributes attributeKey : IndexAttributes.values()) {
-                    indexContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
+                    index.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
                 }
+                indexContainer.addChild(index);
             }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);

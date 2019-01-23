@@ -75,10 +75,9 @@ public class ConstraintsLoader implements Loader {
     }
 
     @Override
-    public void fullLoad(Connection connection, Container tableContainer) throws DatabaseException, ContainerException {
-        lazyLoad(connection, tableContainer);
-        List<Container> constraintContainers = tableContainer
-            .getChildByName(TableCategoriesTagNameCategories.ConstraintCategory.getElement()).getChildren();
+    public void fullLoad(Connection connection, Container constraintCategoryContainer) throws DatabaseException, ContainerException {
+        lazyLoad(connection, constraintCategoryContainer);
+        List<Container> constraintContainers = constraintCategoryContainer.getChildren();
         for (Container constraint : constraintContainers) {
             detailedLoad(connection, constraint);
         }

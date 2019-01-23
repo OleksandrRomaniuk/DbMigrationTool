@@ -18,20 +18,19 @@ public class IndexPrinterHelper implements Printer {
     private String buildPrintIndexes(Container tableContainer) throws ContainerException {
         List<Container> lisOfIndexes = tableContainer
             .getChildByName(TableCategoriesTagNameCategories.Indexes.getElement()).getChildren();
-        List<String> listOfUniqueIndexNames = getListOfUniqueName(lisOfIndexes);
         StringBuilder query = new StringBuilder();
-        for (String indexName : listOfUniqueIndexNames) {
-            query.append(printIndex(lisOfIndexes, indexName));
+        if (lisOfIndexes.size() > 0) {
+            for (Container index : lisOfIndexes) {
+                query.append(printIndex(index));
+            }
         }
         return query.toString();
     }
 
-    private String printIndex(List<Container> lisOfIndexes, String indexName) {
+    private String printIndex(Container index) {
         StringBuilder query = new StringBuilder();
-        List<Container> indexesWithSameName = getIndexesWithSameName(lisOfIndexes, indexName);
-
-        query.append("INDEX " + indexName
-            + getIndexType(indexesWithSameName.get(0)) + getKeyPart(indexesWithSameName) + "\n");
+        query.append("INDEX " + index.getName()
+            + getIndexType((Container) index.getChildren().get(0)) + getKeyPart(index.getChildren()) + ",\n");
 
         return query.toString();
     }
@@ -48,10 +47,12 @@ public class IndexPrinterHelper implements Printer {
 
     private List<String> getListOfUniqueName(List<Container> lisOfIndexes) {
         List<String> listOfUniqueIndexNames = new ArrayList();
-        for (Container indexContainer : lisOfIndexes) {
-            String indexName = (String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME.getElement());
-            if (!ifListContainsName(listOfUniqueIndexNames, indexName)) {
-                listOfUniqueIndexNames.add(indexName);
+        if (lisOfIndexes.size() > 0) {
+            for (Container indexContainer : lisOfIndexes) {
+                String indexName = (String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME.getElement());
+                if (!ifListContainsName(listOfUniqueIndexNames, indexName) && !indexName.equals("PRIMARY")) {
+                    listOfUniqueIndexNames.add(indexName);
+                }
             }
         }
         return listOfUniqueIndexNames;
@@ -98,11 +99,10 @@ public class IndexPrinterHelper implements Printer {
         query.append(", ");
     }
 
-
-    private String getIndexType(Container indexContainer) {
-        if (indexContainer.getAttributes().get(IndexAttributes.INDEX_TYPE.getElement()).equals("BTREE")) {
+    private String getIndexType(Container index) {
+        if (index.getAttributes().get(IndexAttributes.INDEX_TYPE.getElement()).equals("BTREE")) {
             return " USING BTREE";
-        } else if (indexContainer.getAttributes().get(IndexAttributes.INDEX_TYPE.getElement()).equals("HASH")) {
+        } else if (index.getAttributes().get(IndexAttributes.INDEX_TYPE.getElement()).equals("HASH")) {
             return " USING HASH";
         } else {
             return "";

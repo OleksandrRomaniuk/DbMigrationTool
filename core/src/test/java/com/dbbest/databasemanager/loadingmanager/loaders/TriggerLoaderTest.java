@@ -4,6 +4,7 @@ import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.SchemaCategoriesTagNameConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.printers.TablePrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
@@ -110,7 +111,7 @@ public class TriggerLoaderTest {
         schemaContainer2.setName("sakila");
         schemaLoader1.fullLoad(connection, schemaContainer2);
         Container tableContainer = schemaContainer2.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement())
-            .getChildByName("address");
+            .getChildByName("rental");
 /*
         Map<String, String> attributes = tableContainer.getAttributes();
 
@@ -118,7 +119,8 @@ public class TriggerLoaderTest {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
         */
-
+        TablePrinter tablePrinter = new TablePrinter();
+        System.out.println(tablePrinter.execute(tableContainer));
         //Container indexContainer = tableContainer
     }
 }

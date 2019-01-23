@@ -20,10 +20,12 @@ public class UniquePrinterHelper implements Printer {
         List<Container> uniqueList = tableContainer
             .getChildByName(TableCategoriesTagNameCategories.ConstraintCategory.getElement()).getChildren();
         StringBuilder query = new StringBuilder();
-        for (Container uniqueContainer : uniqueList) {
-            String constraintType = (String) uniqueContainer.getAttributes().get(TableConstraintAttributes.CONSTRAINT_TYPE.getElement());
-            if (constraintType.trim().equals("UNIQUE")) {
-                query.append(printUnique(uniqueContainer));
+        if (uniqueList != null && uniqueList.size() > 0) {
+            for (Container uniqueContainer : uniqueList) {
+                String constraintType = (String) uniqueContainer.getAttributes().get(TableConstraintAttributes.CONSTRAINT_TYPE.getElement());
+                if (constraintType.trim().equals("UNIQUE")) {
+                    query.append(printUnique(uniqueContainer));
+                }
             }
         }
         return query.toString();
@@ -41,7 +43,7 @@ public class UniquePrinterHelper implements Printer {
             .get(TableConstraintAttributes.CONSTRAINT_NAME.getElement());
         if (constraintName != null && !constraintName.trim().equals("")
             && !constraintName.trim().equals("null")) {
-            return constraintName + " ";
+            return constraintName;
         } else {
             return "";
         }

@@ -22,10 +22,12 @@ public class PrimaryKeyPrinterHelper implements Printer {
         List<Container> pkList = tableContainer
             .getChildByName(TableCategoriesTagNameCategories.ConstraintCategory.getElement()).getChildren();
         StringBuilder query = new StringBuilder();
-        for (Container pkContainer : pkList) {
-            String constraintType = (String) pkContainer.getAttributes().get(TableConstraintAttributes.CONSTRAINT_TYPE.getElement());
-            if (constraintType.trim().equals("PRIMARY KEY")) {
-                query.append(printPrimaryKey(pkContainer));
+        if (pkList != null && pkList.size() > 0) {
+            for (Container pkContainer : pkList) {
+                String constraintType = (String) pkContainer.getAttributes().get(TableConstraintAttributes.CONSTRAINT_TYPE.getElement());
+                if (constraintType.trim().equals("PRIMARY KEY")) {
+                    query.append(printPrimaryKey(pkContainer));
+                }
             }
         }
         return query.toString();
@@ -34,7 +36,7 @@ public class PrimaryKeyPrinterHelper implements Printer {
     private String printPrimaryKey(Container primaryKey) {
         StringBuilder query = new StringBuilder();
         List<Container> listOfPkChildren = primaryKey.getChildren();
-        query.append("PRIMARY KEY " + getKeyPart(listOfPkChildren) + "\n");
+        query.append("PRIMARY KEY" + getKeyPart(listOfPkChildren) + "\n");
         return query.toString();
     }
 

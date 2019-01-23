@@ -15,13 +15,13 @@ public class TablePrinter implements Printer {
         query.append("CREATE TABLE IF NOT EXISTS " + tableContainer.getAttributes().get(TableAttributes.TABLE_SCHEMA.getElement())
             + "." + tableContainer.getAttributes().get(TableAttributes.TABLE_NAME.getElement()));
         query.append(" (\n");
-        TableColumnPrinter tableColumnPrinter = new TableColumnPrinter();
-        query.append(tableColumnPrinter.execute(tableContainer
+        query.append(new TableColumnPrinter().execute(tableContainer
             .getChildByName(TableCategoriesTagNameCategories.Columns.getElement())));
         query.append(new IndexPrinterHelper().execute(tableContainer));
         query.append(new PrimaryKeyPrinterHelper().execute(tableContainer));
         query.append(new UniquePrinterHelper().execute(tableContainer));
         query.append(new ForeignKeyPrinterHelper().execute(tableContainer));
+        query.deleteCharAt(query.length() - 2);
         query.append(")\n");
         query.append(getTableOptions(tableContainer));
 
@@ -65,7 +65,8 @@ public class TablePrinter implements Printer {
 
     private String getComment(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return tableAttributes.get(TableAttributes.TABLE_TABLE_COMMENT.getElement()) != null
+        return (tableAttributes.get(TableAttributes.TABLE_TABLE_COMMENT.getElement()) != null
+            && !tableAttributes.get(TableAttributes.TABLE_TABLE_COMMENT.getElement()).equals(""))
             ? ("COMMENT = " + tableAttributes.get(TableAttributes.TABLE_TABLE_COMMENT.getElement()) + "\n") : "";
     }
 

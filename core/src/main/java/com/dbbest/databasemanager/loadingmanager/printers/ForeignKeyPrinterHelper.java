@@ -20,10 +20,12 @@ public class ForeignKeyPrinterHelper implements Printer {
         List<Container> fkList = tableContainer
             .getChildByName(TableCategoriesTagNameCategories.ConstraintCategory.getElement()).getChildren();
         StringBuilder query = new StringBuilder();
-        for (Container fkContainer : fkList) {
-            String constraintType = (String) fkContainer.getAttributes().get(TableConstraintAttributes.CONSTRAINT_TYPE.getElement());
-            if (constraintType.trim().equals("FOREIGN KEY")) {
-                query.append(printForeignKey(fkContainer));
+        if (fkList != null && fkList.size() > 0) {
+            for (Container fkContainer : fkList) {
+                String constraintType = (String) fkContainer.getAttributes().get(TableConstraintAttributes.CONSTRAINT_TYPE.getElement());
+                if (constraintType.trim().equals("FOREIGN KEY")) {
+                    query.append(printForeignKey(fkContainer));
+                }
             }
         }
         return query.toString();
@@ -41,7 +43,7 @@ public class ForeignKeyPrinterHelper implements Printer {
             .get(TableConstraintAttributes.CONSTRAINT_NAME.getElement());
         if (constraintName != null && !constraintName.trim().equals("")
             && !constraintName.trim().equals("null")) {
-            return constraintName + " ";
+            return " " + constraintName;
         } else {
             return "";
         }
