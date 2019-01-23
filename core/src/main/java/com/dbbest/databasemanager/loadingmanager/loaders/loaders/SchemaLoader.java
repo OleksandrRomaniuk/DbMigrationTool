@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.loaders;
 
+import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderTypeEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.SchemaAttributes;
@@ -15,13 +16,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-@com.dbbest.databasemanager.loadingmanager.annotations.Loader(LoaderTypeEnum.Schema)
+@LoaderAnnotation(LoaderTypeEnum.Schema)
 public class SchemaLoader implements Loader {
 
     @Override
-    public void lazyLoad(Connection connection, Container schemaContainer) throws ContainerException {
-        if ((!new ContainerValidator().ifContainerContainsSchemaName(schemaContainer))) {
-            throw new ContainerException(Level.SEVERE, "The schema container does not contain the schema name");
+    public void lazyLoad(Connection connection, Container schemaContainer) throws DatabaseException, ContainerException {
+        if (!schemaContainer.hasName()) {
+            try {
+                schemaContainer.setName(connection.getCatalog());
+            } catch (SQLException e) {
+                throw new DatabaseException(Level.SEVERE, "Can not get the schema name.");
+            }
         }
 
         for (SchemaCategoriesTagNameConstants schemaChildName : SchemaCategoriesTagNameConstants.values()) {

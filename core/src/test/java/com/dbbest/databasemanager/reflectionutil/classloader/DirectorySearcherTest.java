@@ -13,8 +13,8 @@ public class DirectorySearcherTest {
     @Test
     public void countFile() throws ClassNotFoundException, IOException, DatabaseException {
         DirectorySearcher directorySearcher = new DirectorySearcher();
-        assertEquals(directorySearcher.findPackageWithLoaders(DatabaseTypesEnum.MYSQL),
-            "com.dbbest.databasemanager.loadingmanager.loaders.loaders");
+        assertEquals(directorySearcher.findFolderWithLoaders(DatabaseTypesEnum.MYSQL.toString()),
+            "C:\\Users\\Oleksandr Romaniuk\\eclipse-workspace\\DBbest\\core\\target\\classes\\com\\dbbest\\databasemanager\\loadingmanager\\loaders\\loaders");
     }
 
 }

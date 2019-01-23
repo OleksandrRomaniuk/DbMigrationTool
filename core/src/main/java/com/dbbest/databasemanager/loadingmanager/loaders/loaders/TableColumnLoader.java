@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.loaders;
 
+import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderTypeEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.ColumnAttributes;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@com.dbbest.databasemanager.loadingmanager.annotations.Loader(LoaderTypeEnum.TableColumn)
+@LoaderAnnotation(LoaderTypeEnum.TableColumn)
 public class TableColumnLoader implements Loader {
     private static final Logger logger = Logger.getLogger("Database logger");
 

@@ -13,8 +13,9 @@ import java.util.logging.Level;
 public class DirectorySearcher {
 
     private String packageWithLoaders;
+    private String folderWithLoader;
 
-    public String findPackageWithLoaders(DatabaseTypesEnum databaseTypesEnum) throws DatabaseException {
+    public String findFolderWithLoaders(String databaseTypesEnum) throws DatabaseException {
 
         try {
             File root = new File(getRoot());
@@ -23,14 +24,14 @@ public class DirectorySearcher {
             throw new DatabaseException(Level.SEVERE, e);
         }
 
-        if (packageWithLoaders != null && !packageWithLoaders.trim().equals("")) {
-            return packageWithLoaders;
+        if (folderWithLoader != null && !folderWithLoader.trim().equals("")) {
+            return folderWithLoader;
         } else {
             throw new DatabaseException(Level.SEVERE, "Can not find the package with loaders " + databaseTypesEnum);
         }
     }
 
-    private void checkFile(File root, DatabaseTypesEnum databaseTypesEnum) throws DatabaseException {
+    private void checkFile(File root, String databaseTypesEnum) throws DatabaseException {
         File[] listOfFiles = root.listFiles();
         for (File item : listOfFiles) {
 
@@ -40,9 +41,9 @@ public class DirectorySearcher {
                 try {
                     Package pkg = new CustomClassLoader().createClass(item).getPackage();
                     Annotation annotation = pkg.getAnnotation(DatabaseTypesAnnotation.class);
-                    if (((DatabaseTypesAnnotation) annotation).value().equals(databaseTypesEnum)) {
+                    if (((DatabaseTypesAnnotation) annotation).value().toString().equals(databaseTypesEnum)) {
                         packageWithLoaders = pkg.getName();
-                        System.out.println(item.getCanonicalPath());
+                        folderWithLoader = item.getCanonicalPath().replace("\\package-info.class", "");
                     }
 
                 } catch (ClassNotFoundException | IOException e) {

@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface Loader {
+public @interface LoaderAnnotation {
     /**
      * @return returns the type of the loader.
      */
