@@ -1,8 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
-import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.FkAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.loaders.loaders.ForeignKeyLoader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;

@@ -36,16 +36,6 @@ public class IndexPrinterHelper implements Printer {
         return query.toString();
     }
 
-    private List<Container> getIndexesWithSameName(List<Container> lisOfIndexes, String indexName) {
-        List<Container> indexesWithSameName = new ArrayList();
-        for (Container indexContainer : lisOfIndexes) {
-            if (((String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME.getElement())).trim().equals(indexName)) {
-                indexesWithSameName.add(indexContainer);
-            }
-        }
-        return indexesWithSameName;
-    }
-
     private List<String> getListOfUniqueName(List<Container> lisOfIndexes) {
         List<String> listOfUniqueIndexNames = new ArrayList();
         if (lisOfIndexes.size() > 0) {

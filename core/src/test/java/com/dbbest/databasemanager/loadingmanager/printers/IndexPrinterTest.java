@@ -13,12 +13,16 @@ public class IndexPrinterTest {
     public void execute() throws ContainerException {
         Container indexContainer = new Container();
         indexContainer.setName("indx_location1");
-        indexContainer.addAttribute(IndexAttributes.NON_UNIQUE.getElement(), 1);
-        indexContainer.addAttribute(IndexAttributes.INDEX_NAME.getElement(), "indx_location1");
-        indexContainer.addAttribute(IndexAttributes.INDEX_TYPE.getElement(), "BTREE");
-        indexContainer.addAttribute(IndexAttributes.TABLE_SCHEMA.getElement(), "sakila");
-        indexContainer.addAttribute(IndexAttributes.TABLE_NAME.getElement(), "address");
-        indexContainer.addAttribute(IndexAttributes.COLUMN_NAME.getElement(), "location");
+        Container index = new Container();
+        indexContainer.addChild(index);
+        index.setName("indx_location1");
+        index.addAttribute(IndexAttributes.NON_UNIQUE.getElement(), 1);
+        index.addAttribute(IndexAttributes.INDEX_NAME.getElement(), "indx_location1");
+        index.addAttribute(IndexAttributes.INDEX_TYPE.getElement(), "BTREE");
+        index.addAttribute(IndexAttributes.TABLE_SCHEMA.getElement(), "sakila");
+        index.addAttribute(IndexAttributes.TABLE_NAME.getElement(), "address");
+        index.addAttribute(IndexAttributes.COLUMN_NAME.getElement(), "location");
+        index.addAttribute(IndexAttributes.SEQ_IN_INDEX.getElement(), "1");
 
         IndexPrinter indexPrinter = new IndexPrinter();
         assertEquals(indexPrinter.execute(indexContainer), "CREATE INDEX indx_location1 USING BTREE\n" +

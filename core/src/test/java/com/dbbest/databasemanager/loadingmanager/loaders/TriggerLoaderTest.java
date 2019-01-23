@@ -1,9 +1,11 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.SchemaCategoriesTagNameConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.loaders.loaders.SchemaLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.loaders.StoredProcedureLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.loaders.ViewColumnLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.loaders.ViewLoader;
 import com.dbbest.databasemanager.loadingmanager.printers.TablePrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -12,10 +14,6 @@ import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;
 
 import java.sql.Connection;
-import java.util.List;
-import java.util.Map;
-
-import static org.junit.Assert.*;
 
 public class TriggerLoaderTest {
 

@@ -54,13 +54,7 @@ public class AnnotationScanner {
      */
     public String readConfig() {
         try {
-            /*
-            URL url = getClass().getClassLoader().getResource("WEB-INF/config.xml");
-            JAXBContext jContext = JAXBContext.newInstance(RepositoryConfig.class);
-            Unmarshaller um = jContext.createUnmarshaller();
-            RepositoryConfig rc = (RepositoryConfig) um.unmarshal(new File(url.getFile()));
-            return rc.getRepository().getPackageName();
-            */
+
         } catch (Exception e) {
             e.printStackTrace();
         }
