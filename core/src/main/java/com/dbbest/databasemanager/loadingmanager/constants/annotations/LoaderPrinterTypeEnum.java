@@ -1,12 +1,12 @@
 package com.dbbest.databasemanager.loadingmanager.constants.annotations;
 
-public enum LoaderTypeEnum {
+public enum LoaderPrinterTypeEnum {
     Schema("Schema"), Foreign_Key("ForeignKey"), Function("Function"), Index("Index"), Stored_Procedure("StoredProcedure"),
     TableColumn("TableColumn"), Table("Table"), Trigger("Trigger"), ViewColumn("ViewColumn"), View("View");
 
     private String element;
 
-    LoaderTypeEnum(String element) {
+    LoaderPrinterTypeEnum(String element) {
         this.element = element;
     }
 

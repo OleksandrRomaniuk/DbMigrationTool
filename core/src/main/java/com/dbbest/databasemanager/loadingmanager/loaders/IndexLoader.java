@@ -1,8 +1,8 @@
-package com.dbbest.databasemanager.loadingmanager.loaders.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderTypeEnum;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterTypeEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.IndexAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderTypeEnum.Index)
+@LoaderAnnotation(LoaderPrinterTypeEnum.Index)
 public class IndexLoader implements Loader {
 
     @Override

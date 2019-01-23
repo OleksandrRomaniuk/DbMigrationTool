@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.loaders.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.ProcedureFunctionParameterAttributes;

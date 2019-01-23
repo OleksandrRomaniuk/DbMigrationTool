@@ -1,5 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.constants.annotations;
 
-public enum DatabaseTypesEnum {
+public enum LoadersPrinterDatabaseTypesEnum {
     MYSQL;
 }

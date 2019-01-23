@@ -8,13 +8,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * The annotation for loader classes.
+ * The annotation for printer classes.
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface LoaderAnnotation {
+public @interface PrinterAnnotation {
     /**
-     * @return returns the type of the loader.
+     * @return returns the type of the printer.
      */
     LoaderPrinterTypeEnum value();
 }

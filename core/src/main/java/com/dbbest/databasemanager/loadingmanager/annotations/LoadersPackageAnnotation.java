@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.annotations;
 
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.DatabaseTypesEnum;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPrinterDatabaseTypesEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -12,10 +12,10 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PACKAGE)
-public @interface DatabaseTypesAnnotation {
+public @interface LoadersPackageAnnotation {
 
     /**
      * @return returns database type.
      */
-    DatabaseTypesEnum value();
+    LoadersPrinterDatabaseTypesEnum value();
 }

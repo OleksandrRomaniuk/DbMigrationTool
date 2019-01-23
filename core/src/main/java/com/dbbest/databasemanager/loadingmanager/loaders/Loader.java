@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.loaders.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;

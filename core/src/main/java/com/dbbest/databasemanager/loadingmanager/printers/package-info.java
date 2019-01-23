@@ -1,0 +1,6 @@
+@PrintersPackageAnnotation(LoadersPrinterDatabaseTypesEnum.MysqlPrinters)
+
+package com.dbbest.databasemanager.loadingmanager.printers;
+
+import com.dbbest.databasemanager.loadingmanager.annotations.PrintersPackageAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPrinterDatabaseTypesEnum;

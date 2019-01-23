@@ -1,8 +1,8 @@
-package com.dbbest.databasemanager.loadingmanager.loaders.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderTypeEnum;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterTypeEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.FkAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.SchemaAttributes;
 import com.dbbest.exceptions.ContainerException;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@LoaderAnnotation(LoaderTypeEnum.Foreign_Key)
+@LoaderAnnotation(LoaderPrinterTypeEnum.Foreign_Key)
 public class ForeignKeyLoader implements Loader {
     private static final Logger logger = Logger.getLogger("Database logger");
 
