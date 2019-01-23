@@ -29,9 +29,10 @@ public class IndexPrinterHelper implements Printer {
 
     private String printIndex(Container index) {
         StringBuilder query = new StringBuilder();
-        query.append("INDEX " + index.getName()
-            + getIndexType((Container) index.getChildren().get(0)) + getKeyPart(index.getChildren()) + ",\n");
-
+        if (!index.getName().equals("PRIMARY")) {
+            query.append("INDEX " + index.getName()
+                + getIndexType((Container) index.getChildren().get(0)) + getKeyPart(index.getChildren()) + ",\n");
+        }
         return query.toString();
     }
 

@@ -8,8 +8,8 @@ public class IndexPrinter implements Printer {
     @Override
     public String execute(Container indexContainer) throws ContainerException {
         StringBuilder query = new StringBuilder();
-        query.append("CREATE" + isUnique(indexContainer) + " INDEX " + getName(indexContainer)
-            + getType(indexContainer) + "\nON " + getTableName(indexContainer) + " ("
+        query.append("CREATE" + isUnique(indexContainer) + " INDEX " + indexContainer.getName()
+            + getType((Container) indexContainer.getChildren().get(0)) + "\nON " + getTableName((Container) indexContainer.getChildren().get(0)) + " ("
             + getColumnName(indexContainer) + ")");
 
         return query.toString();
@@ -38,6 +38,8 @@ public class IndexPrinter implements Printer {
     }
 
     private String getColumnName(Container indexContainer) {
+
+        
         return (String) indexContainer.getAttributes().get(IndexAttributes.COLUMN_NAME.getElement());
     }
 }
