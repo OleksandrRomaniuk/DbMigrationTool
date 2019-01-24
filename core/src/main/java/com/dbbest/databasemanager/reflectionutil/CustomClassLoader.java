@@ -9,7 +9,7 @@ public class CustomClassLoader extends ClassLoader {
 
     public Class<?> createClass(File classFile) throws ClassNotFoundException {
         if (!classFile.isFile()) {
-            throw new ClassNotFoundException("Class not found" + classFile.getPath());
+            throw new ClassNotFoundException("Class not found " + classFile.getPath());
         }
         try (InputStream inputStream = new BufferedInputStream(new FileInputStream(classFile));) {
             byte[] byteRepresentationOfClass = new byte[(int) classFile.length()];
