@@ -1,30 +1,32 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterTypeEnum;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.queries.MySQLQueries;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderPrinterTypeEnum.TableColumn)
-public class TableLoader implements Loader {
+@LoaderAnnotation(LoaderPrinterTypeEnum.Table)
+public class TableLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Connection connection, Container categoryTablesContainer) throws DatabaseException, ContainerException {
         try {
-            if (categoryTablesContainer.getName() == null || categoryTablesContainer.getName().trim().isEmpty()) {
-                throw new ContainerException(Level.SEVERE, "The container with the category Tables does not contain the name.");
-            }
+            String schemaName = categoryTablesContainer.getParent().getName();
+            String lazyLoaderQuery = MySQLQueries.TABLELAZY;
+            String attribute = AttributeSingleConstants.TABLE_NAME;
+            String childName = LoaderPrinterTypeEnum.Table.getElement();
+            super.executeLazyLoad(connection, categoryTablesContainer, lazyLoaderQuery, attribute, childName, schemaName);
+
+/*
             ResultSet resultSet = connection.getMetaData()
                 .getTables(categoryTablesContainer.getParent().getName(), null, null, new String[] {"TABLE"});
 
@@ -38,6 +40,7 @@ public class TableLoader implements Loader {
                     table.addChild(tableCategory);
                 }
             }
+            */
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }
@@ -46,10 +49,13 @@ public class TableLoader implements Loader {
     @Override
     public void detailedLoad(Connection connection, Container tableContainer) throws DatabaseException, ContainerException {
 
+
         try {
-            if (tableContainer.getName() == null || tableContainer.getName().trim().isEmpty()) {
-                throw new ContainerException(Level.SEVERE, "The table container does not contain the name");
-            }
+            String schemaName = tableContainer.getParent().getParent().getName();
+            String detailedLoaderQuery = MySQLQueries.TABLEDETAILED;
+            List<String> attributes =
+            super.executeDetailedLoad(connection, tableContainer, detailedLoaderQuery, List<String> attributes, schemaName);
+            /*
             String informationSchemataSelectAllQuery =
                 String.format(MySqlQueriesConstants.TableInformationSchemaSelectAll.getQuery(),
                     connection.getCatalog(), tableContainer.getName());
@@ -60,6 +66,7 @@ public class TableLoader implements Loader {
                     tableContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
                 }
             }
+            */
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
