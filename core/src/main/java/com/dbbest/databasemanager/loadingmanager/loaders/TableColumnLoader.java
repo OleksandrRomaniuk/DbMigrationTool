@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@LoaderAnnotation(LoaderPrinterName.TableColumn)
+@LoaderAnnotation(LoaderPrinterName.TABLE_COLUMN)
 public class TableColumnLoader implements Loader {
     private static final Logger logger = Logger.getLogger("Database logger");
 

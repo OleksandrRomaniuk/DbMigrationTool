@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderPrinterName.ViewColumn)
+@LoaderAnnotation(LoaderPrinterName.VIEW_COLUMN)
 public class ViewColumnLoader implements Loader {
 
     @Override

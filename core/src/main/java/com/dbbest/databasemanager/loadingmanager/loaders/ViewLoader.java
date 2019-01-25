@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderPrinterName.View)
+@LoaderAnnotation(LoaderPrinterName.VIEW)
 public class ViewLoader implements Loader {
     @Override
     public void lazyLoad(Connection connection, Container viewCategoryContainer) throws DatabaseException, ContainerException {

@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderPrinterName.Index)
+@LoaderAnnotation(LoaderPrinterName.INDEX)
 public class IndexLoader implements Loader {
 
     @Override

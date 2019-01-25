@@ -1,4 +1,4 @@
-@PrintersPackageAnnotation(LoadersPrinterDatabaseTypesEnum.MysqlPrinters)
+@PrintersPackageAnnotation(LoadersPrinterDatabaseTypesEnum.MYSQL)
 
 package com.dbbest.databasemanager.loadingmanager.printers;
 

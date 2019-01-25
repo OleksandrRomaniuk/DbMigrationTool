@@ -32,7 +32,7 @@ public class LoaderManagerTest {
 
         Container container = new Container();
         container.addAttribute(TypeSupportConstants.DatabaseType.toString(), LoadersPrinterDatabaseTypesEnum.MYSQL.toString());
-        container.addAttribute(TypeSupportConstants.LoaderPrinterType.toString(), LoaderPrinterName.Schema);
+        container.addAttribute(TypeSupportConstants.LoaderPrinterType.toString(), LoaderPrinterName.SCHEMA);
 
         LoaderManager loaderManager = new LoaderManager();
         loaderManager.loadFull(connection, container);

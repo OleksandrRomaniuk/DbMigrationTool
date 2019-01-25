@@ -2,7 +2,9 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeListConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -14,34 +16,43 @@ import java.util.List;
 
 public abstract class AbstractLoader implements Loader {
 
+    private Connection connection;
+    private String schemaName;
+    private String childName;
+    private String attribute;
 
-    protected void executeLazyLoad(Container node, String lazyLoaderQuery) throws SQLException, ContainerException {
-
-        String childName = ((LoaderAnnotation) this.getClass()
+    public AbstractLoader() {
+        connection = Context.getInstance().getConnection();
+        schemaName = Context.getInstance().getSchemaName();
+        childName = ((LoaderAnnotation) this.getClass()
             .getAnnotation(LoaderAnnotation.class)).value();
+        attribute = AttributeSingleConstants.NAME_ATTRIBUTE_CONSTANTS.get(childName);
+    }
 
-        String attribute = AttributeSingleConstants.NAME_ATTRIBUTE_CONSTANTS.get(childName);
+    protected void executeLazyLoad(Container node) throws SQLException, ContainerException {
 
-        Connection connection = Context.getInstance().getConnection();
-
-        String schemaName = Context.getInstance().getSchemaName();
+        String lazyLoaderQuery = MySQLQueries.SQL_QUERIES_LAZY_LOADER.get(childName);
 
         this.executeLazyLoaderQuery(connection, node, lazyLoaderQuery, attribute, childName, schemaName);
     }
 
-    protected void executeDetailedLoad(Connection connection, Container node,
-                                       String detailedLoaderQuery, List<String> attributes, String schemaName) throws SQLException {
-        executeDetailedLoaderQuery(connection, node, detailedLoaderQuery,
-            attributes, schemaName);
+    protected void executeDetailedLoad(Container node) throws SQLException {
+
+        List<String> attributes = AttributeListConstants.getInstance().getMapOfConstants()
+            .get(childName);
+
+        String detailedLoaderQuery = MySQLQueries.SQL_QUERIES_DETAIL_LOADER.get(childName);
+
+        this.executeDetailedLoaderQuery(connection, node, detailedLoaderQuery, attributes, schemaName);
     }
 
 
     private void executeLazyLoaderQuery(Connection connection, Container node, String lazyLoaderQuery,
                                         String attribute, String childName, String schemaName) throws SQLException, ContainerException {
-        String query = String.format(lazyLoaderQuery, attribute, schemaName);
+        String query = String.format(lazyLoaderQuery, schemaName);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
+        while (resultSet.next()) {
             Container childNode = new Container();
             childNode.setName(childName);
             childNode.addAttribute(attribute, resultSet.getString(attribute));
@@ -52,8 +63,8 @@ public abstract class AbstractLoader implements Loader {
     private void executeDetailedLoaderQuery(Connection connection, Container node, String detailedLoaderQuery,
                                             List<String> attributes, String schemaName) throws SQLException {
         String listOfAttributes = getListOfAttributes(attributes);
-
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, node.getName());
+        String elementName = (String) node.getAttributes().get(attribute);
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, elementName);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {

@@ -16,16 +16,21 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@LoaderAnnotation(LoaderPrinterName.Trigger)
+@LoaderAnnotation(LoaderPrinterName.TRIGGER)
 public class TriggerLoader implements Loader {
     private static final Logger logger = Logger.getLogger("Database logger");
 
     @Override
-    public void lazyLoad(Connection connection, Container categoryTriggers) throws DatabaseException, ContainerException {
-        if (categoryTriggers.getName() == null || categoryTriggers.getName().trim().isEmpty()) {
+    public void lazyLoad(Container categoryTriggers) throws DatabaseException, ContainerException {
+
+
+
+        /*if (categoryTriggers.getName() == null || categoryTriggers.getName().trim().isEmpty()) {
             throw new ContainerException(Level.SEVERE, "The container with Trigger category does not contain the name.");
-        }
+        }*/
         try {
+
+            /*
             String query =
                 String.format(MySqlQueriesConstants.TriggerInformationSchemaGetListOfTriggers.getQuery(),
                     categoryTriggers.getParent().getParent().getParent().getName(),
@@ -38,13 +43,14 @@ public class TriggerLoader implements Loader {
                 triggerContainer.setName(triggers.getString(TriggerAttributes.TRIGGER_NAME.getElement()));
                 categoryTriggers.addChild(triggerContainer);
             }
+           */
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
 
     @Override
-    public void detailedLoad(Connection connection, Container triggerContainer) throws DatabaseException, ContainerException {
+    public void detailedLoad(Container triggerContainer) throws DatabaseException, ContainerException {
         if (triggerContainer.getName() == null || triggerContainer.getName().trim().isEmpty()) {
             throw new ContainerException(Level.SEVERE, "The trigger container does not contain the name.");
         }
@@ -68,12 +74,12 @@ public class TriggerLoader implements Loader {
     }
 
     @Override
-    public void fullLoad(Connection connection, Container categoryTriggers) throws DatabaseException, ContainerException {
-        lazyLoad(connection, categoryTriggers);
+    public void fullLoad(Container categoryTriggers) throws DatabaseException, ContainerException {
+        lazyLoad(categoryTriggers);
         List<Container> trigers = categoryTriggers.getChildren();
         if (trigers != null && !trigers.isEmpty()) {
             for (Container triger : trigers) {
-                detailedLoad(connection, triger);
+                detailedLoad(triger);
             }
         }
     }

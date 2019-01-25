@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderPrinterName.Schema)
+@LoaderAnnotation(LoaderPrinterName.SCHEMA)
 public class SchemaLoader implements Loader {
 
     @Override
