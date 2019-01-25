@@ -1,7 +1,8 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
-import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableAttributes;
+import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -14,9 +15,17 @@ import java.util.List;
 public abstract class AbstractLoader implements Loader {
 
 
+    protected void executeLazyLoad(Container node, String lazyLoaderQuery) throws SQLException, ContainerException {
 
-    protected void executeLazyLoad(Connection connection, Container node, String lazyLoaderQuery,
-                                   String attribute, String childName, String schemaName) throws SQLException, ContainerException {
+        String childName = ((LoaderAnnotation) this.getClass()
+            .getAnnotation(LoaderAnnotation.class)).value();
+
+        String attribute = AttributeSingleConstants.NAME_ATTRIBUTE_CONSTANTS.get(childName);
+
+        Connection connection = Context.getInstance().getConnection();
+
+        String schemaName = Context.getInstance().getSchemaName();
+
         this.executeLazyLoaderQuery(connection, node, lazyLoaderQuery, attribute, childName, schemaName);
     }
 
@@ -56,7 +65,7 @@ public abstract class AbstractLoader implements Loader {
 
     private String getListOfAttributes(List<String> attributes) {
         StringBuilder stringBuilder = new StringBuilder();
-        for (String attribute: attributes) {
+        for (String attribute : attributes) {
             stringBuilder.append(attribute + ", ");
         }
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);

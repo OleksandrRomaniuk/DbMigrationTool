@@ -1,15 +1,16 @@
 package com.dbbest.xmlmanager.container;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
  * Resizable implementation of the dbList and ListIterable interfaces.
+ *
  * @param <T> the type of elements of the list.
  */
 public class ListOfChildren<T> extends ArrayList<T> implements DbList<T> {
 
+    @Override
     public boolean containsAll(List<T> elements) {
         for (int i = 0; i < this.size(); i++) {
             int counter = 0;
@@ -25,10 +26,12 @@ public class ListOfChildren<T> extends ArrayList<T> implements DbList<T> {
         return true;
     }
 
+    @Override
     public T item(int index) {
         return (T) this.get(index);
     }
 
+    @Override
     public boolean set(T element, int index) {
         if (index < size()) {
             this.set(index, element);
@@ -38,6 +41,14 @@ public class ListOfChildren<T> extends ArrayList<T> implements DbList<T> {
         }
     }
 
+    @Override
+    public void addAll(T[] elements) {
+        for (T element : elements) {
+            super.add(element);
+        }
+    }
+
+    @Override
     public String toString() {
         if (!this.isEmpty() && this.get(0) != null) {
             StringBuilder sb = new StringBuilder();

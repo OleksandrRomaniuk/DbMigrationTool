@@ -1,7 +1,8 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterTypeEnum;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeListConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.queries.MySQLQueries;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
@@ -14,17 +15,14 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderPrinterTypeEnum.Table)
+@LoaderAnnotation(LoaderPrinterName.TABLE)
 public class TableLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Connection connection, Container categoryTablesContainer) throws DatabaseException, ContainerException {
         try {
-            String schemaName = categoryTablesContainer.getParent().getName();
-            String lazyLoaderQuery = MySQLQueries.TABLELAZY;
-            String attribute = AttributeSingleConstants.TABLE_NAME;
-            String childName = LoaderPrinterTypeEnum.Table.getElement();
-            super.executeLazyLoad(connection, categoryTablesContainer, lazyLoaderQuery, attribute, childName, schemaName);
+
+            super.executeLazyLoad(categoryTablesContainer);
 
 /*
             ResultSet resultSet = connection.getMetaData()
@@ -53,8 +51,10 @@ public class TableLoader extends AbstractLoader {
         try {
             String schemaName = tableContainer.getParent().getParent().getName();
             String detailedLoaderQuery = MySQLQueries.TABLEDETAILED;
-            List<String> attributes =
-            super.executeDetailedLoad(connection, tableContainer, detailedLoaderQuery, List<String> attributes, schemaName);
+            List<String> attributes = AttributeListConstants.CONSTANTS
+                .get((LoaderAnnotation) this.getClass().getAnnotation(LoaderAnnotation.class));
+            super.executeDetailedLoad(connection, tableContainer, detailedLoaderQuery, attributes, schemaName);
+
             /*
             String informationSchemataSelectAllQuery =
                 String.format(MySqlQueriesConstants.TableInformationSchemaSelectAll.getQuery(),

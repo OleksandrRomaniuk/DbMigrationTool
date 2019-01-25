@@ -2,7 +2,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterTypeEnum;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.StoredProceduresAndFunctionsAttributes;
 import com.dbbest.exceptions.ContainerException;
@@ -16,7 +16,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderPrinterTypeEnum.Function)
+@LoaderAnnotation(LoaderPrinterName.Function)
 public class FunctionLoader implements Loader {
     @Override
     public void lazyLoad(Connection connection, Container functionCategoryContainer) throws DatabaseException, ContainerException {

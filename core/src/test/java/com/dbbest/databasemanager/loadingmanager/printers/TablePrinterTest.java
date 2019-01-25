@@ -1,13 +1,11 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.ColumnAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class TablePrinterTest {
 

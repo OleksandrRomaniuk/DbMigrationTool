@@ -17,5 +17,5 @@ public @interface PrintersPackageAnnotation {
     /**
      * @return returns database type.
      */
-    LoadersPrinterDatabaseTypesEnum value();
+    String value();
 }

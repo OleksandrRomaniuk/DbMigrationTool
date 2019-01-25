@@ -2,7 +2,7 @@ package com.dbbest.databasemanager.loadingmanager;
 
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPrinterDatabaseTypesEnum;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterTypeEnum;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.SchemaCategoriesTagNameConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.TypeSupportConstants;
 import com.dbbest.exceptions.ContainerException;
@@ -32,7 +32,7 @@ public class LoaderManagerTest {
 
         Container container = new Container();
         container.addAttribute(TypeSupportConstants.DatabaseType.toString(), LoadersPrinterDatabaseTypesEnum.MYSQL.toString());
-        container.addAttribute(TypeSupportConstants.LoaderPrinterType.toString(), LoaderPrinterTypeEnum.Schema.getElement());
+        container.addAttribute(TypeSupportConstants.LoaderPrinterType.toString(), LoaderPrinterName.Schema);
 
         LoaderManager loaderManager = new LoaderManager();
         loaderManager.loadFull(connection, container);

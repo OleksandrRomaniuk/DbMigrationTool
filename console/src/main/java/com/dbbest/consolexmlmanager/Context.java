@@ -2,6 +2,7 @@ package com.dbbest.consolexmlmanager;
 
 import com.dbbest.xmlmanager.container.Container;
 
+import java.sql.Connection;
 import java.util.List;
 
 /**
@@ -14,8 +15,11 @@ public final class Context {
     private String commandLine;
     private static Context instance;
     private List<Container> listOfFoundElements;
+    private Connection connection;
+    private String schemaName;
 
-    private Context() {}
+    private Context() {
+    }
 
     /**
      * @return returns the instance of the class.
@@ -59,6 +63,22 @@ public final class Context {
 
     public void setListOfFoundElements(List<Container> listOfFoundElements) {
         this.listOfFoundElements = listOfFoundElements;
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
+
+    public String getSchemaName() {
+        return schemaName;
+    }
+
+    public void setSchemaName(String schemaName) {
+        this.schemaName = schemaName;
     }
 }
 

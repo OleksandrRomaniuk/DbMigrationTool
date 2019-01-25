@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterTypeEnum;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.SchemaCategoriesTagNameConstants;
@@ -15,7 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
-@LoaderAnnotation(LoaderPrinterTypeEnum.Schema)
+@LoaderAnnotation(LoaderPrinterName.Schema)
 public class SchemaLoader implements Loader {
 
     @Override

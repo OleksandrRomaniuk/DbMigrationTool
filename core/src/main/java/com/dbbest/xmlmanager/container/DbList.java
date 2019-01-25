@@ -61,4 +61,6 @@ public interface DbList<T> {
     T item(int index);
 
     boolean set(T element, int index);
+
+    void addAll(T[] elements);
 }
