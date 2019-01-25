@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.attributes;
+package com.dbbest.databasemanager.loadingmanager.constants.attributes.delete;
 
 public enum ColumnAttributes {
     COLUMN_TABLE_CATALOG("TABLE_CATALOG"), COLUMN_TABLE_SCHEMA("TABLE_SCHEMA"), COLUMN_TABLE_NAME("TABLE_NAME"), COLUMN_NAME("COLUMN_NAME"), COLUMN_ORDINAL_POSITION("ORDINAL_POSITION"),

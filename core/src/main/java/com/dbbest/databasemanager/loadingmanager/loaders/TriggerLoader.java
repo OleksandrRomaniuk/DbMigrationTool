@@ -1,37 +1,29 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.TriggerAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @LoaderAnnotation(LoaderPrinterName.TRIGGER)
-public class TriggerLoader implements Loader {
+public class TriggerLoader extends AbstractLoader {
     private static final Logger logger = Logger.getLogger("Database logger");
 
     @Override
     public void lazyLoad(Container categoryTriggers) throws DatabaseException, ContainerException {
 
-
-
         /*if (categoryTriggers.getName() == null || categoryTriggers.getName().trim().isEmpty()) {
             throw new ContainerException(Level.SEVERE, "The container with Trigger category does not contain the name.");
         }*/
         try {
-
-            /*
-            String query =
+            super.executeLazyLoadTableChildren(categoryTriggers);
+            /*String query =
                 String.format(MySqlQueriesConstants.TriggerInformationSchemaGetListOfTriggers.getQuery(),
                     categoryTriggers.getParent().getParent().getParent().getName(),
                     categoryTriggers.getParent().getName());
@@ -43,7 +35,7 @@ public class TriggerLoader implements Loader {
                 triggerContainer.setName(triggers.getString(TriggerAttributes.TRIGGER_NAME.getElement()));
                 categoryTriggers.addChild(triggerContainer);
             }
-           */
+*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -51,11 +43,13 @@ public class TriggerLoader implements Loader {
 
     @Override
     public void detailedLoad(Container triggerContainer) throws DatabaseException, ContainerException {
-        if (triggerContainer.getName() == null || triggerContainer.getName().trim().isEmpty()) {
+        /*if (triggerContainer.getName() == null || triggerContainer.getName().trim().isEmpty()) {
             throw new ContainerException(Level.SEVERE, "The trigger container does not contain the name.");
-        }
+        }*/
         try {
-            String query =
+
+            super.executeDetailedLoadTableChildren(triggerContainer);
+            /*String query =
                 String.format(MySqlQueriesConstants.TriggerInformationSchemaSelectAll.getQuery(),
                     triggerContainer.getParent().getParent().getParent().getParent().getName(),
                     triggerContainer.getParent().getParent().getName(),
@@ -67,7 +61,7 @@ public class TriggerLoader implements Loader {
                 for (TriggerAttributes attributeKey : TriggerAttributes.values()) {
                     triggerContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
                 }
-            }
+            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

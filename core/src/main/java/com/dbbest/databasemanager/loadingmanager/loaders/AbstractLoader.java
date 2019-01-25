@@ -20,6 +20,10 @@ public abstract class AbstractLoader implements Loader {
     private String schemaName;
     private String childName;
     private String attribute;
+    private String listOfAttributes;
+    private List<String> attributes;
+    private String lazyLoaderQuery;
+    private String detailedLoaderQuery;
 
     public AbstractLoader() {
         connection = Context.getInstance().getConnection();
@@ -27,29 +31,43 @@ public abstract class AbstractLoader implements Loader {
         childName = ((LoaderAnnotation) this.getClass()
             .getAnnotation(LoaderAnnotation.class)).value();
         attribute = AttributeSingleConstants.NAME_ATTRIBUTE_CONSTANTS.get(childName);
-    }
-
-    protected void executeLazyLoad(Container node) throws SQLException, ContainerException {
-
-        String lazyLoaderQuery = MySQLQueries.SQL_QUERIES_LAZY_LOADER.get(childName);
-
-        this.executeLazyLoaderQuery(connection, node, lazyLoaderQuery, attribute, childName, schemaName);
-    }
-
-    protected void executeDetailedLoad(Container node) throws SQLException {
-
-        List<String> attributes = AttributeListConstants.getInstance().getMapOfConstants()
+        attributes = AttributeListConstants.getInstance().getMapOfConstants()
             .get(childName);
-
-        String detailedLoaderQuery = MySQLQueries.SQL_QUERIES_DETAIL_LOADER.get(childName);
-
-        this.executeDetailedLoaderQuery(connection, node, detailedLoaderQuery, attributes, schemaName);
+        listOfAttributes = getListOfAttributes(attributes);
+        lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(childName);
+        detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(childName);
     }
 
+    protected void executeSchemaDetailedLoad(Container node) throws SQLException {
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName);
+        this.executeDetailedLoaderQuery(node, query);
+    }
 
-    private void executeLazyLoaderQuery(Connection connection, Container node, String lazyLoaderQuery,
-                                        String attribute, String childName, String schemaName) throws SQLException, ContainerException {
+    protected void executeLazyLoadSchemaChildren(Container node) throws SQLException, ContainerException {
         String query = String.format(lazyLoaderQuery, schemaName);
+        this.executeLazyLoaderQuery(node, query);
+    }
+
+    protected void executeDetailedLoadSchemaChildren(Container node) throws SQLException {
+        String elementName = (String) node.getAttributes().get(attribute);
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, elementName);
+        this.executeDetailedLoaderQuery(node, query);
+    }
+
+    protected void executeLazyLoadTableChildren(Container node) throws SQLException, ContainerException {
+        String tableName = (String) node.getParent().getAttributes().get(attribute);
+        String query = String.format(lazyLoaderQuery, schemaName, tableName);
+        this.executeLazyLoaderQuery(node, query);
+    }
+
+    protected void executeDetailedLoadTableChildren(Container node) throws SQLException {
+        String elementName = (String) node.getAttributes().get(attribute);
+        String tableName = (String) node.getParent().getParent().getAttributes().get(attribute);
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
+        this.executeDetailedLoaderQuery(node, query);
+    }
+
+    private void executeLazyLoaderQuery(Container node, String query) throws SQLException, ContainerException {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -60,11 +78,7 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 
-    private void executeDetailedLoaderQuery(Connection connection, Container node, String detailedLoaderQuery,
-                                            List<String> attributes, String schemaName) throws SQLException {
-        String listOfAttributes = getListOfAttributes(attributes);
-        String elementName = (String) node.getAttributes().get(attribute);
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, elementName);
+    private void executeDetailedLoaderQuery(Container node, String query) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {

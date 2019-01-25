@@ -1,13 +1,11 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.FkAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.FkAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableConstraintAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class ForeignKeyPrinterHelperTest {
 

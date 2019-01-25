@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.attributes;
+package com.dbbest.databasemanager.loadingmanager.constants.attributes.delete;
 
 public enum TriggerAttributes {
 

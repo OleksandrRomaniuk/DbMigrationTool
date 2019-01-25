@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.ViewAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ViewAttributes;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;

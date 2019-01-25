@@ -3,7 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.ColumnAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ColumnAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;

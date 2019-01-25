@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.ProcedureFunctionParameterAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.StoredProceduresAndFunctionsAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.StoredProceduresAndFunctionsAttributes;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;

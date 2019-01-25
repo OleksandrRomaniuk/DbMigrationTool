@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.tags;
+package com.dbbest.databasemanager.loadingmanager.constants.tags.delete;
 
 public enum SchemaCategoriesTagNameConstants {
     Tables("Tables"), Views("Views"), Stored_Procedures("Stored Procedures"),

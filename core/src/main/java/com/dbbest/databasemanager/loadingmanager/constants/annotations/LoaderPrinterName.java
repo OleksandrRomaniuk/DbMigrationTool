@@ -11,4 +11,8 @@ public class LoaderPrinterName {
     public static final String TRIGGER = "Trigger";
     public static final String VIEW_COLUMN = "ViewColumn";
     public static final String VIEW = "View";
+    public static final String TABLES = "Tables";
+    public static final String VIEWS = "Views";
+    public static final String STORED_PROCEDURES = "Stored Procedures";
+    public static final String FUNCTIONS = "Functions";
 }

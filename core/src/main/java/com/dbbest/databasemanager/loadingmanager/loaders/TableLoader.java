@@ -2,14 +2,11 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeListConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.queries.MySQLQueries;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,7 +17,7 @@ public class TableLoader extends AbstractLoader {
     @Override
     public void lazyLoad(Container categoryTablesContainer) throws DatabaseException, ContainerException {
         try {
-            super.executeLazyLoad(categoryTablesContainer);
+            super.executeLazyLoadSchemaChildren(categoryTablesContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }
@@ -29,7 +26,7 @@ public class TableLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container tableContainer) throws DatabaseException {
         try {
-            super.executeDetailedLoad(tableContainer);
+            super.executeDetailedLoadSchemaChildren(tableContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.FkAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.FkAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.TableConstraintAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -14,9 +14,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-public class ConstraintsLoader implements Loader {
+public class ConstraintsLoader extends AbstractLoader {
     @Override
-    public void lazyLoad(Connection connection, Container constraintCategoryContainer) throws DatabaseException, ContainerException {
+    public void lazyLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
         if (constraintCategoryContainer.getName() == null || constraintCategoryContainer.getName().trim().isEmpty()) {
             throw new ContainerException(Level.SEVERE, "The container of the table does not contain the name.");
         }
@@ -43,7 +43,7 @@ public class ConstraintsLoader implements Loader {
     }
 
     @Override
-    public void detailedLoad(Connection connection, Container constraintContainer) throws DatabaseException, ContainerException {
+    public void detailedLoad(Container constraintContainer) throws DatabaseException, ContainerException {
 
         if (constraintContainer.getName() == null || constraintContainer.getName().trim().isEmpty()) {
             throw new ContainerException(Level.SEVERE, "The container of the constraint category does not contain the name.");
@@ -74,11 +74,11 @@ public class ConstraintsLoader implements Loader {
     }
 
     @Override
-    public void fullLoad(Connection connection, Container constraintCategoryContainer) throws DatabaseException, ContainerException {
-        lazyLoad(connection, constraintCategoryContainer);
+    public void fullLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
+        lazyLoad(constraintCategoryContainer);
         List<Container> constraintContainers = constraintCategoryContainer.getChildren();
         for (Container constraint : constraintContainers) {
-            detailedLoad(connection, constraint);
+            detailedLoad(constraint);
         }
     }
 }

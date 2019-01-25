@@ -1,15 +1,11 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.StoredProceduresAndFunctionsAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,7 +22,7 @@ public class FunctionLoader extends AbstractLoader {
 
         try {
 
-            super.executeLazyLoad(functionCategoryContainer);
+            super.executeLazyLoadSchemaChildren(functionCategoryContainer);
             /*
             ResultSet functions = connection.getMetaData().getFunctions((String) functionCategoryContainer
                 .getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME.getElement()), null, null);
@@ -48,7 +44,7 @@ public class FunctionLoader extends AbstractLoader {
         }*/
 
         try {
-            super.executeDetailedLoad(functionContainer);
+            super.executeDetailedLoadSchemaChildren(functionContainer);
             /*
             String query =
                 String.format(MySqlQueriesConstants.StoredProceduresAndFunctionsSchemaSelectAll.getQuery(),

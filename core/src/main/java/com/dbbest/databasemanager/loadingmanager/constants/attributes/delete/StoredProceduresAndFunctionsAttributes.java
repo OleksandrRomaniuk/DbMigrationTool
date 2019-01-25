@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.attributes;
+package com.dbbest.databasemanager.loadingmanager.constants.attributes.delete;
 
 public enum StoredProceduresAndFunctionsAttributes {
     SPECIFIC_NAME("SPECIFIC_NAME"), ROUTINE_CATALOG("ROUTINE_CATALOG"), ROUTINE_SCHEMA("ROUTINE_SCHEMA"), ROUTINE_NAME("ROUTINE_NAME"),

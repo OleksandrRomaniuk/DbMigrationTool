@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.TriggerAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TriggerAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 

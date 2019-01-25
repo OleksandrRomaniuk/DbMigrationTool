@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.attributes;
+package com.dbbest.databasemanager.loadingmanager.constants.attributes.delete;
 
 public enum IndexAttributes {
     TABLE_CATALOG("TABLE_CATALOG"), TABLE_SCHEMA("TABLE_SCHEMA"), TABLE_NAME("TABLE_NAME"), NON_UNIQUE("NON_UNIQUE"), INDEX_SCHEMA("INDEX_SCHEMA"),

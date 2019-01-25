@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.tags;
+package com.dbbest.databasemanager.loadingmanager.constants.tags.delete;
 
 public enum  TableCategoriesTagNameCategories {
     Columns("Columns"), Indexes("Indexes"), Foreign_Keys("Foreign Keys"),
