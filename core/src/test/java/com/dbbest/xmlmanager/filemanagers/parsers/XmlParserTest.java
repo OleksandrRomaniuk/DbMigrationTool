@@ -75,24 +75,24 @@ public class XmlParserTest {
         expectedContainer.addChild(child2Container);
 
         child1Container.setName("child1");
-        child1Container.setParent(expectedContainer);
+        //child1Container.setParent(expectedContainer);
         HashMap attributes = new HashMap();
         attributes.put("id", "bk106");
         child1Container.setAttributes(attributes);
         child1Container.addChild(child11Container);
 
         child11Container.setValue("test text 1");
-        child11Container.setParent(child1Container);
+        //child11Container.setParent(child1Container);
         child11Container.setAttributes(new HashMap());
 
         child2Container.setName("child2");
-        child2Container.setParent(expectedContainer);
+        //child2Container.setParent(expectedContainer);
         child2Container.setAttributes(new HashMap());
         child2Container.addChild(child21Container);
 
         child21Container.setValue("<message>test text 1</message>");
         child21Container.setAttributes(new HashMap());
-        child21Container.setParent(child2Container);
+        //child21Container.setParent(child2Container);
 
         return expectedContainer;
     }

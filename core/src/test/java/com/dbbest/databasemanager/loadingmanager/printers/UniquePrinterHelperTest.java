@@ -3,6 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.printers;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.FkAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TableConstraintAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.printers.mysql.UniquePrinterHelper;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;
@@ -47,7 +48,8 @@ public class UniquePrinterHelperTest {
         uniqueConstrain2.addChild(subConstraint4);
 
         UniquePrinterHelper uniquePrinterHelper = new UniquePrinterHelper();
-        assertEquals(uniquePrinterHelper.execute(tableContainer), "UNIQUE test1  (store_id2, store_id1, store_id),\n" +
-            "UNIQUE  (store_id3),\n");
+        System.out.println(uniquePrinterHelper.execute(tableContainer));
+        assertEquals(uniquePrinterHelper.execute(tableContainer), "UNIQUE test1 (store_id2, store_id1, store_id),\n" +
+            "UNIQUE (store_id3),\n");
     }
 }

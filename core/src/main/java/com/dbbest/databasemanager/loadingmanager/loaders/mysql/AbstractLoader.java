@@ -2,10 +2,10 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeListConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.queries.MySQLQueries;
+import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -96,7 +96,7 @@ public abstract class AbstractLoader implements Loader {
 
     protected void executeDetailedLoadTableConstraint(Container node) throws SQLException {
         String elementName = (String) node.getAttributes().get(attribute);
-        String tableName = (String) node.getParent().getParent().getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
+        String tableName = (String) node.getParent().getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
         String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
         this.executeDetailedLoaderQuery(node, query);
     }

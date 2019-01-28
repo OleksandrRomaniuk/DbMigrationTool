@@ -1,10 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
-import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
-import com.dbbest.databasemanager.loadingmanager.loaders.mysql.TableLoader;
-import com.dbbest.databasemanager.loadingmanager.printers.TablePrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
@@ -18,7 +14,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 import static org.mockito.Mockito.mock;

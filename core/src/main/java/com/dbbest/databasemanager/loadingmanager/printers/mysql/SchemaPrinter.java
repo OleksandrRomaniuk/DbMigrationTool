@@ -1,6 +1,7 @@
-package com.dbbest.databasemanager.loadingmanager.printers;
+package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.util.Map;

@@ -1,8 +1,9 @@
-package com.dbbest.databasemanager.loadingmanager.printers;
+package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.FkAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TableConstraintAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -34,7 +35,7 @@ public class UniquePrinterHelper implements Printer {
     private String printUnique(Container uniqueContainer) {
         StringBuilder query = new StringBuilder();
         List<Container> listOfUniqueChildren = uniqueContainer.getChildren();
-        query.append("UNIQUE " + getName(uniqueContainer) + getKeyPart(listOfUniqueChildren) + "\n");
+        query.append("UNIQUE" + getName(uniqueContainer) + getKeyPart(listOfUniqueChildren) + "\n");
         return query.toString();
     }
 
@@ -43,7 +44,7 @@ public class UniquePrinterHelper implements Printer {
             .get(TableConstraintAttributes.CONSTRAINT_NAME.getElement());
         if (constraintName != null && !constraintName.trim().equals("")
             && !constraintName.trim().equals("null")) {
-            return constraintName;
+            return " " + constraintName;
         } else {
             return "";
         }

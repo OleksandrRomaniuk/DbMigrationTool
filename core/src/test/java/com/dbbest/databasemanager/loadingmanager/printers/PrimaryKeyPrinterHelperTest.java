@@ -3,6 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.printers;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.FkAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TableConstraintAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.printers.mysql.PrimaryKeyPrinterHelper;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;
@@ -45,9 +46,9 @@ public class PrimaryKeyPrinterHelperTest {
         subConstraint4.addAttribute(FkAttributes.ORDINAL_POSITION.getElement(), "1");
         pkConstrain2.addChild(subConstraint4);
 
+
         PrimaryKeyPrinterHelper primaryKeyPrinterHelper = new PrimaryKeyPrinterHelper();
-        System.out.println(primaryKeyPrinterHelper.execute(tableContainer));
-        assertEquals(primaryKeyPrinterHelper.execute(tableContainer), "PRIMARY KEY  (store_id1, store_id2, store_id),\n" +
-            "PRIMARY KEY  (store_id3),\n");
+        assertEquals(primaryKeyPrinterHelper.execute(tableContainer), "PRIMARY KEY (store_id1, store_id2, store_id),\n" +
+            "PRIMARY KEY (store_id3),\n");
     }
 }

@@ -36,7 +36,7 @@ public class TableLoader extends AbstractLoader {
                 tableContainer.addChild(fkCategory);
 
                 Container triggerCategory = new Container();
-                triggerCategory.setName(LoaderPrinterName.TRIGGER);
+                triggerCategory.setName(LoaderPrinterName.TABLE_TRIGGERS);
                 tableContainer.addChild(triggerCategory);
 
                 Container constraintCategory = new Container();

@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.printers.mysql.SchemaPrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Assert;

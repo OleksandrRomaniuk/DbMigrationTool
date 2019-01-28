@@ -19,11 +19,11 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TableColumnLoaderTest {
+public class IndexLoaderTest {
     @Test
-    public void shouldExecuteLazyLoadOfTableColumns() throws SQLException, DatabaseException, ContainerException {
+    public void shouldExecuteLazyLoadOfIndexes() throws SQLException, DatabaseException, ContainerException {
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= 'sakila' AND TABLE_NAME = 'testTable' ;";
+        String query = "SELECT DISTINCT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = 'sakila' AND TABLE_NAME = 'testTable' ;";
 
         Mockery mockery = new Mockery();
         Connection connection = mockery.mock(Connection.class);
@@ -37,7 +37,7 @@ public class TableColumnLoaderTest {
         mockery1.checking(new Expectations() {{
             oneOf(resultSet).next();
             will(returnValue(true));
-            oneOf(resultSet).getString("COLUMN_NAME");
+            oneOf(resultSet).getString("INDEX_NAME");
             will(returnValue("testColumn"));
             oneOf(resultSet).next();
             will(returnValue(false));
@@ -55,18 +55,18 @@ public class TableColumnLoaderTest {
         parent.addChild(container);
 
 
-        TableColumnLoader loader = new TableColumnLoader();
+        IndexLoader loader = new IndexLoader();
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
-        Assert.assertEquals("testColumn", ((Container) container.getChildren().get(0)).getAttributes().get("COLUMN_NAME"));
+        Assert.assertEquals("testColumn", ((Container) container.getChildren().get(0)).getAttributes().get("INDEX_NAME"));
     }
 
     @Test
-    public void shouldExecuteDetailLoadOfTableColumns() throws SQLException, DatabaseException, ContainerException {
+    public void shouldExecuteDetailLoadOfIndexes() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, CHARACTER_OCTET_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE, DATETIME_PRECISION, CHARACTER_SET_NAME, COLLATION_NAME, COLUMN_TYPE, COLUMN_KEY, EXTRA, PRIVILEGES, COLUMN_COMMENT, GENERATION_EXPRESSION FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= 'sakila' AND TABLE_NAME = 'testTable' AND  COLUMN_NAME = 'null' ;";
+        String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, NON_UNIQUE, INDEX_SCHEMA, SEQ_IN_INDEX, COLUMN_NAME, COLLATION, CARDINALITY, SUB_PART, PACKED, NULLABLE, INDEX_TYPE, COMMENT, INDEX_COMMENT FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = 'sakila' AND TABLE_NAME = 'testTable'  AND INDEX_NAME =  'null' ;";
 
         Mockery mockery = new Mockery();
         final Connection connection = mockery.mock(Connection.class);
@@ -89,8 +89,8 @@ public class TableColumnLoaderTest {
 
         Container container = new Container();
         parent2.addChild(container);
-        container.addAttribute("COLUMN_NAME", null);
-        TableColumnLoader loader = new TableColumnLoader();
+        container.addAttribute("INDEX_NAME", null);
+        IndexLoader loader = new IndexLoader();
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();
@@ -98,5 +98,4 @@ public class TableColumnLoaderTest {
             Assert.assertEquals(null, entry.getValue());
         }
     }
-
 }

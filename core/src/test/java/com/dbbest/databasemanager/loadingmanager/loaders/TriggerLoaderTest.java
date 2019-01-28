@@ -6,7 +6,7 @@ import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.StoredProcedureLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ViewColumnLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ViewLoader;
-import com.dbbest.databasemanager.loadingmanager.printers.TablePrinter;
+import com.dbbest.databasemanager.loadingmanager.printers.mysql.TablePrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
@@ -25,6 +25,8 @@ public class TriggerLoaderTest {
     public void detailedLoad() throws ContainerException, DatabaseException, ParsingException {
         SimpleConnectionBuilder simpleConnectionBuilder = new SimpleConnectionBuilder();
         Connection connection = simpleConnectionBuilder.getConnection("mysql");
+
+
 
         SchemaLoader schemaLoader = new SchemaLoader();
         Container schemaContainer = new Container();

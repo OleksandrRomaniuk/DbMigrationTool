@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.FkAttributes;
+import com.dbbest.databasemanager.loadingmanager.printers.mysql.ForeignKeyPrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;

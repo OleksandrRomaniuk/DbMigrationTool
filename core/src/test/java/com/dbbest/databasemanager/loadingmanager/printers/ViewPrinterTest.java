@@ -2,6 +2,7 @@ package com.dbbest.databasemanager.loadingmanager.printers;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ColumnAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ViewAttributes;
+import com.dbbest.databasemanager.loadingmanager.printers.mysql.ViewPrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;

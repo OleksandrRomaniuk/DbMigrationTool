@@ -3,6 +3,10 @@ package com.dbbest.databasemanager;
 import com.dbbest.databasemanager.ConnectionPropertiesEditorTest;
 import com.dbbest.databasemanager.ConnectionPropertiesManagerTest;
 import com.dbbest.databasemanager.SimpleConnectionBuilderTest;
+import com.dbbest.databasemanager.loadingmanager.LoaderManagerTest;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.*;
+import com.dbbest.databasemanager.loadingmanager.printers.*;
+import com.dbbest.databasemanager.reflectionutil.classloader.DirectorySearcherTest;
 import com.dbbest.xmlmanager.IntegrationTest;
 import com.dbbest.xmlmanager.container.ContainerTest;
 import com.dbbest.xmlmanager.container.HorizontalPassageSearchManagerTest;
@@ -33,6 +37,14 @@ import org.junit.runners.Suite;
     ListOfChildrenTest.class, XmlParserTest.class, XmlSingleNodeParserTest.class,
     CustomLogerFormaterTest.class, CustomLoggerFilterTest.class, CustomLoggerTest.class,
     IntegrationTest.class, ConnectionPropertiesEditorTest.class, ConnectionPropertiesManagerTest.class,
+    SimpleConnectionBuilderTest.class, ConstraintLoaderTest.class, ForeignKeyLoaderTest.class,
+    FunctionLoaderTest.class, IndexLoaderTest.class, ProcedureFunctionParameteresLoaderTest.class,
+    SchemaLoaderTest.class, StoredProcedureLoaderTest.class, TableColumnLoaderTest.class,
+    TableLoaderTest.class, TriggerLoaderTest.class, ViewColumnLoaderTest.class, ViewLoaderTest.class,
+    ForeignKeyPrinterHelperTest.class, ForeignKeyPrinterTest.class, FunctionPrinterTest.class, IndexPrinterHelperTest.class,
+    IndexPrinterTest.class, PrimaryKeyPrinterHelperTest.class, SchemaPrinterTest.class, StoredProcedurePrinterTest.class,
+    TablePrinterTest.class, TriggerPrinterTest.class, UniquePrinterHelperTest.class, ViewPrinterTest.class,
+    LoaderManagerTest.class, DirectorySearcherTest.class, ConnectionPropertiesEditorTest.class, ConnectionPropertiesManagerTest.class,
     SimpleConnectionBuilderTest.class})
 public class TestSuite {
 

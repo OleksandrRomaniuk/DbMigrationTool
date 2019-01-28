@@ -124,46 +124,4 @@ public class ListOfChildrenTest {
         Assert.assertEquals(test.item(1), "four");
     }
 
-
-    @Test
-    public void iteratorShouldReturnTrueInFirstCaseAndFalseInSecond() {
-        List test = new ListOfChildren();
-        test.add("one");
-        test.add("two");
-        test.add("three");
-
-        Assert.assertEquals(test.iterator().hasNext(), true);
-        test.iterator().next();
-        test.iterator().next();
-        test.iterator().next();
-        Assert.assertEquals(test.iterator().hasNext(), false);
-    }
-
-    @Test
-    public void shouldRemoveSecondElement() {
-        List test = new ListOfChildren();
-        test.add("one");
-        test.add("two");
-        test.add("three");
-        test.iterator().next();
-        test.iterator().remove();
-        Assert.assertEquals(((ListOfChildren) test).item(1), "three");
-        Assert.assertEquals(test.size(), 2);
-    }
-
-    @Test
-    public void shouldMoveToSecondElementAndThenToThird() {
-        List test = new ListOfChildren();
-        test.add("one");
-        test.add("two");
-        test.add("three");
-        test.iterator().next();
-        test.iterator().next();
-        Assert.assertEquals(test.listIterator().hasPrevious(), true);
-        test.iterator().next();
-        test.listIterator().previous();
-        test.listIterator().previous();
-        test.listIterator().set("four");
-        Assert.assertEquals(((ListOfChildren) test).item(1), "four");
-    }
 }

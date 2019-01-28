@@ -35,7 +35,7 @@ public class LoaderManagerTest {
         container.addAttribute(TypeSupportConstants.LoaderPrinterType.toString(), LoaderPrinterName.SCHEMA);
 
         LoaderManager loaderManager = new LoaderManager();
-        loaderManager.loadFull(connection, container);
+        loaderManager.loadFull(container);
 
         for(Container container1: (List<Container>)container.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement()).getChildren())
         System.out.println(container1.getName());

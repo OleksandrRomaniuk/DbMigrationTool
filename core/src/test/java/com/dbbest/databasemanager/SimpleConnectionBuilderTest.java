@@ -18,6 +18,6 @@ public class SimpleConnectionBuilderTest {
         Connection connection = simpleConnectionBuilder.getConnection(
             "mysqlDb1",
             "src\\test\\resources\\ConnectionPropertiesConManTest.xml");
-        assertEquals(new SimpleConnectionBuilder().getConnectionPools().size(), 1);
+        assertEquals(new SimpleConnectionBuilder().getConnectionPools().isEmpty(), false);
     }
 }

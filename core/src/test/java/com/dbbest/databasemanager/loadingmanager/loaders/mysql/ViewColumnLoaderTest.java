@@ -19,9 +19,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TableColumnLoaderTest {
+public class ViewColumnLoaderTest {
     @Test
-    public void shouldExecuteLazyLoadOfTableColumns() throws SQLException, DatabaseException, ContainerException {
+    public void shouldExecuteLazyLoadOfViewColumns() throws SQLException, DatabaseException, ContainerException {
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
         String query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= 'sakila' AND TABLE_NAME = 'testTable' ;";
 
@@ -52,10 +52,11 @@ public class TableColumnLoaderTest {
         Container parent = new Container();
         parent.addAttribute("TABLE_NAME", "testTable");
         Container container = new Container();
+        container.addAttribute("TABLE_NAME", "testTable");
         parent.addChild(container);
 
 
-        TableColumnLoader loader = new TableColumnLoader();
+        ViewColumnLoader loader = new ViewColumnLoader();
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -63,7 +64,7 @@ public class TableColumnLoaderTest {
     }
 
     @Test
-    public void shouldExecuteDetailLoadOfTableColumns() throws SQLException, DatabaseException, ContainerException {
+    public void shouldExecuteDetailLoadOfViewColumns() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
         String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, ORDINAL_POSITION, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, CHARACTER_OCTET_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE, DATETIME_PRECISION, CHARACTER_SET_NAME, COLLATION_NAME, COLUMN_TYPE, COLUMN_KEY, EXTRA, PRIVILEGES, COLUMN_COMMENT, GENERATION_EXPRESSION FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= 'sakila' AND TABLE_NAME = 'testTable' AND  COLUMN_NAME = 'null' ;";
@@ -84,13 +85,11 @@ public class TableColumnLoaderTest {
 
         Container parent1 = new Container();
         parent1.addAttribute("TABLE_NAME", "testTable");
-        Container parent2 = new Container();
-        parent1.addChild(parent2);
 
         Container container = new Container();
-        parent2.addChild(container);
+        parent1.addChild(container);
         container.addAttribute("COLUMN_NAME", null);
-        TableColumnLoader loader = new TableColumnLoader();
+        ViewColumnLoader loader = new ViewColumnLoader();
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

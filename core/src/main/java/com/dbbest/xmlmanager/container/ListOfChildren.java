@@ -15,7 +15,7 @@ public class ListOfChildren<T> extends ArrayList<T> implements DbList<T> {
         for (int i = 0; i < this.size(); i++) {
             int counter = 0;
             for (int j = 0; j < elements.size(); j++) {
-                if (this.get(j).equals(elements.get(j))) {
+                if (this.get(i).equals(elements.get(j))) {
                     counter++;
                 }
             }
