@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;

@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ForeignKeyLoader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -53,7 +54,7 @@ public class ForeignKeyLoaderTest {
             oneOf (connection).getMetaData(); will(returnValue(databaseMetaData));
         }});
 
-        foreignKeyLoader.lazyLoad(connection, fkCategoryContainer);
+        foreignKeyLoader.lazyLoad(fkCategoryContainer);
         assertEquals(fkCategoryContainer.getName(), "test");
         assertEquals(fkCategoryContainer.hasChildren(), true);
     }
@@ -89,7 +90,7 @@ public class ForeignKeyLoaderTest {
         schemaContainer.setName("Sakila");
         fks.addChild(schemaContainer);
         ForeignKeyLoader foreignKeyLoader = new ForeignKeyLoader();
-        foreignKeyLoader.detailedLoad(connection, schemaContainer);
+        foreignKeyLoader.detailedLoad(schemaContainer);
 
         Assert.assertEquals(schemaContainer.hasAttributes(), true);
     }

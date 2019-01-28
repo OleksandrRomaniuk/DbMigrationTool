@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants;
+package com.dbbest.databasemanager.loadingmanager.constants.tags.delete;
 
 public enum MySqlQueriesConstants {
     IinformationSchemaSelectAll("SELECT * FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '%s' ;"),

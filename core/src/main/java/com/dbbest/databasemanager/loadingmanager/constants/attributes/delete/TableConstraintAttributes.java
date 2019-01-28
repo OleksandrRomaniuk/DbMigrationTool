@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.attributes;
+package com.dbbest.databasemanager.loadingmanager.constants.attributes.delete;
 
 public enum TableConstraintAttributes {
     CONSTRAINT_CATALOG("CONSTRAINT_CATALOG"), CONSTRAINT_SCHEMA("CONSTRAINT_SCHEMA"), TABLE_SCHEMA("TABLE_SCHEMA"),

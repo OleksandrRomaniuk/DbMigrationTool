@@ -15,4 +15,6 @@ public class LoaderPrinterName {
     public static final String VIEWS = "Views";
     public static final String STORED_PROCEDURES = "Stored Procedures";
     public static final String FUNCTIONS = "Functions";
+    public static final String CONSTRAINT = "Constraint";
+    public static final String PROCEDURE_FUNCTION_PARAMETER = "Procedure Function parameter";
 }

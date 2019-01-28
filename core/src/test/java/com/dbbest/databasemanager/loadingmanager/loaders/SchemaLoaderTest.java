@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -26,7 +27,7 @@ public class SchemaLoaderTest {
         schemaContainer.setName("Test");
         Mockery cnt = new Mockery();
         final Connection connection = cnt.mock(Connection.class);
-        schemaLoader.lazyLoad(connection, schemaContainer);
+        schemaLoader.lazyLoad(schemaContainer);
         Assert.assertEquals(schemaContainer.getChildren().size(), 4);
     }
 
@@ -50,7 +51,7 @@ public class SchemaLoaderTest {
         SchemaLoader schemaLoader = new SchemaLoader();
         Container schemaContainer = new Container();
         schemaContainer.setName("Sakila");
-        schemaLoader.detailedLoad(connection, schemaContainer);
+        schemaLoader.detailedLoad(schemaContainer);
 
         Assert.assertEquals(schemaContainer.getAttributes().get(SchemaAttributes.SCHEMA_NAME.getElement()), "test");
     }

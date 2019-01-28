@@ -2,21 +2,17 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.TableLoader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.xmlmanager.container.Container;
-import com.google.protobuf.MapEntry;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-
-import static org.junit.Assert.*;
 
 public class TableLoaderTest {
 

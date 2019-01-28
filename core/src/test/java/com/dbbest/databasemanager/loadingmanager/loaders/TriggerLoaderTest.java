@@ -2,6 +2,10 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.SchemaCategoriesTagNameConstants;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.StoredProcedureLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ViewColumnLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ViewLoader;
 import com.dbbest.databasemanager.loadingmanager.printers.TablePrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;

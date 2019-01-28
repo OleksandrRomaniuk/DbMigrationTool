@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
@@ -30,6 +30,8 @@ public class TableLoader extends AbstractLoader {
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
+
+
     }
 
     @Override
@@ -43,7 +45,7 @@ public class TableLoader extends AbstractLoader {
                 new IndexLoader().fullLoad(table.getChildByName(TableCategoriesTagNameCategories.Indexes.getElement()));
                 new ForeignKeyLoader().fullLoad(table.getChildByName(TableCategoriesTagNameCategories.Foreign_Keys.getElement()));
                 new TriggerLoader().fullLoad(table.getChildByName(TableCategoriesTagNameCategories.Triggers.getElement()));
-                new ConstraintsLoader().fullLoad(table.getChildByName(TableCategoriesTagNameCategories.ConstraintCategory.getElement()));
+                new ConstraintLoader().fullLoad(table.getChildByName(TableCategoriesTagNameCategories.ConstraintCategory.getElement()));
             }
         }
     }

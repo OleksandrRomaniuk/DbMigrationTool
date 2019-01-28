@@ -3,6 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.SchemaCategoriesTagNameConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.*;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -38,7 +39,7 @@ public class SchemaLoaderTestDelete {
         Container schemaContainer = new Container();
         schemaContainer.setName("sakila");
         SchemaLoader schemaLoader = new SchemaLoader();
-        schemaLoader.lazyLoad(connection, schemaContainer);
+        schemaLoader.lazyLoad(schemaContainer);
 
         List<Container> schemaCatalogs = schemaContainer.getChildren();
       /*
@@ -46,7 +47,7 @@ public class SchemaLoaderTestDelete {
             System.out.println(catalog.getName());
         }
 */
-        schemaLoader.detailedLoad(connection, schemaContainer);
+        schemaLoader.detailedLoad(schemaContainer);
 
         Map<String, String> schemaAttributes = schemaContainer.getAttributes();
 /*
@@ -57,7 +58,7 @@ public class SchemaLoaderTestDelete {
         TableLoader tableLoader = new TableLoader();
         Container categoryTablesContainer = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement());
         //System.out.println(categoryTablesContainer.getName());
-        tableLoader.lazyLoad(connection, categoryTablesContainer);
+        tableLoader.lazyLoad(categoryTablesContainer);
         List<Container> tables = categoryTablesContainer.getChildren();
 
 /*
@@ -66,7 +67,7 @@ public class SchemaLoaderTestDelete {
         }
 */
 
-        tableLoader.detailedLoad(connection, categoryTablesContainer.getChildByName("customer"));
+        tableLoader.detailedLoad(categoryTablesContainer.getChildByName("customer"));
         Map<String, String> tableAttributes = categoryTablesContainer.getChildByName("customer").getAttributes();
 /*
         for(Map.Entry<String, String> entry: tableAttributes.entrySet()) {
@@ -76,7 +77,7 @@ public class SchemaLoaderTestDelete {
         Container table = categoryTablesContainer.getChildByName("customer");
         Container tableColumnCategory = table.getChildByName(TableCategoriesTagNameCategories.Columns.getElement());
         TableColumnLoader columnLoader = new TableColumnLoader();
-        columnLoader.lazyLoad(connection, tableColumnCategory);
+        columnLoader.lazyLoad(tableColumnCategory);
 /*
         List<Container> columns = tableColumnCategory.getChildren();
         for (Container column: columns) {
@@ -84,7 +85,7 @@ public class SchemaLoaderTestDelete {
         }
 */
         Container column = tableColumnCategory.getChildByName("first_name");
-        columnLoader.detailedLoad(connection, column);
+        columnLoader.detailedLoad(column);
 /*
         Map<String, String> columnAttributes = column.getAttributes();
         for(Map.Entry<String, String> entry: columnAttributes.entrySet()) {
@@ -93,16 +94,16 @@ public class SchemaLoaderTestDelete {
 */
         IndexLoader indexLoader = new IndexLoader();
         Container indexCategory = table.getChildByName(TableCategoriesTagNameCategories.Indexes.getElement());
-        indexLoader.lazyLoad(connection, indexCategory);
+        indexLoader.lazyLoad(indexCategory);
         List<Container> indexes = indexCategory.getChildren();
         Container index = indexCategory.getChildByName("PRIMARY");
-        indexLoader.detailedLoad(connection, index);
+        indexLoader.detailedLoad(index);
 
 
         IndexLoader indexLoader2 = new IndexLoader();
         Container indexCategory2 = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement())
             .getChildByName("city").getChildByName(TableCategoriesTagNameCategories.Indexes.getElement());
-        indexLoader.lazyLoad(connection, indexCategory2);
+        indexLoader.lazyLoad(indexCategory2);
         List<Container> indexes2 = indexCategory2.getChildren();
         //Container index2 = indexCategory2.getChildByName("CountryCode");
         //indexLoader.detailedLoad(connection, index2);
@@ -125,7 +126,7 @@ public class SchemaLoaderTestDelete {
 */
         ForeignKeyLoader foreignKeyLoader = new ForeignKeyLoader();
         Container fkCategory = table.getChildByName(TableCategoriesTagNameCategories.Foreign_Keys.getElement());
-        foreignKeyLoader.lazyLoad(connection, fkCategory);
+        foreignKeyLoader.lazyLoad(fkCategory);
 /*
         List<Container> fks = fkCategory.getChildren();
         for (Container fk: fks) {
@@ -133,7 +134,7 @@ public class SchemaLoaderTestDelete {
         }
 */
         Container fk = fkCategory.getChildByName("fk_customer_address");
-        foreignKeyLoader.detailedLoad(connection, fk);
+        foreignKeyLoader.detailedLoad(fk);
 /*
         Map<String, String> fkAttributes = fk.getAttributes();
         for(Map.Entry<String, String> entry: fkAttributes.entrySet()) {
@@ -142,7 +143,7 @@ public class SchemaLoaderTestDelete {
 */
         TriggerLoader triggerLoader = new TriggerLoader();
         Container triggerCategory = table.getChildByName(TableCategoriesTagNameCategories.Triggers.getElement());
-        triggerLoader.lazyLoad(connection, triggerCategory);
+        triggerLoader.lazyLoad(triggerCategory);
 /*
         List<Container> triggers = triggerCategory.getChildren();
         for (Container trigger: triggers) {
@@ -161,7 +162,7 @@ public class SchemaLoaderTestDelete {
 
         ViewLoader viewLoader = new ViewLoader();
         Container viewCategory = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Views.getElement());
-        viewLoader.lazyLoad(connection, viewCategory);
+        viewLoader.lazyLoad(viewCategory);
 /*
         List<Container> views = viewCategory.getChildren();
         for (Container view: views) {
@@ -169,7 +170,7 @@ public class SchemaLoaderTestDelete {
         }
 */
         Container view = viewCategory.getChildByName("actor_info");
-        viewLoader.detailedLoad(connection, view);
+        viewLoader.detailedLoad(view);
 /*
         Map<String, String> viewAttributes = view.getAttributes();
         for(Map.Entry<String, String> entry: viewAttributes.entrySet()) {
@@ -178,7 +179,7 @@ public class SchemaLoaderTestDelete {
         */
 
         ViewColumnLoader viewColumnLoader = new ViewColumnLoader();
-        viewColumnLoader.lazyLoad(connection, view);
+        viewColumnLoader.lazyLoad(view);
 /*
         List<Container> viewColumns = view.getChildren();
         for (Container viewColumn: viewColumns) {
@@ -186,7 +187,7 @@ public class SchemaLoaderTestDelete {
         }
 */
         Container viewColumn = view.getChildByName("first_name");
-        viewColumnLoader.detailedLoad(connection, viewColumn);
+        viewColumnLoader.detailedLoad(viewColumn);
 /*
         Map<String, String> viewAttributes = viewColumn.getAttributes();
         for(Map.Entry<String, String> entry: viewAttributes.entrySet()) {
@@ -195,7 +196,7 @@ public class SchemaLoaderTestDelete {
         */
         StoredProcedureLoader storedProcedureLoader = new StoredProcedureLoader();
         Container storedProcedureCategory = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Stored_Procedures.getElement());
-        storedProcedureLoader.lazyLoad(connection, storedProcedureCategory);
+        storedProcedureLoader.lazyLoad(storedProcedureCategory);
 /*
         List<Container> storedProcedures = storedProcedureCategory.getChildren();
         for (Container storedProcedure: storedProcedures) {
@@ -203,7 +204,7 @@ public class SchemaLoaderTestDelete {
         }
 */
         Container storedProcedure = storedProcedureCategory.getChildByName("film_in_stock");
-        storedProcedureLoader.detailedLoad(connection, storedProcedure);
+        storedProcedureLoader.detailedLoad(storedProcedure);
 /*
         Map<String, String> spAttributes = storedProcedure.getAttributes();
         for(Map.Entry<String, String> entry: spAttributes.entrySet()) {
@@ -212,7 +213,7 @@ public class SchemaLoaderTestDelete {
 */
         FunctionLoader functionLoader = new FunctionLoader();
         Container functionCategory = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Functions.getElement());
-        functionLoader.lazyLoad(connection, functionCategory);
+        functionLoader.lazyLoad(functionCategory);
 /*
         List<Container> functions = functionCategory.getChildren();
         for (Container function: functions) {
@@ -220,7 +221,7 @@ public class SchemaLoaderTestDelete {
         }
 */
         Container function = functionCategory.getChildByName("get_customer_balance");
-        functionLoader.detailedLoad(connection, function);
+        functionLoader.detailedLoad(function);
 /*
         Map<String, String> fAttributes = function.getAttributes();
         for(Map.Entry<String, String> entry: fAttributes.entrySet()) {
@@ -231,7 +232,7 @@ public class SchemaLoaderTestDelete {
         Container schemaContainer1 = new Container();
         schemaContainer1.setName("sakila");
         SchemaLoader schemaLoader1 = new SchemaLoader();
-        schemaLoader1.fullLoad(connection, schemaContainer1);
+        schemaLoader1.fullLoad(schemaContainer1);
         System.out.println(schemaContainer1.getName());
         System.out.println("-----------------------------------------------");
         List<Container> schemaCategories = schemaContainer1.getChildren();

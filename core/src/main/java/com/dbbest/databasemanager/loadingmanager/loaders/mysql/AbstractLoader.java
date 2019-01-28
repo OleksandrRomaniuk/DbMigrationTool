@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
@@ -31,8 +31,7 @@ public abstract class AbstractLoader implements Loader {
         childName = ((LoaderAnnotation) this.getClass()
             .getAnnotation(LoaderAnnotation.class)).value();
         attribute = AttributeSingleConstants.NAME_ATTRIBUTE_CONSTANTS.get(childName);
-        attributes = AttributeListConstants.getInstance().getMapOfConstants()
-            .get(childName);
+        attributes = AttributeListConstants.getInstance().getConstants().get(childName);
         listOfAttributes = getListOfAttributes(attributes);
         lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(childName);
         detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(childName);
@@ -55,14 +54,64 @@ public abstract class AbstractLoader implements Loader {
     }
 
     protected void executeLazyLoadTableChildren(Container node) throws SQLException, ContainerException {
-        String tableName = (String) node.getParent().getAttributes().get(attribute);
+        String tableName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
         String query = String.format(lazyLoaderQuery, schemaName, tableName);
         this.executeLazyLoaderQuery(node, query);
     }
 
+    protected void executeLazyLoadViewColumns(Container node) throws SQLException, ContainerException {
+        String tableName = (String) node.getAttributes().get(AttributeSingleConstants.TABLE_NAME);
+        String query = String.format(lazyLoaderQuery, schemaName, tableName);
+        this.executeLazyLoaderQuery(node, query);
+    }
+
+    protected void executeLazyLoadProcedureFunctionParameters(Container node) throws SQLException, ContainerException {
+        String procedureFunctionName = (String) node.getAttributes().get(attribute);
+        String query = String.format(lazyLoaderQuery, schemaName, procedureFunctionName);
+        this.executeLazyLoaderQuery(node, query);
+    }
+
+    protected void executeLazyLoadTableConstraint(Container node) throws SQLException, ContainerException {
+        String tableName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
+        String query = String.format(lazyLoaderQuery, schemaName, tableName);
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Container childNode = new Container();
+            childNode.setName(childName);
+            node.addChild(childNode);
+
+            for (String attribute : AttributeListConstants.getInstance().getListOfConstraintAttributes()) {
+                childNode.addAttribute(attribute, resultSet.getString(attribute));
+            }
+        }
+    }
+
     protected void executeDetailedLoadTableChildren(Container node) throws SQLException {
         String elementName = (String) node.getAttributes().get(attribute);
-        String tableName = (String) node.getParent().getParent().getAttributes().get(attribute);
+        String tableName = (String) node.getParent().getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
+        this.executeDetailedLoaderQuery(node, query);
+    }
+
+    protected void executeDetailedLoadViewColumns(Container node) throws SQLException {
+        String elementName = (String) node.getAttributes().get(attribute);
+        String tableName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
+        this.executeDetailedLoaderQuery(node, query);
+    }
+
+    protected void executeDetailedLoadProcedureFunctionParameter(Container node) throws SQLException {
+        String elementName = (String) node.getAttributes().get(attribute);
+        String procedureFunctionName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME);
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, procedureFunctionName, elementName);
+        this.executeDetailedLoaderQuery(node, query);
+    }
+
+    protected void executeDetailedLoadTableConstraint(Container node) throws SQLException {
+        String elementName = (String) node.getAttributes().get(attribute);
+        String tableName = (String) node.getParent().getParent().getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
         String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
         this.executeDetailedLoaderQuery(node, query);
     }

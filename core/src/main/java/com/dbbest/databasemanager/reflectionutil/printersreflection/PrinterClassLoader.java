@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.reflectionutil.printersreflection;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.PrinterAnnotation;
-import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.Loader;
 import com.dbbest.databasemanager.reflectionutil.CustomClassLoader;
 import com.dbbest.exceptions.DatabaseException;
 

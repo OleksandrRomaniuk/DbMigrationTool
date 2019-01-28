@@ -1,26 +1,25 @@
-package com.dbbest.databasemanager.loadingmanager.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.MySqlQueriesConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.ProcedureFunctionParameterAttributes;
+import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
-public class ProcedureFunctionParameteresLoader implements Loader {
+@LoaderAnnotation(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER)
+public class ProcedureFunctionParameteresLoader extends AbstractLoader {
     @Override
-    public void lazyLoad(Connection connection, Container procedureFunctionContainer) throws DatabaseException, ContainerException {
-        if (procedureFunctionContainer.getName() == null || procedureFunctionContainer.getName().trim().isEmpty()) {
+    public void lazyLoad(Container procedureFunctionContainer) throws DatabaseException, ContainerException {
+        /*if (procedureFunctionContainer.getName() == null || procedureFunctionContainer.getName().trim().isEmpty()) {
             throw new ContainerException(Level.SEVERE, "The container with Procedure or Function does not contain the name.");
-        }
+        }*/
         try {
-            String query =
+            super.executeLazyLoadProcedureFunctionParameters(procedureFunctionContainer);
+            /*String query =
                 String.format(MySqlQueriesConstants.ProcedureFunctionParametersGetListOfParameters.getQuery(),
                     procedureFunctionContainer.getParent().getParent().getName(),
                     procedureFunctionContainer.getName());
@@ -31,17 +30,17 @@ public class ProcedureFunctionParameteresLoader implements Loader {
                 Container parameter = new Container();
                 parameter.setName(resultSet.getString(ProcedureFunctionParameterAttributes.PARAMETER_NAME.getElement()));
                 procedureFunctionContainer.addChild(parameter);
-            }
+            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
 
     @Override
-    public void detailedLoad(Connection connection, Container parameter) throws DatabaseException, ContainerException {
+    public void detailedLoad(Container parameter) throws DatabaseException, ContainerException {
         try {
-
-            String query =
+            super.executeDetailedLoadProcedureFunctionParameter(parameter);
+            /*String query =
                 String.format(MySqlQueriesConstants.ProcedureFunctionParametersSelectAll.getQuery(),
                     parameter.getParent().getParent().getParent().getName(),
                     parameter.getParent().getName(),
@@ -53,19 +52,19 @@ public class ProcedureFunctionParameteresLoader implements Loader {
                 for (ProcedureFunctionParameterAttributes attributeKey : ProcedureFunctionParameterAttributes.values()) {
                     parameter.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
                 }
-            }
+            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
 
     @Override
-    public void fullLoad(Connection connection, Container procedureFunctionContainer) throws DatabaseException, ContainerException {
-        lazyLoad(connection, procedureFunctionContainer);
+    public void fullLoad(Container procedureFunctionContainer) throws DatabaseException, ContainerException {
+        lazyLoad(procedureFunctionContainer);
         List<Container> parameters = procedureFunctionContainer.getChildren();
         if (parameters != null && !parameters.isEmpty()) {
             for (Container parameter : parameters) {
-                detailedLoad(connection, parameter);
+                detailedLoad(parameter);
             }
         }
     }

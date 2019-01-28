@@ -14,16 +14,20 @@ public class MySQLQueries {
     private final String functionDetailed = "SELECT %s  FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'FUNCTION' AND  ROUTINE_NAME = '%s' ;";
     private final String storedProcedureLazy = "SELECT SPECIFIC_NAME  FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'PROCEDURE' ;";
     private final String storedProcedureDetailed = "SELECT %s  FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'PROCEDURE' AND  ROUTINE_NAME = '%s' ;";
-    private final  String viewLazy = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = '%s' ;";
+    private final String viewLazy = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = '%s' ;";
     private final String viewDetailed = "SELECT %s FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
-    private final  String columnLazy = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= '%s' AND TABLE_NAME = '%s' ;";
-    private final  String columnDetailed = "SELECT %s FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= '%s' AND TABLE_NAME = '%s' AND  COLUMN_NAME = '%s' ;";
-    private final  String indexLazy = "SELECT DISTINCT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
-    private final  String indexDetailed = "SELECT %s FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = '%s' AND TABLE_NAME = '%s'  AND INDEX_NAME =  '%s' ;";
-    private final  String foreignKeyLazy = "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
-    private final  String foreignKeyDetailed = "SELECT %s FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' AND  CONSTRAINT_NAME = '%s' ;";
-    private final  String triggerLazy = "SELECT TRIGGER_NAME  FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_SCHEMA = '%s' AND EVENT_OBJECT_TABLE = '%s' ;";
-    private final  String triggerDeatiled = "SELECT %s FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_SCHEMA = '%s' AND EVENT_OBJECT_TABLE = '%s' AND  TRIGGER_NAME = '%s' ;";
+    private final String columnLazy = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= '%s' AND TABLE_NAME = '%s' ;";
+    private final String columnDetailed = "SELECT %s FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= '%s' AND TABLE_NAME = '%s' AND  COLUMN_NAME = '%s' ;";
+    private final String indexLazy = "SELECT DISTINCT INDEX_NAME FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
+    private final String indexDetailed = "SELECT %s FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = '%s' AND TABLE_NAME = '%s'  AND INDEX_NAME =  '%s' ;";
+    private final String foreignKeyLazy = "SELECT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
+    private final String foreignKeyDetailed = "SELECT %s FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' AND  CONSTRAINT_NAME = '%s' ;";
+    private final String triggerLazy = "SELECT TRIGGER_NAME  FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_SCHEMA = '%s' AND EVENT_OBJECT_TABLE = '%s' ;";
+    private final String triggerDeatiled = "SELECT %s FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_SCHEMA = '%s' AND EVENT_OBJECT_TABLE = '%s' AND  TRIGGER_NAME = '%s' ;";
+    private final String tableConstraintLazy = "SELECT CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, TABLE_SCHEMA, TABLE_NAME, CONSTRAINT_TYPE, CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS WHERE CONSTRAINT_SCHEMA = '%s' AND  TABLE_NAME = '%s' ;";
+    private final String tableConstraintDetaied = "SELECT %s FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' AND  CONSTRAINT_NAME = '%s' ;";
+    private final String procedureFunctionParameterLazy = "SELECT PARAMETER_NAME FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = '%s' AND SPECIFIC_NAME = '%s' ;";
+    private final String procedureFunctionParameterDetailed = "SELECT %s FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = '%s' AND SPECIFIC_NAME = '%s' AND PARAMETER_NAME = '%s' ;";
     private Map<String, String> sqlQueriesLazyLoader = new HashMap();
     private Map<String, String> sqlQueriesDetailLoader = new HashMap();
     private static MySQLQueries instance;
@@ -47,6 +51,9 @@ public class MySQLQueries {
         sqlQueriesLazyLoader.put(LoaderPrinterName.INDEX, indexLazy);
         sqlQueriesLazyLoader.put(LoaderPrinterName.FOREIGN_KEY, foreignKeyLazy);
         sqlQueriesLazyLoader.put(LoaderPrinterName.TRIGGER, triggerLazy);
+        sqlQueriesLazyLoader.put(LoaderPrinterName.CONSTRAINT, tableConstraintLazy);
+        sqlQueriesLazyLoader.put(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER, procedureFunctionParameterLazy);
+        sqlQueriesLazyLoader.put(LoaderPrinterName.VIEW_COLUMN, columnLazy);
     }
 
     private void addSqlDetailedQueries() {
@@ -59,6 +66,9 @@ public class MySQLQueries {
         sqlQueriesDetailLoader.put(LoaderPrinterName.INDEX, indexDetailed);
         sqlQueriesDetailLoader.put(LoaderPrinterName.FOREIGN_KEY, foreignKeyDetailed);
         sqlQueriesDetailLoader.put(LoaderPrinterName.TRIGGER, triggerDeatiled);
+        sqlQueriesDetailLoader.put(LoaderPrinterName.CONSTRAINT, tableConstraintDetaied);
+        sqlQueriesDetailLoader.put(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER, procedureFunctionParameterDetailed);
+        sqlQueriesDetailLoader.put(LoaderPrinterName.VIEW_COLUMN, columnDetailed);
     }
 
     public Map<String, String> getSqlQueriesLazyLoader() {
