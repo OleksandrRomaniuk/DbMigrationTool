@@ -1,19 +1,23 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.SchemaAttributes;
+import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
+import com.dbbest.exceptions.ParsingException;
 import com.dbbest.xmlmanager.container.Container;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -21,38 +25,42 @@ import static org.mockito.Mockito.when;
 public class SchemaLoaderTest {
 
     @Test
-    public void lazyLoad() throws ContainerException, DatabaseException, SQLException {
-        SchemaLoader schemaLoader = new SchemaLoader();
+    public void shouldSetSchemaNameAndCreateFourChildren() throws ContainerException, DatabaseException, SQLException {
         Container schemaContainer = new Container();
-        schemaContainer.setName("Test");
-        Mockery cnt = new Mockery();
-        final Connection connection = cnt.mock(Connection.class);
+        SchemaLoader schemaLoader = new SchemaLoader();
         schemaLoader.lazyLoad(schemaContainer);
-        Assert.assertEquals(schemaContainer.getChildren().size(), 4);
+
+        Assert.assertEquals("Schema", schemaContainer.getName());
+        Assert.assertEquals(4, schemaContainer.getChildren().size());
     }
 
     @Test
-    public void detailedLoad() throws SQLException, ContainerException, DatabaseException {
-        String query = "SELECT * FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'Sakila'";
-        ResultSet rs = mock(ResultSet.class);
-        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+    public void detailedLoad() throws SQLException, ContainerException, DatabaseException, ParsingException {
 
-        Mockery cnt = new Mockery();
-        final Connection connection = cnt.mock(Connection.class);
-        cnt.checking(new Expectations(){{
-            oneOf (connection).getCatalog(); will(returnValue("Sakila"));
+        ResultSet resultSet = mock(ResultSet.class);
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        String query = "SELECT CATALOG_NAME, SCHEMA_NAME, DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME, SQL_PATH FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'sakila' ;";
+
+        Mockery mockery = new Mockery();
+        final Connection connection = mockery.mock(Connection.class);
+        mockery.checking(new Expectations(){{
             oneOf (connection).prepareStatement(query); will(returnValue(preparedStatement));
         }});
 
-        when(preparedStatement.executeQuery()).thenReturn(rs);
-        when(rs.getString(SchemaAttributes.SCHEMA_NAME.getElement())).thenReturn("test");
-        when(rs.next()).thenReturn(true);
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
 
-        SchemaLoader schemaLoader = new SchemaLoader();
+        Context context = Context.getInstance();
+        context.setConnection(connection);
+        context.setSchemaName("sakila");
+
         Container schemaContainer = new Container();
-        schemaContainer.setName("Sakila");
+        SchemaLoader schemaLoader = new SchemaLoader();
         schemaLoader.detailedLoad(schemaContainer);
 
-        Assert.assertEquals(schemaContainer.getAttributes().get(SchemaAttributes.SCHEMA_NAME.getElement()), "test");
+        Map<String, String> schemaAttributes = schemaContainer.getAttributes();
+        for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
+            Assert.assertEquals(null, entry.getValue());
+        }
     }
 }

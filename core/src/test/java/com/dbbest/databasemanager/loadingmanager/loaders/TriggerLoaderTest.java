@@ -30,14 +30,14 @@ public class TriggerLoaderTest {
         Container schemaContainer = new Container();
         schemaContainer.setName("sakila");
 
-        schemaLoader.lazyLoad(connection, schemaContainer);
-        schemaLoader.detailedLoad(connection, schemaContainer);
+        schemaLoader.lazyLoad(schemaContainer);
+        schemaLoader.detailedLoad(schemaContainer);
 
         Container viewCategoryContainer = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Views.getElement());
         ViewLoader viewLoader = new ViewLoader();
-        viewLoader.lazyLoad(connection, viewCategoryContainer);
+        viewLoader.lazyLoad(viewCategoryContainer);
         Container view = viewCategoryContainer.getChildByName("actor_info");
-        viewLoader.detailedLoad(connection, view);
+        viewLoader.detailedLoad(view);
 /*
         Map<String, String> viewAtt = view.getAttributes();
         for(Map.Entry<String, String> entry: viewAtt.entrySet()) {
@@ -46,9 +46,9 @@ public class TriggerLoaderTest {
 */
       //  System.out.println("-----------------------------------------------------");
         ViewColumnLoader viewColumnLoader = new ViewColumnLoader();
-        viewColumnLoader.lazyLoad(connection, view);
+        viewColumnLoader.lazyLoad(view);
         Container viewCol = view.getChildByName("first_name");
-        viewColumnLoader.detailedLoad(connection, viewCol);
+        viewColumnLoader.detailedLoad(viewCol);
 /*
         Map<String, String> viewAttributes = viewCol.getAttributes();
         for(Map.Entry<String, String> entry: viewAttributes.entrySet()) {
@@ -57,9 +57,9 @@ public class TriggerLoaderTest {
   */
         Container spCategoryContainer = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Stored_Procedures.getElement());
         StoredProcedureLoader spLoader = new StoredProcedureLoader();
-        spLoader.lazyLoad(connection, spCategoryContainer);
+        spLoader.lazyLoad(spCategoryContainer);
         Container sp = spCategoryContainer.getChildByName("film_in_stock");
-        spLoader.detailedLoad(connection, sp);
+        spLoader.detailedLoad(sp);
 
 /*
         Map<String, String> spAttributes = sp.getAttributes();
@@ -74,7 +74,7 @@ public class TriggerLoaderTest {
         SchemaLoader schemaLoader1 = new SchemaLoader();
         Container schemaContainer1 = new Container();
         schemaContainer1.setName("sakila");
-        schemaLoader1.fullLoad(connection, schemaContainer1);
+        schemaLoader1.fullLoad(schemaContainer1);
         Container procCategory = schemaContainer1.getChildByName(SchemaCategoriesTagNameConstants.Stored_Procedures.getElement());
 /*
         Container procedure = procCategory.getChildByName("film_in_stock");
@@ -107,7 +107,7 @@ public class TriggerLoaderTest {
         SchemaLoader schemaLoader2 = new SchemaLoader();
         Container schemaContainer2 = new Container();
         schemaContainer2.setName("sakila");
-        schemaLoader1.fullLoad(connection, schemaContainer2);
+        schemaLoader1.fullLoad(schemaContainer2);
         Container tableContainer = schemaContainer2.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement())
             .getChildByName("rental");
 /*

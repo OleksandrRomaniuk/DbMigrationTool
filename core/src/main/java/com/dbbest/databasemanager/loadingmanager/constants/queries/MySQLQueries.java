@@ -72,10 +72,16 @@ public class MySQLQueries {
     }
 
     public Map<String, String> getSqlQueriesLazyLoader() {
+        if (sqlQueriesLazyLoader.isEmpty()) {
+            addSqlLazyQueries();
+        }
         return sqlQueriesLazyLoader;
     }
 
     public Map<String, String> getSqlQueriesDetailLoader() {
+        if (sqlQueriesDetailLoader.isEmpty()) {
+            addSqlDetailedQueries();
+        }
         return sqlQueriesDetailLoader;
     }
 }

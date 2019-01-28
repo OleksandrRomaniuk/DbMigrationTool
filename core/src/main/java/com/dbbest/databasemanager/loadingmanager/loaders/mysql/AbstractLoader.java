@@ -2,6 +2,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeListConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.queries.MySQLQueries;
@@ -16,41 +17,19 @@ import java.util.List;
 
 public abstract class AbstractLoader implements Loader {
 
-    private Connection connection;
-    private String schemaName;
-    private String childName;
-    private String attribute;
-    private String listOfAttributes;
-    private List<String> attributes;
-    private String lazyLoaderQuery;
-    private String detailedLoaderQuery;
-
-    public AbstractLoader() {
-        connection = Context.getInstance().getConnection();
-        schemaName = Context.getInstance().getSchemaName();
-        childName = ((LoaderAnnotation) this.getClass()
-            .getAnnotation(LoaderAnnotation.class)).value();
-        attribute = AttributeSingleConstants.NAME_ATTRIBUTE_CONSTANTS.get(childName);
-        attributes = AttributeListConstants.getInstance().getConstants().get(childName);
-        listOfAttributes = getListOfAttributes(attributes);
-        lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(childName);
-        detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(childName);
-    }
-
-    protected void executeSchemaDetailedLoad(Container node) throws SQLException {
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName);
-        this.executeDetailedLoaderQuery(node, query);
-    }
+    private Connection connection = Context.getInstance().getConnection();
+    private String schemaName = Context.getInstance().getSchemaName();
+    private String childName = this.getClass()
+        .getAnnotation(LoaderAnnotation.class).value();
+    private String attribute  = AttributeSingleConstants.NAME_ATTRIBUTE_CONSTANTS.get(childName);
+    private List<String> attributes = AttributeListConstants.getInstance().getConstants().get(childName);
+    private String listOfAttributes = getListOfAttributes(attributes);
+    private String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(childName);
+    private String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(childName);
 
     protected void executeLazyLoadSchemaChildren(Container node) throws SQLException, ContainerException {
         String query = String.format(lazyLoaderQuery, schemaName);
         this.executeLazyLoaderQuery(node, query);
-    }
-
-    protected void executeDetailedLoadSchemaChildren(Container node) throws SQLException {
-        String elementName = (String) node.getAttributes().get(attribute);
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, elementName);
-        this.executeDetailedLoaderQuery(node, query);
     }
 
     protected void executeLazyLoadTableChildren(Container node) throws SQLException, ContainerException {
@@ -86,6 +65,12 @@ public abstract class AbstractLoader implements Loader {
                 childNode.addAttribute(attribute, resultSet.getString(attribute));
             }
         }
+    }
+
+    protected void executeDetailedLoadSchemaChildren(Container node) throws SQLException {
+        String elementName = (String) node.getAttributes().get(attribute);
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, elementName);
+        this.executeDetailedLoaderQuery(node, query);
     }
 
     protected void executeDetailedLoadTableChildren(Container node) throws SQLException {
@@ -127,7 +112,13 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 
+    protected void executeSchemaDetailedLoad(Container node) throws SQLException {
+        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName);
+        this.executeDetailedLoaderQuery(node, query);
+    }
+
     private void executeDetailedLoaderQuery(Container node, String query) throws SQLException {
+
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {

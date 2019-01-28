@@ -4,7 +4,6 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.SchemaCategoriesTagNameConstants;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -28,7 +27,7 @@ public class SchemaLoader extends AbstractLoader {
         schemaContainer.addChild(tablesCategory);
 
         Container viewsCategory = new Container();
-        tablesCategory.setName(LoaderPrinterName.VIEWS);
+        viewsCategory.setName(LoaderPrinterName.VIEWS);
         schemaContainer.addChild(viewsCategory);
 
         Container functionsCategory = new Container();
@@ -45,20 +44,6 @@ public class SchemaLoader extends AbstractLoader {
 
         try {
             super.executeSchemaDetailedLoad(schemaContainer);
-            /*
-            if (schemaContainer.getName() == null || schemaContainer.getName().trim().isEmpty()) {
-                throw new ContainerException(Level.SEVERE, "The schema container does not contain the schema name");
-            }
-            String informationSchemataSelectAllQuery =
-                String.format(MySqlQueriesConstants.IinformationSchemaSelectAll.getQuery(), connection.getCatalog());
-            PreparedStatement preparedStatement = connection.prepareStatement(informationSchemataSelectAllQuery);
-            ResultSet schemaAttributes = preparedStatement.executeQuery();
-
-            if (schemaAttributes.next()) {
-                for (SchemaAttributes attributeKey : SchemaAttributes.values()) {
-                    schemaContainer.addAttribute(attributeKey.getElement(), schemaAttributes.getString(attributeKey.getElement()));
-                }
-            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -68,9 +53,9 @@ public class SchemaLoader extends AbstractLoader {
     public void fullLoad(Container schemaContainer) throws ContainerException, DatabaseException {
         lazyLoad(schemaContainer);
         detailedLoad(schemaContainer);
-        new TableLoader().fullLoad(schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement()));
-        new ViewLoader().fullLoad(schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Views.getElement()));
-        new StoredProcedureLoader().fullLoad(schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Stored_Procedures.getElement()));
-        new FunctionLoader().fullLoad(schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Functions.getElement()));
+        new TableLoader().fullLoad(schemaContainer.getChildByName(LoaderPrinterName.TABLES));
+        new ViewLoader().fullLoad(schemaContainer.getChildByName(LoaderPrinterName.VIEWS));
+        new StoredProcedureLoader().fullLoad(schemaContainer.getChildByName(LoaderPrinterName.STORED_PROCEDURES));
+        new FunctionLoader().fullLoad(schemaContainer.getChildByName(LoaderPrinterName.FUNCTIONS));
     }
 }

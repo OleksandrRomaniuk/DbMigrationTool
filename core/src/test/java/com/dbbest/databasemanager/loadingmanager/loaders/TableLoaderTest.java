@@ -2,44 +2,93 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.TableLoader;
+import com.dbbest.databasemanager.loadingmanager.printers.TablePrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.xmlmanager.container.Container;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
 import org.junit.Assert;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class TableLoaderTest {
 
+
     @Test
-    public void lazyLoad() throws ParsingException, ContainerException, DatabaseException {
-        SimpleConnectionBuilder simpleConnectionBuilder = new SimpleConnectionBuilder();
-        Connection connection = simpleConnectionBuilder.getConnection("mysql");
+    public void shouldExecuteLazyLoadOfTwoTables() throws SQLException, DatabaseException, ContainerException {
+
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        String query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila' ;";
+
+        Mockery mockery = new Mockery();
+        Connection connection = mockery.mock(Connection.class);
+        mockery.checking(new Expectations(){{
+            oneOf (connection).prepareStatement(query); will(returnValue(preparedStatement));
+        }});
+
+        Mockery mockery1 = new Mockery();
+        ResultSet resultSet = mockery1.mock(ResultSet.class);
+        mockery1.checking(new Expectations(){{
+            oneOf (resultSet).next(); will(returnValue(true));
+            oneOf (resultSet).getString("TABLE_NAME"); will(returnValue("testTable"));
+            oneOf (resultSet).next(); will(returnValue(false));
+        }});
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
         Context context = Context.getInstance();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
+        Container container = new Container();
         TableLoader tableLoader = new TableLoader();
-        Container tableCategoryContainer = new Container();
-        tableLoader.lazyLoad(tableCategoryContainer);
+        tableLoader.lazyLoad(container);
 
-        List<Container> containers = tableCategoryContainer.getChildren();
-        for (Container container: containers) {
-           // System.out.println(container.getAttributes().get(AttributeSingleConstants.TABLE_NAME));
+        Assert.assertEquals(1, container.getChildren().size());
+        Assert.assertEquals("testTable", ((Container)container.getChildren().get(0)).getAttributes().get("TABLE_NAME"));
+        Assert.assertEquals(5, ((Container)container.getChildren().get(0)).getChildren().size());
+    }
+
+    @Test
+    public void lazyLoad() throws ParsingException, ContainerException, DatabaseException, SQLException {
+        ResultSet resultSet = mock(ResultSet.class);
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        String query = "SELECT CATALOG_NAME, SCHEMA_NAME, DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME, SQL_PATH FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'sakila' ;";
+
+        Mockery mockery = new Mockery();
+        final Connection connection = mockery.mock(Connection.class);
+        mockery.checking(new Expectations(){{
+            oneOf (connection).prepareStatement(query); will(returnValue(preparedStatement));
+        }});
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+
+        Context context = Context.getInstance();
+        context.setConnection(connection);
+        context.setSchemaName("sakila");
+
+        Container container = new Container();
+        SchemaLoader schemaLoader = new SchemaLoader();
+        schemaLoader.detailedLoad(container);
+
+        Map<String, String> schemaAttributes = container.getAttributes();
+        for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
+            Assert.assertEquals(null, entry.getValue());
         }
 
-        Container table = containers.get(0);
-        tableLoader.detailedLoad(table);
-        StringBuilder result = new StringBuilder();
-        Map<String, String> map = table.getAttributes();
-        for (Map.Entry<String, String> entry: map.entrySet()) {
-            result.append(entry.getKey() + " - " + entry.getValue() + " ");
-        }
-        Assert.assertEquals(result.toString(), "TABLE_CATALOG - def TABLE_COMMENT -  TABLE_NAME - actor CHECKSUM - null TABLE_SCHEMA - sakila CHECK_TIME - null ENGINE - InnoDB TABLE_TYPE - BASE TABLE TABLE_ROWS - 200 AVG_ROW_LENGTH - 81 UPDATE_TIME - null DATA_LENGTH - 16384 DATA_FREE - 0 INDEX_LENGTH - 16384 ROW_FORMAT - Dynamic AUTO_INCREMENT - 201 VERSION - 10 CREATE_OPTIONS -  CREATE_TIME - 2018-08-09 20:08:05 MAX_DATA_LENGTH - 0 TABLE_COLLATION - utf8_general_ci ");
     }
 }

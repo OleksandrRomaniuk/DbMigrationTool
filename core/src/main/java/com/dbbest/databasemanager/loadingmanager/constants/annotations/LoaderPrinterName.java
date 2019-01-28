@@ -17,4 +17,9 @@ public class LoaderPrinterName {
     public static final String FUNCTIONS = "Functions";
     public static final String CONSTRAINT = "Constraint";
     public static final String PROCEDURE_FUNCTION_PARAMETER = "Procedure Function parameter";
+    public static final String TABLE_COLUMNS = "Columns";
+    public static final String TABLE_INDEXES = "Indexes";
+    public static final String TABLE_FOREIGN_KEYS = "Foreign Keys";
+    public static final String TABLE_TRIGGERS = "Triggers";
+    public static final String TABLE_CONSTRAINTS = "Constraints";
 }

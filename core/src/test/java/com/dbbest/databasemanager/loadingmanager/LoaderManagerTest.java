@@ -4,7 +4,7 @@ import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPrinterDatabaseTypesEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.SchemaCategoriesTagNameConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.TypeSupportConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TypeSupportConstants;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;

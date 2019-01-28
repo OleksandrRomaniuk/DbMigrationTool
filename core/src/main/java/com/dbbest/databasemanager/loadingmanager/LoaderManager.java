@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager;
 
-import com.dbbest.databasemanager.loadingmanager.constants.tags.TypeSupportConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TypeSupportConstants;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.Loader;
 import com.dbbest.databasemanager.reflectionutil.loadersreflection.DirectorySearcher;
 import com.dbbest.databasemanager.reflectionutil.loadersreflection.LoaderClassLoader;
