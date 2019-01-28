@@ -1,13 +1,8 @@
-package com.dbbest.databasemanager.loadingmanager.loaders;
+package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
-import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
-import com.dbbest.databasemanager.loadingmanager.loaders.mysql.TableLoader;
-import com.dbbest.databasemanager.loadingmanager.printers.TablePrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
-import com.dbbest.exceptions.ParsingException;
 import com.dbbest.xmlmanager.container.Container;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
@@ -18,33 +13,34 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.Map;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TableLoaderTest {
-
+public class ViewLoaderTest {
 
     @Test
-    public void shouldExecuteLazyLoadOfTwoTables() throws SQLException, DatabaseException, ContainerException {
-
+    public void shouldExecuteLazyLoadOfViews() throws SQLException, DatabaseException, ContainerException {
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila' ;";
+        String query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = 'sakila' ;";
 
         Mockery mockery = new Mockery();
         Connection connection = mockery.mock(Connection.class);
-        mockery.checking(new Expectations(){{
-            oneOf (connection).prepareStatement(query); will(returnValue(preparedStatement));
+        mockery.checking(new Expectations() {{
+            oneOf(connection).prepareStatement(query);
+            will(returnValue(preparedStatement));
         }});
 
         Mockery mockery1 = new Mockery();
         ResultSet resultSet = mockery1.mock(ResultSet.class);
-        mockery1.checking(new Expectations(){{
-            oneOf (resultSet).next(); will(returnValue(true));
-            oneOf (resultSet).getString("TABLE_NAME"); will(returnValue("testTable"));
-            oneOf (resultSet).next(); will(returnValue(false));
+        mockery1.checking(new Expectations() {{
+            oneOf(resultSet).next();
+            will(returnValue(true));
+            oneOf(resultSet).getString("TABLE_NAME");
+            will(returnValue("testTable"));
+            oneOf(resultSet).next();
+            will(returnValue(false));
         }});
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
@@ -54,24 +50,24 @@ public class TableLoaderTest {
         context.setSchemaName("sakila");
 
         Container container = new Container();
-        TableLoader tableLoader = new TableLoader();
-        tableLoader.lazyLoad(container);
+        ViewLoader loader = new ViewLoader();
+        loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
-        Assert.assertEquals("testTable", ((Container)container.getChildren().get(0)).getAttributes().get("TABLE_NAME"));
-        Assert.assertEquals(5, ((Container)container.getChildren().get(0)).getChildren().size());
+        Assert.assertEquals("testTable", ((Container) container.getChildren().get(0)).getAttributes().get("TABLE_NAME"));
     }
 
     @Test
-    public void lazyLoad() throws ParsingException, ContainerException, DatabaseException, SQLException {
+    public void shouldExecuteDetailLoadOfViews() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT CATALOG_NAME, SCHEMA_NAME, DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME, SQL_PATH FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'sakila' ;";
+        String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, VIEW_DEFINITION, CHECK_OPTION, IS_UPDATABLE, DEFINER, SECURITY_TYPE, CHARACTER_SET_CLIENT, COLLATION_CONNECTION FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = 'sakila' AND TABLE_NAME = 'tableTest' ;";
 
         Mockery mockery = new Mockery();
         final Connection connection = mockery.mock(Connection.class);
-        mockery.checking(new Expectations(){{
-            oneOf (connection).prepareStatement(query); will(returnValue(preparedStatement));
+        mockery.checking(new Expectations() {{
+            oneOf(connection).prepareStatement(query);
+            will(returnValue(preparedStatement));
         }});
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
@@ -82,13 +78,13 @@ public class TableLoaderTest {
         context.setSchemaName("sakila");
 
         Container container = new Container();
-        SchemaLoader schemaLoader = new SchemaLoader();
-        schemaLoader.detailedLoad(container);
+        container.addAttribute("TABLE_NAME", "tableTest");
+        ViewLoader loader = new ViewLoader();
+        loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
             Assert.assertEquals(null, entry.getValue());
         }
-
     }
 }

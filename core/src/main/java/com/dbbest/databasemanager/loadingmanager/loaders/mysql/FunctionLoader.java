@@ -14,24 +14,8 @@ import java.util.logging.Level;
 public class FunctionLoader extends AbstractLoader {
     @Override
     public void lazyLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
-
-        /*if (functionCategoryContainer.getName() == null || functionCategoryContainer.getName().trim().isEmpty()) {
-            throw new ContainerException(Level.SEVERE, "The container of the category Functions does not contain the name.");
-        }*/
-
-
         try {
-
             super.executeLazyLoadSchemaChildren(functionCategoryContainer);
-            /*
-            ResultSet functions = connection.getMetaData().getFunctions((String) functionCategoryContainer
-                .getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME.getElement()), null, null);
-            while (functions.next()) {
-                Container storedProcedure = new Container();
-                storedProcedure.setName(functions.getString(StoredProceduresAndFunctionsAttributes.SPECIFIC_NAME.getElement()));
-                functionCategoryContainer.addChild(storedProcedure);
-            }
-            */
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -39,26 +23,8 @@ public class FunctionLoader extends AbstractLoader {
 
     @Override
     public void detailedLoad(Container functionContainer) throws DatabaseException, ContainerException {
-        /*if (functionContainer.getName() == null || functionContainer.getName().trim().isEmpty()) {
-            throw new ContainerException(Level.SEVERE, "The view container does not contain the name.");
-        }*/
-
         try {
             super.executeDetailedLoadSchemaChildren(functionContainer);
-            /*
-            String query =
-                String.format(MySqlQueriesConstants.StoredProceduresAndFunctionsSchemaSelectAll.getQuery(),
-                    functionContainer.getParent().getParent().getName(),
-                    "FUNCTION",
-                    functionContainer.getName());
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                for (StoredProceduresAndFunctionsAttributes attributeKey : StoredProceduresAndFunctionsAttributes.values()) {
-                    functionContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
-                }
-            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

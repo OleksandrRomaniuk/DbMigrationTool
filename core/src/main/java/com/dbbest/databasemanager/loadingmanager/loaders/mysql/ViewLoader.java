@@ -14,19 +14,8 @@ import java.util.logging.Level;
 public class ViewLoader extends AbstractLoader {
     @Override
     public void lazyLoad(Container viewCategoryContainer) throws DatabaseException, ContainerException {
-        /*if (viewCategoryContainer.getName() == null || viewCategoryContainer.getName().trim().isEmpty()) {
-            throw new ContainerException(Level.SEVERE, "The container of the category Views does not contain the name.");
-        }*/
         try {
             super.executeLazyLoadSchemaChildren(viewCategoryContainer);
-            /*ResultSet views = connection.getMetaData()
-                .getTables((String) viewCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME.getElement()),
-                    null, "%", new String[] {"VIEW"});
-            while (views.next()) {
-                Container view = new Container();
-                view.setName(views.getString(ViewAttributes.TABLE_NAME.getElement()));
-                viewCategoryContainer.addChild(view);
-            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -34,24 +23,8 @@ public class ViewLoader extends AbstractLoader {
 
     @Override
     public void detailedLoad(Container viewContainer) throws DatabaseException, ContainerException {
-        /*if (viewContainer.getName() == null || viewContainer.getName().trim().isEmpty()) {
-            throw new ContainerException(Level.SEVERE, "The view container does not contain the name.");
-        }*/
-
         try {
             super.executeDetailedLoadSchemaChildren(viewContainer);
-            /*String query =
-                String.format(MySqlQueriesConstants.ViewInformationSchemaSelectAll.getQuery(),
-                    viewContainer.getParent().getParent().getName(),
-                    viewContainer.getName());
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                for (ViewAttributes attributeKey : ViewAttributes.values()) {
-                    viewContainer.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
-                }
-            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

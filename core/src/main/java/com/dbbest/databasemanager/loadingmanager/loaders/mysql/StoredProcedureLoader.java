@@ -14,24 +14,8 @@ import java.util.logging.Level;
 public class StoredProcedureLoader extends AbstractLoader {
     @Override
     public void lazyLoad(Container storedProceduresCategoryContainer) throws DatabaseException, ContainerException {
-        /*if (storedProceduresCategoryContainer.getName() == null || storedProceduresCategoryContainer.getName().trim().isEmpty()) {
-            throw new ContainerException(Level.SEVERE, "The container of the category Stored procedures does not contain the name.");
-        }*/
         try {
-
             super.executeLazyLoadSchemaChildren(storedProceduresCategoryContainer);
-
-            /*
-            ResultSet storedProcedures = connection.getMetaData().getProcedures((String) storedProceduresCategoryContainer
-                .getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME.getElement()), "%", "%");
-
-            while (storedProcedures.next()) {
-                if (Integer.parseInt(storedProcedures.getString("PROCEDURE_TYPE")) == 1) {
-                    Container storedProcedure = new Container();
-                    storedProcedure.setName(storedProcedures.getString(StoredProceduresAndFunctionsAttributes.SPECIFIC_NAME.getElement()));
-                    storedProceduresCategoryContainer.addChild(storedProcedure);
-                }
-            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -39,25 +23,8 @@ public class StoredProcedureLoader extends AbstractLoader {
 
     @Override
     public void detailedLoad(Container storedProcedure) throws DatabaseException, ContainerException {
-        /*if (storedProcedure.getName() == null || storedProcedure.getName().trim().isEmpty()) {
-            throw new ContainerException(Level.SEVERE, "The view container does not contain the name.");
-        }*/
-
         try {
             super.executeDetailedLoadSchemaChildren(storedProcedure);
-            /*String query =
-                String.format(MySqlQueriesConstants.StoredProceduresAndFunctionsSchemaSelectAll.getQuery(),
-                    storedProcedure.getParent().getParent().getName(),
-                    "PROCEDURE",
-                    storedProcedure.getName());
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                for (StoredProceduresAndFunctionsAttributes attributeKey : StoredProceduresAndFunctionsAttributes.values()) {
-                    storedProcedure.addAttribute(attributeKey.getElement(), resultSet.getString(attributeKey.getElement()));
-                }
-            }*/
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
