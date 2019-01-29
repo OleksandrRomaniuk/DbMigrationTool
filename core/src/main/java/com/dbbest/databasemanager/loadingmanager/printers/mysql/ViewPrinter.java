@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ViewAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -16,28 +16,29 @@ public class ViewPrinter implements Printer {
 
         Map<String, String> viewAttributes = viewContainer.getAttributes();
 
-        if (viewAttributes.get(ViewAttributes.DEFINER.getElement()) != null
-            && !viewAttributes.get(ViewAttributes.DEFINER.getElement()).isEmpty()) {
-            query.append("DEFINER " + viewAttributes.get(ViewAttributes.DEFINER.getElement()) + " ");
+        if (viewAttributes.get(AttributeSingleConstants.DEFINER) != null
+            && !viewAttributes.get(AttributeSingleConstants.DEFINER).isEmpty()) {
+            query.append("DEFINER " + viewAttributes.get(AttributeSingleConstants.DEFINER) + " ");
         }
-        if (viewAttributes.get(ViewAttributes.SECURITY_TYPE.getElement()) != null
-            && !viewAttributes.get(ViewAttributes.SECURITY_TYPE.getElement()).isEmpty()) {
-            query.append("SQL SECURITY " + viewAttributes.get(ViewAttributes.SECURITY_TYPE.getElement()) + " ");
+        if (viewAttributes.get(AttributeSingleConstants.SECURITY_TYPE) != null
+            && !viewAttributes.get(AttributeSingleConstants.SECURITY_TYPE).isEmpty()) {
+            query.append("SQL SECURITY " + viewAttributes.get(AttributeSingleConstants.SECURITY_TYPE) + " ");
         }
-        query.append("VIEW " + viewContainer.getAttributes().get(ViewAttributes.TABLE_SCHEMA.getElement()) + "." + viewContainer.getName());
+        query.append("VIEW " + viewContainer.getAttributes().get(AttributeSingleConstants.TABLE_SCHEMA)
+            + "." + viewAttributes.get(AttributeSingleConstants.TABLE_NAME));
 
         if (viewContainer.getChildren() != null && !viewContainer.getChildren().isEmpty()) {
             List<Container> columns = viewContainer.getChildren();
             query.append(" (");
             for (Container column : columns) {
-                query.append( column.getName() + ", ");
+                query.append(column.getAttributes().get(AttributeSingleConstants.COLUMN_NAME) + ", ");
             }
             query.deleteCharAt(query.length() - 1);
             query.deleteCharAt(query.length() - 1);
             query.append(")");
         }
 
-        query.append(" AS " + viewAttributes.get(ViewAttributes.VIEW_DEFINITION.getElement()));
+        query.append(" AS " + viewAttributes.get(AttributeSingleConstants.VIEW_DEFINITION));
 
         return query.toString();
     }

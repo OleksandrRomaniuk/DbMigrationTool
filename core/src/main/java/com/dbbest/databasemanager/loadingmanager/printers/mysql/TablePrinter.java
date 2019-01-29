@@ -1,7 +1,8 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TableAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -13,11 +14,11 @@ public class TablePrinter implements Printer {
     public String execute(Container tableContainer) throws ContainerException {
 
         StringBuilder query = new StringBuilder();
-        query.append("CREATE TABLE IF NOT EXISTS " + tableContainer.getAttributes().get(TableAttributes.TABLE_SCHEMA.getElement())
-            + "." + tableContainer.getAttributes().get(TableAttributes.TABLE_NAME.getElement()));
+        query.append("CREATE TABLE IF NOT EXISTS " + tableContainer.getAttributes().get(AttributeSingleConstants.TABLE_SCHEMA)
+            + "." + tableContainer.getAttributes().get(AttributeSingleConstants.TABLE_NAME));
         query.append(" (\n");
         query.append(new TableColumnPrinter().execute(tableContainer
-            .getChildByName(TableCategoriesTagNameCategories.Columns.getElement())));
+            .getChildByName(LoaderPrinterName.TABLE_COLUMN)));
         query.append(new IndexPrinterHelper().execute(tableContainer));
         query.append(new PrimaryKeyPrinterHelper().execute(tableContainer));
         query.append(new UniquePrinterHelper().execute(tableContainer));
@@ -48,14 +49,14 @@ public class TablePrinter implements Printer {
 
     private String getAngRowLength(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return tableAttributes.get(TableAttributes.TABLE_AVG_ROW_LENGTH.getElement()) != null
-            ? ("AVG_ROW_LENGTH = " + tableAttributes.get(TableAttributes.TABLE_AVG_ROW_LENGTH.getElement()) + "\n") : "";
+        return tableAttributes.get(AttributeSingleConstants.AVG_ROW_LENGTH) != null
+            ? ("AVG_ROW_LENGTH = " + tableAttributes.get(AttributeSingleConstants.AVG_ROW_LENGTH) + "\n") : "";
     }
 
     private String getCheckSum(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return tableAttributes.get(TableAttributes.TABLE_CHECKSUM.getElement()) != null
-            ? ("CHECKSUM = " + tableAttributes.get(TableAttributes.TABLE_CHECKSUM.getElement()) + "\n") : "";
+        return tableAttributes.get(AttributeSingleConstants.CHECKSUM) != null
+            ? ("CHECKSUM = " + tableAttributes.get(AttributeSingleConstants.CHECKSUM) + "\n") : "";
     }
 
     private String getCollation(Container tableContainer) {
@@ -66,26 +67,26 @@ public class TablePrinter implements Printer {
 
     private String getComment(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return (tableAttributes.get(TableAttributes.TABLE_TABLE_COMMENT.getElement()) != null
-            && !tableAttributes.get(TableAttributes.TABLE_TABLE_COMMENT.getElement()).equals(""))
-            ? ("COMMENT = " + tableAttributes.get(TableAttributes.TABLE_TABLE_COMMENT.getElement()) + "\n") : "";
+        return (tableAttributes.get(AttributeSingleConstants.TABLE_COMMENT) != null
+            && !tableAttributes.get(AttributeSingleConstants.TABLE_COMMENT).equals(""))
+            ? ("COMMENT = " + tableAttributes.get(AttributeSingleConstants.TABLE_COMMENT) + "\n") : "";
     }
 
     private String getEngine(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return tableAttributes.get(TableAttributes.TABLE_ENGINE.getElement()) != null
-            ? ("ENGINE = " + tableAttributes.get(TableAttributes.TABLE_ENGINE.getElement()) + "\n") : "";
+        return tableAttributes.get(AttributeSingleConstants.ENGINE) != null
+            ? ("ENGINE = " + tableAttributes.get(AttributeSingleConstants.ENGINE) + "\n") : "";
     }
 
     private String getRowFormat(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return tableAttributes.get(TableAttributes.TABLE_ROW_FORMAT.getElement()) != null
-            ? ("ROW_FORMAT = " + tableAttributes.get(TableAttributes.TABLE_ROW_FORMAT.getElement()) + "\n") : "";
+        return tableAttributes.get(AttributeSingleConstants.ROW_FORMAT) != null
+            ? ("ROW_FORMAT = " + tableAttributes.get(AttributeSingleConstants.ROW_FORMAT) + "\n") : "";
     }
 
     private String getTableSpace(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return tableAttributes.get(TableAttributes.TABLE_DATA_FREE.getElement()) != null
-            ? ("TABLESPACE = " + tableAttributes.get(TableAttributes.TABLE_DATA_FREE.getElement()) + "\n") : "";
+        return tableAttributes.get(AttributeSingleConstants.DATA_FREE) != null
+            ? ("TABLESPACE = " + tableAttributes.get(AttributeSingleConstants.DATA_FREE) + "\n") : "";
     }
 }

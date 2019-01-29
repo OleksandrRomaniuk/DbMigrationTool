@@ -21,7 +21,7 @@ public abstract class AbstractLoader implements Loader {
     private String schemaName = Context.getInstance().getSchemaName();
     private String childName = this.getClass()
         .getAnnotation(LoaderAnnotation.class).value();
-    private String attribute  = AttributeSingleConstants.NAME_ATTRIBUTE_CONSTANTS.get(childName);
+    private String attribute  = AttributeSingleConstants.getInstance().getNameAttributes().get(childName);
     private List<String> attributes = AttributeListConstants.getInstance().getConstants().get(childName);
     private String listOfAttributes = getListOfAttributes(attributes);
     private String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(childName);

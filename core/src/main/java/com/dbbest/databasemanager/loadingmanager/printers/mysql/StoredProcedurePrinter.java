@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ProcedureFunctionParameterAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.StoredProceduresAndFunctionsAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -15,24 +15,24 @@ public class StoredProcedurePrinter implements Printer {
         query.append("DELIMITER $$ \n");
         query.append("CREATE ");
         getDefiner(query, storedProcedureContainer);
-        query.append(" PROCEDURE " + storedProcedureContainer.getAttributes().get(StoredProceduresAndFunctionsAttributes.ROUTINE_SCHEMA.getElement())
-            + "." + storedProcedureContainer.getName());
+        query.append(" PROCEDURE " + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_SCHEMA)
+            + "." + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME));
 
         if (storedProcedureContainer.hasChildren()) {
             getParameters(query, storedProcedureContainer);
         }
 
         getCharacteristics(query, storedProcedureContainer);
-        query.append(" " + storedProcedureContainer.getAttributes().get(StoredProceduresAndFunctionsAttributes.ROUTINE_DEFINITION.getElement()));
+        query.append(" " + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_DEFINITION));
         query.append("$$ \nDELIMITER ;");
         return query.toString();
     }
 
     private void getDefiner(StringBuilder query, Container storedProcedureContainer) {
         Map<String, String> procedureAttributes = storedProcedureContainer.getAttributes();
-        if (procedureAttributes.get(StoredProceduresAndFunctionsAttributes.DEFINER.getElement()) != null
-            && !procedureAttributes.get(StoredProceduresAndFunctionsAttributes.DEFINER.getElement()).trim().isEmpty()) {
-            query.append(" DEFINER = " + procedureAttributes.get(StoredProceduresAndFunctionsAttributes.DEFINER.getElement()));
+        if (procedureAttributes.get(AttributeSingleConstants.DEFINER) != null
+            && !procedureAttributes.get(AttributeSingleConstants.DEFINER).trim().isEmpty()) {
+            query.append(" DEFINER = " + procedureAttributes.get(AttributeSingleConstants.DEFINER));
         }
     }
 
@@ -46,23 +46,23 @@ public class StoredProcedurePrinter implements Printer {
     }
 
     private void geRoutineComment(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
-        if (procedureAttributes.get(StoredProceduresAndFunctionsAttributes.ROUTINE_COMMENT.getElement()) != null
-            && !procedureAttributes.get(StoredProceduresAndFunctionsAttributes.ROUTINE_COMMENT.getElement()).trim().isEmpty()) {
-            query.append(" COMMENT '" + procedureAttributes.get(StoredProceduresAndFunctionsAttributes.ROUTINE_COMMENT.getElement()) + "'");
+        if (procedureAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT) != null
+            && !procedureAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT).trim().isEmpty()) {
+            query.append(" COMMENT '" + procedureAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT) + "'");
         }
     }
 
     private void getExternalLanguage(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
-        if (procedureAttributes.get(StoredProceduresAndFunctionsAttributes.EXTERNAL_LANGUAGE.getElement()) != null
-            && !procedureAttributes.get(StoredProceduresAndFunctionsAttributes.EXTERNAL_LANGUAGE.getElement()).trim().isEmpty()) {
-            query.append(" LANGUAGE " + procedureAttributes.get(StoredProceduresAndFunctionsAttributes.EXTERNAL_LANGUAGE.getElement()));
+        if (procedureAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE) != null
+            && !procedureAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE).trim().isEmpty()) {
+            query.append(" LANGUAGE " + procedureAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE));
         }
     }
 
     private void getDetermenisticOption(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
-        if (procedureAttributes.get(StoredProceduresAndFunctionsAttributes.IS_DETERMINISTIC.getElement()) != null
-            && !procedureAttributes.get(StoredProceduresAndFunctionsAttributes.IS_DETERMINISTIC.getElement()).trim().isEmpty()) {
-            if (procedureAttributes.get(StoredProceduresAndFunctionsAttributes.IS_DETERMINISTIC.getElement()).trim().equals("NO")) {
+        if (procedureAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC) != null
+            && !procedureAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC).trim().isEmpty()) {
+            if (procedureAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC).trim().equals("NO")) {
                 query.append(" NOT DETERMINISTIC");
             } else {
                 query.append(" DETERMINISTIC");
@@ -71,16 +71,16 @@ public class StoredProcedurePrinter implements Printer {
     }
 
     private void getSqlDataAccess(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
-        if (procedureAttributes.get(StoredProceduresAndFunctionsAttributes.SQL_DATA_ACCESS.getElement()) != null
-            && !procedureAttributes.get(StoredProceduresAndFunctionsAttributes.SQL_DATA_ACCESS.getElement()).trim().isEmpty()) {
-            query.append(" " + procedureAttributes.get(StoredProceduresAndFunctionsAttributes.SQL_DATA_ACCESS.getElement()));
+        if (procedureAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS) != null
+            && !procedureAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS).trim().isEmpty()) {
+            query.append(" " + procedureAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS));
         }
     }
 
     private void getSecurityType(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
-        if (procedureAttributes.get(StoredProceduresAndFunctionsAttributes.SECURITY_TYPE.getElement()) != null
-            && !procedureAttributes.get(StoredProceduresAndFunctionsAttributes.SECURITY_TYPE.getElement()).trim().isEmpty()) {
-            query.append(" SQL SECURITY " + procedureAttributes.get(StoredProceduresAndFunctionsAttributes.SECURITY_TYPE.getElement()));
+        if (procedureAttributes.get(AttributeSingleConstants.SECURITY_TYPE) != null
+            && !procedureAttributes.get(AttributeSingleConstants.SECURITY_TYPE).trim().isEmpty()) {
+            query.append(" SQL SECURITY " + procedureAttributes.get(AttributeSingleConstants.SECURITY_TYPE));
         }
     }
 
@@ -90,11 +90,12 @@ public class StoredProcedurePrinter implements Printer {
         for (Container parameter : parameters) {
             Map<String, String> parameterAttributes = parameter.getAttributes();
 
-            if (parameterAttributes.get(ProcedureFunctionParameterAttributes.PARAMETER_MODE.getElement()) != null
-                && !parameterAttributes.get(ProcedureFunctionParameterAttributes.PARAMETER_MODE.getElement()).trim().isEmpty()) {
-                query.append(parameterAttributes.get(ProcedureFunctionParameterAttributes.PARAMETER_MODE.getElement()) + " ");
+            if (parameterAttributes.get(AttributeSingleConstants.PARAMETER_MODE) != null
+                && !parameterAttributes.get(AttributeSingleConstants.PARAMETER_MODE).trim().isEmpty()) {
+                query.append(parameterAttributes.get(AttributeSingleConstants.PARAMETER_MODE) + " ");
             }
-            query.append(parameter.getName() + " " + parameterAttributes.get(ProcedureFunctionParameterAttributes.DATA_TYPE.getElement()) + ", ");
+            query.append(parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME)
+                + " " + parameterAttributes.get(ProcedureFunctionParameterAttributes.DATA_TYPE.getElement()) + ", ");
         }
         query.deleteCharAt(query.length() - 1);
         query.deleteCharAt(query.length() - 1);

@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.IndexAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -18,7 +18,7 @@ public class IndexPrinterHelper implements Printer {
 
     private String buildPrintIndexes(Container tableContainer) throws ContainerException {
         List<Container> lisOfIndexes = tableContainer
-            .getChildByName(TableCategoriesTagNameCategories.Indexes.getElement()).getChildren();
+            .getChildByName(LoaderPrinterName.TABLE_INDEXES).getChildren();
         StringBuilder query = new StringBuilder();
         if (lisOfIndexes.size() > 0) {
             for (Container index : lisOfIndexes) {
@@ -30,8 +30,8 @@ public class IndexPrinterHelper implements Printer {
 
     private String printIndex(Container index) {
         StringBuilder query = new StringBuilder();
-        if (!index.getName().equals("PRIMARY")) {
-            query.append("INDEX " + index.getName()
+        if (!index.getAttributes().get(AttributeSingleConstants.INDEX_NAME).equals("PRIMARY")) {
+            query.append("INDEX " + index.getAttributes().get(AttributeSingleConstants.INDEX_NAME)
                 + getIndexType((Container) index.getChildren().get(0)) + getKeyPart(index.getChildren()) + ",\n");
         }
         return query.toString();
@@ -41,7 +41,7 @@ public class IndexPrinterHelper implements Printer {
         List<String> listOfUniqueIndexNames = new ArrayList();
         if (lisOfIndexes.size() > 0) {
             for (Container indexContainer : lisOfIndexes) {
-                String indexName = (String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME.getElement());
+                String indexName = (String) indexContainer.getAttributes().get(AttributeSingleConstants.INDEX_NAME);
                 if (!ifListContainsName(listOfUniqueIndexNames, indexName) && !indexName.equals("PRIMARY")) {
                     listOfUniqueIndexNames.add(indexName);
                 }
@@ -66,7 +66,7 @@ public class IndexPrinterHelper implements Printer {
             for (int j = 0; j < indexesWithSameName.size(); j++) {
                 Container indexContainer = indexesWithSameName.get(j);
                 int seqIndex = Integer.parseInt((String) indexContainer
-                    .getAttributes().get(IndexAttributes.SEQ_IN_INDEX.getElement()));
+                    .getAttributes().get(AttributeSingleConstants.SEQ_IN_INDEX));
                 if (seqIndex == i + 1) {
                     getOneColumnOfKeyParts(indexContainer, query);
                 }
@@ -80,21 +80,21 @@ public class IndexPrinterHelper implements Printer {
     }
 
     private void getOneColumnOfKeyParts(Container indexContainer, StringBuilder query) {
-        query.append(indexContainer.getAttributes().get(IndexAttributes.COLUMN_NAME.getElement()));
-        if (indexContainer.getAttributes().get(IndexAttributes.SUB_PART.getElement()) != null
-            && !((String) indexContainer.getAttributes().get(IndexAttributes.SUB_PART.getElement())).trim().equals("")
-            && !((String) indexContainer.getAttributes().get(IndexAttributes.SUB_PART.getElement())).trim().equals("null")) {
+        query.append(indexContainer.getAttributes().get(AttributeSingleConstants.COLUMN_NAME));
+        if (indexContainer.getAttributes().get(AttributeSingleConstants.SUB_PART) != null
+            && !((String) indexContainer.getAttributes().get(AttributeSingleConstants.SUB_PART)).trim().equals("")
+            && !((String) indexContainer.getAttributes().get(AttributeSingleConstants.SUB_PART)).trim().equals("null")) {
             query.append(" (");
-            query.append(indexContainer.getAttributes().get(IndexAttributes.SUB_PART.getElement()));
+            query.append(indexContainer.getAttributes().get(AttributeSingleConstants.SUB_PART));
             query.append(")");
         }
         query.append(", ");
     }
 
     private String getIndexType(Container index) {
-        if (index.getAttributes().get(IndexAttributes.INDEX_TYPE.getElement()).equals("BTREE")) {
+        if (index.getAttributes().get(AttributeSingleConstants.INDEX_TYPE).equals("BTREE")) {
             return " USING BTREE";
-        } else if (index.getAttributes().get(IndexAttributes.INDEX_TYPE.getElement()).equals("HASH")) {
+        } else if (index.getAttributes().get(AttributeSingleConstants.INDEX_TYPE).equals("HASH")) {
             return " USING HASH";
         } else {
             return "";

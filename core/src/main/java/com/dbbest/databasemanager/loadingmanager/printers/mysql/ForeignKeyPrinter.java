@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.FkAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -12,15 +12,16 @@ public class ForeignKeyPrinter implements Printer {
     @Override
     public String execute(Container fkContainer) throws ContainerException {
         StringBuilder query = new StringBuilder();
-        query.append("FOREIGN KEY " + fkContainer.getName() + " (" + getColumns(fkContainer)
-            + ") REFERENCES " + getReferencedTable(fkContainer) + " (" + getReferencedColumns(fkContainer) + ")");
+        query.append("FOREIGN KEY " + fkContainer.getAttributes().get(AttributeSingleConstants.CONSTRAINT_NAME)
+            + " (" + getColumns(fkContainer) + ") REFERENCES " + getReferencedTable(fkContainer)
+            + " (" + getReferencedColumns(fkContainer) + ")");
         return query.toString();
     }
 
     private String getReferencedTable(Container fkContainer) {
         List<Container> constraints = fkContainer.getChildren();
-        return (String) constraints.get(0).getAttributes().get(FkAttributes.REFERENCED_TABLE_SCHEMA.getElement()) + "."
-            + constraints.get(0).getAttributes().get(FkAttributes.REFERENCED_TABLE_NAME.getElement());
+        return (String) constraints.get(0).getAttributes().get(AttributeSingleConstants.REFERENCED_TABLE_SCHEMA) + "."
+            + constraints.get(0).getAttributes().get(AttributeSingleConstants.REFERENCED_TABLE_NAME);
     }
 
     private String getReferencedColumns(Container fkContainer) {
@@ -30,9 +31,10 @@ public class ForeignKeyPrinter implements Printer {
         for (int i = 0; i < constraints.size(); i++) {
 
             for (int j = 0; j < constraints.size(); j++) {
-                int position = Integer.parseInt((String) constraints.get(j).getAttributes().get(FkAttributes.POSITION_IN_UNIQUE_CONSTRAINT.getElement()));
+                int position = Integer.parseInt((String) constraints.get(j).getAttributes()
+                    .get(AttributeSingleConstants.POSITION_IN_UNIQUE_CONSTRAINT));
                 if (position == (i + 1)) {
-                    query.append(constraints.get(j).getAttributes().get(FkAttributes.REFERENCED_COLUMN_NAME.getElement()) + ", ");
+                    query.append(constraints.get(j).getAttributes().get(AttributeSingleConstants.REFERENCED_COLUMN_NAME) + ", ");
                 }
             }
         }
@@ -47,9 +49,10 @@ public class ForeignKeyPrinter implements Printer {
 
         for (int i = 0; i < constraints.size(); i++) {
             for (int j = 0; j < constraints.size(); j++) {
-                int ordPosition = Integer.parseInt((String) constraints.get(j).getAttributes().get(FkAttributes.ORDINAL_POSITION.getElement()));
+                int ordPosition = Integer.parseInt((String) constraints.get(j).getAttributes()
+                    .get(AttributeSingleConstants.ORDINAL_POSITION));
                 if (ordPosition == (i + 1)) {
-                    query.append(constraints.get(j).getAttributes().get(FkAttributes.COLUMN_NAME.getElement()) + ", ");
+                    query.append(constraints.get(j).getAttributes().get(AttributeSingleConstants.FK_COLUMN_NAME) + ", ");
                 }
             }
         }

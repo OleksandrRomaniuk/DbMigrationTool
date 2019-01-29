@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TriggerAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
@@ -10,22 +11,22 @@ public class TriggerPrinter implements Printer {
     public String execute(Container triggerContainer) throws ContainerException {
         StringBuilder query = new StringBuilder();
         query.append("DELIMITER //\n" + "CREATE\n" + getDefiner(triggerContainer)
-            + " TRIGGER " + ((String) triggerContainer.getAttributes().get(TriggerAttributes.EVENT_OBJECT_SCHEMA.getElement()))
-            + "." + ((String) triggerContainer.getAttributes().get(TriggerAttributes.TRIGGER_NAME.getElement())) + "\n"
-            + ((String) triggerContainer.getAttributes().get(TriggerAttributes.ACTION_TIMING.getElement()) + " ")
-            + ((String) triggerContainer.getAttributes().get(TriggerAttributes.EVENT_MANIPULATION.getElement())) + "\n"
-            + "ON " + ((String) triggerContainer.getAttributes().get(TriggerAttributes.EVENT_OBJECT_TABLE.getElement()))
+            + " TRIGGER " + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.EVENT_OBJECT_SCHEMA))
+            + "." + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.TRIGGER_NAME)) + "\n"
+            + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.ACTION_TIMING) + " ")
+            + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.EVENT_MANIPULATION)) + "\n"
+            + "ON " + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.EVENT_OBJECT_TABLE))
             + " FOR EACH ROW\n"
-            + ((String) triggerContainer.getAttributes().get(TriggerAttributes.ACTION_STATEMENT.getElement())) + "; \n"
+            + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.ACTION_STATEMENT)) + "; \n"
             + "DELIMITER;\n");
 
         return query.toString();
     }
 
     private String getDefiner(Container triggerContainer) throws ContainerException {
-        if (triggerContainer.getAttributes().get(TriggerAttributes.DEFINER.getElement()) != null
-            && !((String) triggerContainer.getAttributes().get(TriggerAttributes.DEFINER.getElement())).trim().isEmpty()) {
-            return " DEFINER = " + (String) triggerContainer.getAttributes().get(TriggerAttributes.DEFINER.getElement()) + "\n";
+        if (triggerContainer.getAttributes().get(AttributeSingleConstants.DEFINER) != null
+            && !((String) triggerContainer.getAttributes().get(AttributeSingleConstants.DEFINER)).trim().isEmpty()) {
+            return " DEFINER = " + (String) triggerContainer.getAttributes().get(AttributeSingleConstants.DEFINER) + "\n";
         } else {
             return "";
         }

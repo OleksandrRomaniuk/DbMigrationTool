@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ColumnAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -12,12 +12,12 @@ public class ColumnPrinter implements Printer {
 
         StringBuilder query = new StringBuilder();
         Map<String, String> columnAttributes = columnTree.getAttributes();
-        query.append(columnTree.getName() + " ");
-        query.append(columnAttributes.get(ColumnAttributes.COLUMN_TYPE.getElement()));
+        query.append(columnAttributes.get(AttributeSingleConstants.COLUMN_NAME) + " ");
+        query.append(columnAttributes.get(AttributeSingleConstants.COLUMN_TYPE));
 
-        if (columnAttributes.get(ColumnAttributes.COLUMN_TYPE.getElement()) != null
-            && !columnAttributes.get(ColumnAttributes.COLUMN_TYPE.getElement()).isEmpty()
-            && columnAttributes.get(ColumnAttributes.COLUMN_IS_NULLABLE.getElement()).equals("NO")) {
+        if (columnAttributes.get(AttributeSingleConstants.COLUMN_TYPE) != null
+            && !columnAttributes.get(AttributeSingleConstants.COLUMN_TYPE).isEmpty()
+            && columnAttributes.get(AttributeSingleConstants.COLUMN_IS_NULLABLE).equals("NO")) {
             query.append(" " + "NOT NULL");
         }
 

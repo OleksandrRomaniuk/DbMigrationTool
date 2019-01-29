@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -15,15 +15,15 @@ public class SchemaPrinter implements Printer {
         Map<String, String> schemaAttributes = schemaContainer.getAttributes();
         if (schemaAttributes != null
             && !schemaAttributes.isEmpty()
-            && schemaAttributes.get(SchemaAttributes.SCHEMA_DEFAULT_CHARACTER_SET_NAME.getElement()) != null
-            && !schemaAttributes.get(SchemaAttributes.SCHEMA_DEFAULT_CHARACTER_SET_NAME.getElement()).trim().isEmpty()) {
-            query.append(" CHARACTER SET " + "'" + schemaAttributes.get(SchemaAttributes.SCHEMA_DEFAULT_CHARACTER_SET_NAME.getElement()) + "'");
+            && schemaAttributes.get(AttributeSingleConstants.DEFAULT_CHARACTER_SET_NAME) != null
+            && !schemaAttributes.get(AttributeSingleConstants.DEFAULT_CHARACTER_SET_NAME).trim().isEmpty()) {
+            query.append(" CHARACTER SET " + "'" + schemaAttributes.get(AttributeSingleConstants.DEFAULT_CHARACTER_SET_NAME) + "'");
         }
         if (schemaAttributes != null
             && !schemaAttributes.isEmpty()
-            && schemaAttributes.get(SchemaAttributes.SCHEMA_DEFAULT_COLLATION_NAME.getElement()) != null
-            && !schemaAttributes.get(SchemaAttributes.SCHEMA_DEFAULT_COLLATION_NAME.getElement()).trim().isEmpty()) {
-            query.append(" COLLATE " + "'" + schemaAttributes.get(SchemaAttributes.SCHEMA_DEFAULT_COLLATION_NAME.getElement()) + "'");
+            && schemaAttributes.get(AttributeSingleConstants.DEFAULT_COLLATION_NAME) != null
+            && !schemaAttributes.get(AttributeSingleConstants.DEFAULT_COLLATION_NAME).trim().isEmpty()) {
+            query.append(" COLLATE " + "'" + schemaAttributes.get(AttributeSingleConstants.DEFAULT_COLLATION_NAME) + "'");
         }
         query.append(";");
         return query.toString();

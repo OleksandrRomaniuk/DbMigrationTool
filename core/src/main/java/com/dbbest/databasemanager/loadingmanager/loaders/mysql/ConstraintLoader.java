@@ -33,8 +33,9 @@ public class ConstraintLoader extends AbstractLoader {
     @Override
     public void fullLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
         lazyLoad(constraintCategoryContainer);
-        if (constraintCategoryContainer.getChildren() != null && !constraintCategoryContainer.getChildren().isEmpty()) {
+
             List<Container> constraintContainers = constraintCategoryContainer.getChildren();
+        if (constraintContainers != null && !constraintContainers.isEmpty()) {
             for (Container constraint : constraintContainers) {
                 detailedLoad(constraint);
             }
