@@ -1,7 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ProcedureFunctionParameterAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -95,7 +94,7 @@ public class StoredProcedurePrinter implements Printer {
                 query.append(parameterAttributes.get(AttributeSingleConstants.PARAMETER_MODE) + " ");
             }
             query.append(parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME)
-                + " " + parameterAttributes.get(ProcedureFunctionParameterAttributes.DATA_TYPE.getElement()) + ", ");
+                + " " + parameterAttributes.get(AttributeSingleConstants.DATA_TYPE) + ", ");
         }
         query.deleteCharAt(query.length() - 1);
         query.deleteCharAt(query.length() - 1);

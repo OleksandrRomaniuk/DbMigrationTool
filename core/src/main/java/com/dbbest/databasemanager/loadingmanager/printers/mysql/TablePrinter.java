@@ -2,7 +2,6 @@ package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -43,8 +42,8 @@ public class TablePrinter implements Printer {
 
     private String getAutoIncrement(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return tableAttributes.get(TableAttributes.TABLE_AUTO_INCREMENT.getElement()) != null
-            ? ("AUTO_INCREMENT = " + tableAttributes.get(TableAttributes.TABLE_AUTO_INCREMENT.getElement()) + "\n") : "";
+        return tableAttributes.get(AttributeSingleConstants.AUTO_INCREMENT) != null
+            ? ("AUTO_INCREMENT = " + tableAttributes.get(AttributeSingleConstants.AUTO_INCREMENT) + "\n") : "";
     }
 
     private String getAngRowLength(Container tableContainer) {
@@ -61,8 +60,8 @@ public class TablePrinter implements Printer {
 
     private String getCollation(Container tableContainer) {
         Map<String, String> tableAttributes = tableContainer.getAttributes();
-        return tableAttributes.get(TableAttributes.TABLE_TABLE_COLLATION.getElement()) != null
-            ? ("DEFAULT COLLATE = " + tableAttributes.get(TableAttributes.TABLE_TABLE_COLLATION.getElement()) + "\n") : "";
+        return tableAttributes.get(AttributeSingleConstants.TABLE_COLLATION) != null
+            ? ("DEFAULT COLLATE = " + tableAttributes.get(AttributeSingleConstants.TABLE_COLLATION) + "\n") : "";
     }
 
     private String getComment(Container tableContainer) {

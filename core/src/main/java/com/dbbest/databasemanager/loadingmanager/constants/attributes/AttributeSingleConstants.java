@@ -5,7 +5,10 @@ import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPri
 import java.util.HashMap;
 import java.util.Map;
 
-public class AttributeSingleConstants {
+/**
+ * The class containing mysql database attributes.
+ */
+public final class AttributeSingleConstants {
     //Name attributes
     public static final String TABLE_NAME = "TABLE_NAME";
     public static final String SCHEMA_NAME = "SCHEMA_NAME";
@@ -64,6 +67,8 @@ public class AttributeSingleConstants {
     public static final String ENGINE = "ENGINE";
     public static final String ROW_FORMAT = "ROW_FORMAT";
     public static final String DATA_FREE = "DATA_FREE";
+    public static final String AUTO_INCREMENT = "AUTO_INCREMENT";
+    public static final String TABLE_COLLATION = "TABLE_COLLATION";
     //Trigger attributes
     public static final String EVENT_OBJECT_SCHEMA = "EVENT_OBJECT_SCHEMA";
     public static final String ACTION_TIMING = "ACTION_TIMING";
@@ -80,6 +85,9 @@ public class AttributeSingleConstants {
     private AttributeSingleConstants() {
     }
 
+    /**
+     * @return returns the instance of the class.
+     */
     public static AttributeSingleConstants getInstance() {
         if (instance == null) {
             instance = new AttributeSingleConstants();

@@ -4,7 +4,6 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPrinterDatabaseTypesEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.SchemaCategoriesTagNameConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TypeSupportConstants;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -41,7 +40,7 @@ public class LoaderManagerTest {
         LoaderManager loaderManager = LoaderManager.getInstance();
         loaderManager.loadFull(container);
 
-        for(Container container1: (List<Container>)container.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement()).getChildren())
+        for(Container container1: (List<Container>)container.getChildByName(LoaderPrinterName.TABLES).getChildren())
         System.out.println(container1.getName());
     }
 }

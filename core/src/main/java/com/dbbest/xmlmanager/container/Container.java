@@ -143,6 +143,11 @@ public class Container<V> {
         return children;
     }
 
+    /**
+     * @param childName the name of the child to be found.
+     * @return returns the child with defined name.
+     * @throws ContainerException throws the exception if such child has not been found.
+     */
     public Container<V> getChildByName(String childName) throws ContainerException {
         for (Container child : children) {
             if (child.getName().equals(childName)) {

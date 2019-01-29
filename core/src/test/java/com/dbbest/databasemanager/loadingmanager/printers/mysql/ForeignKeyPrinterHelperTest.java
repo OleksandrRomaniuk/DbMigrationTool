@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;
@@ -12,7 +12,7 @@ public class ForeignKeyPrinterHelperTest {
     public void execute() throws ContainerException {
         Container tableContainer = new Container();
         Container constraintCategoryContainer = new Container();
-        constraintCategoryContainer.setName(TableCategoriesTagNameCategories.ConstraintCategory.getElement());
+        constraintCategoryContainer.setName(LoaderPrinterName.TABLE_CONSTRAINTS);
         tableContainer.addChild(constraintCategoryContainer);
 
         Container pkConstrain1 = new Container();

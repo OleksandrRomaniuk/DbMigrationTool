@@ -16,6 +16,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The abstract loader class with realized loaders for all child loaders.
+ */
 public abstract class AbstractLoader implements Loader {
 
     private Connection connection = Context.getInstance().getConnection();
@@ -97,7 +100,8 @@ public abstract class AbstractLoader implements Loader {
 
     protected void executeDetailedLoadProcedureFunctionParameter(Container node) throws SQLException {
         String elementName = (String) node.getAttributes().get(attribute);
-        String procedureFunctionName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME);
+        String procedureFunctionName = (String) node.getParent().getAttributes()
+            .get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME);
         String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, procedureFunctionName, elementName);
         this.executeDetailedLoaderQuery(node, query);
     }

@@ -1,7 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ColumnAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
 

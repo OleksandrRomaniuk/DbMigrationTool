@@ -6,6 +6,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.Map;
 
+/**
+ * The class which prints the column.
+ */
 public class ColumnPrinter implements Printer {
     @Override
     public String execute(Container columnTree) {

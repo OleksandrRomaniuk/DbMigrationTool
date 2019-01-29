@@ -8,7 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AttributeListConstants {
+/**
+ * The class which contains lists with attributes for mysql databases.
+ */
+public final class AttributeListConstants {
 
     private Map<String, List<String>> constants;
 
@@ -18,6 +21,9 @@ public class AttributeListConstants {
         constants = getAttributes();
     }
 
+    /**
+     * @return returns the instance of the class.
+     */
     public static AttributeListConstants getInstance() {
         if (instance == null) {
             instance = new AttributeListConstants();
@@ -45,8 +51,8 @@ public class AttributeListConstants {
     private List<String> getListOfTableAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren(); // do not include TABLE_NAME as it is in AttributSingleConstants
         String[] listOfConstants = {"TABLE_CATALOG", "TABLE_SCHEMA", "TABLE_NAME", "TABLE_TYPE", "ENGINE", "VERSION", "ROW_FORMAT",
-            "TABLE_ROWS", "AVG_ROW_LENGTH", "DATA_LENGTH", "MAX_DATA_LENGTH", "INDEX_LENGTH", "DATA_FREE", "AUTO_INCREMENT", "CREATE_TIME",
-            "UPDATE_TIME", "CHECK_TIME", "TABLE_COLLATION", "CHECKSUM", "CREATE_OPTIONS", "TABLE_COMMENT"};
+            "TABLE_ROWS", "AVG_ROW_LENGTH", "DATA_LENGTH", "MAX_DATA_LENGTH", "INDEX_LENGTH", "DATA_FREE", "AUTO_INCREMENT",
+            "CREATE_TIME", "UPDATE_TIME", "CHECK_TIME", "TABLE_COLLATION", "CHECKSUM", "CREATE_OPTIONS", "TABLE_COMMENT"};
         listOfAttributes.addAll(listOfConstants);
         return (List<String>) listOfAttributes;
     }
@@ -55,9 +61,10 @@ public class AttributeListConstants {
         DbList<String> listOfAttributes = new ListOfChildren(); // do not include SPECIFIC_NAME as it is in AttributSingleConstants
         String[] listOfConstants = {"ROUTINE_CATALOG", "ROUTINE_SCHEMA", "ROUTINE_NAME",
             "ROUTINE_TYPE", "DATA_TYPE", "CHARACTER_MAXIMUM_LENGTH", "CHARACTER_OCTET_LENGTH", "NUMERIC_PRECISION", "NUMERIC_SCALE",
-            "DATETIME_PRECISION", "CHARACTER_SET_NAME", "COLLATION_NAME", "DTD_IDENTIFIER", "ROUTINE_BODY", "ROUTINE_DEFINITION", "EXTERNAL_NAME",
-            "EXTERNAL_LANGUAGE", "PARAMETER_STYLE", "IS_DETERMINISTIC", "SQL_DATA_ACCESS", "SQL_PATH", "SECURITY_TYPE", "CREATED", "LAST_ALTERED", "SQL_MODE", "ROUTINE_COMMENT",
-            "DEFINER", "CHARACTER_SET_CLIENT", "COLLATION_CONNECTION", "DATABASE_COLLATION"};
+            "DATETIME_PRECISION", "CHARACTER_SET_NAME", "COLLATION_NAME", "DTD_IDENTIFIER", "ROUTINE_BODY", "ROUTINE_DEFINITION",
+            "EXTERNAL_NAME", "EXTERNAL_LANGUAGE", "PARAMETER_STYLE", "IS_DETERMINISTIC", "SQL_DATA_ACCESS", "SQL_PATH",
+            "SECURITY_TYPE", "CREATED", "LAST_ALTERED", "SQL_MODE", "ROUTINE_COMMENT", "DEFINER", "CHARACTER_SET_CLIENT",
+            "COLLATION_CONNECTION", "DATABASE_COLLATION"};
         listOfAttributes.addAll(listOfConstants);
         return (List<String>) listOfAttributes;
     }
@@ -101,8 +108,8 @@ public class AttributeListConstants {
     private List<String> getListOfForeignKeyAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();//do not include CONSTRAINT_NAME as it is in AttributSingleConstants
         String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_CATALOG",
-            "TABLE_SCHEMA", "TABLE_NAME", "COLUMN_NAME", "ORDINAL_POSITION", "POSITION_IN_UNIQUE_CONSTRAINT", "REFERENCED_TABLE_SCHEMA",
-            "REFERENCED_TABLE_NAME", "REFERENCED_COLUMN_NAME"};
+            "TABLE_SCHEMA", "TABLE_NAME", "COLUMN_NAME", "ORDINAL_POSITION", "POSITION_IN_UNIQUE_CONSTRAINT",
+            "REFERENCED_TABLE_SCHEMA", "REFERENCED_TABLE_NAME", "REFERENCED_COLUMN_NAME"};
         listOfAttributes.addAll(listOfConstants);
         return (List<String>) listOfAttributes;
     }
@@ -111,9 +118,10 @@ public class AttributeListConstants {
         DbList<String> listOfAttributes = new ListOfChildren();//do not include TRIGGER_NAME as it is in AttributSingleConstants
         String[] listOfConstants = {"TRIGGER_CATALOG", "TRIGGER_SCHEMA", "TRIGGER_NAME",
             "EVENT_MANIPULATION", "EVENT_OBJECT_CATALOG", "EVENT_OBJECT_SCHEMA", "EVENT_OBJECT_TABLE",
-            "ACTION_ORDER", "ACTION_CONDITION", "ACTION_STATEMENT", "ACTION_ORIENTATION", "ACTION_TIMING", "ACTION_REFERENCE_OLD_TABLE",
-            "ACTION_REFERENCE_NEW_TABLE", "ACTION_REFERENCE_OLD_ROW", "ACTION_REFERENCE_NEW_ROW", "CREATED", "SQL_MODE", "DEFINER",
-            "CHARACTER_SET_CLIENT", "COLLATION_CONNECTION", "DATABASE_COLLATION"};
+            "ACTION_ORDER", "ACTION_CONDITION", "ACTION_STATEMENT", "ACTION_ORIENTATION", "ACTION_TIMING",
+            "ACTION_REFERENCE_OLD_TABLE", "ACTION_REFERENCE_NEW_TABLE", "ACTION_REFERENCE_OLD_ROW",
+            "ACTION_REFERENCE_NEW_ROW", "CREATED", "SQL_MODE", "DEFINER", "CHARACTER_SET_CLIENT",
+            "COLLATION_CONNECTION", "DATABASE_COLLATION"};
         listOfAttributes.addAll(listOfConstants);
         return (List<String>) listOfAttributes;
     }
@@ -121,16 +129,20 @@ public class AttributeListConstants {
     private List<String> getListOfProcedureFunctionParameterAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();//do not include TRIGGER_NAME as it is in AttributSingleConstants
         String[] listOfConstants = {"ORDINAL_POSITION", "PARAMETER_MODE", "PARAMETER_NAME",
-        "SPECIFIC_CATALOG", "SPECIFIC_SCHEMA", "SPECIFIC_NAME", "DATA_TYPE", "CHARACTER_MAXIMUM_LENGTH",
-            "CHARACTER_OCTET_LENGTH", "NUMERIC_PRECISION", "NUMERIC_SCALE", "CHARACTER_SET_NAME",
+            "SPECIFIC_CATALOG", "SPECIFIC_SCHEMA", "SPECIFIC_NAME", "DATA_TYPE",
+            "CHARACTER_MAXIMUM_LENGTH", "CHARACTER_OCTET_LENGTH", "NUMERIC_PRECISION", "NUMERIC_SCALE", "CHARACTER_SET_NAME",
             "COLLATION_NAME", "DTD_IDENTIFIER", "ROUTINE_TYPE"};
         listOfAttributes.addAll(listOfConstants);
         return (List<String>) listOfAttributes;
     }
 
+    /**
+     * @return returns the list of attributes for constraints of mysql databases.
+     */
     public List<String> getListOfConstraintAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
-        String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_SCHEMA", "TABLE_NAME", "CONSTRAINT_TYPE", "CONSTRAINT_NAME"};
+        String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_SCHEMA", "TABLE_NAME", "CONSTRAINT_TYPE",
+            "CONSTRAINT_NAME"};
         listOfAttributes.addAll(listOfConstants);
         return (List<String>) listOfAttributes;
     }

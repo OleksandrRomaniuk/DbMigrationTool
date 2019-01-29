@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class loader of constraints of tables.
+ */
 @LoaderAnnotation(LoaderPrinterName.CONSTRAINT)
 public class ConstraintLoader extends AbstractLoader {
     @Override
@@ -33,8 +36,7 @@ public class ConstraintLoader extends AbstractLoader {
     @Override
     public void fullLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
         lazyLoad(constraintCategoryContainer);
-
-            List<Container> constraintContainers = constraintCategoryContainer.getChildren();
+        List<Container> constraintContainers = constraintCategoryContainer.getChildren();
         if (constraintContainers != null && !constraintContainers.isEmpty()) {
             for (Container constraint : constraintContainers) {
                 detailedLoad(constraint);

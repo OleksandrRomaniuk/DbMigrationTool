@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.SchemaCategoriesTagNameConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.StoredProcedureLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ViewColumnLoader;
@@ -35,90 +35,37 @@ public class TriggerLoaderTest {
         schemaLoader.lazyLoad(schemaContainer);
         schemaLoader.detailedLoad(schemaContainer);
 
-        Container viewCategoryContainer = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Views.getElement());
+        Container viewCategoryContainer = schemaContainer.getChildByName(LoaderPrinterName.VIEWS);
         ViewLoader viewLoader = new ViewLoader();
         viewLoader.lazyLoad(viewCategoryContainer);
         Container view = viewCategoryContainer.getChildByName("actor_info");
         viewLoader.detailedLoad(view);
-/*
-        Map<String, String> viewAtt = view.getAttributes();
-        for(Map.Entry<String, String> entry: viewAtt.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
-*/
-      //  System.out.println("-----------------------------------------------------");
+
         ViewColumnLoader viewColumnLoader = new ViewColumnLoader();
         viewColumnLoader.lazyLoad(view);
         Container viewCol = view.getChildByName("first_name");
         viewColumnLoader.detailedLoad(viewCol);
-/*
-        Map<String, String> viewAttributes = viewCol.getAttributes();
-        for(Map.Entry<String, String> entry: viewAttributes.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
-  */
-        Container spCategoryContainer = schemaContainer.getChildByName(SchemaCategoriesTagNameConstants.Stored_Procedures.getElement());
+
+        Container spCategoryContainer = schemaContainer.getChildByName(LoaderPrinterName.STORED_PROCEDURES);
         StoredProcedureLoader spLoader = new StoredProcedureLoader();
         spLoader.lazyLoad(spCategoryContainer);
         Container sp = spCategoryContainer.getChildByName("film_in_stock");
         spLoader.detailedLoad(sp);
-
-/*
-        Map<String, String> spAttributes = sp.getAttributes();
-        for(Map.Entry<String, String> entry: spAttributes.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
-*/
-
-        //System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 
 
         SchemaLoader schemaLoader1 = new SchemaLoader();
         Container schemaContainer1 = new Container();
         schemaContainer1.setName("sakila");
         schemaLoader1.fullLoad(schemaContainer1);
-        Container procCategory = schemaContainer1.getChildByName(SchemaCategoriesTagNameConstants.Stored_Procedures.getElement());
-/*
-        Container procedure = procCategory.getChildByName("film_in_stock");
-        List<Container> parameters = procedure.getChildren();
-
-        for(Container parameter: parameters) {
-            Map<String, String> attributes = parameter.getAttributes();
-
-            for(Map.Entry<String, String> entry: attributes.entrySet()) {
-                System.out.println(entry.getKey() + " - " + entry.getValue());
-            }
-            System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-        }
-*/
-/*
-        SchemaLoader schemaLoader2 = new SchemaLoader();
-        Container schemaContainer2 = new Container();
-        schemaContainer2.setName("sakila");
-        schemaLoader1.fullLoad(connection, schemaContainer2);
-        Container columnContainer = schemaContainer2.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement())
-            .getChildByName("address").getChildByName(TableCategoriesTagNameCategories.Columns.getElement()).getChildByName("address_id");
-
-        Map<String, String> attributes = columnContainer.getAttributes();
-
-        for(Map.Entry<String, String> entry: attributes.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
-*/
+        Container procCategory = schemaContainer1.getChildByName(LoaderPrinterName.STORED_PROCEDURES);
 
         SchemaLoader schemaLoader2 = new SchemaLoader();
         Container schemaContainer2 = new Container();
         schemaContainer2.setName("sakila");
         schemaLoader1.fullLoad(schemaContainer2);
-        Container tableContainer = schemaContainer2.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement())
+        Container tableContainer = schemaContainer2.getChildByName(LoaderPrinterName.TABLES)
             .getChildByName("rental");
-/*
-        Map<String, String> attributes = tableContainer.getAttributes();
 
-        for(Map.Entry<String, String> entry: attributes.entrySet()) {
-            System.out.println(entry.getKey() + " - " + entry.getValue());
-        }
-        */
         TablePrinter tablePrinter = new TablePrinter();
         System.out.println(tablePrinter.execute(tableContainer));
         //Container indexContainer = tableContainer

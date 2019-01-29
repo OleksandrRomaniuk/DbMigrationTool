@@ -1,9 +1,9 @@
-package com.dbbest.databasemanager.connectionbuilder.PropertyFileManager;
+package com.dbbest.databasemanager.connectionbuilder.propertyfilemanager;
 
 import com.dbbest.databasemanager.connectionbuilder.ConnectionConfiguration;
 import com.dbbest.databasemanager.connectionbuilder.ContainerElementsNames;
-import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.exceptions.SerializingException;
 import com.dbbest.xmlmanager.container.Container;
@@ -25,12 +25,12 @@ public class ConnectionPropertiesEditor {
     }
 
     /**
-     * @param fileName the custom connection properties file.
+     * @param fileName       the custom connection properties file.
      * @param connectionName the connection name.
      * @return returns true if the element was successfully removed.
-     * @throws ParsingException throws the parsing exception at parsing the connection properties file.
-     * @throws ContainerException throws the container exception at removing the element.
-     * @throws DatabaseException throws the connection exception at validation transaction.
+     * @throws ParsingException     throws the parsing exception at parsing the connection properties file.
+     * @throws ContainerException   throws the container exception at removing the element.
+     * @throws DatabaseException    throws the connection exception at validation transaction.
      * @throws SerializingException throws the parsing exception at writing the connection properties file.
      */
     public boolean remove(String fileName, String connectionName)
@@ -73,16 +73,16 @@ public class ConnectionPropertiesEditor {
     }
 
     /**
-     * @param fileName the custom connection properties file.
+     * @param fileName       the custom connection properties file.
      * @param connectionName the connection name.
-     * @param url the url of the connection.
-     * @param driver the driver of the connection.
-     * @param login the login name of the connection.
-     * @param password the password of the connection.
+     * @param url            the url of the connection.
+     * @param driver         the driver of the connection.
+     * @param login          the login name of the connection.
+     * @param password       the password of the connection.
      * @return returns true if the element was successfully added.
-     * @throws ParsingException throws the parsing exception at parsing the connection properties file.
-     * @throws ContainerException throws the container exception at removing the element.
-     * @throws DatabaseException throws the connection exception at validation transaction.
+     * @throws ParsingException     throws the parsing exception at parsing the connection properties file.
+     * @throws ContainerException   throws the container exception at removing the element.
+     * @throws DatabaseException    throws the connection exception at validation transaction.
      * @throws SerializingException throws the parsing exception at writing the connection properties file.
      */
     public boolean add(String fileName, String connectionName, String url, String driver, String login, String password)
@@ -100,7 +100,7 @@ public class ConnectionPropertiesEditor {
 
     private boolean addElement(Container connectionProperties, String connectionName, String url, String driver,
                                String login, String password, String fileName, String defaultConfigFileName)
-                                throws DatabaseException, SerializingException, ContainerException {
+        throws DatabaseException, SerializingException, ContainerException {
         List<Container> foundProperties = connectionProperties.searchInTreeHorizontalSearchInNames(connectionName);
         if (foundProperties.size() > 0) {
             throw new DatabaseException("A connection with the name "
