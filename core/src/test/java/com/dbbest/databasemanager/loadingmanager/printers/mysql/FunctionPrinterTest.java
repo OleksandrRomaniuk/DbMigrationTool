@@ -1,14 +1,11 @@
-package com.dbbest.databasemanager.loadingmanager.printers;
+package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ProcedureFunctionParameterAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.StoredProceduresAndFunctionsAttributes;
-import com.dbbest.databasemanager.loadingmanager.printers.mysql.FunctionPrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class FunctionPrinterTest {
 
@@ -16,22 +13,22 @@ public class FunctionPrinterTest {
     public void execute() throws ContainerException {
         Container function = new Container();
         function.addAttribute(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME, "inventory_held_by_customer1");
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.ROUTINE_SCHEMA.getElement(), "sakila");
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.DEFINER.getElement(), "root@localhost");
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.DATA_TYPE.getElement(), "int");
+        function.addAttribute(AttributeSingleConstants.ROUTINE_SCHEMA, "sakila");
+        function.addAttribute(AttributeSingleConstants.DEFINER, "root@localhost");
+        function.addAttribute(AttributeSingleConstants.DATA_TYPE, "int");
 
         Container parameter = new Container();
         parameter.addAttribute(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME, "p_inventory_id");
-        parameter.addAttribute(ProcedureFunctionParameterAttributes.PARAMETER_MODE.getElement(), "IN");
-        parameter.addAttribute(ProcedureFunctionParameterAttributes.DATA_TYPE.getElement(), "int");
+        parameter.addAttribute(AttributeSingleConstants.PARAMETER_MODE, "IN");
+        parameter.addAttribute(AttributeSingleConstants.DATA_TYPE, "int");
         function.addChild(parameter);
 
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.ROUTINE_COMMENT.getElement(), "Comment made by ROI");
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.EXTERNAL_LANGUAGE.getElement(), "SQL");
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.IS_DETERMINISTIC.getElement(), "NO");
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.SQL_DATA_ACCESS.getElement(), "READS SQL DATA");
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.SECURITY_TYPE.getElement(), "DEFINER");
-        function.addAttribute(StoredProceduresAndFunctionsAttributes.ROUTINE_DEFINITION.getElement(), "BEGIN\n" +
+        function.addAttribute(AttributeSingleConstants.ROUTINE_COMMENT, "Comment made by ROI");
+        function.addAttribute(AttributeSingleConstants.EXTERNAL_LANGUAGE, "SQL");
+        function.addAttribute(AttributeSingleConstants.IS_DETERMINISTIC, "NO");
+        function.addAttribute(AttributeSingleConstants.SQL_DATA_ACCESS, "READS SQL DATA");
+        function.addAttribute(AttributeSingleConstants.SECURITY_TYPE, "DEFINER");
+        function.addAttribute(AttributeSingleConstants.ROUTINE_DEFINITION, "BEGIN\n" +
             "  DECLARE v_customer_id INT;\n" +
             "  DECLARE EXIT HANDLER FOR NOT FOUND RETURN NULL;\n" +
             "\n" +

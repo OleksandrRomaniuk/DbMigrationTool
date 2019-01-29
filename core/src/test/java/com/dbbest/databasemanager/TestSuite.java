@@ -1,11 +1,8 @@
 package com.dbbest.databasemanager;
 
-import com.dbbest.databasemanager.ConnectionPropertiesEditorTest;
-import com.dbbest.databasemanager.ConnectionPropertiesManagerTest;
-import com.dbbest.databasemanager.SimpleConnectionBuilderTest;
 import com.dbbest.databasemanager.loadingmanager.LoaderManagerTest;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.*;
-import com.dbbest.databasemanager.loadingmanager.printers.*;
+import com.dbbest.databasemanager.loadingmanager.printers.mysql.*;
 import com.dbbest.databasemanager.reflectionutil.classloader.DirectorySearcherTest;
 import com.dbbest.xmlmanager.IntegrationTest;
 import com.dbbest.xmlmanager.container.ContainerTest;

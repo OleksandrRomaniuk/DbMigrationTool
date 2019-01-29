@@ -1,11 +1,7 @@
-package com.dbbest.databasemanager.loadingmanager.printers;
+package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ColumnAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.TableAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TableCategoriesTagNameCategories;
-import com.dbbest.databasemanager.loadingmanager.printers.mysql.TablePrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Assert;
@@ -17,8 +13,8 @@ public class TablePrinterTest {
     public void execute() throws ContainerException {
         Container table = new Container();
         table.addAttribute(AttributeSingleConstants.TABLE_NAME, "customer1");
-        table.addAttribute(TableAttributes.TABLE_SCHEMA.getElement(), "sakila");
-        table.addAttribute(TableAttributes.TABLE_NAME.getElement(), "customer1");
+        table.addAttribute(AttributeSingleConstants.TABLE_SCHEMA, "sakila");
+        table.addAttribute(AttributeSingleConstants.TABLE_NAME, "customer1");
         Container columnCategory = new Container();
         table.addChild(columnCategory);
         columnCategory.setName(LoaderPrinterName.TABLE_COLUMNS);
@@ -26,16 +22,16 @@ public class TablePrinterTest {
         column1.setName(LoaderPrinterName.TABLE_COLUMN);
         columnCategory.addChild(column1);
         column1.addAttribute(AttributeSingleConstants.TABLE_NAME, "adressId");
-        column1.addAttribute(ColumnAttributes.COLUMN_EXTRA.getElement(), null);
-        column1.addAttribute(ColumnAttributes.COLUMN_NAME.getElement(), "address_id");
-        column1.addAttribute(ColumnAttributes.COLUMN_TYPE.getElement(), "smallint(5) unsigned");
-        column1.addAttribute(ColumnAttributes.COLUMN_COMMENT.getElement(), "Comment test");
-        column1.addAttribute(ColumnAttributes.COLUMN_GENERATION_EXPRESSION.getElement(), "");
-        column1.addAttribute(ColumnAttributes.COLUMN_IS_NULLABLE.getElement(), "NO");
-        column1.addAttribute(ColumnAttributes.COLUMN_DEFAULT.getElement(), null);
-        column1.addAttribute(ColumnAttributes.COLUMN_EXTRA.getElement(), "");
-        column1.addAttribute(ColumnAttributes.COLUMN_KEY.getElement(), "MUL");
-        column1.addAttribute(ColumnAttributes.COLUMN_COLLATION_NAME.getElement(), null);
+        column1.addAttribute(AttributeSingleConstants.EXTRA, null);
+        column1.addAttribute(AttributeSingleConstants.COLUMN_NAME, "address_id");
+        column1.addAttribute(AttributeSingleConstants.COLUMN_TYPE, "smallint(5) unsigned");
+        column1.addAttribute(AttributeSingleConstants.COLUMN_COMMENT, "Comment test");
+        column1.addAttribute(AttributeSingleConstants.GENERATION_EXPRESSION, "");
+        column1.addAttribute(AttributeSingleConstants.COLUMN_IS_NULLABLE, "NO");
+        column1.addAttribute(AttributeSingleConstants.COLUMN_DEFAULT, null);
+        column1.addAttribute(AttributeSingleConstants.EXTRA, "");
+        column1.addAttribute(AttributeSingleConstants.COLUMN_KEY, "MUL");
+        column1.addAttribute(AttributeSingleConstants.COLLATION_NAME, null);
         Container indexCategory = new Container();
         indexCategory.setName(LoaderPrinterName.TABLE_INDEXES);
         table.addChild(indexCategory);

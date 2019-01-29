@@ -1,13 +1,11 @@
-package com.dbbest.databasemanager.loadingmanager.printers;
+package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.IndexAttributes;
-import com.dbbest.databasemanager.loadingmanager.printers.mysql.IndexPrinter;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class IndexPrinterTest {
 
@@ -18,13 +16,13 @@ public class IndexPrinterTest {
         Container index = new Container();
         indexContainer.addChild(index);
         index.addAttribute(AttributeSingleConstants.INDEX_NAME, "indx_location1");
-        index.addAttribute(IndexAttributes.NON_UNIQUE.getElement(), 1);
-        index.addAttribute(IndexAttributes.INDEX_NAME.getElement(), "indx_location1");
-        index.addAttribute(IndexAttributes.INDEX_TYPE.getElement(), "BTREE");
-        index.addAttribute(IndexAttributes.TABLE_SCHEMA.getElement(), "sakila");
-        index.addAttribute(IndexAttributes.TABLE_NAME.getElement(), "address");
-        index.addAttribute(IndexAttributes.COLUMN_NAME.getElement(), "location");
-        index.addAttribute(IndexAttributes.SEQ_IN_INDEX.getElement(), "1");
+        index.addAttribute(AttributeSingleConstants.NON_UNIQUE, 1);
+        index.addAttribute(AttributeSingleConstants.INDEX_NAME, "indx_location1");
+        index.addAttribute(AttributeSingleConstants.INDEX_TYPE, "BTREE");
+        index.addAttribute(AttributeSingleConstants.TABLE_SCHEMA, "sakila");
+        index.addAttribute(AttributeSingleConstants.TABLE_NAME, "address");
+        index.addAttribute(AttributeSingleConstants.COLUMN_NAME, "location");
+        index.addAttribute(AttributeSingleConstants.SEQ_IN_INDEX, "1");
 
         IndexPrinter indexPrinter = new IndexPrinter();
         assertEquals(indexPrinter.execute(indexContainer), "CREATE INDEX indx_location1 USING BTREE\n" +

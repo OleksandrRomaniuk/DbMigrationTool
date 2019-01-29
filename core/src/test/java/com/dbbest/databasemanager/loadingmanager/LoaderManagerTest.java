@@ -38,7 +38,7 @@ public class LoaderManagerTest {
         container.addAttribute(TypeSupportConstants.DatabaseType.toString(), LoadersPrinterDatabaseTypesEnum.MYSQL.toString());
         container.addAttribute(TypeSupportConstants.LoaderPrinterType.toString(), LoaderPrinterName.SCHEMA);
 
-        LoaderManager loaderManager = new LoaderManager();
+        LoaderManager loaderManager = LoaderManager.getInstance();
         loaderManager.loadFull(container);
 
         for(Container container1: (List<Container>)container.getChildByName(SchemaCategoriesTagNameConstants.Tables.getElement()).getChildren())

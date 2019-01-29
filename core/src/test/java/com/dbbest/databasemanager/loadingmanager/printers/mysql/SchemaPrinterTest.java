@@ -1,7 +1,6 @@
-package com.dbbest.databasemanager.loadingmanager.printers;
+package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.SchemaAttributes;
-import com.dbbest.databasemanager.loadingmanager.printers.mysql.SchemaPrinter;
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 import org.junit.Assert;
@@ -13,8 +12,8 @@ public class SchemaPrinterTest {
     public void execute() throws ContainerException {
         Container schemaContainer = new Container();
         schemaContainer.setName("testDB");
-        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_DEFAULT_CHARACTER_SET_NAME.getElement(), "utf8mb4");
-        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_DEFAULT_COLLATION_NAME.getElement(), "utf8mb4_0900_ai_ci");
+        schemaContainer.addAttribute(AttributeSingleConstants.DEFAULT_CHARACTER_SET_NAME, "utf8mb4");
+        schemaContainer.addAttribute(AttributeSingleConstants.DEFAULT_COLLATION_NAME, "utf8mb4_0900_ai_ci");
 
         SchemaPrinter schemaPrinter = new SchemaPrinter();
         String query = schemaPrinter.execute(schemaContainer);
