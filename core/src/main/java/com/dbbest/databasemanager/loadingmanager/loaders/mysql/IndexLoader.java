@@ -25,7 +25,7 @@ public class IndexLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container indexContainer) throws DatabaseException, ContainerException {
         try {
-            super.executeDetailedLoadTableChildren(indexContainer);
+            super.executeDetailedLoadTableIndexey(indexContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

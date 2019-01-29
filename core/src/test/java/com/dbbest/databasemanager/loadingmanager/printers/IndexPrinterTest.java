@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.IndexAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.mysql.IndexPrinter;
 import com.dbbest.exceptions.ContainerException;
@@ -13,10 +14,10 @@ public class IndexPrinterTest {
     @Test
     public void execute() throws ContainerException {
         Container indexContainer = new Container();
-        indexContainer.setName("indx_location1");
+        indexContainer.addAttribute(AttributeSingleConstants.INDEX_NAME, "indx_location1");
         Container index = new Container();
         indexContainer.addChild(index);
-        index.setName("indx_location1");
+        index.addAttribute(AttributeSingleConstants.INDEX_NAME, "indx_location1");
         index.addAttribute(IndexAttributes.NON_UNIQUE.getElement(), 1);
         index.addAttribute(IndexAttributes.INDEX_NAME.getElement(), "indx_location1");
         index.addAttribute(IndexAttributes.INDEX_TYPE.getElement(), "BTREE");

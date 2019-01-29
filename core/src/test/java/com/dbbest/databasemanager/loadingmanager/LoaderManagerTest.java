@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager;
 
+import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPrinterDatabaseTypesEnum;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
@@ -29,6 +30,9 @@ public class LoaderManagerTest {
     public void loadFull() throws ParsingException, ContainerException, DatabaseException, SQLException {
         SimpleConnectionBuilder simpleConnectionBuilder = new SimpleConnectionBuilder();
         Connection connection = simpleConnectionBuilder.getConnection("mysql");
+
+        Context.getInstance().setSchemaName("sakila");
+        Context.getInstance().setConnection(connection);
 
         Container container = new Container();
         container.addAttribute(TypeSupportConstants.DatabaseType.toString(), LoadersPrinterDatabaseTypesEnum.MYSQL.toString());

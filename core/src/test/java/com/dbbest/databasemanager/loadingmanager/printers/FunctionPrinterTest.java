@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ProcedureFunctionParameterAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.StoredProceduresAndFunctionsAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.mysql.FunctionPrinter;
@@ -14,13 +15,13 @@ public class FunctionPrinterTest {
     @Test
     public void execute() throws ContainerException {
         Container function = new Container();
-        function.setName("inventory_held_by_customer1");
+        function.addAttribute(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME, "inventory_held_by_customer1");
         function.addAttribute(StoredProceduresAndFunctionsAttributes.ROUTINE_SCHEMA.getElement(), "sakila");
         function.addAttribute(StoredProceduresAndFunctionsAttributes.DEFINER.getElement(), "root@localhost");
         function.addAttribute(StoredProceduresAndFunctionsAttributes.DATA_TYPE.getElement(), "int");
 
         Container parameter = new Container();
-        parameter.setName("p_inventory_id");
+        parameter.addAttribute(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME, "p_inventory_id");
         parameter.addAttribute(ProcedureFunctionParameterAttributes.PARAMETER_MODE.getElement(), "IN");
         parameter.addAttribute(ProcedureFunctionParameterAttributes.DATA_TYPE.getElement(), "int");
         function.addChild(parameter);

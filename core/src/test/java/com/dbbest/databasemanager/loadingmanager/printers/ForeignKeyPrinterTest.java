@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.FkAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.mysql.ForeignKeyPrinter;
 import com.dbbest.exceptions.ContainerException;
@@ -13,7 +14,7 @@ public class ForeignKeyPrinterTest {
     @Test
     public void execute() throws ContainerException {
         Container fkContainer = new Container();
-        fkContainer.setName("testFK");
+        fkContainer.addAttribute(AttributeSingleConstants.CONSTRAINT_NAME, "testFK");
 
         Container constraint1 = new Container();
         constraint1.addAttribute(FkAttributes.REFERENCED_TABLE_SCHEMA.getElement(), "sakila");

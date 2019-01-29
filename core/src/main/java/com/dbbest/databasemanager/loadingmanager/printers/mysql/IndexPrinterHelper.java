@@ -20,7 +20,7 @@ public class IndexPrinterHelper implements Printer {
         List<Container> lisOfIndexes = tableContainer
             .getChildByName(LoaderPrinterName.TABLE_INDEXES).getChildren();
         StringBuilder query = new StringBuilder();
-        if (lisOfIndexes.size() > 0) {
+        if (lisOfIndexes != null && lisOfIndexes.size() > 0) {
             for (Container index : lisOfIndexes) {
                 query.append(printIndex(index));
             }

@@ -18,7 +18,7 @@ public class TablePrinter implements Printer {
             + "." + tableContainer.getAttributes().get(AttributeSingleConstants.TABLE_NAME));
         query.append(" (\n");
         query.append(new TableColumnPrinter().execute(tableContainer
-            .getChildByName(LoaderPrinterName.TABLE_COLUMN)));
+            .getChildByName(LoaderPrinterName.TABLE_COLUMNS)));
         query.append(new IndexPrinterHelper().execute(tableContainer));
         query.append(new PrimaryKeyPrinterHelper().execute(tableContainer));
         query.append(new UniquePrinterHelper().execute(tableContainer));

@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.printers;
 
+import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.ProcedureFunctionParameterAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.delete.StoredProceduresAndFunctionsAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.mysql.StoredProcedurePrinter;
@@ -14,24 +15,24 @@ public class StoredProcedurePrinterTest {
     @Test
     public void execute() throws ContainerException {
         Container storedProcedure = new Container();
-        storedProcedure.setName("film_in_stock1");
+        storedProcedure.addAttribute(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME, "film_in_stock1");
         storedProcedure.addAttribute(StoredProceduresAndFunctionsAttributes.ROUTINE_SCHEMA.getElement(), "sakila");
         storedProcedure.addAttribute(StoredProceduresAndFunctionsAttributes.DEFINER.getElement(), "root@localhost");
 
         Container parameter = new Container();
-        parameter.setName("p_film_id");
+        parameter.addAttribute(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME, "p_film_id");
         parameter.addAttribute(ProcedureFunctionParameterAttributes.PARAMETER_MODE.getElement(), "IN");
         parameter.addAttribute(ProcedureFunctionParameterAttributes.DATA_TYPE.getElement(), "int");
         storedProcedure.addChild(parameter);
 
         Container parameter2 = new Container();
-        parameter2.setName("p_store_id");
+        parameter2.addAttribute(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME, "p_store_id");
         parameter2.addAttribute(ProcedureFunctionParameterAttributes.PARAMETER_MODE.getElement(), "IN");
         parameter2.addAttribute(ProcedureFunctionParameterAttributes.DATA_TYPE.getElement(), "int");
         storedProcedure.addChild(parameter2);
 
         Container parameter3 = new Container();
-        parameter3.setName("p_film_count");
+        parameter3.addAttribute(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME, "p_film_count");
         parameter3.addAttribute(ProcedureFunctionParameterAttributes.PARAMETER_MODE.getElement(), "OUT");
         parameter3.addAttribute(ProcedureFunctionParameterAttributes.DATA_TYPE.getElement(), "int");
         storedProcedure.addChild(parameter3);

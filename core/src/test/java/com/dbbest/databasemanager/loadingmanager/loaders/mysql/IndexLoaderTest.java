@@ -69,14 +69,23 @@ public class IndexLoaderTest {
         String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, NON_UNIQUE, INDEX_SCHEMA, SEQ_IN_INDEX, COLUMN_NAME, COLLATION, CARDINALITY, SUB_PART, PACKED, NULLABLE, INDEX_TYPE, COMMENT, INDEX_COMMENT FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = 'sakila' AND TABLE_NAME = 'testTable'  AND INDEX_NAME =  'null' ;";
 
         Mockery mockery = new Mockery();
-        final Connection connection = mockery.mock(Connection.class);
+        Connection connection = mockery.mock(Connection.class);
         mockery.checking(new Expectations() {{
             oneOf(connection).prepareStatement(query);
             will(returnValue(preparedStatement));
         }});
 
+        Mockery mockery1 = new Mockery();
+        /*ResultSet resultSet = mockery.mock(ResultSet.class);
+        mockery.checking(new Expectations() {{
+            oneOf(resultSet).next();
+            will(returnValue(true));
+            oneOf(resultSet).next();
+            will(returnValue(false));
+        }});*/
+
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
-        when(resultSet.next()).thenReturn(true);
+        when(resultSet.next()).thenReturn(true).thenReturn(false);
 
         Context context = Context.getInstance();
         context.setConnection(connection);
@@ -84,6 +93,7 @@ public class IndexLoaderTest {
 
         Container parent1 = new Container();
         parent1.addAttribute("TABLE_NAME", "testTable");
+
         Container parent2 = new Container();
         parent1.addChild(parent2);
 

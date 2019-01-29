@@ -97,11 +97,8 @@ public class ConstraintLoaderTest {
         Container parent2 = new Container();
         parent1.addChild(parent2);
 
-        Container parent3 = new Container();
-        parent2.addChild(parent3);
-
         Container container = new Container();
-        parent3.addChild(container);
+        parent2.addChild(container);
         container.addAttribute("CONSTRAINT_NAME", null);
         ConstraintLoader loader = new ConstraintLoader();
         loader.detailedLoad(container);

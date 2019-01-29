@@ -15,7 +15,7 @@ public class DirectorySearcherTest {
     public void countFile() throws ClassNotFoundException, IOException, DatabaseException {
         DirectorySearcher directorySearcher = new DirectorySearcher();
         assertEquals(directorySearcher.findFolderWithLoaders(LoadersPrinterDatabaseTypesEnum.MYSQL.toString()),
-            "C:\\Users\\Oleksandr Romaniuk\\eclipse-workspace\\DBbest\\core\\target\\classes\\com\\dbbest\\databasemanager\\loadingmanager\\loaders");
+            "C:\\Users\\Oleksandr Romaniuk\\eclipse-workspace\\DBbest\\core\\target\\classes\\com\\dbbest\\databasemanager\\loadingmanager\\loaders\\mysql");
     }
 
 }
