@@ -1,10 +1,13 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
+import com.dbbest.databasemanager.loadingmanager.annotations.PrinterAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 
+@PrinterAnnotation(LoaderPrinterName.TRIGGER)
 public class TriggerPrinter implements Printer {
     @Override
     public String execute(Container triggerContainer) throws ContainerException {

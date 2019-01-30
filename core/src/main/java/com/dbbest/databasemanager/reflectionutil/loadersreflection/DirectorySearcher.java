@@ -11,7 +11,6 @@ import java.util.logging.Level;
 
 public class DirectorySearcher {
 
-    private String packageWithLoaders;
     private String folderWithLoader;
 
     public String findFolderWithLoaders(String databaseTypesEnum) throws DatabaseException {
@@ -42,7 +41,6 @@ public class DirectorySearcher {
                     Annotation annotation = pkg.getAnnotation(LoadersPackageAnnotation.class);
                     if (annotation != null
                         && ((LoadersPackageAnnotation) annotation).value().toString().equals(databaseTypesEnum)) {
-                        packageWithLoaders = pkg.getName();
                         folderWithLoader = item.getCanonicalPath().replace("\\package-info.class", "");
                     }
 

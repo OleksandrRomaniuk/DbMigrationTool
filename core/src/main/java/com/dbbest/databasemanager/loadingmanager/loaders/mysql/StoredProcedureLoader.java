@@ -28,6 +28,8 @@ public class StoredProcedureLoader extends AbstractLoader {
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
+
+        new ProcedureFunctionParameteresLoader().fullLoad(storedProcedure);
     }
 
     @Override
@@ -37,7 +39,6 @@ public class StoredProcedureLoader extends AbstractLoader {
         if (storedProcedures != null && !storedProcedures.isEmpty()) {
             for (Container storedProcedure : storedProcedures) {
                 detailedLoad(storedProcedure);
-                new ProcedureFunctionParameteresLoader().fullLoad(storedProcedure);
             }
         }
     }

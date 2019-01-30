@@ -42,7 +42,7 @@ public final class AttributeListConstants {
         attributeListConstants.put(LoaderPrinterName.INDEX, getListOfIndexAttributes());
         attributeListConstants.put(LoaderPrinterName.FOREIGN_KEY, getListOfForeignKeyAttributes());
         attributeListConstants.put(LoaderPrinterName.TRIGGER, getListOfTriggerAttributes());
-        attributeListConstants.put(LoaderPrinterName.CONSTRAINT, getListOfForeignKeyAttributes());
+        attributeListConstants.put(LoaderPrinterName.CONSTRAINT, getListOfConstraintDetailedAttributes());
         attributeListConstants.put(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER, getListOfProcedureFunctionParameterAttributes());
         attributeListConstants.put(LoaderPrinterName.VIEW_COLUMN, getListOfColumnAttributes());
         return attributeListConstants;
@@ -110,6 +110,15 @@ public final class AttributeListConstants {
         String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_CATALOG",
             "TABLE_SCHEMA", "TABLE_NAME", "COLUMN_NAME", "ORDINAL_POSITION", "POSITION_IN_UNIQUE_CONSTRAINT",
             "REFERENCED_TABLE_SCHEMA", "REFERENCED_TABLE_NAME", "REFERENCED_COLUMN_NAME"};
+        listOfAttributes.addAll(listOfConstants);
+        return (List<String>) listOfAttributes;
+    }
+
+    private List<String> getListOfConstraintDetailedAttributes() {
+        DbList<String> listOfAttributes = new ListOfChildren();//do not include CONSTRAINT_NAME as it is in AttributSingleConstants
+        String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_CATALOG",
+            "TABLE_SCHEMA", "TABLE_NAME", "COLUMN_NAME", "ORDINAL_POSITION", "POSITION_IN_UNIQUE_CONSTRAINT",
+            "REFERENCED_TABLE_SCHEMA", "REFERENCED_TABLE_NAME", "REFERENCED_COLUMN_NAME", "CONSTRAINT_NAME"};
         listOfAttributes.addAll(listOfConstants);
         return (List<String>) listOfAttributes;
     }

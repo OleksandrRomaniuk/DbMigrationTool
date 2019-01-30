@@ -1,8 +1,6 @@
 package com.dbbest.databasemanager.reflectionutil.printersreflection;
 
-import com.dbbest.databasemanager.loadingmanager.annotations.LoadersPackageAnnotation;
 import com.dbbest.databasemanager.loadingmanager.annotations.PrintersPackageAnnotation;
-import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.databasemanager.reflectionutil.CustomClassLoader;
 import com.dbbest.exceptions.DatabaseException;
 
@@ -12,14 +10,13 @@ import java.lang.annotation.Annotation;
 import java.util.logging.Level;
 
 public class PrintersDirectorySearcher {
-    private String packageWithLoaders;
     private String folderWithLoader;
 
-    public String findFolderWithPrinters(String loadersPrinterDatabaseTypesEnum) throws DatabaseException {
+    public String findFolderWithPrinters(String loadersPrinterDatabaseTypes) throws DatabaseException {
 
         try {
             File root = new File(getRoot());
-            checkFile(root, loadersPrinterDatabaseTypesEnum);
+            checkFile(root, loadersPrinterDatabaseTypes);
         } catch (IOException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -27,7 +24,7 @@ public class PrintersDirectorySearcher {
         if (folderWithLoader != null && !folderWithLoader.trim().equals("")) {
             return folderWithLoader;
         } else {
-            throw new DatabaseException(Level.SEVERE, "Can not find the package with printers " + loadersPrinterDatabaseTypesEnum);
+            throw new DatabaseException(Level.SEVERE, "Can not find the package with printers " + loadersPrinterDatabaseTypes);
         }
     }
 
@@ -43,7 +40,6 @@ public class PrintersDirectorySearcher {
                     Annotation annotation = pkg.getAnnotation(PrintersPackageAnnotation.class);
                     if (annotation != null
                         && ((PrintersPackageAnnotation) annotation).value().toString().equals(loadersPrinterDatabaseTypesEnum)) {
-                        packageWithLoaders = pkg.getName();
                         folderWithLoader = item.getCanonicalPath().replace("\\package-info.class", "");
                     }
 

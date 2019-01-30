@@ -1,5 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
+import com.dbbest.databasemanager.loadingmanager.annotations.PrinterAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
@@ -7,22 +9,23 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.List;
 import java.util.Map;
 
+@PrinterAnnotation(LoaderPrinterName.STORED_PROCEDURE)
 public class StoredProcedurePrinter implements Printer {
     @Override
     public String execute(Container storedProcedureContainer) {
         StringBuilder query = new StringBuilder();
-        query.append("DELIMITER $$ \n");
+        query.append("DELIMITER $$ ");
         query.append("CREATE ");
         getDefiner(query, storedProcedureContainer);
-        query.append(" PROCEDURE " + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_SCHEMA)
-            + "." + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME));
+        query.append("\n" + "PROCEDURE " + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_SCHEMA)
+            + "." + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME));
 
         if (storedProcedureContainer.hasChildren()) {
             getParameters(query, storedProcedureContainer);
         }
 
         getCharacteristics(query, storedProcedureContainer);
-        query.append(" " + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_DEFINITION));
+        query.append("\n" + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_DEFINITION));
         query.append("$$ \nDELIMITER ;");
         return query.toString();
     }
@@ -31,7 +34,7 @@ public class StoredProcedurePrinter implements Printer {
         Map<String, String> procedureAttributes = storedProcedureContainer.getAttributes();
         if (procedureAttributes.get(AttributeSingleConstants.DEFINER) != null
             && !procedureAttributes.get(AttributeSingleConstants.DEFINER).trim().isEmpty()) {
-            query.append(" DEFINER = " + procedureAttributes.get(AttributeSingleConstants.DEFINER));
+            query.append("\n" + "DEFINER = " + procedureAttributes.get(AttributeSingleConstants.DEFINER));
         }
     }
 
@@ -47,14 +50,14 @@ public class StoredProcedurePrinter implements Printer {
     private void geRoutineComment(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
         if (procedureAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT) != null
             && !procedureAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT).trim().isEmpty()) {
-            query.append(" COMMENT '" + procedureAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT) + "'");
+            query.append("\n" + "COMMENT '" + procedureAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT) + "'");
         }
     }
 
     private void getExternalLanguage(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
         if (procedureAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE) != null
             && !procedureAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE).trim().isEmpty()) {
-            query.append(" LANGUAGE " + procedureAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE));
+            query.append("\n" + "LANGUAGE " + procedureAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE));
         }
     }
 
@@ -62,9 +65,9 @@ public class StoredProcedurePrinter implements Printer {
         if (procedureAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC) != null
             && !procedureAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC).trim().isEmpty()) {
             if (procedureAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC).trim().equals("NO")) {
-                query.append(" NOT DETERMINISTIC");
+                query.append("\n" + "NOT DETERMINISTIC");
             } else {
-                query.append(" DETERMINISTIC");
+                query.append("\n" + "DETERMINISTIC");
             }
         }
     }
@@ -72,14 +75,14 @@ public class StoredProcedurePrinter implements Printer {
     private void getSqlDataAccess(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
         if (procedureAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS) != null
             && !procedureAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS).trim().isEmpty()) {
-            query.append(" " + procedureAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS));
+            query.append("\n" + procedureAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS));
         }
     }
 
     private void getSecurityType(StringBuilder query, Container storedProcedureContainer, Map<String, String> procedureAttributes) {
         if (procedureAttributes.get(AttributeSingleConstants.SECURITY_TYPE) != null
             && !procedureAttributes.get(AttributeSingleConstants.SECURITY_TYPE).trim().isEmpty()) {
-            query.append(" SQL SECURITY " + procedureAttributes.get(AttributeSingleConstants.SECURITY_TYPE));
+            query.append("\n" + "SQL SECURITY " + procedureAttributes.get(AttributeSingleConstants.SECURITY_TYPE));
         }
     }
 

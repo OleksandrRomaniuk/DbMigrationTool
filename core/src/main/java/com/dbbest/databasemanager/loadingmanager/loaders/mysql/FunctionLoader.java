@@ -28,6 +28,8 @@ public class FunctionLoader extends AbstractLoader {
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
+
+        new ProcedureFunctionParameteresLoader().fullLoad(functionContainer);
     }
 
     @Override
@@ -37,7 +39,6 @@ public class FunctionLoader extends AbstractLoader {
         if (functions != null && !functions.isEmpty()) {
             for (Container function : functions) {
                 detailedLoad(function);
-                new ProcedureFunctionParameteresLoader().fullLoad(function);
             }
         }
     }

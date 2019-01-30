@@ -17,6 +17,7 @@ public final class Context {
     private List<Container> listOfFoundElements;
     private Connection connection;
     private String schemaName;
+    private String dbType;
 
     private Context() {
     }
@@ -79,6 +80,14 @@ public final class Context {
 
     public void setSchemaName(String schemaName) {
         this.schemaName = schemaName;
+    }
+
+    public String getDbType() {
+        return dbType;
+    }
+
+    public void setDbType(String dbType) {
+        this.dbType = dbType;
     }
 }
 

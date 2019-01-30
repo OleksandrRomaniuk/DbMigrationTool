@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager;
 
-import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TypeSupportConstants;
+import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
 import com.dbbest.databasemanager.reflectionutil.loadersreflection.DirectorySearcher;
 import com.dbbest.databasemanager.reflectionutil.loadersreflection.LoaderClassLoader;
@@ -8,49 +9,50 @@ import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
-import java.sql.Connection;
+import java.util.HashMap;
 import java.util.Map;
 
-public class LoaderManager {
+public class LoaderManager extends AbstractManager {
 
     private static LoaderManager instance;
 
     private Map<String, Loader> loaders;
 
-    private LoaderManager(){}
+    private LoaderManager() {
+    }
 
-    public static LoaderManager getInstance() {
+    public static LoaderManager getInstance() throws DatabaseException {
         if (instance == null) {
             instance = new LoaderManager();
+            instance.initializeLoaders();
         }
         return instance;
     }
 
     public Container loadLazy(Container container) throws DatabaseException, ContainerException {
-        Loader loader = getLoader(container);
+        Loader loader = loaders.get(super.getLazyOrDetailedLoaderMatching(container.getName()));
         loader.lazyLoad(container);
         return container;
     }
 
     public Container loadDetails(Container container) throws DatabaseException, ContainerException {
-        Loader loader = getLoader(container);
+        Loader loader = loaders.get(container.getName());
         loader.detailedLoad(container);
         return container;
     }
 
     public Container loadFull(Container container) throws DatabaseException, ContainerException {
-        Loader loader = getLoader(container);
+        Loader loader = loaders.get(super.getLazyOrDetailedLoaderMatching(container.getName()));
         loader.fullLoad(container);
         return container;
     }
 
-    private Loader getLoader(Container container) throws DatabaseException {
-        String catalogWithLoader = new DirectorySearcher()
-            .findFolderWithLoaders((String) container.getAttributes().get(TypeSupportConstants.DatabaseType.toString()));
-
-        Loader loader = new LoaderClassLoader().getLoader(catalogWithLoader,
-            (String) container.getAttributes().get(TypeSupportConstants.LoaderPrinterType.toString()));
-
-        return loader;
+    private void initializeLoaders() throws DatabaseException {
+        String connectionType = Context.getInstance().getDbType();
+        String loadersCatalog = new DirectorySearcher().findFolderWithLoaders(connectionType);
+        loaders = new HashMap();
+        for (String loaderType : LoaderPrinterName.getInstance().getListOfLoaders()) {
+            loaders.put(loaderType, new LoaderClassLoader().getLoader(loadersCatalog, loaderType));
+        }
     }
 }

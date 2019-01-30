@@ -107,6 +107,7 @@ public final class AttributeSingleConstants {
         nameAttributeConstants.put(LoaderPrinterName.TRIGGER, TRIGGER_NAME);
         nameAttributeConstants.put(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER, PROC_FUNC_PARAMETER_NAME);
         nameAttributeConstants.put(LoaderPrinterName.VIEW_COLUMN, COLUMN_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.CONSTRAINT, CONSTRAINT_NAME);
         return nameAttributeConstants;
     }
 

@@ -1,5 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
+import com.dbbest.databasemanager.loadingmanager.annotations.PrinterAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
@@ -7,12 +9,13 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.List;
 import java.util.Map;
 
+@PrinterAnnotation(LoaderPrinterName.FUNCTION)
 public class FunctionPrinter implements Printer {
     @Override
     public String execute(Container functionContainer) {
         StringBuilder query = new StringBuilder();
         query.append("DELIMITER $$ \n");
-        query.append("CREATE ");
+        query.append("CREATE");
         getDefiner(query, functionContainer);
         query.append(" FUNCTION " + functionContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_SCHEMA)
             + "." + functionContainer.getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME));
@@ -21,10 +24,10 @@ public class FunctionPrinter implements Printer {
             getParameters(query, functionContainer);
         }
 
-        query.append("\nRETURNS " + functionContainer.getAttributes().get(AttributeSingleConstants.DATA_TYPE) + "\n");
+        query.append("\n" + "RETURNS " + functionContainer.getAttributes().get(AttributeSingleConstants.DATA_TYPE));
 
         getCharacteristics(query, functionContainer);
-        query.append(" " + functionContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_DEFINITION));
+        query.append("\n" + functionContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_DEFINITION));
         query.append("$$ \nDELIMITER ;");
         return query.toString();
     }
@@ -49,14 +52,14 @@ public class FunctionPrinter implements Printer {
     private void geRoutineComment(StringBuilder query, Container functionContainer, Map<String, String> functionAttributes) {
         if (functionAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT) != null
             && !functionAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT).trim().isEmpty()) {
-            query.append(" COMMENT '" + functionAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT) + "'");
+            query.append("\n" + "COMMENT '" + functionAttributes.get(AttributeSingleConstants.ROUTINE_COMMENT) + "'");
         }
     }
 
     private void getExternalLanguage(StringBuilder query, Container functionContainer, Map<String, String> functionAttributes) {
         if (functionAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE) != null
             && !functionAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE).trim().isEmpty()) {
-            query.append(" LANGUAGE " + functionAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE));
+            query.append("\n" + "LANGUAGE " + functionAttributes.get(AttributeSingleConstants.EXTERNAL_LANGUAGE));
         }
     }
 
@@ -64,9 +67,9 @@ public class FunctionPrinter implements Printer {
         if (functionAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC) != null
             && !functionAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC).trim().isEmpty()) {
             if (functionAttributes.get(AttributeSingleConstants.IS_DETERMINISTIC).trim().equals("NO")) {
-                query.append(" NOT DETERMINISTIC");
+                query.append("\n" + "NOT DETERMINISTIC");
             } else {
-                query.append(" DETERMINISTIC");
+                query.append("\n" + "DETERMINISTIC");
             }
         }
     }
@@ -74,14 +77,14 @@ public class FunctionPrinter implements Printer {
     private void getSqlDataAccess(StringBuilder query, Container functionContainer, Map<String, String> functionAttributes) {
         if (functionAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS) != null
             && !functionAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS).trim().isEmpty()) {
-            query.append(" " + functionAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS));
+            query.append("\n" + functionAttributes.get(AttributeSingleConstants.SQL_DATA_ACCESS));
         }
     }
 
     private void getSecurityType(StringBuilder query, Container functionContainer, Map<String, String> functionAttributes) {
         if (functionAttributes.get(AttributeSingleConstants.SECURITY_TYPE) != null
             && !functionAttributes.get(AttributeSingleConstants.SECURITY_TYPE).trim().isEmpty()) {
-            query.append(" SQL SECURITY " + functionAttributes.get(AttributeSingleConstants.SECURITY_TYPE));
+            query.append("\n" + "SQL SECURITY " + functionAttributes.get(AttributeSingleConstants.SECURITY_TYPE));
         }
     }
 

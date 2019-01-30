@@ -106,11 +106,11 @@ public abstract class AbstractLoader implements Loader {
         this.executeDetailedLoaderQuery(node, query);
     }
 
-    protected void executeDetailedLoadTableConstraint(Container node) throws SQLException {
+    protected void executeDetailedLoadTableConstraint(Container node) throws SQLException, ContainerException {
         String elementName = (String) node.getAttributes().get(attribute);
         String tableName = (String) node.getParent().getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
         String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
-        this.executeDetailedLoaderQuery(node, query);
+        this.executeDetailedLoaderConstraintQuery(node, query);
     }
 
     protected void executeSchemaDetailedLoad(Container node) throws SQLException {
@@ -150,6 +150,20 @@ public abstract class AbstractLoader implements Loader {
         if (resultSet.next()) {
             for (String attribute : attributes) {
                 node.addAttribute(attribute, resultSet.getString(attribute));
+            }
+        }
+    }
+
+    private void executeDetailedLoaderConstraintQuery(Container node, String query) throws SQLException, ContainerException {
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            Container childNode = new Container();
+            childNode.setName(childName);
+            node.addChild(childNode);
+            for (String attribute : attributes) {
+                childNode.addAttribute(attribute, resultSet.getString(attribute));
             }
         }
     }

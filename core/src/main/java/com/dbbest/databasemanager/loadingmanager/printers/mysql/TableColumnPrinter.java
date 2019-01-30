@@ -1,5 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
+import com.dbbest.databasemanager.loadingmanager.annotations.PrinterAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
@@ -7,6 +9,7 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.List;
 import java.util.Map;
 
+@PrinterAnnotation(LoaderPrinterName.TABLE_COLUMN)
 public class TableColumnPrinter implements Printer {
     @Override
     public String execute(Container tableColumnCategoryContainer) {
