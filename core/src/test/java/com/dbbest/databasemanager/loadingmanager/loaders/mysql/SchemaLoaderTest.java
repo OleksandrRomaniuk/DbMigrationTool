@@ -42,7 +42,7 @@ public class SchemaLoaderTest {
         String query = "SELECT CATALOG_NAME, SCHEMA_NAME, DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME, SQL_PATH FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'sakila' ;";
 
         Mockery mockery = new Mockery();
-        final Connection connection = mockery.mock(Connection.class);
+        Connection connection = mockery.mock(Connection.class);
         mockery.checking(new Expectations(){{
             oneOf (connection).prepareStatement(query); will(returnValue(preparedStatement));
         }});

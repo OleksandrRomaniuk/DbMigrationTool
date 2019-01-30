@@ -6,15 +6,25 @@ import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPr
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
 import com.dbbest.databasemanager.loadingmanager.constants.tags.delete.TypeSupportConstants;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.xmlmanager.container.Container;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class LoaderManagerTest {
 
@@ -28,21 +38,35 @@ public class LoaderManagerTest {
 
     @Test
     public void loadFull() throws ParsingException, ContainerException, DatabaseException, SQLException {
-        SimpleConnectionBuilder simpleConnectionBuilder = new SimpleConnectionBuilder();
-        Connection connection = simpleConnectionBuilder.getConnection("mysql");
 
-        Context.getInstance().setSchemaName("sakila");
-        Context.getInstance().setConnection(connection);
+        ResultSet resultSet = mock(ResultSet.class);
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        String query = "SELECT CATALOG_NAME, SCHEMA_NAME, DEFAULT_CHARACTER_SET_NAME, DEFAULT_COLLATION_NAME, SQL_PATH FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = 'sakila' ;";
 
+        Mockery mockery = new Mockery();
+        Connection connection = mockery.mock(Connection.class);
+        mockery.checking(new Expectations(){{
+            oneOf (connection).prepareStatement(query); will(returnValue(preparedStatement));
+        }});
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+        when(resultSet.next()).thenReturn(true);
+
+        Context context = Context.getInstance();
+        context.setConnection(connection);
+        context.setSchemaName("sakila");
+
+        context.setDbType(LoadersPrinterDatabaseTypes.MYSQL);
 
         Container container = new Container();
         container.setName(LoaderPrinterName.SCHEMA);
-        Context.getInstance().setDbType(LoadersPrinterDatabaseTypes.MYSQL);
 
         LoaderManager loaderManager = LoaderManager.getInstance();
-        loaderManager.loadFull(container);
+        loaderManager.loadDetails(container);
 
-        for(Container container1: (List<Container>)container.getChildByName(LoaderPrinterName.STORED_PROCEDURES).getChildren())
-        System.out.println(container1.getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME));
+        Map<String, String> schemaAttributes = container.getAttributes();
+        for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
+            Assert.assertEquals(null, entry.getValue());
+        }
     }
 }
