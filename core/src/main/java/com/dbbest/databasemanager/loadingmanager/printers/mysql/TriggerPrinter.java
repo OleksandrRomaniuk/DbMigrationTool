@@ -12,8 +12,8 @@ public class TriggerPrinter implements Printer {
     @Override
     public String execute(Container triggerContainer) throws ContainerException {
         StringBuilder query = new StringBuilder();
-        query.append("DELIMITER //\n" + "CREATE\n" + getDefiner(triggerContainer)
-            + " TRIGGER " + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.EVENT_OBJECT_SCHEMA))
+        query.append("DELIMITER //\n" + "CREATE" + getDefiner(triggerContainer)
+            + "\nTRIGGER " + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.EVENT_OBJECT_SCHEMA))
             + "." + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.TRIGGER_NAME)) + "\n"
             + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.ACTION_TIMING) + " ")
             + ((String) triggerContainer.getAttributes().get(AttributeSingleConstants.EVENT_MANIPULATION)) + "\n"
@@ -28,7 +28,7 @@ public class TriggerPrinter implements Printer {
     private String getDefiner(Container triggerContainer) throws ContainerException {
         if (triggerContainer.getAttributes().get(AttributeSingleConstants.DEFINER) != null
             && !((String) triggerContainer.getAttributes().get(AttributeSingleConstants.DEFINER)).trim().isEmpty()) {
-            return " DEFINER = " + (String) triggerContainer.getAttributes().get(AttributeSingleConstants.DEFINER) + "\n";
+            return "\nDEFINER = " + (String) triggerContainer.getAttributes().get(AttributeSingleConstants.DEFINER);
         } else {
             return "";
         }

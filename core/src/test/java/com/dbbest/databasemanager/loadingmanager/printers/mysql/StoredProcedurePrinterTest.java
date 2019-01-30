@@ -44,8 +44,16 @@ public class StoredProcedurePrinterTest {
         StoredProcedurePrinter storedProcedurePrinter = new StoredProcedurePrinter();
         String query = storedProcedurePrinter.execute(storedProcedure);
 
-        assertEquals("DELIMITER $$ \n" +
-            "CREATE  DEFINER = root@localhost PROCEDURE sakila.film_in_stock1 (IN p_film_id int, IN p_store_id int, OUT p_film_count int) COMMENT 'Comment made by ROI' LANGUAGE SQL NOT DETERMINISTIC READS SQL DATA SQL SECURITY DEFINER BEGIN SELECT inventory_id FROM inventory WHERE film_id = p_film_id AND store_id = p_store_id AND inventory_in_stock(inventory_id); SELECT FOUND_ROWS() INTO p_film_count; END$$ \n" +
+        System.out.println(query);
+        assertEquals("DELIMITER $$ CREATE \n" +
+            "DEFINER = root@localhost\n" +
+            "PROCEDURE sakila.null (IN p_film_id int, IN p_store_id int, OUT p_film_count int)\n" +
+            "COMMENT 'Comment made by ROI'\n" +
+            "LANGUAGE SQL\n" +
+            "NOT DETERMINISTIC\n" +
+            "READS SQL DATA\n" +
+            "SQL SECURITY DEFINER\n" +
+            "BEGIN SELECT inventory_id FROM inventory WHERE film_id = p_film_id AND store_id = p_store_id AND inventory_in_stock(inventory_id); SELECT FOUND_ROWS() INTO p_film_count; END$$ \n" +
             "DELIMITER ;", query);
     }
 }

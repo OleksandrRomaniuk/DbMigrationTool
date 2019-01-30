@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager;
 
 import com.dbbest.databasemanager.loadingmanager.LoaderManagerTest;
+import com.dbbest.databasemanager.loadingmanager.PrinterManagerTest;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.*;
 import com.dbbest.databasemanager.loadingmanager.printers.mysql.*;
 import com.dbbest.databasemanager.reflectionutil.classloader.DirectorySearcherTest;
@@ -44,7 +45,8 @@ import org.junit.runners.Suite;
     IndexPrinterTest.class, PrimaryKeyPrinterHelperTest.class, SchemaPrinterTest.class, StoredProcedurePrinterTest.class,
     TablePrinterTest.class, TriggerPrinterTest.class, UniquePrinterHelperTest.class, ViewPrinterTest.class,
     LoaderManagerTest.class, DirectorySearcherTest.class, ConnectionPropertiesEditorTest.class, ConnectionPropertiesManagerTest.class,
-    SimpleConnectionBuilderTest.class, PrintersDirectorySearcherTest.class, PrinterClassLoaderTest.class})
+    SimpleConnectionBuilderTest.class, PrintersDirectorySearcherTest.class, PrinterClassLoaderTest.class,
+    PrinterManagerTest.class})
 public class TestSuite {
 
     @Before

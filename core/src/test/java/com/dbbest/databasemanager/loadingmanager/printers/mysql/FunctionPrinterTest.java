@@ -42,11 +42,17 @@ public class FunctionPrinterTest {
 
         FunctionPrinter functionPrinter = new FunctionPrinter();
         String query = functionPrinter.execute(function);
+        System.out.println(query);
 
         assertEquals("DELIMITER $$ \n" +
-            "CREATE  DEFINER = root@localhost FUNCTION sakila.inventory_held_by_customer1 (p_inventory_id int)\n" +
+            "CREATE DEFINER = root@localhost FUNCTION sakila.inventory_held_by_customer1 (p_inventory_id int)\n" +
             "RETURNS int\n" +
-            " COMMENT 'Comment made by ROI' LANGUAGE SQL NOT DETERMINISTIC READS SQL DATA SQL SECURITY DEFINER BEGIN\n" +
+            "COMMENT 'Comment made by ROI'\n" +
+            "LANGUAGE SQL\n" +
+            "NOT DETERMINISTIC\n" +
+            "READS SQL DATA\n" +
+            "SQL SECURITY DEFINER\n" +
+            "BEGIN\n" +
             "  DECLARE v_customer_id INT;\n" +
             "  DECLARE EXIT HANDLER FOR NOT FOUND RETURN NULL;\n" +
             "\n" +

@@ -73,11 +73,11 @@ public class LoaderPrinterName {
     private void intializeListOfPrinters() {
         printers = new ArrayList();
         printers.add(SCHEMA);
-        printers.add(FUNCTION);
-        printers.add(INDEX);
-        printers.add(STORED_PROCEDURE);
         printers.add(TABLE);
-        printers.add(TRIGGER);
         printers.add(VIEW);
+        printers.add(STORED_PROCEDURE);
+        printers.add(FUNCTION);
+        printers.add(TRIGGER);
+        printers.add(INDEX);
     }
 }
