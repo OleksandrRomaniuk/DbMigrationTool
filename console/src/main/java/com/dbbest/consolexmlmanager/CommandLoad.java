@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The command-loader from a databse to the container.
+ */
 public class CommandLoad implements Command {
     private static final Logger logger = Logger.getLogger("Command logger");
 
@@ -27,6 +30,15 @@ public class CommandLoad implements Command {
     private final String routineID;
     private final String loadType;
 
+    /**
+     * @param dbType the type of the databse to load.
+     * @param dbName the name of the databse to load.
+     * @param userName the username to connect to the database.
+     * @param password the password to connect to the database.
+     * @param routineID the rooutine id of the node to load.
+     * @param loadType 
+     * @param priority
+     */
     public CommandLoad(String dbType, String dbName, String userName, String password,
                        String routineID, String loadType, int priority) {
         this.dbType = dbType;

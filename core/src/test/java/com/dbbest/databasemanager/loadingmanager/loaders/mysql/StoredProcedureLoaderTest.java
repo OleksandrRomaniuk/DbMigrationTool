@@ -35,6 +35,7 @@ public class StoredProcedureLoaderTest {
         Mockery mockery1 = new Mockery();
         ResultSet resultSet = mockery1.mock(ResultSet.class);
         mockery1.checking(new Expectations(){{
+            oneOf (resultSet).getString("SPECIFIC_NAME"); will(returnValue("testSP"));
             oneOf (resultSet).next(); will(returnValue(true));
             oneOf (resultSet).getString("SPECIFIC_NAME"); will(returnValue("testSP"));
             oneOf (resultSet).next(); will(returnValue(false));
