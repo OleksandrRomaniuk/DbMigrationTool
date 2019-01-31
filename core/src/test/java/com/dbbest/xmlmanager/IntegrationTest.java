@@ -2,6 +2,7 @@ package com.dbbest.xmlmanager;
 
 import com.dbbest.consolexmlmanager.CommandManager;
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.exceptions.SerializingException;
 import org.custommonkey.xmlunit.DetailedDiff;
@@ -20,7 +21,7 @@ public class IntegrationTest {
     String actualXml = "src/test/resources/TestFileResultedFromIntegrationTest.xml";
 
     @Test
-    public void shouldReadXmlFileThenWriteFileAfterComparesTwoFileAndAsksTesterToValidateDifferences() throws ParsingException, SerializingException, IOException, SAXException, CommandException {
+    public void shouldReadXmlFileThenWriteFileAfterComparesTwoFileAndAsksTesterToValidateDifferences() throws ParsingException, SerializingException, IOException, SAXException, CommandException, DatabaseException {
 
         String[] commandLine = new String[4];
         commandLine[0] = "-read";

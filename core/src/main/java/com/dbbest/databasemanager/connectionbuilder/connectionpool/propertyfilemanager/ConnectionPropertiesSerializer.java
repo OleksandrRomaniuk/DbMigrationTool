@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.connectionbuilder.propertyfilemanager;
+package com.dbbest.databasemanager.connectionbuilder.connectionpool.propertyfilemanager;
 
 import com.dbbest.exceptions.SerializingException;
 import com.dbbest.xmlmanager.filemanagers.SerializingManager;

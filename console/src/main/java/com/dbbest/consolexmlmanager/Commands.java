@@ -8,7 +8,10 @@ import com.dbbest.consolexmlmanager.exceptions.CommandException;
 public enum Commands {
     READ("-read", 1),
     WRITE("-write", 3),
-    SEARCH("-search", 2);
+    SEARCH("-search", 2),
+    LOAD("-load", 4),
+    PRINT("-print", 5);
+
 
     private final String stringCommand;
     private int priority;
@@ -36,6 +39,11 @@ public enum Commands {
                 } else {
                     throw new CommandException("The command was not recognized: " + singleCommand);
                 }
+            case PRINT:
+                return new CommandPrint(singleCommandWords[1].trim(), singleCommandWords[2].trim(), this.getPriority());
+            case LOAD:
+                return new CommandLoad(singleCommandWords[1].trim(), singleCommandWords[2].trim(), singleCommandWords[3].trim(),
+                    singleCommandWords[4].trim(), singleCommandWords[5].trim(), singleCommandWords[6].trim(), this.getPriority());
             default:
                 throw new CommandException("The command was not recognized."  + singleCommand);
         }

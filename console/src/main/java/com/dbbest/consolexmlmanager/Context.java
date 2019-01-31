@@ -18,6 +18,8 @@ public final class Context {
     private Connection connection;
     private String schemaName;
     private String dbType;
+    private String printedSqlQuery;
+    private Container dbTreeContainer;
 
     private Context() {
     }
@@ -88,6 +90,24 @@ public final class Context {
 
     public void setDbType(String dbType) {
         this.dbType = dbType;
+    }
+
+
+    public String getPrintedSqlQuery() {
+        return printedSqlQuery;
+    }
+
+    public void setPrintedSqlQuery(String printedSqlQuery) {
+        this.printedSqlQuery = printedSqlQuery;
+    }
+
+
+    public Container getDbTreeContainer() {
+        return dbTreeContainer;
+    }
+
+    public void setDbTreeContainer(Container dbTreeContainer) {
+        this.dbTreeContainer = dbTreeContainer;
     }
 }
 

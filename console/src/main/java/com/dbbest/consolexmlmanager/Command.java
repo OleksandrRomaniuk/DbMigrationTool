@@ -1,6 +1,8 @@
 package com.dbbest.consolexmlmanager;
 
+import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.exceptions.SerializingException;
 
@@ -8,7 +10,7 @@ import com.dbbest.exceptions.SerializingException;
  * This interface represents command for each particular operation with xml.
  */
 public interface Command extends Comparable<Command> {
-    void execute() throws ParsingException, SerializingException, ContainerException;
+    void execute() throws ParsingException, SerializingException, ContainerException, DatabaseException, CommandException;
 
     int getPriority();
 

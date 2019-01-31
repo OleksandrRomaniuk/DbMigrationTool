@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.connectionbuilder;
+package com.dbbest.databasemanager.connectionbuilder.connectionpool;
 
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.ParsingException;

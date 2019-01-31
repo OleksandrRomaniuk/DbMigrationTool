@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.connectionbuilder;
+package com.dbbest.databasemanager.connectionbuilder.connectionpool;
 
 import com.dbbest.exceptions.DatabaseException;
 import java.util.logging.Level;

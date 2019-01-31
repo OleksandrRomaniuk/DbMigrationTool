@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.connectionbuilder;
+package com.dbbest.databasemanager.connectionbuilder.connectionpool;
 
 /**
  * The enum with tags for the properties file.

@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
+import com.dbbest.databasemanager.connectionbuilder.connectionpool.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.*;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;

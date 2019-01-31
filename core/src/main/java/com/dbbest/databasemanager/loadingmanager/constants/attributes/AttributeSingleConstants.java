@@ -9,6 +9,7 @@ import java.util.Map;
  * The class containing mysql database attributes.
  */
 public final class AttributeSingleConstants {
+    public static final String ROUTINE_ID = "routine_ID";
     //Name attributes
     public static final String TABLE_NAME = "TABLE_NAME";
     public static final String SCHEMA_NAME = "SCHEMA_NAME";

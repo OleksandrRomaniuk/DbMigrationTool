@@ -63,6 +63,7 @@ public abstract class AbstractLoader implements Loader {
         while (resultSet.next()) {
             Container childNode = new Container();
             childNode.setName(childName);
+            childNode.addAttribute(AttributeSingleConstants.ROUTINE_ID, childName + resultSet.getString("CONSTRAINT_NAME"));
             node.addChild(childNode);
 
             for (String attribute : AttributeListConstants.getInstance().getListOfConstraintAttributes()) {
@@ -125,6 +126,7 @@ public abstract class AbstractLoader implements Loader {
             Container childNode = new Container();
             childNode.setName(childName);
             childNode.addAttribute(attribute, resultSet.getString(attribute));
+            childNode.addAttribute(AttributeSingleConstants.ROUTINE_ID, childName + resultSet.getString(attribute));
             node.addChild(childNode);
         }
     }

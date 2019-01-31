@@ -2,6 +2,7 @@ package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 import com.dbbest.exceptions.SerializingException;
 
@@ -35,13 +36,13 @@ public class Invoker {
     /**
      * @throws CommandException the exception thrown during execution of commands.
      */
-    public void execute() throws CommandException {
+    public void execute() throws CommandException, DatabaseException {
         for (Command command : priorityQueueCommands) {
             executeCommand(command);
         }
     }
 
-    private void executeCommand(Command command) throws CommandException {
+    private void executeCommand(Command command) throws CommandException, DatabaseException {
 
         try {
             command.execute();

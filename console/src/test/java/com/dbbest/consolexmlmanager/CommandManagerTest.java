@@ -1,6 +1,7 @@
 package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.ParsingException;
@@ -33,7 +34,7 @@ public class CommandManagerTest {
 
 
     @Test
-    public void shouldReadValidTestFile() throws CommandException {
+    public void shouldReadValidTestFile() throws CommandException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[2];
         commandLine[0] = "-read";
@@ -45,7 +46,7 @@ public class CommandManagerTest {
     }
 
     @Test
-    public void shouldReadAndThenWriteValidFile() throws CommandException, ParsingException, ContainerException {
+    public void shouldReadAndThenWriteValidFile() throws CommandException, ParsingException, ContainerException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[4];
         commandLine[0] = "-read";
@@ -63,7 +64,7 @@ public class CommandManagerTest {
     }
 
     @Test
-    public void shouldFindElementSearchHorizontalName() throws CommandException {
+    public void shouldFindElementSearchHorizontalName() throws CommandException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[5];
         commandLine[0] = "-read";
@@ -78,7 +79,7 @@ public class CommandManagerTest {
     }
 
     @Test
-    public void shouldFindElementSearchHorizontalValue() throws CommandException {
+    public void shouldFindElementSearchHorizontalValue() throws CommandException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[5];
         commandLine[0] = "-read";
@@ -93,7 +94,7 @@ public class CommandManagerTest {
     }
 
     @Test
-    public void shouldFindElementSearchHorizontalKeyValue() throws CommandException {
+    public void shouldFindElementSearchHorizontalKeyValue() throws CommandException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[6];
         commandLine[0] = "-read";
@@ -109,7 +110,7 @@ public class CommandManagerTest {
     }
 
     @Test
-    public void shouldFindElementSearchVerticalName() throws CommandException {
+    public void shouldFindElementSearchVerticalName() throws CommandException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[5];
         commandLine[0] = "-read";
@@ -124,7 +125,7 @@ public class CommandManagerTest {
     }
 
     @Test
-    public void shouldFindElementSearchVerticalValue() throws CommandException {
+    public void shouldFindElementSearchVerticalValue() throws CommandException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[5];
         commandLine[0] = "-read";
@@ -139,7 +140,7 @@ public class CommandManagerTest {
     }
 
     @Test
-    public void shouldFindElementSearchVerticalKeyValue() throws CommandException {
+    public void shouldFindElementSearchVerticalKeyValue() throws CommandException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[6];
         commandLine[0] = "-read";
@@ -155,7 +156,7 @@ public class CommandManagerTest {
     }
 
     @Test(expected = CommandException.class)
-    public void shouldThrowCommandException() throws CommandException {
+    public void shouldThrowCommandException() throws CommandException, DatabaseException {
         CommandManager commandManager = new CommandManager();
         String[] commandLine = new String[5];
         commandLine[0] = "read";

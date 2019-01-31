@@ -1,6 +1,7 @@
 package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
+import com.dbbest.exceptions.DatabaseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,7 @@ public class CommandManager {
         }
     }
 
-    public void execute() throws CommandException {
+    public void execute() throws CommandException, DatabaseException {
         invoker.execute();
     }
 

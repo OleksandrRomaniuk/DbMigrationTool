@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager;
 
-import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
+import com.dbbest.databasemanager.connectionbuilder.connectionpool.SimpleConnectionBuilder;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.ParsingException;

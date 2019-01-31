@@ -1,7 +1,7 @@
-package com.dbbest.databasemanager.connectionbuilder.propertyfilemanager;
+package com.dbbest.databasemanager.connectionbuilder.connectionpool.propertyfilemanager;
 
-import com.dbbest.databasemanager.connectionbuilder.ConnectionConfiguration;
-import com.dbbest.databasemanager.connectionbuilder.ContainerElementsNames;
+import com.dbbest.databasemanager.connectionbuilder.connectionpool.ConnectionConfiguration;
+import com.dbbest.databasemanager.connectionbuilder.connectionpool.ContainerElementsNames;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;

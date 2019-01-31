@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.loadingmanager.loaders;
 
-import com.dbbest.databasemanager.connectionbuilder.SimpleConnectionBuilder;
+import com.dbbest.databasemanager.connectionbuilder.connectionpool.SimpleConnectionBuilder;
 import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.StoredProcedureLoader;
