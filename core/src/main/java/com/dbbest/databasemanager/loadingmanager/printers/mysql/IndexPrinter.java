@@ -9,6 +9,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of the mysql indexes.
+ */
 @PrinterAnnotation(LoaderPrinterName.INDEX)
 public class IndexPrinter implements Printer {
     @Override

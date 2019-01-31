@@ -9,10 +9,19 @@ import java.io.File;
 import java.lang.annotation.Annotation;
 import java.util.logging.Level;
 
+/**
+ * The class which searches for the respective printer class and returns its instance.
+ */
 public class PrinterClassLoader {
 
     private Printer printerInstance;
 
+    /**
+     * @param catalog retrieves the catalog where the class should search for the respective printer.
+     * @param printerType the type of the printer which should found.
+     * @return returns the instance of the respective printer.
+     * @throws DatabaseException throws an exception if could not make the instance of the respective printer.
+     */
     public Printer getPrinter(String catalog, String printerType) throws DatabaseException {
         File root = new File(catalog);
         checkPrinters(root, printerType);

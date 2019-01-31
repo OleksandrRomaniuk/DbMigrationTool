@@ -7,6 +7,9 @@ import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
 
+/**
+ * The class-printer of the mysql triggers.
+ */
 @PrinterAnnotation(LoaderPrinterName.TRIGGER)
 public class TriggerPrinter implements Printer {
     @Override

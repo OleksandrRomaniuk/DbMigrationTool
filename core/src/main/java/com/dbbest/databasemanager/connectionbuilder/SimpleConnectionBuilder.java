@@ -1,8 +1,8 @@
 package com.dbbest.databasemanager.connectionbuilder;
 
 import com.dbbest.databasemanager.connectionbuilder.propertyfilemanager.ConnectionPropertiesManager;
-import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 
 import java.sql.Connection;

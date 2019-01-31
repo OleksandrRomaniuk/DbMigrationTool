@@ -9,9 +9,17 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.logging.Level;
 
+/**
+ * The class which searches the catalog with the printers.
+ */
 public class PrintersDirectorySearcher {
     private String folderWithLoader;
 
+    /**
+     * @param loadersPrinterDatabaseTypes the type of the database for which the printers are searched.
+     * @return returns the catalog with the respective printers.
+     * @throws DatabaseException throws an exception if can not get the catalog with the printers.
+     */
     public String findFolderWithPrinters(String loadersPrinterDatabaseTypes) throws DatabaseException {
 
         try {

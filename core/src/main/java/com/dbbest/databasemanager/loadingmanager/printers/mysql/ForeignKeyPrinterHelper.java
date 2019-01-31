@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class helper for the ForeignKeyPrinter class. Executes some of foreign key printing elements.
+ */
 public class ForeignKeyPrinterHelper implements Printer {
 
     @Override

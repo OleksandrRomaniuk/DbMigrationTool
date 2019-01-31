@@ -1,8 +1,8 @@
 package com.dbbest.xmlmanager.filemanagers.parsers;
 
-import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.ParsingException;
+import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.filemanagers.parsers.validator.XmlValidator;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;

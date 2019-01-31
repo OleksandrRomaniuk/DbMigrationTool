@@ -9,10 +9,19 @@ import java.io.File;
 import java.lang.annotation.Annotation;
 import java.util.logging.Level;
 
+/**
+ * The class which looks for the required loader in the defined catalog and returns its instance.
+ */
 public class LoaderClassLoader {
 
     private Loader loaderInstance;
 
+    /**
+     * @param catalog the catalog in which the class loader should search for the respective loader.
+     * @param loaderType the type of the loader that should be found.
+     * @return returns the instance of the target loader.
+     * @throws DatabaseException throw an exception if the instance was not retrived.
+     */
     public Loader getLoader(String catalog, String loaderType) throws DatabaseException {
         File root = new File(catalog);
         checkLoaders(root, loaderType);

@@ -9,6 +9,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of foreign keys (assists TablePrinter class).
+ */
 @PrinterAnnotation(LoaderPrinterName.FOREIGN_KEY)
 public class ForeignKeyPrinter implements Printer {
 

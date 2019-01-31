@@ -9,6 +9,9 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class-printer of the mysql views.
+ */
 @PrinterAnnotation(LoaderPrinterName.VIEW)
 public class ViewPrinter implements Printer {
     @Override

@@ -12,7 +12,10 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PrinterManager extends AbstractManager {
+/**
+ * The class which executes printing of a database element with the respective printer.
+ */
+public final class PrinterManager {
 
     private static PrinterManager instance;
 
@@ -21,6 +24,10 @@ public class PrinterManager extends AbstractManager {
     private PrinterManager() {
     }
 
+    /**
+     * @return returns the instance of the class.
+     * @throws DatabaseException throws an exception if can not initialize the map with printers.
+     */
     public static PrinterManager getInstance() throws DatabaseException {
         if (instance == null) {
             instance = new PrinterManager();

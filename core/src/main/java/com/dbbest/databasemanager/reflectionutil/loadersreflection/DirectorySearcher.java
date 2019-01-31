@@ -9,15 +9,23 @@ import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.util.logging.Level;
 
+/**
+ * The class which looks for the catalog with respective loaders.
+ */
 public class DirectorySearcher {
 
     private String folderWithLoader;
 
-    public String findFolderWithLoaders(String databaseTypesEnum) throws DatabaseException {
+    /**
+     * @param databaseType the type of database and respective loaders.
+     * @return returns the path to the catalog with respective loaders
+     * @throws DatabaseException throws an exception if the catalog has not been found.
+     */
+    public String findFolderWithLoaders(String databaseType) throws DatabaseException {
 
         try {
             File root = new File(getRoot());
-            checkFile(root, databaseTypesEnum);
+            checkFile(root, databaseType);
         } catch (IOException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -25,7 +33,7 @@ public class DirectorySearcher {
         if (folderWithLoader != null && !folderWithLoader.trim().equals("")) {
             return folderWithLoader;
         } else {
-            throw new DatabaseException(Level.SEVERE, "Can not find the package with loaders " + databaseTypesEnum);
+            throw new DatabaseException(Level.SEVERE, "Can not find the package with loaders " + databaseType);
         }
     }
 

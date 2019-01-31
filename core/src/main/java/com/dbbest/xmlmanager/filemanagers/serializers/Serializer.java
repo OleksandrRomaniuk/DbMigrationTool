@@ -1,7 +1,7 @@
 package com.dbbest.xmlmanager.filemanagers.serializers;
 
-import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.exceptions.SerializingException;
+import com.dbbest.xmlmanager.container.Container;
 
 /**
  * An interface which is used to writes a tree kept in a container to a file.

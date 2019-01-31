@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of foreign keys.
+ */
 @LoaderAnnotation(LoaderPrinterName.FOREIGN_KEY)
 public class ForeignKeyLoader extends AbstractLoader {
 

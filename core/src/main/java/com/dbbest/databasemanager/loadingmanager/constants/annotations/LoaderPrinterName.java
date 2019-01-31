@@ -3,7 +3,10 @@ package com.dbbest.databasemanager.loadingmanager.constants.annotations;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LoaderPrinterName {
+/**
+ * The class with constants defining names of the loaded and printed containers.
+ */
+public final class LoaderPrinterName {
     public static final String SCHEMA = "Schema";
     public static final String VIEWS = "Views";
     public static final String VIEW = "View";
@@ -33,6 +36,9 @@ public class LoaderPrinterName {
     private LoaderPrinterName() {
     }
 
+    /**
+     * @return returns the instance of the class.
+     */
     public static LoaderPrinterName getInstance() {
         if (instance == null) {
             instance = new LoaderPrinterName();
@@ -40,6 +46,9 @@ public class LoaderPrinterName {
         return instance;
     }
 
+    /**
+     * @return returns the list of name of the containers to be loaded by the loader manager.
+     */
     public List<String> getListOfLoaders() {
         if (loaders == null || loaders.isEmpty()) {
             intializeListOfLoaders();
@@ -47,6 +56,9 @@ public class LoaderPrinterName {
         return loaders;
     }
 
+    /**
+     * @return returns the list of name of the containers to be printed by the printer manager.
+     */
     public List<String> getListOfPrinters() {
         if (printers == null || printers.isEmpty()) {
             intializeListOfPrinters();

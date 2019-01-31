@@ -9,6 +9,9 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class-printer of the table columns.
+ */
 @PrinterAnnotation(LoaderPrinterName.TABLE_COLUMN)
 public class TableColumnPrinter implements Printer {
     @Override

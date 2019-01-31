@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the stored procedures.
+ */
 @LoaderAnnotation(LoaderPrinterName.STORED_PROCEDURE)
 public class StoredProcedureLoader extends AbstractLoader {
     @Override

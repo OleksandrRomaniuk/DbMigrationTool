@@ -9,6 +9,9 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The class-printer of the functions.
+ */
 @PrinterAnnotation(LoaderPrinterName.FUNCTION)
 public class FunctionPrinter implements Printer {
     @Override
@@ -94,7 +97,8 @@ public class FunctionPrinter implements Printer {
         for (Container parameter : parameters) {
             Map<String, String> parameterAttributes = parameter.getAttributes();
 
-            query.append(parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME) + " " + parameterAttributes.get(AttributeSingleConstants.DATA_TYPE) + ", ");
+            query.append(parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME)
+                + " " + parameterAttributes.get(AttributeSingleConstants.DATA_TYPE) + ", ");
         }
         query.deleteCharAt(query.length() - 1);
         query.deleteCharAt(query.length() - 1);

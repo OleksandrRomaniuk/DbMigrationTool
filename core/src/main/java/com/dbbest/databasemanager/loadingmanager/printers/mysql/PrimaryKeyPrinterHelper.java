@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class which executes printing of some elements of the primary key. Assists the PrimaryKeyPrinter class.
+ */
 public class PrimaryKeyPrinterHelper implements Printer {
 
     @Override

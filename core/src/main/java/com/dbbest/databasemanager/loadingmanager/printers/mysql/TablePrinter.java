@@ -9,6 +9,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.Map;
 
+/**
+ * The class-printer of the tables.
+ */
 @PrinterAnnotation(LoaderPrinterName.TABLE)
 public class TablePrinter implements Printer {
     @Override

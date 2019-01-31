@@ -9,6 +9,9 @@ import com.dbbest.xmlmanager.container.Container;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The class-printer of the mysql indexes. It assists the IndexPrinter class in printing some of the index elements.
+ */
 public class IndexPrinterHelper implements Printer {
     @Override
     public String execute(Container tableContainer) throws ContainerException {

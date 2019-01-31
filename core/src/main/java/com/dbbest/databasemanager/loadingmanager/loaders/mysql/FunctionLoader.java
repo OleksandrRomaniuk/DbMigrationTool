@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the functions.
+ */
 @LoaderAnnotation(LoaderPrinterName.FUNCTION)
 public class FunctionLoader extends AbstractLoader {
     @Override

@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The class-loader of the mysql triggers.
+ */
 @LoaderAnnotation(LoaderPrinterName.TRIGGER)
 public class TriggerLoader extends AbstractLoader {
     private static final Logger logger = Logger.getLogger("Database logger");

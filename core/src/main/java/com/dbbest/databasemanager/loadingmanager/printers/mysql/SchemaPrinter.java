@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.Map;
 
+/**
+ * The class-printer of the schema.
+ */
 @PrinterAnnotation(LoaderPrinterName.SCHEMA)
 public class SchemaPrinter implements Printer {
     @Override

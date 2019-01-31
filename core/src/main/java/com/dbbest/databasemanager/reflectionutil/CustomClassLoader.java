@@ -9,9 +9,17 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The custom class loader which loads classes defined by the path.
+ */
 public class CustomClassLoader extends ClassLoader {
     private static final Logger logger = Logger.getLogger("Database logger");
 
+    /**
+     * @param classFile retrieves the file of a class to load.
+     * @return returns the loaded class.
+     * @throws ClassNotFoundException throws exception if loading of the class has not been successfully completed.
+     */
     public Class<?> createClass(File classFile) throws ClassNotFoundException {
         if (!classFile.isFile()) {
             throw new ClassNotFoundException("Class not found " + classFile.getPath());

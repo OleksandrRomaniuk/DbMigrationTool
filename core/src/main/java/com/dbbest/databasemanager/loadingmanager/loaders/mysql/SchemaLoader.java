@@ -11,6 +11,9 @@ import com.dbbest.xmlmanager.container.Container;
 import java.sql.SQLException;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the schema.
+ */
 @LoaderAnnotation(LoaderPrinterName.SCHEMA)
 public class SchemaLoader extends AbstractLoader {
 

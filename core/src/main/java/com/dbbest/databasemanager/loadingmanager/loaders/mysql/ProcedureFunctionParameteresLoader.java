@@ -10,6 +10,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class which loads details of parameters of functions of stored procedures.
+ */
 @LoaderAnnotation(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER)
 public class ProcedureFunctionParameteresLoader extends AbstractLoader {
     @Override

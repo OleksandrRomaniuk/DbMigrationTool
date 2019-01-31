@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class which executes printing of a part of the mysql unique keys.
+ */
 public class UniquePrinterHelper implements Printer {
 
     @Override
