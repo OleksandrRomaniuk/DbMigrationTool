@@ -36,8 +36,8 @@ public class CommandLoad implements Command {
      * @param userName the username to connect to the database.
      * @param password the password to connect to the database.
      * @param routineID the rooutine id of the node to load.
-     * @param loadType 
-     * @param priority
+     * @param loadType the type of loading (lazy, detailed or full).
+     * @param priority priority of the command in the list of commands.
      */
     public CommandLoad(String dbType, String dbName, String userName, String password,
                        String routineID, String loadType, int priority) {

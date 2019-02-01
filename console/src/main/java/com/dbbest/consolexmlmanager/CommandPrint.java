@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * The command print to execute printing of an element to an sql query.
+ */
 public class CommandPrint implements Command {
 
     private static final Logger logger = Logger.getLogger("Command logger");
@@ -20,6 +23,11 @@ public class CommandPrint implements Command {
     private final String dbType;
     private final String routineID;
 
+    /**
+     * @param dbType the type of the database (mysql, mssql etc.).
+     * @param routineID the identifier of the element to print.
+     * @param priority the priority of the command in the list of commands.
+     */
     public CommandPrint(String dbType, String routineID, int priority) {
         this.dbType = dbType;
         this.routineID = routineID;

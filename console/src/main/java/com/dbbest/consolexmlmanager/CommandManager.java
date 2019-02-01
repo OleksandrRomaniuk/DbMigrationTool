@@ -15,9 +15,7 @@ public class CommandManager {
 
     private Invoker invoker = new Invoker();
     private Context context = Context.getInstance();
-    private final String patternReadAndWriteCommand = "-\\S*\\s*\\S*\\z";
-    private final String patternSearchCommandNameOrValue = "-\\S*\\s*\\S*\\s*\\S*\\z";
-    private final String patternSearchCommandAttributes = "-\\S*\\s*\\S*\\s*\\S*\\s*\\S*\\z";
+    private final String commandPattern = "-(((\\S+\\s+){1,3})|((\\S+\\s+){6}))\\S+\\s*\\z";
 
     /**
      * Adds command lines to work out.
@@ -49,9 +47,7 @@ public class CommandManager {
         String[] commandsSplit = cl.toString().trim().split("-");
         for (String element : commandsSplit) {
             if (element.length() > 0) {
-                if (matchs("-" + element.trim(), patternReadAndWriteCommand)
-                    || matchs("-" + element.trim(), patternSearchCommandNameOrValue)
-                    || matchs("-" + element.trim(), patternSearchCommandAttributes)) {
+                if ((matchs("-" + element.trim(), commandPattern))) {
                     commands.add("-" + element.trim());
                 } else {
                     throw new CommandException("Incorrect command format: -" + element.trim());
@@ -70,9 +66,7 @@ public class CommandManager {
 
     private void addToInvoker(String singleCommand) throws CommandException {
 
-        if (!matchs(singleCommand.trim(), patternReadAndWriteCommand)
-            && !matchs(singleCommand.trim(), patternSearchCommandNameOrValue)
-            && !matchs(singleCommand.trim(), patternSearchCommandAttributes)) {
+        if (!matchs(singleCommand.trim(), commandPattern)) {
             throw new CommandException("The command " + singleCommand + " was not recognized.");
         }
 

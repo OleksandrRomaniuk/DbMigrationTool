@@ -5,6 +5,9 @@ import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPr
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The class which builds the url and driver identifier.
+ */
 public final class DriverUrlManager {
     private static DriverUrlManager instance;
     private Map<String, String> drivers = new HashMap();
@@ -12,6 +15,9 @@ public final class DriverUrlManager {
 
     private DriverUrlManager() {}
 
+    /**
+     * @return returns the instance of the class.
+     */
     public static DriverUrlManager getInstance() {
         if (instance == null) {
             instance = new DriverUrlManager();
