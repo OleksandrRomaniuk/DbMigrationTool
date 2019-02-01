@@ -7,9 +7,9 @@ import com.dbbest.consolexmlmanager.exceptions.CommandException;
  */
 public enum Commands {
     READ("-read", 1),
-    WRITE("-write", 3),
-    SEARCH("-search", 2),
-    LOAD("-load", 4),
+    WRITE("-write", 4),
+    SEARCH("-search", 3),
+    LOAD("-load", 2),
     PRINT("-print", 5);
 
 

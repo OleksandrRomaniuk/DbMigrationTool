@@ -11,7 +11,7 @@ import java.util.List;
 public final class Context {
 
     private String fileName;
-    private Container builtContainer;
+    private Container container;
     private String commandLine;
     private static Context instance;
     private List<Container> listOfFoundElements;
@@ -19,7 +19,7 @@ public final class Context {
     private String schemaName;
     private String dbType;
     private String printedSqlQuery;
-    private Container dbTreeContainer;
+    //private Container dbTreeContainer;
 
     private Context() {
     }
@@ -45,11 +45,11 @@ public final class Context {
     }
 
     public Container getBuiltContainer() {
-        return builtContainer;
+        return container;
     }
 
     public void setBuiltContainer(Container builtContainer) {
-        this.builtContainer = builtContainer;
+        this.container = builtContainer;
     }
 
     public String getCommandLine() {
@@ -103,11 +103,11 @@ public final class Context {
 
 
     public Container getDbTreeContainer() {
-        return dbTreeContainer;
+        return container;
     }
 
     public void setDbTreeContainer(Container dbTreeContainer) {
-        this.dbTreeContainer = dbTreeContainer;
+        this.container = dbTreeContainer;
     }
 }
 

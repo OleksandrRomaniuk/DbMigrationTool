@@ -25,7 +25,7 @@ public class SchemaLoader extends AbstractLoader {
 
         schemaContainer.addAttribute(AttributeSingleConstants.SCHEMA_NAME, Context.getInstance().getSchemaName());
         schemaContainer.addAttribute(AttributeSingleConstants.ROUTINE_ID,
-            LoaderPrinterName.SCHEMA + Context.getInstance().getSchemaName());
+            LoaderPrinterName.SCHEMA);
 
         Container tablesCategory = new Container();
         tablesCategory.setName(LoaderPrinterName.TABLES);
@@ -35,19 +35,19 @@ public class SchemaLoader extends AbstractLoader {
 
         Container viewsCategory = new Container();
         viewsCategory.setName(LoaderPrinterName.VIEWS);
-        tablesCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+        viewsCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
             LoaderPrinterName.VIEWS);
         schemaContainer.addChild(viewsCategory);
 
         Container functionsCategory = new Container();
         functionsCategory.setName(LoaderPrinterName.FUNCTIONS);
-        tablesCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+        functionsCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
             LoaderPrinterName.FUNCTIONS);
         schemaContainer.addChild(functionsCategory);
 
         Container storedProceduresCategory = new Container();
         storedProceduresCategory.setName(LoaderPrinterName.STORED_PROCEDURES);
-        tablesCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+        storedProceduresCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
             LoaderPrinterName.STORED_PROCEDURES);
         schemaContainer.addChild(storedProceduresCategory);
     }

@@ -31,13 +31,13 @@ public class CommandLoad implements Command {
     private final String loadType;
 
     /**
-     * @param dbType the type of the databse to load.
-     * @param dbName the name of the databse to load.
-     * @param userName the username to connect to the database.
-     * @param password the password to connect to the database.
+     * @param dbType    the type of the databse to load.
+     * @param dbName    the name of the databse to load.
+     * @param userName  the username to connect to the database.
+     * @param password  the password to connect to the database.
      * @param routineID the rooutine id of the node to load.
-     * @param loadType the type of loading (lazy, detailed or full).
-     * @param priority priority of the command in the list of commands.
+     * @param loadType  the type of loading (lazy, detailed or full).
+     * @param priority  priority of the command in the list of commands.
      */
     public CommandLoad(String dbType, String dbName, String userName, String password,
                        String routineID, String loadType, int priority) {
@@ -56,9 +56,12 @@ public class CommandLoad implements Command {
         if (context.getDbTreeContainer() == null) {
             Container schemaContainer = new Container();
             schemaContainer.setName(LoaderPrinterName.SCHEMA);
+            schemaContainer.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+                LoaderPrinterName.SCHEMA);
             context.setDbTreeContainer(schemaContainer);
         }
         context.setDbType(dbType);
+        context.setSchemaName(dbName);
         SimpleConnectionBuilder simpleConnectionBuilder = new SimpleConnectionBuilder();
         Connection connection = simpleConnectionBuilder.getConnection(dbType, dbName, userName, password);
         context.setConnection(connection);

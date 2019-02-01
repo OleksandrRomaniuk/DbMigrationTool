@@ -17,21 +17,24 @@ public class FunctionPrinter implements Printer {
     @Override
     public String execute(Container functionContainer) {
         StringBuilder query = new StringBuilder();
-        query.append("DELIMITER $$ \n");
+        query.append("DELIMITER // \n");
         query.append("CREATE");
         getDefiner(query, functionContainer);
         query.append(" FUNCTION " + functionContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_SCHEMA)
             + "." + functionContainer.getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME));
 
+        query.append(" (");
         if (functionContainer.hasChildren()) {
             getParameters(query, functionContainer);
         }
+        query.append(")");
+
 
         query.append("\n" + "RETURNS " + functionContainer.getAttributes().get(AttributeSingleConstants.DATA_TYPE));
 
         getCharacteristics(query, functionContainer);
         query.append("\n" + functionContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_DEFINITION));
-        query.append("$$ \nDELIMITER ;");
+        query.append(" // \nDELIMITER ;");
         return query.toString();
     }
 
@@ -93,15 +96,17 @@ public class FunctionPrinter implements Printer {
 
     private void getParameters(StringBuilder query, Container functionContainer) {
         List<Container> parameters = functionContainer.getChildren();
-        query.append(" (");
         for (Container parameter : parameters) {
             Map<String, String> parameterAttributes = parameter.getAttributes();
 
-            query.append(parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME)
-                + " " + parameterAttributes.get(AttributeSingleConstants.DATA_TYPE) + ", ");
+            if (parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME) != null
+                && !parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME).isEmpty()
+                && !parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME).equals("null")) {
+                query.append(parameterAttributes.get(AttributeSingleConstants.PROC_FUNC_PARAMETER_NAME)
+                    + " " + parameterAttributes.get(AttributeSingleConstants.DATA_TYPE) + ", ");
+            }
         }
         query.deleteCharAt(query.length() - 1);
         query.deleteCharAt(query.length() - 1);
-        query.append(")");
     }
 }

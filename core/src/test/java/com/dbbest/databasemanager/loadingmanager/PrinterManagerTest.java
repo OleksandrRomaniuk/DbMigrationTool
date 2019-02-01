@@ -22,7 +22,7 @@ public class PrinterManagerTest {
 
         Context.getInstance().setDbType(LoadersPrinterDatabaseTypes.MYSQL);
 
-        Assert.assertEquals("CREATE SCHEMA IF NOT EXISTS Schema CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_0900_ai_ci';",
+        Assert.assertEquals("CREATE SCHEMA IF NOT EXISTS sakila CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_0900_ai_ci';",
             PrinterManager.getInstance().print(container));
     }
 }

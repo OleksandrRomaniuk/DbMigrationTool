@@ -49,7 +49,7 @@ public abstract class AbstractLoader implements Loader {
     }
 
     protected void executeLazyLoadProcedureFunctionParameters(Container node) throws SQLException, ContainerException {
-        String procedureFunctionName = (String) node.getAttributes().get(attribute);
+        String procedureFunctionName = (String) node.getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME);
         String query = String.format(lazyLoaderQuery, schemaName, procedureFunctionName);
         this.executeLazyLoaderQuery(node, query);
     }

@@ -54,7 +54,7 @@ public class ProcedureFunctionParameteresLoaderTest {
         Container parent = new Container();
         parent.addAttribute("TABLE_NAME", "testTable");
         Container container = new Container();
-        container.addAttribute("PARAMETER_NAME", "procParam");
+        container.addAttribute("SPECIFIC_NAME", "procParam");
         parent.addChild(container);
 
 

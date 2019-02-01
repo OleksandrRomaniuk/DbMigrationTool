@@ -25,7 +25,7 @@ public class TableLoader extends AbstractLoader {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }
 
-        if (categoryTablesContainer.getChildren().size() > 0) {
+        if (categoryTablesContainer.getChildren() != null && !categoryTablesContainer.getChildren().isEmpty()) {
             for (Container tableContainer : (List<Container>) categoryTablesContainer.getChildren()) {
                 Container columnsCategory = new Container();
                 columnsCategory.setName(LoaderPrinterName.TABLE_COLUMNS);

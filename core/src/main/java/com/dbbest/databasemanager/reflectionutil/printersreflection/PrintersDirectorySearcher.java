@@ -23,7 +23,7 @@ public class PrintersDirectorySearcher {
     public String findFolderWithPrinters(String loadersPrinterDatabaseTypes) throws DatabaseException {
 
         try {
-            File root = new File(getRoot());
+            File root = new File(new File(getRoot()).getParent());
             checkFile(root, loadersPrinterDatabaseTypes);
         } catch (IOException e) {
             throw new DatabaseException(Level.SEVERE, e);

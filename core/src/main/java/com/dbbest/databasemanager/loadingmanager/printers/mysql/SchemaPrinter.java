@@ -16,7 +16,7 @@ public class SchemaPrinter implements Printer {
     @Override
     public String execute(Container schemaContainer) {
         StringBuilder query = new StringBuilder();
-        query.append("CREATE SCHEMA IF NOT EXISTS " + schemaContainer.getName());
+        query.append("CREATE SCHEMA IF NOT EXISTS " + schemaContainer.getAttributes().get(AttributeSingleConstants.SCHEMA_NAME));
 
         Map<String, String> schemaAttributes = schemaContainer.getAttributes();
         if (schemaAttributes != null

@@ -24,7 +24,7 @@ public class DirectorySearcher {
     public String findFolderWithLoaders(String databaseType) throws DatabaseException {
 
         try {
-            File root = new File(getRoot());
+            File root = new File(new File(getRoot()).getParent());
             checkFile(root, databaseType);
         } catch (IOException e) {
             throw new DatabaseException(Level.SEVERE, e);

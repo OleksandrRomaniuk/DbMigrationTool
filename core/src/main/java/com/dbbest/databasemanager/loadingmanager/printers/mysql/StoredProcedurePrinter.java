@@ -17,19 +17,21 @@ public class StoredProcedurePrinter implements Printer {
     @Override
     public String execute(Container storedProcedureContainer) {
         StringBuilder query = new StringBuilder();
-        query.append("DELIMITER $$ ");
+        query.append("DELIMITER // \n");
         query.append("CREATE ");
         getDefiner(query, storedProcedureContainer);
         query.append("\n" + "PROCEDURE " + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_SCHEMA)
             + "." + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME));
 
+        query.append(" (");
         if (storedProcedureContainer.hasChildren()) {
             getParameters(query, storedProcedureContainer);
         }
+        query.append(")");
 
         getCharacteristics(query, storedProcedureContainer);
         query.append("\n" + storedProcedureContainer.getAttributes().get(AttributeSingleConstants.ROUTINE_DEFINITION));
-        query.append("$$ \nDELIMITER ;");
+        query.append(" // \nDELIMITER ;");
         return query.toString();
     }
 
@@ -96,7 +98,7 @@ public class StoredProcedurePrinter implements Printer {
 
     private void getParameters(StringBuilder query, Container storedProcedureContainer) {
         List<Container> parameters = storedProcedureContainer.getChildren();
-        query.append(" (");
+
         for (Container parameter : parameters) {
             Map<String, String> parameterAttributes = parameter.getAttributes();
 
@@ -109,6 +111,5 @@ public class StoredProcedurePrinter implements Printer {
         }
         query.deleteCharAt(query.length() - 1);
         query.deleteCharAt(query.length() - 1);
-        query.append(")");
     }
 }

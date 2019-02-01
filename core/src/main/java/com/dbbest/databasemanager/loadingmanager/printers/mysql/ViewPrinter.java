@@ -18,13 +18,13 @@ public class ViewPrinter implements Printer {
     public String execute(Container viewContainer) {
 
         StringBuilder query = new StringBuilder();
-        query.append("CREATE ");
+        query.append("CREATE\n");
 
         Map<String, String> viewAttributes = viewContainer.getAttributes();
 
         if (viewAttributes.get(AttributeSingleConstants.DEFINER) != null
             && !viewAttributes.get(AttributeSingleConstants.DEFINER).isEmpty()) {
-            query.append("DEFINER " + viewAttributes.get(AttributeSingleConstants.DEFINER) + "\n");
+            query.append("DEFINER = " + viewAttributes.get(AttributeSingleConstants.DEFINER) + "\n");
         }
         if (viewAttributes.get(AttributeSingleConstants.SECURITY_TYPE) != null
             && !viewAttributes.get(AttributeSingleConstants.SECURITY_TYPE).isEmpty()) {
@@ -37,7 +37,7 @@ public class ViewPrinter implements Printer {
             List<Container> columns = viewContainer.getChildren();
             query.append(" (\n");
             for (Container column : columns) {
-                query.append(column.getAttributes().get(AttributeSingleConstants.COLUMN_NAME) + ",\n");
+                query.append("`" + column.getAttributes().get(AttributeSingleConstants.COLUMN_NAME) + "`" + ",\n");
             }
             query.deleteCharAt(query.length() - 1);
             query.deleteCharAt(query.length() - 1);

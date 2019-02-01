@@ -11,7 +11,7 @@ public class SchemaPrinterTest {
     @Test
     public void execute() throws ContainerException {
         Container schemaContainer = new Container();
-        schemaContainer.setName("testDB");
+        schemaContainer.addAttribute(AttributeSingleConstants.SCHEMA_NAME,"testDB");
         schemaContainer.addAttribute(AttributeSingleConstants.DEFAULT_CHARACTER_SET_NAME, "utf8mb4");
         schemaContainer.addAttribute(AttributeSingleConstants.DEFAULT_COLLATION_NAME, "utf8mb4_0900_ai_ci");
 

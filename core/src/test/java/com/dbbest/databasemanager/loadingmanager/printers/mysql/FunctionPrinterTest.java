@@ -44,7 +44,7 @@ public class FunctionPrinterTest {
         String query = functionPrinter.execute(function);
         System.out.println(query);
 
-        assertEquals("DELIMITER $$ \n" +
+        assertEquals("DELIMITER // \n" +
             "CREATE DEFINER = root@localhost FUNCTION sakila.inventory_held_by_customer1 (p_inventory_id int)\n" +
             "RETURNS int\n" +
             "COMMENT 'Comment made by ROI'\n" +
@@ -62,7 +62,7 @@ public class FunctionPrinterTest {
             "  AND inventory_id = p_inventory_id;\n" +
             "\n" +
             "  RETURN v_customer_id;\n" +
-            "END$$ \n" +
+            "END // \n" +
             "DELIMITER ;", query);
     }
 }
