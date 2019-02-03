@@ -50,3 +50,4 @@ public class ConnectionPropertiesEditorTest {
         Assert.assertEquals(false, connectionPropertiesEditor.remove(fileName, conName));
     }
 }
+
