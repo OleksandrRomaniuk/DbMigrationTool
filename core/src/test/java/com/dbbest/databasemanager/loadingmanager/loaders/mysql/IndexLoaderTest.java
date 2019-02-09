@@ -68,7 +68,7 @@ public class IndexLoaderTest {
     public void shouldExecuteDetailLoadOfIndexes() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, NON_UNIQUE, INDEX_SCHEMA, SEQ_IN_INDEX, COLUMN_NAME, COLLATION, CARDINALITY, SUB_PART, PACKED, NULLABLE, INDEX_TYPE, COMMENT, INDEX_COMMENT FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = 'sakila' AND TABLE_NAME = 'testTable'  AND INDEX_NAME =  'null' ;";
+        String query = "SELECT TABLE_CATALOG, INDEX_SCHEMA, COLLATION, CARDINALITY, PACKED, NULLABLE, COMMENT, INDEX_COMMENT, NON_UNIQUE, INDEX_TYPE, TABLE_SCHEMA, TABLE_NAME, SEQ_IN_INDEX, COLUMN_NAME, SUB_PART FROM INFORMATION_SCHEMA.STATISTICS WHERE TABLE_SCHEMA = 'sakila' AND TABLE_NAME = 'testTable'  AND INDEX_NAME =  'null' ;";
 
         Mockery mockery = new Mockery();
         Connection connection = mockery.mock(Connection.class);

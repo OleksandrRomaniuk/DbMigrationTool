@@ -11,6 +11,7 @@
     <modules>
         <module>console</module>
         <module>core</module>
+        <module>ui</module>
     </modules>
     <dependencies>
         <dependency>

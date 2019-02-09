@@ -1,8 +1,6 @@
 package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoadersPrinterDatabaseTypes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;

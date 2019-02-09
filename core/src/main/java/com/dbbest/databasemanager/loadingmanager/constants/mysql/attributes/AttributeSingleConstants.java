@@ -1,6 +1,6 @@
-package com.dbbest.databasemanager.loadingmanager.constants.attributes;
+package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,12 +23,14 @@ public final class AttributeSingleConstants {
     public static final String COLUMN_TYPE = "COLUMN_TYPE";
     public static final String COLUMN_IS_NULLABLE = "IS_NULLABLE";
     // Foreign keys attributes
+
     public static final String REFERENCED_TABLE_SCHEMA = "REFERENCED_TABLE_SCHEMA";
     public static final String REFERENCED_TABLE_NAME = "REFERENCED_TABLE_NAME";
     public static final String POSITION_IN_UNIQUE_CONSTRAINT = "POSITION_IN_UNIQUE_CONSTRAINT";
     public static final String REFERENCED_COLUMN_NAME = "REFERENCED_COLUMN_NAME";
     public static final String ORDINAL_POSITION = "ORDINAL_POSITION";
     public static final String FK_COLUMN_NAME = "COLUMN_NAME";
+
     //Table constraint attributes
     public static final String CONSTRAINT_TYPE = "CONSTRAINT_TYPE";
     //Function attributes

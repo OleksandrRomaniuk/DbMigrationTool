@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.annotations;
+package com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants;
 
 /**
  * The class with constants of types of databases.

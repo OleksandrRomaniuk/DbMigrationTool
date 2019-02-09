@@ -5,18 +5,20 @@
       <profile default="true" name="Default" enabled="true">
         <outputRelativeToContentRoot value="true" />
       </profile>
-      <profile name="Maven default annotation processors profile" enabled="true">
+      <profile name="Maven default annotation processors profile">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="console" />
         <module name="core" />
+        <module name="ui" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="10">
-      <module name="console" target="1.5" />
-      <module name="core" target="1.5" />
-      <module name="DBbest" target="1.5" />
+      <module name="console" target="10" />
+      <module name="core" target="10" />
+      <module name="DBbest" target="10" />
+      <module name="ui" target="10" />
     </bytecodeTargetLevel>
   </component>
 </project>

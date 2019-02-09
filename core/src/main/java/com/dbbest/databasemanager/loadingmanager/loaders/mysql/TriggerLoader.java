@@ -1,7 +1,13 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TriggerAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -21,7 +27,11 @@ public class TriggerLoader extends AbstractLoader {
     @Override
     public void lazyLoad(Container categoryTriggers) throws DatabaseException, ContainerException {
         try {
-            super.executeLazyLoadTableChildren(categoryTriggers);
+            String tableName = (String) categoryTriggers.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
+            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.TRIGGER);
+            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName(), tableName);
+            super.executeLazyLoaderQuery(categoryTriggers, query);
+            //super.executeLazyLoadTableChildren(categoryTriggers);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -30,7 +40,13 @@ public class TriggerLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container triggerContainer) throws DatabaseException, ContainerException {
         try {
-            super.executeDetailedLoadTableChildren(triggerContainer);
+            String elementName = (String) triggerContainer.getAttributes().get(TriggerAttributes.TRIGGER_NAME);
+            String tableName = (String) triggerContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_NAME);
+            String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.TRIGGER);
+            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), tableName, elementName);
+            super.executeDetailedLoaderQuery(triggerContainer, query);
+            //super.executeDetailedLoadTableChildren(triggerContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

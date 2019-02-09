@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.annotations;
+package com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants;
 
 import java.util.ArrayList;
 import java.util.List;

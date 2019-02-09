@@ -1,7 +1,7 @@
 package com.dbbest.consolexmlmanager;
 
 import com.dbbest.databasemanager.loadingmanager.PrinterManager;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;

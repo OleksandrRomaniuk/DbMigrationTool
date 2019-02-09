@@ -1,14 +1,19 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeListConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -18,12 +23,12 @@ import java.util.logging.Level;
 public class SchemaLoader extends AbstractLoader {
 
     @Override
-    public void lazyLoad(Container schemaContainer) throws DatabaseException, ContainerException {
+    public void lazyLoad(Container schemaContainer) throws ContainerException {
         if (!schemaContainer.hasName()) {
             schemaContainer.setName(LoaderPrinterName.SCHEMA);
         }
 
-        schemaContainer.addAttribute(AttributeSingleConstants.SCHEMA_NAME, Context.getInstance().getSchemaName());
+        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, Context.getInstance().getSchemaName());
         schemaContainer.addAttribute(AttributeSingleConstants.ROUTINE_ID,
             LoaderPrinterName.SCHEMA);
 
@@ -53,10 +58,15 @@ public class SchemaLoader extends AbstractLoader {
     }
 
     @Override
-    public void detailedLoad(Container schemaContainer) throws DatabaseException, ContainerException {
+    public void detailedLoad(Container schemaContainer) throws DatabaseException {
+        String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.SCHEMA);
+        List<String> attributeNames = MySQLAttributeFactory.getInstance().getAttributes(this);
+        String listOfAttributes = super.getListOfAttributes(attributeNames);
 
         try {
-            super.executeSchemaDetailedLoad(schemaContainer);
+            String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName());
+            super.executeDetailedLoaderQuery(schemaContainer, query);
+            //super.executeSchemaDetailedLoad(schemaContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

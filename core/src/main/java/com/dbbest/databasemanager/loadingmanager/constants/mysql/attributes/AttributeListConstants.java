@@ -1,6 +1,6 @@
-package com.dbbest.databasemanager.loadingmanager.constants.attributes;
+package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
 
@@ -56,6 +56,7 @@ public final class AttributeListConstants {
         listOfAttributes.addAll(listOfConstants);
         return (List<String>) listOfAttributes;
     }
+
 
     private List<String> getListOfFunctionProcedureAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren(); // do not include SPECIFIC_NAME as it is in AttributSingleConstants

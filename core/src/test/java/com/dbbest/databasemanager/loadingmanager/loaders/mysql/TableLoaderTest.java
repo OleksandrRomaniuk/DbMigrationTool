@@ -59,10 +59,10 @@ public class TableLoaderTest {
     }
 
     @Test
-    public void lazyLoad() throws ParsingException, ContainerException, DatabaseException, SQLException {
+    public void shouldExecuteDetailedLoadingForTables() throws ParsingException, ContainerException, DatabaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, TABLE_TYPE, ENGINE, VERSION, ROW_FORMAT, TABLE_ROWS, AVG_ROW_LENGTH, DATA_LENGTH, MAX_DATA_LENGTH, INDEX_LENGTH, DATA_FREE, AUTO_INCREMENT, CREATE_TIME, UPDATE_TIME, CHECK_TIME, TABLE_COLLATION, CHECKSUM, CREATE_OPTIONS, TABLE_COMMENT FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila' AND table_name = 'testTable' ;";
+        String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_TYPE, VERSION, TABLE_ROWS, DATA_LENGTH, MAX_DATA_LENGTH, INDEX_LENGTH, CREATE_TIME, UPDATE_TIME, CHECK_TIME, CREATE_OPTIONS, AVG_ROW_LENGTH, CHECKSUM, TABLE_COMMENT, ENGINE, ROW_FORMAT, DATA_FREE, AUTO_INCREMENT, TABLE_COLLATION FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila' AND table_name = 'testTable' ;";
 
         Mockery mockery = new Mockery();
         final Connection connection = mockery.mock(Connection.class);

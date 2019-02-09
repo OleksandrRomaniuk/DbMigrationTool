@@ -1,6 +1,6 @@
-package com.dbbest.databasemanager.loadingmanager.constants.queries;
+package com.dbbest.databasemanager.loadingmanager.constants.mysql.queries;
 
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,14 +14,14 @@ public final class MySQLQueries {
     private final String tableLazy = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '%s' ;";
     private final String tableDetailed = "SELECT %s FROM INFORMATION_SCHEMA.TABLES "
         + "WHERE table_schema = '%s' AND table_name = '%s' ;";
-    private final String functionLazy = "SELECT SPECIFIC_NAME  FROM INFORMATION_SCHEMA.ROUTINES "
+    private final String functionLazy = "SELECT SPECIFIC_NAME FROM INFORMATION_SCHEMA.ROUTINES "
         + "WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'FUNCTION' ;";
     private final String functionDetailed = "SELECT %s  FROM INFORMATION_SCHEMA.ROUTINES "
-        + "WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'FUNCTION' AND  ROUTINE_NAME = '%s' ;";
+        + "WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'FUNCTION' AND SPECIFIC_NAME = '%s' ;";
     private final String storedProcedureLazy = "SELECT SPECIFIC_NAME  FROM INFORMATION_SCHEMA.ROUTINES "
         + "WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'PROCEDURE' ;";
     private final String storedProcedureDetailed = "SELECT %s  FROM INFORMATION_SCHEMA.ROUTINES "
-        + "WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'PROCEDURE' AND  ROUTINE_NAME = '%s' ;";
+        + "WHERE ROUTINE_SCHEMA = '%s' AND ROUTINE_TYPE = 'PROCEDURE' AND SPECIFIC_NAME = '%s' ;";
     private final String viewLazy = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = '%s' ;";
     private final String viewDetailed = "SELECT %s FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
     private final String columnLazy = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS "
@@ -40,8 +40,7 @@ public final class MySQLQueries {
         + "WHERE TRIGGER_SCHEMA = '%s' AND EVENT_OBJECT_TABLE = '%s' ;";
     private final String triggerDeatiled = "SELECT %s FROM INFORMATION_SCHEMA.TRIGGERS "
         + "WHERE TRIGGER_SCHEMA = '%s' AND EVENT_OBJECT_TABLE = '%s' AND  TRIGGER_NAME = '%s' ;";
-    private final String tableConstraintLazy = "SELECT CONSTRAINT_CATALOG, CONSTRAINT_SCHEMA, TABLE_SCHEMA, "
-        + "TABLE_NAME, CONSTRAINT_TYPE, CONSTRAINT_NAME FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS "
+    private final String tableConstraintLazy = "SELECT %s FROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS "
         + "WHERE CONSTRAINT_SCHEMA = '%s' AND  TABLE_NAME = '%s' ;";
     private final String tableConstraintDetaied = "SELECT %s FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
         + "WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' AND  CONSTRAINT_NAME = '%s' ;";

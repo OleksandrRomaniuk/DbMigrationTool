@@ -1,11 +1,11 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeListConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.queries.MySQLQueries;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeListConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public abstract class AbstractLoader implements Loader {
 
-    private Connection connection = Context.getInstance().getConnection();
+    protected Connection connection = Context.getInstance().getConnection();
     private String schemaName = Context.getInstance().getSchemaName();
     private String childName = this.getClass()
         .getAnnotation(LoaderAnnotation.class).value();
@@ -53,7 +53,7 @@ public abstract class AbstractLoader implements Loader {
         String query = String.format(lazyLoaderQuery, schemaName, procedureFunctionName);
         this.executeLazyLoaderQuery(node, query);
     }
-
+/*
     protected void executeLazyLoadTableConstraint(Container node) throws SQLException, ContainerException {
         String tableName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
         String query = String.format(lazyLoaderQuery, schemaName, tableName);
@@ -71,7 +71,7 @@ public abstract class AbstractLoader implements Loader {
             }
         }
     }
-
+*/
     protected void executeDetailedLoadSchemaChildren(Container node) throws SQLException {
         String elementName = (String) node.getAttributes().get(attribute);
         String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, elementName);
@@ -119,7 +119,7 @@ public abstract class AbstractLoader implements Loader {
         this.executeDetailedLoaderQuery(node, query);
     }
 
-    private void executeLazyLoaderQuery(Container node, String query) throws SQLException, ContainerException {
+    protected void executeLazyLoaderQuery(Container node, String query) throws SQLException, ContainerException {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -131,7 +131,7 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 
-    private void executeDetailedLoaderIndexQuery(Container node, String query) throws SQLException, ContainerException {
+    protected void executeDetailedLoaderIndexQuery(Container node, String query) throws SQLException, ContainerException {
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -145,7 +145,7 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 
-    private void executeDetailedLoaderQuery(Container node, String query) throws SQLException {
+    protected void executeDetailedLoaderQuery(Container node, String query) throws SQLException {
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -156,7 +156,7 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 
-    private void executeDetailedLoaderConstraintQuery(Container node, String query) throws SQLException, ContainerException {
+    protected void executeDetailedLoaderConstraintQuery(Container node, String query) throws SQLException, ContainerException {
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -170,7 +170,7 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 
-    private String getListOfAttributes(List<String> attributes) {
+    protected String getListOfAttributes(List<String> attributes) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String attribute : attributes) {
             stringBuilder.append(attribute + ", ");

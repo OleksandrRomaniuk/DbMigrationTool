@@ -15,25 +15,24 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ProcedureFunctionParameteresLoaderTest {
     @Test
     public void shouldExecuteLazyLoadOfProcedureFunctionParameteres() throws SQLException, DatabaseException, ContainerException {
-        PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT PARAMETER_NAME FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = 'sakila' AND SPECIFIC_NAME = 'procParam' ;";
+        final PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        final String query = "SELECT PARAMETER_NAME FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = 'sakila' AND SPECIFIC_NAME = 'procParam' ;";
 
         Mockery mockery = new Mockery();
-        Connection connection = mockery.mock(Connection.class);
+        final Connection connection = mockery.mock(Connection.class);
         mockery.checking(new Expectations() {{
             oneOf(connection).prepareStatement(query);
             will(returnValue(preparedStatement));
         }});
 
         Mockery mockery1 = new Mockery();
-        ResultSet resultSet = mockery1.mock(ResultSet.class);
+        final ResultSet resultSet = mockery1.mock(ResultSet.class);
         mockery1.checking(new Expectations() {{
             oneOf(resultSet).getString("PARAMETER_NAME");
             will(returnValue("testColumn"));
@@ -68,8 +67,8 @@ public class ProcedureFunctionParameteresLoaderTest {
     @Test
     public void shouldExecuteDetailLoadOfIndexes() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
-        PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT ORDINAL_POSITION, PARAMETER_MODE, PARAMETER_NAME, SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, CHARACTER_OCTET_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE, CHARACTER_SET_NAME, COLLATION_NAME, DTD_IDENTIFIER, ROUTINE_TYPE FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = 'sakila' AND SPECIFIC_NAME = 'testTable' AND PARAMETER_NAME = 'null' ;";
+        final PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        final String query = "SELECT ORDINAL_POSITION, SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, CHARACTER_OCTET_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE, CHARACTER_SET_NAME, COLLATION_NAME, DTD_IDENTIFIER, ROUTINE_TYPE, PARAMETER_MODE FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = 'sakila' AND SPECIFIC_NAME = 'testTable' AND PARAMETER_NAME = 'null' ;";
 
         Mockery mockery = new Mockery();
         final Connection connection = mockery.mock(Connection.class);

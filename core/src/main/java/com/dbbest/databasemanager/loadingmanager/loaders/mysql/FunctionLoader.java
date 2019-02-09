@@ -1,7 +1,12 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeListConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -18,7 +23,10 @@ public class FunctionLoader extends AbstractLoader {
     @Override
     public void lazyLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
         try {
-            super.executeLazyLoadSchemaChildren(functionCategoryContainer);
+            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.FUNCTION);
+            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName());
+            this.executeLazyLoaderQuery(functionCategoryContainer, query);
+            //super.executeLazyLoadSchemaChildren(functionCategoryContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -27,7 +35,12 @@ public class FunctionLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container functionContainer) throws DatabaseException, ContainerException {
         try {
-            super.executeDetailedLoadSchemaChildren(functionContainer);
+            String elementName = (String) functionContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+            String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.FUNCTION);
+            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), elementName);
+            this.executeDetailedLoaderQuery(functionContainer, query);
+            //super.executeDetailedLoadSchemaChildren(functionContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

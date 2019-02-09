@@ -1,7 +1,13 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.annotations.LoaderPrinterName;
+import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.IndexAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -19,7 +25,11 @@ public class IndexLoader extends AbstractLoader {
     @Override
     public void lazyLoad(Container indexCategory) throws DatabaseException, ContainerException {
         try {
-            super.executeLazyLoadTableChildren(indexCategory);
+            String tableName = (String) indexCategory.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
+            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.INDEX);
+            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName(), tableName);
+            super.executeLazyLoaderQuery(indexCategory, query);
+            //super.executeLazyLoadTableChildren(indexCategory);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -28,7 +38,16 @@ public class IndexLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container indexContainer) throws DatabaseException, ContainerException {
         try {
-            super.executeDetailedLoadTableIndexey(indexContainer);
+            String elementName = (String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME);
+            String tableName = (String) indexContainer.getParent().getParent()
+                .getAttributes().get(TableAttributes.TABLE_NAME);
+            String detailedLoaderQuery = MySQLQueries.getInstance()
+                .getSqlQueriesDetailLoader().get(LoaderPrinterName.INDEX);
+            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String query = String.format(detailedLoaderQuery, listOfAttributes,
+                Context.getInstance().getSchemaName(), tableName, elementName);
+            super.executeDetailedLoaderIndexQuery(indexContainer, query);
+            //super.executeDetailedLoadTableIndexey(indexContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
