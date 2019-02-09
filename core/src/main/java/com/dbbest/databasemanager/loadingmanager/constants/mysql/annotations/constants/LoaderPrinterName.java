@@ -1,7 +1,9 @@
 package com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The class with constants defining names of the loaded and printed containers.
@@ -32,6 +34,7 @@ public final class LoaderPrinterName {
     private static LoaderPrinterName instance;
     private List<String> loaders;
     private List<String> printers;
+    private Map<String, String> lazyLoaderMatching;
 
     private LoaderPrinterName() {
     }
@@ -66,6 +69,13 @@ public final class LoaderPrinterName {
         return printers;
     }
 
+    public Map<String, String> getLazyLoaderName() {
+        if (lazyLoaderMatching == null || lazyLoaderMatching.isEmpty()) {
+            initializeLazyLoaderMatching();
+        }
+        return lazyLoaderMatching;
+    }
+
     private void intializeListOfLoaders() {
         loaders = new ArrayList();
         loaders.add(SCHEMA);
@@ -91,5 +101,20 @@ public final class LoaderPrinterName {
         printers.add(FUNCTION);
         printers.add(TRIGGER);
         printers.add(INDEX);
+    }
+
+    private void initializeLazyLoaderMatching() {
+        lazyLoaderMatching = new HashMap();
+        lazyLoaderMatching.put(LoaderPrinterName.SCHEMA, LoaderPrinterName.SCHEMA);
+        lazyLoaderMatching.put(LoaderPrinterName.TABLES, LoaderPrinterName.TABLE);
+        lazyLoaderMatching.put(LoaderPrinterName.VIEWS, LoaderPrinterName.VIEW);
+        lazyLoaderMatching.put(LoaderPrinterName.STORED_PROCEDURES, LoaderPrinterName.STORED_PROCEDURE);
+        lazyLoaderMatching.put(LoaderPrinterName.FUNCTIONS, LoaderPrinterName.FUNCTION);
+        lazyLoaderMatching.put(LoaderPrinterName.TABLE_COLUMNS, LoaderPrinterName.TABLE_COLUMN);
+        lazyLoaderMatching.put(LoaderPrinterName.TABLE_INDEXES, LoaderPrinterName.INDEX);
+        lazyLoaderMatching.put(LoaderPrinterName.TABLE_FOREIGN_KEYS, LoaderPrinterName.FOREIGN_KEY);
+        lazyLoaderMatching.put(LoaderPrinterName.TABLE_TRIGGERS, LoaderPrinterName.TRIGGER);
+        lazyLoaderMatching.put(LoaderPrinterName.TABLE_CONSTRAINTS, LoaderPrinterName.CONSTRAINT);
+        lazyLoaderMatching.put(LoaderPrinterName.VIEW, LoaderPrinterName.VIEW_COLUMN);
     }
 }

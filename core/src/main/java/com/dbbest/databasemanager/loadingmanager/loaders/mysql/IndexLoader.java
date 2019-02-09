@@ -12,6 +12,8 @@ import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -46,8 +48,18 @@ public class IndexLoader extends AbstractLoader {
             String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(detailedLoaderQuery, listOfAttributes,
                 Context.getInstance().getSchemaName(), tableName, elementName);
-            super.executeDetailedLoaderIndexQuery(indexContainer, query);
+            //super.executeDetailedLoaderIndexQuery(indexContainer, query);
             //super.executeDetailedLoadTableIndexey(indexContainer);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Container index = new Container();
+                index.setName(LoaderPrinterName.INDEX);
+                for (String attribute : MySQLAttributeFactory.getInstance().getAttributes(this)) {
+                    index.addAttribute(attribute, resultSet.getString(attribute));
+                }
+                indexContainer.addChild(index);
+            }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

@@ -58,8 +58,18 @@ public class ConstraintLoader extends AbstractLoader {
             String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(detailedLoaderQuery, listOfAttributes,
                 Context.getInstance().getSchemaName(), tableName, elementName);
-            super.executeDetailedLoaderConstraintQuery(constraintContainer, query);
+            //super.executeDetailedLoaderConstraintQuery(constraintContainer, query);
             //super.executeDetailedLoadTableConstraint(constraintContainer);
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Container childNode = new Container();
+                childNode.setName(ConstraintAttributes.CONSTRAINT_NAME);
+                constraintContainer.addChild(childNode);
+                for (String attribute : MySQLAttributeFactory.getInstance().getAttributes(this)) {
+                    childNode.addAttribute(attribute, resultSet.getString(attribute));
+                }
+            }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

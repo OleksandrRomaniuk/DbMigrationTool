@@ -22,15 +22,18 @@ import java.util.List;
 public abstract class AbstractLoader implements Loader {
 
     protected Connection connection = Context.getInstance().getConnection();
-    private String schemaName = Context.getInstance().getSchemaName();
+
+    //private String schemaName = Context.getInstance().getSchemaName();
     private String childName = this.getClass()
         .getAnnotation(LoaderAnnotation.class).value();
-    private String attribute  = AttributeSingleConstants.getInstance().getNameAttributes().get(childName);
-    private List<String> attributes = AttributeListConstants.getInstance().getConstants().get(childName);
+    //private String attribute  = AttributeSingleConstants.getInstance().getNameAttributes().get(childName);
+    //private List<String> attributes = AttributeListConstants.getInstance().getConstants().get(childName);
+    /*
     private String listOfAttributes = getListOfAttributes(attributes);
     private String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(childName);
     private String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(childName);
-
+    */
+/*
     protected void executeLazyLoadSchemaChildren(Container node) throws SQLException, ContainerException {
         String query = String.format(lazyLoaderQuery, schemaName);
         this.executeLazyLoaderQuery(node, query);
@@ -53,6 +56,7 @@ public abstract class AbstractLoader implements Loader {
         String query = String.format(lazyLoaderQuery, schemaName, procedureFunctionName);
         this.executeLazyLoaderQuery(node, query);
     }
+    */
 /*
     protected void executeLazyLoadTableConstraint(Container node) throws SQLException, ContainerException {
         String tableName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
@@ -72,6 +76,7 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 */
+/*
     protected void executeDetailedLoadSchemaChildren(Container node) throws SQLException {
         String elementName = (String) node.getAttributes().get(attribute);
         String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, elementName);
@@ -118,8 +123,10 @@ public abstract class AbstractLoader implements Loader {
         String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName);
         this.executeDetailedLoaderQuery(node, query);
     }
+*/
 
     protected void executeLazyLoaderQuery(Container node, String query) throws SQLException, ContainerException {
+        String attribute  = AttributeSingleConstants.getInstance().getNameAttributes().get(childName);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
@@ -131,6 +138,7 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 
+/*
     protected void executeDetailedLoaderIndexQuery(Container node, String query) throws SQLException, ContainerException {
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -144,9 +152,10 @@ public abstract class AbstractLoader implements Loader {
             node.addChild(index);
         }
     }
-
+*/
     protected void executeDetailedLoaderQuery(Container node, String query) throws SQLException {
 
+        List<String> attributes = AttributeListConstants.getInstance().getConstants().get(childName);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
@@ -155,7 +164,7 @@ public abstract class AbstractLoader implements Loader {
             }
         }
     }
-
+/*
     protected void executeDetailedLoaderConstraintQuery(Container node, String query) throws SQLException, ContainerException {
 
         PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -169,7 +178,7 @@ public abstract class AbstractLoader implements Loader {
             }
         }
     }
-
+*/
     protected String getListOfAttributes(List<String> attributes) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String attribute : attributes) {

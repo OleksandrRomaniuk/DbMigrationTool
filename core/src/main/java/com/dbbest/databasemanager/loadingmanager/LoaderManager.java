@@ -11,7 +11,6 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 /**
  * The class which executes a respective loader defined by the criteria.
@@ -40,36 +39,44 @@ public final class LoaderManager {
     /**
      * @param container retrieves the container to be loaded with a respective lazy loader.
      * @return returns the loaded container.
-     * @throws DatabaseException throws an exception if the loading failed.
+     * @throws DatabaseException  throws an exception if the loading failed.
      * @throws ContainerException throws an exception if a problem encountered with the container.
      */
     public Container loadLazy(Container container) throws DatabaseException, ContainerException {
-        Loader loader = loaders.get(getLazyOrDetailedLoaderMatching(container.getName()));
-        loader.lazyLoad(container);
+        String loaderName = LoaderPrinterName.getInstance().getLazyLoaderName().get(container.getName());
+        if (loaderName != null && !loaderName.isEmpty()) {
+            Loader loader = loaders.get(loaderName);
+            loader.lazyLoad(container);
+        }
         return container;
     }
 
     /**
      * @param container retrieves the container to be loaded with a respective detailed loader.
      * @return returns the loaded container.
-     * @throws DatabaseException throws an exception if the loading failed.
+     * @throws DatabaseException  throws an exception if the loading failed.
      * @throws ContainerException throws an exception if a problem encountered with the container.
      */
     public Container loadDetails(Container container) throws DatabaseException, ContainerException {
         Loader loader = loaders.get(container.getName());
-        loader.detailedLoad(container);
+        if (loader != null) {
+            loader.detailedLoad(container);
+        }
         return container;
     }
 
     /**
      * @param container retrieves the container to be loaded with a respective full loader.
      * @return returns the loaded container.
-     * @throws DatabaseException throws an exception if the loading failed.
+     * @throws DatabaseException  throws an exception if the loading failed.
      * @throws ContainerException throws an exception if a problem encountered with the container.
      */
     public Container loadFull(Container container) throws DatabaseException, ContainerException {
-        Loader loader = loaders.get(getLazyOrDetailedLoaderMatching(container.getName()));
-        loader.fullLoad(container);
+        String loaderName = LoaderPrinterName.getInstance().getLazyLoaderName().get(container.getName());
+        if (loaderName != null && !loaderName.isEmpty()) {
+            Loader loader = loaders.get(loaderName);
+            loader.fullLoad(container);
+        }
         return container;
     }
 
@@ -81,7 +88,7 @@ public final class LoaderManager {
             loaders.put(loaderType, new LoaderClassLoader().getLoader(loadersCatalog, loaderType));
         }
     }
-
+/*
     private String getLazyOrDetailedLoaderMatching(String containerName) throws DatabaseException {
         switch (containerName) {
             case LoaderPrinterName.SCHEMA:
@@ -110,5 +117,5 @@ public final class LoaderManager {
                 throw new DatabaseException(Level.SEVERE,
                     "The manager can not find a respective loader or printer matching for the container " + containerName);
         }
-    }
+    }*/
 }
