@@ -29,7 +29,6 @@ public class ProcedureFunctionParameteresLoader extends AbstractLoader {
                 .get(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
             String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName(), procedureFunctionName);
             super.executeLazyLoaderQuery(procedureFunctionContainer, query);
-            //super.executeLazyLoadProcedureFunctionParameters(procedureFunctionContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -48,7 +47,6 @@ public class ProcedureFunctionParameteresLoader extends AbstractLoader {
             String query = String.format(detailedLoaderQuery, listOfAttributes,
                 Context.getInstance().getSchemaName(), procedureFunctionName, elementName);
             this.executeDetailedLoaderQuery(parameter, query);
-            //super.executeDetailedLoadProcedureFunctionParameter(parameter);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

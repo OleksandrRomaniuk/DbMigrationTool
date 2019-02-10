@@ -21,7 +21,7 @@ public class SchemaAttributes implements Attributes {
     }
 
     private List<String> getListOfSchemaAttribute() {
-        DbList<String> listOfAttribute = new ListOfChildren(); // do not include SCHEMA_NAME as it is in AttributSingleConstants
+        DbList<String> listOfAttribute = new ListOfChildren();
         String[] listOfConstants = {"CATALOG_NAME", "SQL_PATH"};
         listOfAttribute.addAll(listOfConstants);
 

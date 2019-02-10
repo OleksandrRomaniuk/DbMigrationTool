@@ -28,7 +28,6 @@ public class ViewColumnLoader extends AbstractLoader {
             String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.VIEW_COLUMN);
             String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName(), tableName);
             this.executeLazyLoaderQuery(viewContainer, query);
-            //super.executeLazyLoadViewColumns(viewContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of columns.");
         }
@@ -44,7 +43,6 @@ public class ViewColumnLoader extends AbstractLoader {
             String query = String.format(detailedLoaderQuery, listOfAttributes,
                 Context.getInstance().getSchemaName(), tableName, elementName);
             super.executeDetailedLoaderQuery(viewColumnContainer, query);
-            //super.executeDetailedLoadViewColumns(viewColumnContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

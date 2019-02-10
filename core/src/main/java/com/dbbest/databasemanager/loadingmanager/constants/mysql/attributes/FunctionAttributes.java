@@ -28,7 +28,7 @@ public class FunctionAttributes implements Attributes {
     }
 
     private List<String> getListOfFunctionAttributes() {
-        DbList<String> listOfAttributes = new ListOfChildren(); // do not include SPECIFIC_NAME as it is in AttributSingleConstants
+        DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"ROUTINE_CATALOG", /*"ROUTINE_SCHEMA",*/ "ROUTINE_NAME",
             "ROUTINE_TYPE", /*"DATA_TYPE",*/ "CHARACTER_MAXIMUM_LENGTH",
             "CHARACTER_OCTET_LENGTH", "NUMERIC_PRECISION", "NUMERIC_SCALE",

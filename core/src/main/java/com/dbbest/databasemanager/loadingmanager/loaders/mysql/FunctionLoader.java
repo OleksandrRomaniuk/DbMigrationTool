@@ -25,7 +25,6 @@ public class FunctionLoader extends AbstractLoader {
             String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.FUNCTION);
             String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName());
             this.executeLazyLoaderQuery(functionCategoryContainer, query);
-            //super.executeLazyLoadSchemaChildren(functionCategoryContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -39,7 +38,6 @@ public class FunctionLoader extends AbstractLoader {
             String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), elementName);
             this.executeDetailedLoaderQuery(functionContainer, query);
-            //super.executeDetailedLoadSchemaChildren(functionContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

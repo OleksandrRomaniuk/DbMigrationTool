@@ -65,7 +65,6 @@ public class SchemaLoader extends AbstractLoader {
         try {
             String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName());
             super.executeDetailedLoaderQuery(schemaContainer, query);
-            //super.executeSchemaDetailedLoad(schemaContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

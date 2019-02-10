@@ -25,7 +25,6 @@ public class StoredProcedureLoader extends AbstractLoader {
             String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.STORED_PROCEDURE);
             String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName());
             super.executeLazyLoaderQuery(storedProceduresCategoryContainer, query);
-            //super.executeLazyLoadSchemaChildren(storedProceduresCategoryContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -40,7 +39,6 @@ public class StoredProcedureLoader extends AbstractLoader {
             String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), elementName);
             super.executeDetailedLoaderQuery(storedProcedure, query);
-            //super.executeDetailedLoadSchemaChildren(storedProcedure);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

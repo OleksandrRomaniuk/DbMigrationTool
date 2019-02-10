@@ -69,8 +69,6 @@ public class ForeignKeyLoader extends AbstractLoader {
                     childContainer.addAttribute(attribute, resultSet.getString(attribute));
                 }
             }
-
-            //this.executeDetailedLoaderQuery(fkContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

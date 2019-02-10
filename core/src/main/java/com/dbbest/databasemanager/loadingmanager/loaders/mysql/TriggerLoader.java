@@ -30,7 +30,6 @@ public class TriggerLoader extends AbstractLoader {
             String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.TRIGGER);
             String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName(), tableName);
             super.executeLazyLoaderQuery(categoryTriggers, query);
-            //super.executeLazyLoadTableChildren(categoryTriggers);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -46,7 +45,6 @@ public class TriggerLoader extends AbstractLoader {
             String query = String.format(detailedLoaderQuery, listOfAttributes,
                 Context.getInstance().getSchemaName(), tableName, elementName);
             super.executeDetailedLoaderQuery(triggerContainer, query);
-            //super.executeDetailedLoadTableChildren(triggerContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

@@ -26,7 +26,6 @@ public class ViewLoader extends AbstractLoader {
                 .getSqlQueriesLazyLoader().get(LoaderPrinterName.VIEW);
             String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName());
             super.executeLazyLoaderQuery(viewCategoryContainer, query);
-            //super.executeLazyLoadSchemaChildren(viewCategoryContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -41,7 +40,6 @@ public class ViewLoader extends AbstractLoader {
             String listOfAttributes = getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), elementName);
             super.executeDetailedLoaderQuery(viewContainer, query);
-            //super.executeDetailedLoadSchemaChildren(viewContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

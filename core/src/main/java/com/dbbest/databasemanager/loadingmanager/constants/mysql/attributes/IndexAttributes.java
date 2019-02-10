@@ -26,7 +26,7 @@ public class IndexAttributes implements Attributes {
     }
 
     private List<String> getListOfIndexAttributes() {
-        DbList<String> listOfAttributes = new ListOfChildren(); // do not include INDEX_NAME as it is in AttributSingleConstants
+        DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"TABLE_CATALOG", /*"TABLE_SCHEMA", "TABLE_NAME", "NON_UNIQUE",*/ "INDEX_SCHEMA",
             /*"SEQ_IN_INDEX",*/ /*"COLUMN_NAME",*/ "COLLATION", "CARDINALITY",
             /*"SUB_PART",*/ "PACKED", "NULLABLE", /*"INDEX_TYPE",*/ "COMMENT", "INDEX_COMMENT"};

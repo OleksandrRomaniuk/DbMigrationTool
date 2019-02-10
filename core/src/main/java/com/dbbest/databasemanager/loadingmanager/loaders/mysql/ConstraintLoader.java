@@ -47,7 +47,6 @@ public class ConstraintLoader extends AbstractLoader {
                     childNode.addAttribute(attributeName, resultSet.getString(attributeName));
                 }
             }
-            //super.executeLazyLoadTableConstraint(constraintCategoryContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -63,8 +62,6 @@ public class ConstraintLoader extends AbstractLoader {
             String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(detailedLoaderQuery, listOfAttributes,
                 Context.getInstance().getSchemaName(), tableName, elementName);
-            //super.executeDetailedLoaderConstraintQuery(constraintContainer, query);
-            //super.executeDetailedLoadTableConstraint(constraintContainer);
             Connection connection = super.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();

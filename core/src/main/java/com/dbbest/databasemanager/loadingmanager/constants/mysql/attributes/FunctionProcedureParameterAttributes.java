@@ -20,7 +20,7 @@ public class FunctionProcedureParameterAttributes implements Attributes {
     }
 
     private List<String> getListOfFunctionProcedureParameterAttributes() {
-        DbList<String> listOfAttributes = new ListOfChildren(); // do not include PARAMETER_NAME as it is loaded in lazyloader
+        DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"ORDINAL_POSITION", /*"PARAMETER_MODE", "PARAMETER_NAME",*/
             "SPECIFIC_CATALOG", "SPECIFIC_SCHEMA", "SPECIFIC_NAME", "DATA_TYPE",
             "CHARACTER_MAXIMUM_LENGTH", "CHARACTER_OCTET_LENGTH", "NUMERIC_PRECISION", "NUMERIC_SCALE", "CHARACTER_SET_NAME",
