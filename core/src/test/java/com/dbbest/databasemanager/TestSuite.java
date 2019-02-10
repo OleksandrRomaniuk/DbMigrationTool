@@ -41,9 +41,9 @@ import org.junit.runners.Suite;
     FunctionLoaderTest.class, IndexLoaderTest.class, ProcedureFunctionParameteresLoaderTest.class,
     SchemaLoaderTest.class, StoredProcedureLoaderTest.class, TableColumnLoaderTest.class,
     TableLoaderTest.class, TriggerLoaderTest.class, ViewColumnLoaderTest.class, ViewLoaderTest.class,
-    ForeignKeyPrinterHelperTest.class, ForeignKeyPrinterTest.class, FunctionPrinterTest.class, IndexPrinterHelperTest.class,
-    IndexPrinterTest.class, PrimaryKeyPrinterHelperTest.class, SchemaPrinterTest.class, StoredProcedurePrinterTest.class,
-    TablePrinterTest.class, TriggerPrinterTest.class, UniquePrinterHelperTest.class, ViewPrinterTest.class,
+    ForeignKeyPrinterTest.class, FunctionPrinterTest.class,
+    IndexPrinterTest.class, PrimaryKeyPrinterTest.class, SchemaPrinterTest.class, StoredProcedurePrinterTest.class,
+    TablePrinterTest.class, TriggerPrinterTest.class, UniquePrinterTest.class, ViewPrinterTest.class,
     LoaderManagerTest.class, DirectorySearcherTest.class, ConnectionPropertiesEditorTest.class, ConnectionPropertiesManagerTest.class,
     SimpleConnectionBuilderTest.class, PrintersDirectorySearcherTest.class, PrinterClassLoaderTest.class,
     PrinterManagerTest.class})

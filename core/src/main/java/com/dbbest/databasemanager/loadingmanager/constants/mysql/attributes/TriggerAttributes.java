@@ -6,6 +6,9 @@ import com.dbbest.xmlmanager.container.ListOfChildren;
 
 import java.util.List;
 
+/**
+ * The class with the attributes of the trigger node.
+ */
 public class TriggerAttributes implements Attributes {
 
     public static final String TRIGGER_NAME = "TRIGGER_NAME";

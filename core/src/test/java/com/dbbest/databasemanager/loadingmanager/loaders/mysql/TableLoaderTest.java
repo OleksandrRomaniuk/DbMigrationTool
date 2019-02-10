@@ -84,7 +84,11 @@ public class TableLoaderTest {
 
         Map<String, String> schemaAttributes = container.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
-            Assert.assertEquals(null, entry.getValue());
+            if(!entry.getKey().equals("TABLE_NAME")) {
+                Assert.assertEquals(null, entry.getValue());
+            } else {
+                Assert.assertEquals("testTable", entry.getValue());
+            }
         }
 
     }

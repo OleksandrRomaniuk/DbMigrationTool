@@ -2,6 +2,10 @@ package com.dbbest.databasemanager.loadingmanager.loaders;
 
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.connectionbuilder.connectionpool.SimpleConnectionBuilder;
+import com.dbbest.databasemanager.loadingmanager.LoaderManager;
+import com.dbbest.databasemanager.loadingmanager.PrinterManager;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoadersPrinterDatabaseTypes;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.*;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ContainerException;
@@ -37,6 +41,18 @@ public class SchemaLoaderTestDelete {
     @Test
     public void lazyLoad() throws DatabaseException, ContainerException, SQLException {
 
+/*
+        Container container = new Container();
+        container.setName(LoaderPrinterName.SCHEMA);
+        Context context = Context.getInstance();
+        context.setDbType(LoadersPrinterDatabaseTypes.MYSQL);
+        LoaderManager loaderManager = LoaderManager.getInstance();
+        loaderManager.loadFull(container);
+
+        PrinterManager.getInstance().print(container);
+*/
+
+        /*
         Container schemaContainer1 = new Container();
         SchemaLoader schemaLoader1 = new SchemaLoader();
         schemaLoader1.fullLoad(schemaContainer1);
@@ -74,7 +90,7 @@ public class SchemaLoaderTestDelete {
                     }
                 }
             }
-        }
+        }*/
     }
 
 }

@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.connectionbuilder.connectionpool;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoadersPrinterDatabaseTypes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoadersPrinterDatabaseTypes;
 
 import java.util.HashMap;
 import java.util.Map;

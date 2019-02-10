@@ -1,14 +1,18 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.*;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,12 +34,13 @@ public class ConstraintLoader extends AbstractLoader {
                 Context.getInstance().getSchemaName(),
                 tableName);
 
+            Connection connection = super.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Container childNode = new Container();
                 childNode.setName(LoaderPrinterName.CONSTRAINT);
-                childNode.addAttribute(AttributeSingleConstants.ROUTINE_ID, LoaderPrinterName.CONSTRAINT
+                childNode.addAttribute(CustomAttributes.ROUTINE_ID, LoaderPrinterName.CONSTRAINT
                     + resultSet.getString(ConstraintAttributes.CONSTRAINT_NAME));
                 constraintCategoryContainer.addChild(childNode);
                 for (String attributeName : new ConstraintAttributes().getListOfLazyLoadAttributeNames()) {
@@ -60,11 +65,13 @@ public class ConstraintLoader extends AbstractLoader {
                 Context.getInstance().getSchemaName(), tableName, elementName);
             //super.executeDetailedLoaderConstraintQuery(constraintContainer, query);
             //super.executeDetailedLoadTableConstraint(constraintContainer);
+            Connection connection = super.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Container childNode = new Container();
-                childNode.setName(ConstraintAttributes.CONSTRAINT_NAME);
+                childNode.setName((String) constraintContainer.getAttributes()
+                    .get(ConstraintAttributes.CONSTRAINT_NAME));
                 constraintContainer.addChild(childNode);
                 for (String attribute : MySQLAttributeFactory.getInstance().getAttributes(this)) {
                     childNode.addAttribute(attribute, resultSet.getString(attribute));

@@ -1,12 +1,13 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.PrinterAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.PrinterAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ForeignKeyAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableColumnAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
-
 import java.util.List;
 
 /**
@@ -17,53 +18,70 @@ public class ForeignKeyPrinter implements Printer {
 
     @Override
     public String execute(Container fkContainer) throws ContainerException {
+        return printForeignKey(fkContainer);
+    }
+
+    private String printForeignKey(Container fkContainer) {
         StringBuilder query = new StringBuilder();
-        query.append("FOREIGN KEY " + fkContainer.getAttributes().get(AttributeSingleConstants.CONSTRAINT_NAME)
-            + " (" + getColumns(fkContainer) + ") REFERENCES " + getReferencedTable(fkContainer)
-            + " (" + getReferencedColumns(fkContainer) + ")");
+        List<Container> listOfFkChildren = fkContainer.getChildren();
+        System.out.println(listOfFkChildren.size());
+        query.append("ALTER TABLE " + ((Container)fkContainer.getChildren().get(0))
+            .getAttributes().get(ConstraintAttributes.TABLE_SCHEMA)
+            + "." + ((Container)fkContainer.getChildren().get(0)).getAttributes().get(ConstraintAttributes.TABLE_NAME) + "\n");
+        query.append("ADD FOREIGN KEY" + getName(fkContainer) + getColumns(listOfFkChildren)
+            + getReference(listOfFkChildren));
         return query.toString();
     }
 
-    private String getReferencedTable(Container fkContainer) {
-        List<Container> constraints = fkContainer.getChildren();
-        return (String) constraints.get(0).getAttributes().get(AttributeSingleConstants.REFERENCED_TABLE_SCHEMA) + "."
-            + constraints.get(0).getAttributes().get(AttributeSingleConstants.REFERENCED_TABLE_NAME);
+    private String getName(Container fkContainer) {
+        String constraintName = (String) fkContainer.getAttributes()
+            .get(ConstraintAttributes.CONSTRAINT_NAME);
+        if (constraintName != null && !constraintName.trim().equals("")
+            && !constraintName.trim().equals("null")) {
+            return " " + constraintName;
+        } else {
+            return "";
+        }
     }
 
-    private String getReferencedColumns(Container fkContainer) {
-        List<Container> constraints = fkContainer.getChildren();
+    private String getReference(List<Container> listOfFkChildren) {
         StringBuilder query = new StringBuilder();
-
-        for (int i = 0; i < constraints.size(); i++) {
-
-            for (int j = 0; j < constraints.size(); j++) {
-                int position = Integer.parseInt((String) constraints.get(j).getAttributes()
-                    .get(AttributeSingleConstants.POSITION_IN_UNIQUE_CONSTRAINT));
-                if (position == (i + 1)) {
-                    query.append(constraints.get(j).getAttributes().get(AttributeSingleConstants.REFERENCED_COLUMN_NAME) + ", ");
+        query.append(" REFERENCES " + listOfFkChildren.get(0).getAttributes().get(ForeignKeyAttributes.REFERENCED_TABLE_SCHEMA)
+            + "." + listOfFkChildren.get(0).getAttributes().get(ForeignKeyAttributes.REFERENCED_TABLE_NAME) + " (");
+        for (int i = 0; i < listOfFkChildren.size(); i++) {
+            for (int j = 0; j < listOfFkChildren.size(); j++) {
+                Container uniqueContainer = listOfFkChildren.get(j);
+                int seqIndex = Integer.parseInt((String) uniqueContainer
+                    .getAttributes().get(ForeignKeyAttributes.POSITION_IN_UNIQUE_CONSTRAINT));
+                if (seqIndex == i + 1) {
+                    query.append(uniqueContainer
+                        .getAttributes().get(ForeignKeyAttributes.REFERENCED_COLUMN_NAME) + ", ");
                 }
             }
         }
         query.deleteCharAt(query.length() - 1);
         query.deleteCharAt(query.length() - 1);
+        query.append(")");
         return query.toString();
     }
 
-    private String getColumns(Container fkContainer) {
-        List<Container> constraints = fkContainer.getChildren();
+    private String getColumns(List<Container> listOfFkChildren) {
         StringBuilder query = new StringBuilder();
-
-        for (int i = 0; i < constraints.size(); i++) {
-            for (int j = 0; j < constraints.size(); j++) {
-                int ordPosition = Integer.parseInt((String) constraints.get(j).getAttributes()
-                    .get(AttributeSingleConstants.ORDINAL_POSITION));
-                if (ordPosition == (i + 1)) {
-                    query.append(constraints.get(j).getAttributes().get(AttributeSingleConstants.FK_COLUMN_NAME) + ", ");
+        query.append(" (");
+        for (int i = 0; i < listOfFkChildren.size(); i++) {
+            for (int j = 0; j < listOfFkChildren.size(); j++) {
+                Container uniqueContainer = listOfFkChildren.get(j);
+                int seqIndex = Integer.parseInt((String) uniqueContainer
+                    .getAttributes().get(ForeignKeyAttributes.ORDINAL_POSITION));
+                if (seqIndex == i + 1) {
+                    query.append(uniqueContainer
+                        .getAttributes().get(TableColumnAttributes.COLUMN_NAME) + ", ");
                 }
             }
         }
         query.deleteCharAt(query.length() - 1);
         query.deleteCharAt(query.length() - 1);
+        query.append(")");
         return query.toString();
     }
 }

@@ -1,7 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
 import com.dbbest.databasemanager.reflectionutil.loadersreflection.DirectorySearcher;
 import com.dbbest.databasemanager.reflectionutil.loadersreflection.LoaderClassLoader;

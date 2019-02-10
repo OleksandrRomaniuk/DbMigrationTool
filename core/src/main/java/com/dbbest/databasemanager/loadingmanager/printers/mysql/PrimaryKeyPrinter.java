@@ -1,7 +1,8 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ForeignKeyAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * The class which executes printing of some elements of the primary key. Assists the PrimaryKeyPrinter class.
  */
-public class PrimaryKeyPrinterHelper implements Printer {
+public class PrimaryKeyPrinter implements Printer {
 
     @Override
     public String execute(Container tableContainer) throws ContainerException {
@@ -25,7 +26,7 @@ public class PrimaryKeyPrinterHelper implements Printer {
         StringBuilder query = new StringBuilder();
         if (pkList != null && pkList.size() > 0) {
             for (Container pkContainer : pkList) {
-                String constraintType = (String) pkContainer.getAttributes().get(AttributeSingleConstants.CONSTRAINT_TYPE);
+                String constraintType = (String) pkContainer.getAttributes().get(ConstraintAttributes.CONSTRAINT_TYPE);
                 if (constraintType.trim().equals("PRIMARY KEY")) {
                     query.append(printPrimaryKey(pkContainer));
                 }
@@ -48,10 +49,10 @@ public class PrimaryKeyPrinterHelper implements Printer {
             for (int j = 0; j < listOfPkChildren.size(); j++) {
                 Container pkContainer = listOfPkChildren.get(j);
                 int seqIndex = Integer.parseInt((String) pkContainer
-                    .getAttributes().get(AttributeSingleConstants.ORDINAL_POSITION));
+                    .getAttributes().get(ForeignKeyAttributes.ORDINAL_POSITION));
                 if (seqIndex == i + 1) {
                     query.append(pkContainer
-                        .getAttributes().get(AttributeSingleConstants.FK_COLUMN_NAME) + ", ");
+                        .getAttributes().get(ForeignKeyAttributes.FK_COLUMN_NAME) + ", ");
                 }
             }
         }

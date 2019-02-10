@@ -1,9 +1,8 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableColumnAttributes;
@@ -39,10 +38,11 @@ public class ViewColumnLoader extends AbstractLoader {
     public void detailedLoad(Container viewColumnContainer) throws DatabaseException, ContainerException {
         try {
             String elementName = (String) viewColumnContainer.getAttributes().get(TableColumnAttributes.COLUMN_NAME);
-            String tableName = (String) viewColumnContainer.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
+            String tableName = (String) viewColumnContainer.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
             String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.VIEW_COLUMN);
             String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), tableName, elementName);
+            String query = String.format(detailedLoaderQuery, listOfAttributes,
+                Context.getInstance().getSchemaName(), tableName, elementName);
             super.executeDetailedLoaderQuery(viewColumnContainer, query);
             //super.executeDetailedLoadViewColumns(viewColumnContainer);
         } catch (SQLException e) {

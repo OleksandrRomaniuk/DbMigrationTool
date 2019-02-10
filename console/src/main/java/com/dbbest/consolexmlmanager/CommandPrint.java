@@ -1,7 +1,7 @@
 package com.dbbest.consolexmlmanager;
 
 import com.dbbest.databasemanager.loadingmanager.PrinterManager;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -42,7 +42,7 @@ public class CommandPrint implements Command {
         }
         context.setDbType(dbType);
         HorizontalPassageSearchManager horSearchManager = new HorizontalPassageSearchManager(context.getDbTreeContainer());
-        List<Container> targetContainer = horSearchManager.searchInKeyValues(AttributeSingleConstants.ROUTINE_ID, routineID);
+        List<Container> targetContainer = horSearchManager.searchInKeyValues(CustomAttributes.ROUTINE_ID, routineID);
         PrinterManager printerManager = PrinterManager.getInstance();
         if (targetContainer != null && !targetContainer.isEmpty()) {
             context.setPrintedSqlQuery(printerManager.print(targetContainer.get(0)));

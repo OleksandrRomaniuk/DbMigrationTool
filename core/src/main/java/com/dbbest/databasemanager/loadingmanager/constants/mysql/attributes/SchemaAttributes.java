@@ -6,6 +6,9 @@ import com.dbbest.xmlmanager.container.ListOfChildren;
 
 import java.util.List;
 
+/**
+ * The class with the attributes of the schema node.
+ */
 public class SchemaAttributes implements Attributes {
 
     public static final String SCHEMA_NAME = "SCHEMA_NAME";

@@ -1,7 +1,9 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ForeignKeyAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableColumnAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -11,7 +13,7 @@ import java.util.List;
 /**
  * The class which executes printing of a part of the mysql unique keys.
  */
-public class UniquePrinterHelper implements Printer {
+public class UniquePrinter implements Printer {
 
     @Override
     public String execute(Container tableContainer) throws ContainerException {
@@ -25,7 +27,7 @@ public class UniquePrinterHelper implements Printer {
         StringBuilder query = new StringBuilder();
         if (uniqueList != null && uniqueList.size() > 0) {
             for (Container uniqueContainer : uniqueList) {
-                String constraintType = (String) uniqueContainer.getAttributes().get(AttributeSingleConstants.CONSTRAINT_TYPE);
+                String constraintType = (String) uniqueContainer.getAttributes().get(ConstraintAttributes.CONSTRAINT_TYPE);
                 if (constraintType.trim().equals("UNIQUE")) {
                     query.append(printUnique(uniqueContainer));
                 }
@@ -43,7 +45,7 @@ public class UniquePrinterHelper implements Printer {
 
     private String getName(Container uniqueContainer) {
         String constraintName = (String) uniqueContainer.getAttributes()
-            .get(AttributeSingleConstants.CONSTRAINT_NAME);
+            .get(ConstraintAttributes.CONSTRAINT_NAME);
         if (constraintName != null && !constraintName.trim().equals("")
             && !constraintName.trim().equals("null")) {
             return " " + constraintName;
@@ -59,10 +61,10 @@ public class UniquePrinterHelper implements Printer {
             for (int j = 0; j < listOfUniqueChildren.size(); j++) {
                 Container uniqueContainer = listOfUniqueChildren.get(j);
                 int seqIndex = Integer.parseInt((String) uniqueContainer
-                    .getAttributes().get(AttributeSingleConstants.ORDINAL_POSITION));
+                    .getAttributes().get(ForeignKeyAttributes.ORDINAL_POSITION));
                 if (seqIndex == i + 1) {
                     query.append(uniqueContainer
-                        .getAttributes().get(AttributeSingleConstants.COLUMN_NAME) + ", ");
+                        .getAttributes().get(TableColumnAttributes.COLUMN_NAME) + ", ");
                 }
             }
         }

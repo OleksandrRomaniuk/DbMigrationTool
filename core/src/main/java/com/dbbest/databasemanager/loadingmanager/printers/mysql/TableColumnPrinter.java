@@ -1,8 +1,8 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.PrinterAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.PrinterAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableColumnAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.xmlmanager.container.Container;
 
@@ -22,8 +22,8 @@ public class TableColumnPrinter implements Printer {
         if (columns != null && columns.size() > 0) {
             for (Container column : columns) {
                 Map<String, String> columnAttributes = column.getAttributes();
-                if (columnAttributes.get(AttributeSingleConstants.EXTRA).equals("VIRTUAL GENERATED")
-                    || columnAttributes.get(AttributeSingleConstants.EXTRA).equals("VIRTUAL STORED")) {
+                if (columnAttributes.get(TableColumnAttributes.EXTRA).equals("VIRTUAL GENERATED")
+                    || columnAttributes.get(TableColumnAttributes.EXTRA).equals("VIRTUAL STORED")) {
                     query.append(getGenerated(column) + ",\n");
                 } else {
                     query.append(getNoGenerated(column));
@@ -37,8 +37,8 @@ public class TableColumnPrinter implements Printer {
         Map<String, String> columnAttributes = column.getAttributes();
         StringBuilder query = new StringBuilder();
 
-        query.append(columnAttributes.get(AttributeSingleConstants.COLUMN_NAME)
-            + " " + columnAttributes.get(AttributeSingleConstants.COLUMN_TYPE)
+        query.append(columnAttributes.get(TableColumnAttributes.COLUMN_NAME)
+            + " " + columnAttributes.get(TableColumnAttributes.COLUMN_TYPE)
             + isNullable(column) + getDefault(column)
             + isAutoIncrement(column) /*+ getColumnKey(column)*/
             + getComment(column) + getCollation(column) + ",\n");
@@ -47,9 +47,9 @@ public class TableColumnPrinter implements Printer {
 
     private String getComment(Container column) {
         Map<String, String> columnAttributes = column.getAttributes();
-        if (columnAttributes.get(AttributeSingleConstants.COLUMN_COMMENT) != null
-            && !columnAttributes.get(AttributeSingleConstants.COLUMN_COMMENT).trim().equals("")) {
-            return " COMMENT " + columnAttributes.get(AttributeSingleConstants.COLUMN_COMMENT);
+        if (columnAttributes.get(TableColumnAttributes.COLUMN_COMMENT) != null
+            && !columnAttributes.get(TableColumnAttributes.COLUMN_COMMENT).trim().equals("")) {
+            return " COMMENT " + columnAttributes.get(TableColumnAttributes.COLUMN_COMMENT);
         } else  {
             return "";
         }
@@ -58,18 +58,18 @@ public class TableColumnPrinter implements Printer {
     private String getGenerated(Container column) {
         Map<String, String> columnAttributes = column.getAttributes();
         StringBuilder query = new StringBuilder();
-        query.append(columnAttributes.get(AttributeSingleConstants.COLUMN_NAME)
-            + " " + columnAttributes.get(AttributeSingleConstants.COLUMN_TYPE) + "\n"
-            + "GENERATED ALWAYS AS (" + columnAttributes.get(AttributeSingleConstants.GENERATION_EXPRESSION) + ") \n"
+        query.append(columnAttributes.get(TableColumnAttributes.COLUMN_NAME)
+            + " " + columnAttributes.get(TableColumnAttributes.COLUMN_TYPE) + "\n"
+            + "GENERATED ALWAYS AS (" + columnAttributes.get(TableColumnAttributes.GENERATION_EXPRESSION) + ") \n"
             + getVirtualStored(column) + " " + isNullable(column) + "\n"
             + getColumnKey(column) + "\n"
-            + columnAttributes.get(AttributeSingleConstants.COLUMN_COMMENT));
+            + columnAttributes.get(TableColumnAttributes.COLUMN_COMMENT));
         return query.toString();
     }
 
     private String getVirtualStored(Container column) {
         Map<String, String> columnAttributes = column.getAttributes();
-        switch (columnAttributes.get(AttributeSingleConstants.GENERATION_EXPRESSION)) {
+        switch (columnAttributes.get(TableColumnAttributes.GENERATION_EXPRESSION)) {
             case "VIRTUAL GENERATED":
                 return "GENERATED";
             case "VIRTUAL STORED":
@@ -81,23 +81,23 @@ public class TableColumnPrinter implements Printer {
 
     private String isNullable(Container column) {
         Map<String, String> columnAttributes = column.getAttributes();
-        return columnAttributes.get(AttributeSingleConstants.COLUMN_IS_NULLABLE).equals("NO") ? " NOT NULL" : " NULL";
+        return columnAttributes.get(TableColumnAttributes.COLUMN_IS_NULLABLE).equals("NO") ? " NOT NULL" : " NULL";
     }
 
     private String getDefault(Container column) {
         Map<String, String> columnAttributes = column.getAttributes();
-        return columnAttributes.get(AttributeSingleConstants.COLUMN_DEFAULT) == null ? ""
-            : (" DEFAULT " + columnAttributes.get(AttributeSingleConstants.COLUMN_DEFAULT));
+        return columnAttributes.get(TableColumnAttributes.COLUMN_DEFAULT) == null ? ""
+            : (" DEFAULT " + columnAttributes.get(TableColumnAttributes.COLUMN_DEFAULT));
     }
 
     private String isAutoIncrement(Container column) {
         Map<String, String> columnAttributes = column.getAttributes();
-        return columnAttributes.get(AttributeSingleConstants.EXTRA).equals("auto_increment") ? " AUTO_INCREMENT" : "";
+        return columnAttributes.get(TableColumnAttributes.EXTRA).equals("auto_increment") ? " AUTO_INCREMENT" : "";
     }
 
     private String getColumnKey(Container column) {
         Map<String, String> columnAttributes = column.getAttributes();
-        switch (columnAttributes.get(AttributeSingleConstants.COLUMN_KEY)) {
+        switch (columnAttributes.get(TableColumnAttributes.COLUMN_KEY)) {
             case "PRI":
                 return "PRIMARY KEY";
             case "UNI":
@@ -109,7 +109,7 @@ public class TableColumnPrinter implements Printer {
 
     private String getCollation(Container column) {
         Map<String, String> columnAttributes = column.getAttributes();
-        return columnAttributes.get(AttributeSingleConstants.COLLATION_NAME) != null
-            ? (" COLLATE " + columnAttributes.get(AttributeSingleConstants.COLLATION_NAME)) : "";
+        return columnAttributes.get(TableColumnAttributes.COLLATION_NAME) != null
+            ? (" COLLATE " + columnAttributes.get(TableColumnAttributes.COLLATION_NAME)) : "";
     }
 }

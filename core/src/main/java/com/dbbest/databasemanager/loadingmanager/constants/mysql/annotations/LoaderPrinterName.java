@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants;
+package com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +69,9 @@ public final class LoaderPrinterName {
         return printers;
     }
 
+    /**
+     * @return returns the map of lazy loaders mapped to nodes.
+     */
     public Map<String, String> getLazyLoaderName() {
         if (lazyLoaderMatching == null || lazyLoaderMatching.isEmpty()) {
             initializeLazyLoaderMatching();
@@ -101,6 +104,7 @@ public final class LoaderPrinterName {
         printers.add(FUNCTION);
         printers.add(TRIGGER);
         printers.add(INDEX);
+        printers.add(FOREIGN_KEY);
     }
 
     private void initializeLazyLoaderMatching() {

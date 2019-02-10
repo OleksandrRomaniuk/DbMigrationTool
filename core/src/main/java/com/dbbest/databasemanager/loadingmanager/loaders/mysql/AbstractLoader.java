@@ -1,13 +1,13 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeListConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.NameAttributes;
 import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
 import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.sql.Connection;
@@ -21,141 +21,27 @@ import java.util.List;
  */
 public abstract class AbstractLoader implements Loader {
 
-    protected Connection connection = Context.getInstance().getConnection();
-
-    //private String schemaName = Context.getInstance().getSchemaName();
-    private String childName = this.getClass()
-        .getAnnotation(LoaderAnnotation.class).value();
-    //private String attribute  = AttributeSingleConstants.getInstance().getNameAttributes().get(childName);
-    //private List<String> attributes = AttributeListConstants.getInstance().getConstants().get(childName);
-    /*
-    private String listOfAttributes = getListOfAttributes(attributes);
-    private String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(childName);
-    private String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(childName);
-    */
-/*
-    protected void executeLazyLoadSchemaChildren(Container node) throws SQLException, ContainerException {
-        String query = String.format(lazyLoaderQuery, schemaName);
-        this.executeLazyLoaderQuery(node, query);
-    }
-
-    protected void executeLazyLoadTableChildren(Container node) throws SQLException, ContainerException {
-        String tableName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
-        String query = String.format(lazyLoaderQuery, schemaName, tableName);
-        this.executeLazyLoaderQuery(node, query);
-    }
-
-    protected void executeLazyLoadViewColumns(Container node) throws SQLException, ContainerException {
-        String tableName = (String) node.getAttributes().get(AttributeSingleConstants.TABLE_NAME);
-        String query = String.format(lazyLoaderQuery, schemaName, tableName);
-        this.executeLazyLoaderQuery(node, query);
-    }
-
-    protected void executeLazyLoadProcedureFunctionParameters(Container node) throws SQLException, ContainerException {
-        String procedureFunctionName = (String) node.getAttributes().get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME);
-        String query = String.format(lazyLoaderQuery, schemaName, procedureFunctionName);
-        this.executeLazyLoaderQuery(node, query);
-    }
-    */
-/*
-    protected void executeLazyLoadTableConstraint(Container node) throws SQLException, ContainerException {
-        String tableName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
-        String query = String.format(lazyLoaderQuery, schemaName, tableName);
-
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            Container childNode = new Container();
-            childNode.setName(childName);
-            childNode.addAttribute(AttributeSingleConstants.ROUTINE_ID, childName + resultSet.getString("CONSTRAINT_NAME"));
-            node.addChild(childNode);
-
-            for (String attribute : AttributeListConstants.getInstance().getListOfConstraintAttributes()) {
-                childNode.addAttribute(attribute, resultSet.getString(attribute));
-            }
-        }
-    }
-*/
-/*
-    protected void executeDetailedLoadSchemaChildren(Container node) throws SQLException {
-        String elementName = (String) node.getAttributes().get(attribute);
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, elementName);
-        this.executeDetailedLoaderQuery(node, query);
-    }
-
-    protected void executeDetailedLoadTableChildren(Container node) throws SQLException {
-        String elementName = (String) node.getAttributes().get(attribute);
-        String tableName = (String) node.getParent().getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
-        this.executeDetailedLoaderQuery(node, query);
-    }
-
-    protected void executeDetailedLoadTableIndexey(Container node) throws SQLException, ContainerException {
-        String elementName = (String) node.getAttributes().get(attribute);
-        String tableName = (String) node.getParent().getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
-        this.executeDetailedLoaderIndexQuery(node, query);
-    }
-
-    protected void executeDetailedLoadViewColumns(Container node) throws SQLException {
-        String elementName = (String) node.getAttributes().get(attribute);
-        String tableName = (String) node.getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
-        this.executeDetailedLoaderQuery(node, query);
-    }
-
-    protected void executeDetailedLoadProcedureFunctionParameter(Container node) throws SQLException {
-        String elementName = (String) node.getAttributes().get(attribute);
-        String procedureFunctionName = (String) node.getParent().getAttributes()
-            .get(AttributeSingleConstants.FUNCTION_PROCEDURE_NAME);
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, procedureFunctionName, elementName);
-        this.executeDetailedLoaderQuery(node, query);
-    }
-
-    protected void executeDetailedLoadTableConstraint(Container node) throws SQLException, ContainerException {
-        String elementName = (String) node.getAttributes().get(attribute);
-        String tableName = (String) node.getParent().getParent().getAttributes().get(AttributeSingleConstants.TABLE_NAME);
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName, tableName, elementName);
-        this.executeDetailedLoaderConstraintQuery(node, query);
-    }
-
-    protected void executeSchemaDetailedLoad(Container node) throws SQLException {
-        String query = String.format(detailedLoaderQuery, listOfAttributes, schemaName);
-        this.executeDetailedLoaderQuery(node, query);
-    }
-*/
+    private Connection connection = Context.getInstance().getConnection();
 
     protected void executeLazyLoaderQuery(Container node, String query) throws SQLException, ContainerException {
-        String attribute  = AttributeSingleConstants.getInstance().getNameAttributes().get(childName);
+        String childName = this.getClass()
+            .getAnnotation(LoaderAnnotation.class).value();
+        String attribute  = NameAttributes.getInstance().getNameAttributes().get(childName);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             Container childNode = new Container();
             childNode.setName(childName);
             childNode.addAttribute(attribute, resultSet.getString(attribute));
-            childNode.addAttribute(AttributeSingleConstants.ROUTINE_ID, childName + resultSet.getString(attribute));
+            childNode.addAttribute(CustomAttributes.ROUTINE_ID, childName + resultSet.getString(attribute));
             node.addChild(childNode);
         }
     }
 
-/*
-    protected void executeDetailedLoaderIndexQuery(Container node, String query) throws SQLException, ContainerException {
-
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            Container index = new Container();
-            index.setName(LoaderPrinterName.INDEX);
-            for (String attribute : attributes) {
-                index.addAttribute(attribute, resultSet.getString(attribute));
-            }
-            node.addChild(index);
-        }
-    }
-*/
-    protected void executeDetailedLoaderQuery(Container node, String query) throws SQLException {
-
-        List<String> attributes = AttributeListConstants.getInstance().getConstants().get(childName);
+    protected void executeDetailedLoaderQuery(Container node, String query) throws SQLException, DatabaseException {
+        String childName = this.getClass()
+            .getAnnotation(LoaderAnnotation.class).value();
+        List<String> attributes = MySQLAttributeFactory.getInstance().getAttributes(this);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         if (resultSet.next()) {
@@ -164,21 +50,7 @@ public abstract class AbstractLoader implements Loader {
             }
         }
     }
-/*
-    protected void executeDetailedLoaderConstraintQuery(Container node, String query) throws SQLException, ContainerException {
 
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            Container childNode = new Container();
-            childNode.setName(childName);
-            node.addChild(childNode);
-            for (String attribute : attributes) {
-                childNode.addAttribute(attribute, resultSet.getString(attribute));
-            }
-        }
-    }
-*/
     protected String getListOfAttributes(List<String> attributes) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String attribute : attributes) {
@@ -187,5 +59,9 @@ public abstract class AbstractLoader implements Loader {
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         stringBuilder.deleteCharAt(stringBuilder.length() - 1);
         return stringBuilder.toString();
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

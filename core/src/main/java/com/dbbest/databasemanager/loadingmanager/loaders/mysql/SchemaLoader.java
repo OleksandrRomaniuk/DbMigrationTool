@@ -1,10 +1,9 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeListConstants;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -29,30 +28,30 @@ public class SchemaLoader extends AbstractLoader {
         }
 
         schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, Context.getInstance().getSchemaName());
-        schemaContainer.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+        schemaContainer.addAttribute(CustomAttributes.ROUTINE_ID,
             LoaderPrinterName.SCHEMA);
 
         Container tablesCategory = new Container();
         tablesCategory.setName(LoaderPrinterName.TABLES);
-        tablesCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+        tablesCategory.addAttribute(CustomAttributes.ROUTINE_ID,
             LoaderPrinterName.TABLES);
         schemaContainer.addChild(tablesCategory);
 
         Container viewsCategory = new Container();
         viewsCategory.setName(LoaderPrinterName.VIEWS);
-        viewsCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+        viewsCategory.addAttribute(CustomAttributes.ROUTINE_ID,
             LoaderPrinterName.VIEWS);
         schemaContainer.addChild(viewsCategory);
 
         Container functionsCategory = new Container();
         functionsCategory.setName(LoaderPrinterName.FUNCTIONS);
-        functionsCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+        functionsCategory.addAttribute(CustomAttributes.ROUTINE_ID,
             LoaderPrinterName.FUNCTIONS);
         schemaContainer.addChild(functionsCategory);
 
         Container storedProceduresCategory = new Container();
         storedProceduresCategory.setName(LoaderPrinterName.STORED_PROCEDURES);
-        storedProceduresCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID,
+        storedProceduresCategory.addAttribute(CustomAttributes.ROUTINE_ID,
             LoaderPrinterName.STORED_PROCEDURES);
         schemaContainer.addChild(storedProceduresCategory);
     }

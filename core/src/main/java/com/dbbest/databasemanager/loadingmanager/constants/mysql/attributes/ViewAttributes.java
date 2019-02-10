@@ -6,6 +6,9 @@ import com.dbbest.xmlmanager.container.ListOfChildren;
 
 import java.util.List;
 
+/**
+ * The class with the attributes of the view node.
+ */
 public class ViewAttributes implements Attributes {
 
     public static final String TABLE_NAME = "TABLE_NAME";

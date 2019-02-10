@@ -1,9 +1,9 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -36,27 +36,27 @@ public class TableLoader extends AbstractLoader {
             for (Container tableContainer : (List<Container>) categoryTablesContainer.getChildren()) {
                 Container columnsCategory = new Container();
                 columnsCategory.setName(LoaderPrinterName.TABLE_COLUMNS);
-                columnsCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID, LoaderPrinterName.TABLE_COLUMNS);
+                columnsCategory.addAttribute(CustomAttributes.ROUTINE_ID, LoaderPrinterName.TABLE_COLUMNS);
                 tableContainer.addChild(columnsCategory);
 
                 Container indexCategory = new Container();
                 indexCategory.setName(LoaderPrinterName.TABLE_INDEXES);
-                indexCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID, LoaderPrinterName.TABLE_INDEXES);
+                indexCategory.addAttribute(CustomAttributes.ROUTINE_ID, LoaderPrinterName.TABLE_INDEXES);
                 tableContainer.addChild(indexCategory);
 
                 Container fkCategory = new Container();
                 fkCategory.setName(LoaderPrinterName.TABLE_FOREIGN_KEYS);
-                fkCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID, LoaderPrinterName.TABLE_FOREIGN_KEYS);
+                fkCategory.addAttribute(CustomAttributes.ROUTINE_ID, LoaderPrinterName.TABLE_FOREIGN_KEYS);
                 tableContainer.addChild(fkCategory);
 
                 Container triggerCategory = new Container();
                 triggerCategory.setName(LoaderPrinterName.TABLE_TRIGGERS);
-                triggerCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID, LoaderPrinterName.TABLE_TRIGGERS);
+                triggerCategory.addAttribute(CustomAttributes.ROUTINE_ID, LoaderPrinterName.TABLE_TRIGGERS);
                 tableContainer.addChild(triggerCategory);
 
                 Container constraintCategory = new Container();
                 constraintCategory.setName(LoaderPrinterName.TABLE_CONSTRAINTS);
-                constraintCategory.addAttribute(AttributeSingleConstants.ROUTINE_ID, LoaderPrinterName.TABLE_CONSTRAINTS);
+                constraintCategory.addAttribute(CustomAttributes.ROUTINE_ID, LoaderPrinterName.TABLE_CONSTRAINTS);
                 tableContainer.addChild(constraintCategory);
             }
         }
@@ -70,7 +70,6 @@ public class TableLoader extends AbstractLoader {
             String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), elementName);
             super.executeDetailedLoaderQuery(tableContainer, query);
-            //super.executeDetailedLoadSchemaChildren(tableContainer);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

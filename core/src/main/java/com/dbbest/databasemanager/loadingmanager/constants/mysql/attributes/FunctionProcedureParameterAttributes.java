@@ -6,6 +6,9 @@ import com.dbbest.xmlmanager.container.ListOfChildren;
 
 import java.util.List;
 
+/**
+ * The class with the attributes of the node of function(procedure) parameters.
+ */
 public class FunctionProcedureParameterAttributes implements Attributes {
 
     public static final String PROC_FUNC_PARAMETER_NAME = "PARAMETER_NAME";

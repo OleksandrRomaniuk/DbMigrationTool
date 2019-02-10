@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.reflectionutil.printersreflection;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoadersPrinterDatabaseTypes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoadersPrinterDatabaseTypes;
 import com.dbbest.exceptions.DatabaseException;
 import org.junit.Test;
 

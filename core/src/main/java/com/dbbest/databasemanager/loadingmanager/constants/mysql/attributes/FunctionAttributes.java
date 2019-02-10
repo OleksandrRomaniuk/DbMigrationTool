@@ -6,6 +6,9 @@ import com.dbbest.xmlmanager.container.ListOfChildren;
 
 import java.util.List;
 
+/**
+ * The class with the attributes of the function node.
+ */
 public class FunctionAttributes implements Attributes {
 
     public static final String FUNCTION_PROCEDURE_NAME = "SPECIFIC_NAME";
@@ -27,10 +30,14 @@ public class FunctionAttributes implements Attributes {
     private List<String> getListOfFunctionAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren(); // do not include SPECIFIC_NAME as it is in AttributSingleConstants
         String[] listOfConstants = {"ROUTINE_CATALOG", /*"ROUTINE_SCHEMA",*/ "ROUTINE_NAME",
-            "ROUTINE_TYPE", /*"DATA_TYPE",*/ "CHARACTER_MAXIMUM_LENGTH", "CHARACTER_OCTET_LENGTH", "NUMERIC_PRECISION", "NUMERIC_SCALE",
-            "DATETIME_PRECISION", "CHARACTER_SET_NAME", "COLLATION_NAME", "DTD_IDENTIFIER", "ROUTINE_BODY", /*"ROUTINE_DEFINITION",*/
-            "EXTERNAL_NAME", /*"EXTERNAL_LANGUAGE",*/ "PARAMETER_STYLE", /*"IS_DETERMINISTIC"*//*, "SQL_DATA_ACCESS",*/ "SQL_PATH",
-            /*"SECURITY_TYPE",*/ "CREATED", "LAST_ALTERED", "SQL_MODE", /*"ROUTINE_COMMENT",*/ /*"DEFINER",*/ "CHARACTER_SET_CLIENT",
+            "ROUTINE_TYPE", /*"DATA_TYPE",*/ "CHARACTER_MAXIMUM_LENGTH",
+            "CHARACTER_OCTET_LENGTH", "NUMERIC_PRECISION", "NUMERIC_SCALE",
+            "DATETIME_PRECISION", "CHARACTER_SET_NAME", "COLLATION_NAME",
+            "DTD_IDENTIFIER", "ROUTINE_BODY", /*"ROUTINE_DEFINITION",*/
+            "EXTERNAL_NAME", /*"EXTERNAL_LANGUAGE",*/ "PARAMETER_STYLE",
+            /*"IS_DETERMINISTIC"*//*, "SQL_DATA_ACCESS",*/ "SQL_PATH",
+            /*"SECURITY_TYPE",*/ "CREATED", "LAST_ALTERED", "SQL_MODE",
+            /*"ROUTINE_COMMENT",*/ /*"DEFINER",*/ "CHARACTER_SET_CLIENT",
             "COLLATION_CONNECTION", "DATABASE_COLLATION"};
         listOfAttributes.addAll(listOfConstants);
 

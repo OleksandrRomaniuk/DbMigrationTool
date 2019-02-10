@@ -6,6 +6,9 @@ import com.dbbest.xmlmanager.container.ListOfChildren;
 
 import java.util.List;
 
+/**
+ * The class with the attributes of the index node.
+ */
 public class IndexAttributes implements Attributes {
 
     public static final String INDEX_NAME = "INDEX_NAME";

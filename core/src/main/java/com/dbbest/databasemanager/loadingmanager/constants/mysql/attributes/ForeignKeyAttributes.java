@@ -6,6 +6,9 @@ import com.dbbest.xmlmanager.container.ListOfChildren;
 
 import java.util.List;
 
+/**
+ * The class with the attributes of the fk node.
+ */
 public class ForeignKeyAttributes implements Attributes {
 
     public static final String FUNCTION_PROCEDURE_NAME = "SPECIFIC_NAME";
@@ -23,9 +26,10 @@ public class ForeignKeyAttributes implements Attributes {
     }
 
     private List<String> getListOfFKAttributes() {
-        DbList<String> listOfAttributes = new ListOfChildren(); // do not include SPECIFIC_NAME as it is in AttributSingleConstants
+        DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_CATALOG",
-            "TABLE_SCHEMA", "TABLE_NAME", "COLUMN_NAME"/*, "ORDINAL_POSITION"*/, /*"POSITION_IN_UNIQUE_CONSTRAINT",*/
+            "TABLE_SCHEMA", "TABLE_NAME", "COLUMN_NAME", "CONSTRAINT_NAME"
+            /*"ORDINAL_POSITION"*/, /*"POSITION_IN_UNIQUE_CONSTRAINT",*/
             /*"REFERENCED_TABLE_SCHEMA",*/ /*"REFERENCED_TABLE_NAME",*/ /*"REFERENCED_COLUMN_NAME"*/};
         listOfAttributes.addAll(listOfConstants);
 

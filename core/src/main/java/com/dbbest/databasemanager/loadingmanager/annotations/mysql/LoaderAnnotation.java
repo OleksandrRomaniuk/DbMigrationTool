@@ -1,4 +1,4 @@
-package com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations;
+package com.dbbest.databasemanager.loadingmanager.annotations.mysql;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

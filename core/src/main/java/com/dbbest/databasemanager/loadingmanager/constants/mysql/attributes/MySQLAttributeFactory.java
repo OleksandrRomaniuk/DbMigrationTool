@@ -3,7 +3,19 @@ package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 import com.dbbest.databasemanager.loadingmanager.constants.AttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.Attributes;
 import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
-import com.dbbest.databasemanager.loadingmanager.loaders.mysql.*;
+
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ConstraintLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ForeignKeyLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.FunctionLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.IndexLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ProcedureFunctionParameteresLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.StoredProcedureLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.TableColumnLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.TableLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.TriggerLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ViewColumnLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ViewLoader;
 import com.dbbest.exceptions.DatabaseException;
 
 import java.lang.reflect.InvocationTargetException;
@@ -12,7 +24,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
-public class MySQLAttributeFactory implements AttributeFactory {
+/**
+ * The realization of the attribute factory for mysql database.
+ */
+public final class MySQLAttributeFactory implements AttributeFactory {
 
     private static MySQLAttributeFactory instance;
     private Map<String, Class> attributeClasses = new HashMap();
@@ -32,6 +47,9 @@ public class MySQLAttributeFactory implements AttributeFactory {
         attributeClasses.put(ProcedureFunctionParameteresLoader.class.getName(), FunctionProcedureParameterAttributes.class);
     }
 
+    /**
+     * @return returns the instance of the class.
+     */
     public static MySQLAttributeFactory getInstance() {
         if (instance == null) {
             instance = new MySQLAttributeFactory();

@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.reflectionutil.loadersreflection;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoadersPackageAnnotation;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoadersPackageAnnotation;
 import com.dbbest.databasemanager.reflectionutil.CustomClassLoader;
 import com.dbbest.exceptions.DatabaseException;
 

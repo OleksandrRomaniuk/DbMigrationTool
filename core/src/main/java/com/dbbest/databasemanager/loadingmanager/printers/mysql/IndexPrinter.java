@@ -1,8 +1,9 @@
 package com.dbbest.databasemanager.loadingmanager.printers.mysql;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.PrinterAnnotation;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.constants.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.AttributeSingleConstants;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.PrinterAnnotation;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.IndexAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.xmlmanager.container.Container;
@@ -18,7 +19,7 @@ public class IndexPrinter implements Printer {
     public String execute(Container indexContainer) throws ContainerException {
         StringBuilder query = new StringBuilder();
         query.append("CREATE" + isUnique((Container) indexContainer.getChildren().get(0)) + " INDEX "
-            + indexContainer.getAttributes().get(AttributeSingleConstants.INDEX_NAME)
+            + indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME)
             + getType((Container) indexContainer.getChildren().get(0))
             + "\nON " + getTableName((Container) indexContainer.getChildren().get(0))
             + getColumnName(indexContainer));
@@ -27,25 +28,25 @@ public class IndexPrinter implements Printer {
     }
 
     private String isUnique(Container indexContainer) {
-        return indexContainer.getAttributes().get(AttributeSingleConstants.NON_UNIQUE).equals(0) ? " UNIQUE" : "";
+        return indexContainer.getAttributes().get(IndexAttributes.NON_UNIQUE).equals(0) ? " UNIQUE" : "";
     }
 
     private String getName(Container indexContainer) {
-        return (String) indexContainer.getAttributes().get(AttributeSingleConstants.INDEX_NAME);
+        return (String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME);
     }
 
     private String getType(Container indexContainer) {
-        if (indexContainer.getAttributes().get(AttributeSingleConstants.INDEX_TYPE).equals("BTREE")
-            || indexContainer.getAttributes().get(AttributeSingleConstants.INDEX_TYPE).equals("HASH")) {
-            return (String) " USING " + indexContainer.getAttributes().get(AttributeSingleConstants.INDEX_TYPE);
+        if (indexContainer.getAttributes().get(IndexAttributes.INDEX_TYPE).equals("BTREE")
+            || indexContainer.getAttributes().get(IndexAttributes.INDEX_TYPE).equals("HASH")) {
+            return (String) " USING " + indexContainer.getAttributes().get(IndexAttributes.INDEX_TYPE);
         } else {
             return "";
         }
     }
 
     private String getTableName(Container indexContainer) {
-        return (String) indexContainer.getAttributes().get(AttributeSingleConstants.TABLE_SCHEMA) + "."
-            + indexContainer.getAttributes().get(AttributeSingleConstants.TABLE_NAME);
+        return (String) indexContainer.getAttributes().get(IndexAttributes.TABLE_SCHEMA) + "."
+            + indexContainer.getAttributes().get(TableAttributes.TABLE_NAME);
     }
 
     private String getColumnName(Container indexContainer) {
@@ -61,7 +62,7 @@ public class IndexPrinter implements Printer {
             for (int j = 0; j < indexesWithSameName.size(); j++) {
                 Container indexContainer = indexesWithSameName.get(j);
                 int seqIndex = Integer.parseInt((String) indexContainer
-                    .getAttributes().get(AttributeSingleConstants.SEQ_IN_INDEX));
+                    .getAttributes().get(IndexAttributes.SEQ_IN_INDEX));
                 if (seqIndex == i + 1) {
                     getOneColumnOfKeyParts(indexContainer, query);
                 }
@@ -75,12 +76,12 @@ public class IndexPrinter implements Printer {
     }
 
     private void getOneColumnOfKeyParts(Container indexContainer, StringBuilder query) {
-        query.append(indexContainer.getAttributes().get(AttributeSingleConstants.INDEX_COLUMN_NAME));
-        if (indexContainer.getAttributes().get(AttributeSingleConstants.SUB_PART) != null
-            && !((String) indexContainer.getAttributes().get(AttributeSingleConstants.SUB_PART)).trim().equals("")
-            && !((String) indexContainer.getAttributes().get(AttributeSingleConstants.SUB_PART)).trim().equals("null")) {
+        query.append(indexContainer.getAttributes().get(IndexAttributes.INDEX_COLUMN_NAME));
+        if (indexContainer.getAttributes().get(IndexAttributes.SUB_PART) != null
+            && !((String) indexContainer.getAttributes().get(IndexAttributes.SUB_PART)).trim().equals("")
+            && !((String) indexContainer.getAttributes().get(IndexAttributes.SUB_PART)).trim().equals("null")) {
             query.append(" (");
-            query.append(indexContainer.getAttributes().get(AttributeSingleConstants.SUB_PART));
+            query.append(indexContainer.getAttributes().get(IndexAttributes.SUB_PART));
             query.append(")");
         }
         query.append(", ");
