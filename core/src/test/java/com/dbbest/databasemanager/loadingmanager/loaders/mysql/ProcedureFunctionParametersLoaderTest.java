@@ -18,7 +18,7 @@ import java.util.Map;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class ProcedureFunctionParameteresLoaderTest {
+public class ProcedureFunctionParametersLoaderTest {
     @Test
     public void shouldExecuteLazyLoadOfProcedureFunctionParameteres() throws SQLException, DatabaseException, ContainerException {
         final PreparedStatement preparedStatement = mock(PreparedStatement.class);
@@ -57,7 +57,7 @@ public class ProcedureFunctionParameteresLoaderTest {
         parent.addChild(container);
 
 
-        ProcedureFunctionParameteresLoader loader = new ProcedureFunctionParameteresLoader();
+        ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader();
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -93,7 +93,7 @@ public class ProcedureFunctionParameteresLoaderTest {
         Container container = new Container();
         parent2.addChild(container);
         container.addAttribute("PARAMETER_NAME", null);
-        ProcedureFunctionParameteresLoader loader = new ProcedureFunctionParameteresLoader();
+        ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader();
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

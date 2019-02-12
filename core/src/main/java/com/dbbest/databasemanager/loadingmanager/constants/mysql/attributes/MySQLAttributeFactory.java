@@ -7,7 +7,7 @@ import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ConstraintLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ForeignKeyLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.FunctionLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.IndexLoader;
-import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ProcedureFunctionParameteresLoader;
+import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ProcedureFunctionParametersLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.SchemaLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.StoredProcedureLoader;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.TableColumnLoader;
@@ -19,7 +19,6 @@ import com.dbbest.databasemanager.loadingmanager.loaders.mysql.ViewLoader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 
 /**
  * The realization of the attribute factory for mysql database.
@@ -41,7 +40,7 @@ public final class MySQLAttributeFactory implements AttributeFactory {
         attributeClasses.put(ConstraintLoader.class.getName(), ConstraintAttributes.getListOfDetailedLoadAttributeNames());
         attributeClasses.put(ForeignKeyLoader.class.getName(), ForeignKeyAttributes.getListOfFKAttributes());
         attributeClasses.put(IndexLoader.class.getName(), IndexAttributes.getListOfIndexAttributes());
-        attributeClasses.put(ProcedureFunctionParameteresLoader.class.getName(),
+        attributeClasses.put(ProcedureFunctionParametersLoader.class.getName(),
             FunctionProcedureParameterAttributes.getListOfFunctionProcedureParameterAttributes());
     }
 

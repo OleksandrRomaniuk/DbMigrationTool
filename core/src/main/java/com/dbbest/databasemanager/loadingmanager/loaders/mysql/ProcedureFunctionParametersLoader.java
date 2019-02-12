@@ -12,47 +12,32 @@ import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
  * The class which loads details of parameters of functions of stored procedures.
  */
 @LoaderAnnotation(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER)
-public class ProcedureFunctionParameteresLoader extends AbstractLoader {
-    public ProcedureFunctionParameteresLoader(Context context) {
+public class ProcedureFunctionParametersLoader extends AbstractLoader {
+    public ProcedureFunctionParametersLoader(Context context) {
         super(context);
     }
 
     @Override
-    public void lazyLoad(Container procedureFunctionContainer) throws DatabaseException, ContainerException {
-        try {
-            String procedureFunctionName = (String) procedureFunctionContainer
-                .getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
-            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader()
-                .get(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
-            String query = String.format(lazyLoaderQuery,
-                procedureFunctionContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA),
-                procedureFunctionName);
-            super.executeLazyLoaderQuery(procedureFunctionContainer, query);
-        } catch (SQLException e) {
-            throw new DatabaseException(Level.SEVERE, e);
-        }
+    public void lazyLoad(Container parameterContainer) throws DatabaseException, ContainerException {
     }
 
     @Override
     public void detailedLoad(Container parameterContainer) throws DatabaseException, ContainerException {
         try {
-            String elementName = (String) parameterContainer.getAttributes()
+            String parameterName = (String) parameterContainer.getParent().getAttributes()
                 .get(FunctionProcedureParameterAttributes.PROC_FUNC_PARAMETER_NAME);
             String procedureFunctionName = (String) parameterContainer.getParent().getAttributes()
                 .get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
-            String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader()
-                .get(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
             String listOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes,
+            String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERDETAILED, listOfAttributes,
                 parameterContainer.getParent().getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA),
-                procedureFunctionName, elementName);
+                procedureFunctionName, parameterName);
             this.executeDetailedLoaderQuery(parameterContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -60,13 +45,8 @@ public class ProcedureFunctionParameteresLoader extends AbstractLoader {
     }
 
     @Override
-    public void fullLoad(Container procedureFunctionContainer) throws DatabaseException, ContainerException {
-        lazyLoad(procedureFunctionContainer);
-        List<Container> parameters = procedureFunctionContainer.getChildren();
-        if (parameters != null && !parameters.isEmpty()) {
-            for (Container parameter : parameters) {
-                detailedLoad(parameter);
-            }
-        }
+    public void fullLoad(Container parameterContainer) throws DatabaseException, ContainerException {
+        this.lazyLoad(parameterContainer);
+        this.detailedLoad(parameterContainer);
     }
 }

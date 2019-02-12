@@ -1,12 +1,12 @@
 package com.dbbest.databasemanager.reflectionutil.printersreflection;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.PrinterAnnotation;
-import com.dbbest.databasemanager.loadingmanager.printers.Printer;
 import com.dbbest.databasemanager.reflectionutil.CustomClassLoader;
 import com.dbbest.exceptions.DatabaseException;
 
 import java.io.File;
-import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 /**
@@ -14,38 +14,38 @@ import java.util.logging.Level;
  */
 public class PrinterClassLoader {
 
-    private Printer printerInstance;
+    private String connectionType;
+
+    public PrinterClassLoader(String connectionType) {
+        this.connectionType = connectionType;
+    }
 
     /**
-     * @param catalog retrieves the catalog where the class should search for the respective printer.
-     * @param printerType the type of the printer which should found.
      * @return returns the instance of the respective printer.
      * @throws DatabaseException throws an exception if could not make the instance of the respective printer.
      */
-    public Printer getPrinter(String catalog, String printerType) throws DatabaseException {
-        File root = new File(catalog);
-        checkPrinters(root, printerType);
-        return printerInstance;
+    public Map<String, Class> getPrinters() throws DatabaseException {
+        String printersCatalog = new PrintersDirectorySearcher().findFolderWithPrinters(connectionType);
+        File root = new File(printersCatalog);
+        return checkPrinters(root);
     }
 
-    private void checkPrinters(File root, String printerType) throws DatabaseException {
+    private Map<String, Class> checkPrinters(File root) throws DatabaseException {
+        Map<String, Class> printers = new HashMap();
         File[] listOfFiles = root.listFiles();
         for (File item : listOfFiles) {
             if (!item.isDirectory() && item.getName().toLowerCase().endsWith(".class")) {
                 try {
-                    Class printerClass = new CustomClassLoader().createClass(item);
+                    Class printerClass = new CustomClassLoader().getClass(item);
                     if (printerClass.isAnnotationPresent(PrinterAnnotation.class)) {
-
-                        Annotation annotation = printerClass.getAnnotation(PrinterAnnotation.class);
-                        if (annotation != null
-                            && ((PrinterAnnotation) annotation).value().toString().equals(printerType)) {
-                            printerInstance = (Printer) printerClass.newInstance();
-                        }
+                        PrinterAnnotation annotation = (PrinterAnnotation) printerClass.getAnnotation(PrinterAnnotation.class);
+                        printers.put(annotation.value(), printerClass);
                     }
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (ClassNotFoundException e) {
                     throw new DatabaseException(Level.SEVERE, e);
                 }
             }
         }
+        return printers;
     }
 }

@@ -1,12 +1,12 @@
 package com.dbbest.databasemanager.reflectionutil.loadersreflection;
 
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
-import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
 import com.dbbest.databasemanager.reflectionutil.CustomClassLoader;
 import com.dbbest.exceptions.DatabaseException;
 
 import java.io.File;
-import java.lang.annotation.Annotation;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 
 /**
@@ -14,37 +14,39 @@ import java.util.logging.Level;
  */
 public class LoaderClassLoader {
 
-    private Loader loaderInstance;
+    private String connectionType;
+
+    public LoaderClassLoader(String connectionType) {
+        this.connectionType = connectionType;
+    }
 
     /**
-     * @param catalog the catalog in which the class loader should search for the respective loader.
-     * @param loaderType the type of the loader that should be found.
      * @return returns the instance of the target loader.
      * @throws DatabaseException throw an exception if the instance was not retrived.
      */
-    public Loader getLoader(String catalog, String loaderType) throws DatabaseException {
-        File root = new File(catalog);
-        checkLoaders(root, loaderType);
-        return loaderInstance;
+    public Map<String, Class> getLoaders() throws DatabaseException {
+
+        String loadersCatalog = new DirectorySearcher().findFolderWithLoaders(connectionType);
+        File root = new File(loadersCatalog);
+        return this.checkLoaders(root);
     }
 
-    private void checkLoaders(File root, String loaderType) throws DatabaseException {
+    private Map<String, Class> checkLoaders(File root) throws DatabaseException {
+        Map<String, Class> loaders = new HashMap();
         File[] listOfFiles = root.listFiles();
         for (File item : listOfFiles) {
             if (!item.isDirectory() && item.getName().toLowerCase().endsWith(".class")) {
                 try {
-                    Class loaderClass = new CustomClassLoader().createClass(item);
+                    Class loaderClass = new CustomClassLoader().getClass(item);
                     if (loaderClass.isAnnotationPresent(LoaderAnnotation.class)) {
-
-                        Annotation annotation = loaderClass.getAnnotation(LoaderAnnotation.class);
-                        if (((LoaderAnnotation) annotation).value().toString().equals(loaderType)) {
-                            loaderInstance = (Loader) loaderClass.newInstance();
-                        }
+                        LoaderAnnotation annotation = (LoaderAnnotation)loaderClass.getAnnotation(LoaderAnnotation.class);
+                        loaders.put(annotation.value(), loaderClass);
                     }
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (ClassNotFoundException e) {
                     throw new DatabaseException(Level.SEVERE, e);
                 }
             }
         }
+        return loaders;
     }
 }

@@ -11,30 +11,26 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
 
 /**
  * The class which executes printing of a database element with the respective printer.
  */
 public final class PrinterManager {
 
-    private Map<String, Printer> printers;
-    private Context context;
+    private Map<String, Class> printers;
 
-    public PrinterManager(Context context) {
-        this.context = context;
+    public PrinterManager(Context context) throws DatabaseException {
+        printers = new PrinterClassLoader(context.getDbType()).getPrinters();
     }
 
-    public String print(Container container) throws ContainerException {
-        Printer printer = printers.get(container.getName());
-        return printer.execute(container);
-    }
-
-    private void initializePrinters() throws DatabaseException {
-        String connectionType = context.getDbType();
-        String printersCatalog = new PrintersDirectorySearcher().findFolderWithPrinters(connectionType);
-        printers = new HashMap();
-        for (String printerType : LoaderPrinterName.getInstance().getListOfPrinters()) {
-            printers.put(printerType, new PrinterClassLoader().getPrinter(printersCatalog, printerType));
+    public String print(Container container) throws DatabaseException, ContainerException {
+        Class printerClass = printers.get(container.getName());
+        try {
+            Printer printer = (Printer)printerClass.newInstance();
+            return printer.execute(container);
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new DatabaseException(Level.SEVERE, e);
         }
     }
 }

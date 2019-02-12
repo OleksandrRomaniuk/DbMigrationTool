@@ -44,7 +44,7 @@ public class CommandPrint implements Command {
         context.setDbType(dbType);
         HorizontalPassageSearchManager horSearchManager = new HorizontalPassageSearchManager(context.getDbTreeContainer());
         List<Container> targetContainer = horSearchManager.searchInKeyValues(CustomAttributes.ROUTINE_ID, routineID);
-        PrinterManager printerManager = PrinterManager.getInstance();
+        PrinterManager printerManager = new PrinterManager(context);
         if (targetContainer != null && !targetContainer.isEmpty()) {
             context.setPrintedSqlQuery(printerManager.print(targetContainer.get(0)));
         } else {

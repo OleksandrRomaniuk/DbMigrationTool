@@ -24,11 +24,13 @@ public class FunctionLoader extends AbstractLoader {
     }
 
     @Override
-    public void lazyLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
+    public void lazyLoad(Container functionContainer) throws DatabaseException, ContainerException {
         try {
-            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.FUNCTION);
-            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName());
-            this.executeLazyLoaderQuery(functionCategoryContainer, query);
+            String functionName = (String) functionContainer
+                .getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+            String schemaName = (String) functionContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
+            String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERLAZY, schemaName, functionName);
+            super.executeLazyLoaderQuery(functionContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -37,25 +39,25 @@ public class FunctionLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container functionContainer) throws DatabaseException, ContainerException {
         try {
-            String elementName = (String) functionContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
-            String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.FUNCTION);
+            String functionName = (String) functionContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listRepresentationOfAttributes, Context.getInstance().getSchemaName(), elementName);
+            String schemaName = (String) functionContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
+            String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERDETAILED, listRepresentationOfAttributes,
+                schemaName, functionName);
             this.executeDetailedLoaderQuery(functionContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
-
-        new ProcedureFunctionParameteresLoader().fullLoad(functionContainer);
     }
 
     @Override
     public void fullLoad(Container functionsCategoryContainer) throws DatabaseException, ContainerException {
-        lazyLoad(functionsCategoryContainer);
-        List<Container> functions = functionsCategoryContainer.getChildren();
-        if (functions != null && !functions.isEmpty()) {
-            for (Container function : functions) {
-                detailedLoad(function);
+        this.lazyLoad(functionsCategoryContainer);
+        this.detailedLoad(functionsCategoryContainer);
+        if (functionsCategoryContainer.hasChildren()) {
+            List<Container> functionParameters = functionsCategoryContainer.getChildren();
+            for (Container functionParameter : functionParameters) {
+                new ProcedureFunctionParametersLoader(super.getContext()).fullLoad(functionParameter);
             }
         }
     }

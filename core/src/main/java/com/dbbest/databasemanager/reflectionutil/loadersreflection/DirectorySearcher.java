@@ -45,7 +45,7 @@ public class DirectorySearcher {
                 checkFile(item, databaseTypesEnum);
             } else if (item.getName().toLowerCase().equals("package-info.class")) {
                 try {
-                    Package pkg = new CustomClassLoader().createClass(item).getPackage();
+                    Package pkg = new CustomClassLoader().getClass(item).getPackage();
                     Annotation annotation = pkg.getAnnotation(LoadersPackageAnnotation.class);
                     if (annotation != null
                         && ((LoadersPackageAnnotation) annotation).value().toString().equals(databaseTypesEnum)) {

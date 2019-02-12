@@ -44,7 +44,7 @@ public class PrintersDirectorySearcher {
                 checkFile(item, loadersPrinterDatabaseTypesEnum);
             } else if (item.getName().toLowerCase().equals("package-info.class")) {
                 try {
-                    Package pkg = new CustomClassLoader().createClass(item).getPackage();
+                    Package pkg = new CustomClassLoader().getClass(item).getPackage();
                     Annotation annotation = pkg.getAnnotation(PrintersPackageAnnotation.class);
                     if (annotation != null
                         && ((PrintersPackageAnnotation) annotation).value().toString().equals(loadersPrinterDatabaseTypesEnum)) {

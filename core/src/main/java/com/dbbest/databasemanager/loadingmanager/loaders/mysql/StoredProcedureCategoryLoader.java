@@ -19,41 +19,36 @@ public class StoredProcedureCategoryLoader extends AbstractLoader {
     }
 
     @Override
-    public void lazyLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
-        if (!storedProcedureContainer.hasName()) {
-            storedProcedureContainer.setName(LoaderPrinterName.TABLES);
+    public void lazyLoad(Container storedProcedureCategoryContainer) throws DatabaseException, ContainerException {
+        if (!storedProcedureCategoryContainer.hasName()) {
+            storedProcedureCategoryContainer.setName(LoaderPrinterName.TABLES);
         }
-        if (!storedProcedureContainer.getAttributes().containsKey(CustomAttributes.IS_CATEGORY)) {
-            storedProcedureContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        }
-        if (!storedProcedureContainer.getAttributes().containsKey(CustomAttributes.CHILD_TYPE)) {
-            storedProcedureContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.STORED_PROCEDURE);
-        }
+        storedProcedureCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
+        storedProcedureCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.STORED_PROCEDURE);
         try {
             String query = String.format(MySQLQueries.STOREDPROCEDURELAZY,
-                storedProcedureContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));
-            super.executeLazyLoaderQuery(storedProcedureContainer, query);
+                storedProcedureCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));
+            super.executeLazyLoaderQuery(storedProcedureCategoryContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }
     }
 
     @Override
-    public void detailedLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
-        if (storedProcedureContainer.getAttributes().get(CustomAttributes.CHILD_TYPE).equals(LoaderPrinterName.STORED_PROCEDURE)
-            && storedProcedureContainer.hasChildren()) {
-            for (Container table : (List<Container>)storedProcedureContainer.getChildren()) {
-                new TableLoader().detailedLoad(table);
+    public void detailedLoad(Container storedProcedureCategoryContainer) throws DatabaseException, ContainerException {
+        if (storedProcedureCategoryContainer.hasChildren()) {
+            for (Container table : (List<Container>) storedProcedureCategoryContainer.getChildren()) {
+                new StoredProcedureLoader(super.getContext()).detailedLoad(table);
             }
         }
     }
 
     @Override
-    public void fullLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
-        this.lazyLoad(storedProcedureContainer);
-        if (storedProcedureContainer.hasChildren()) {
-            for (Container storedProcedure : (List<Container>)storedProcedureContainer.getChildren()) {
-                new StoredProcedureLoader().fullLoad(storedProcedure);
+    public void fullLoad(Container storedProcedureCategoryContainer) throws DatabaseException, ContainerException {
+        this.lazyLoad(storedProcedureCategoryContainer);
+        if (storedProcedureCategoryContainer.hasChildren()) {
+            for (Container storedProcedure : (List<Container>) storedProcedureCategoryContainer.getChildren()) {
+                new StoredProcedureLoader(super.getContext()).fullLoad(storedProcedure);
             }
         }
     }

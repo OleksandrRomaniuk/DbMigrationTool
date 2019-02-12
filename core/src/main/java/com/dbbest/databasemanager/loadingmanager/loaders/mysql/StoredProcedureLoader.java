@@ -28,9 +28,10 @@ public class StoredProcedureLoader extends AbstractLoader {
     @Override
     public void lazyLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
         try {
-            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.STORED_PROCEDURE);
-            String query = String.format(lazyLoaderQuery,
-                storedProcedureContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_SCHEMA));
+            String procedureName = (String) storedProcedureContainer
+                .getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+            String schemaName = (String) storedProcedureContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
+            String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERLAZY, schemaName, procedureName);
             super.executeLazyLoaderQuery(storedProcedureContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -40,29 +41,25 @@ public class StoredProcedureLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
         try {
-            String elementName = (String) storedProcedureContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
-            String detailedLoaderQuery = MySQLQueries.getInstance()
-                .getSqlQueriesDetailLoader().get(LoaderPrinterName.STORED_PROCEDURE);
+            String storedProcedureName = (String) storedProcedureContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery,
+            String query = String.format(MySQLQueries.STOREDPROCEDUREDETAILED,
                 listRepresentationOfAttributes, storedProcedureContainer.getParent().getParent()
-                    .getAttributes().get(TableAttributes.TABLE_SCHEMA),
-                elementName);
+                    .getAttributes().get(TableAttributes.TABLE_SCHEMA), storedProcedureName);
             super.executeDetailedLoaderQuery(storedProcedureContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
-
-        new ProcedureFunctionParameteresLoader(super.getContext()).fullLoad(storedProcedureContainer);
     }
 
     @Override
-    public void fullLoad(Container storedProceduresCategoryContainer) throws DatabaseException, ContainerException {
-        lazyLoad(storedProceduresCategoryContainer);
-        List<Container> storedProcedures = storedProceduresCategoryContainer.getChildren();
-        if (storedProcedures != null && !storedProcedures.isEmpty()) {
-            for (Container storedProcedure : storedProcedures) {
-                detailedLoad(storedProcedure);
+    public void fullLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
+        this.lazyLoad(storedProcedureContainer);
+        this.detailedLoad(storedProcedureContainer);
+        if (storedProcedureContainer.hasChildren()) {
+            List<Container> storedProcedureParameters = storedProcedureContainer.getChildren();
+            for (Container storedProcedureParameter : storedProcedureParameters) {
+                new ProcedureFunctionParametersLoader(super.getContext()).fullLoad(storedProcedureParameter);
             }
         }
     }

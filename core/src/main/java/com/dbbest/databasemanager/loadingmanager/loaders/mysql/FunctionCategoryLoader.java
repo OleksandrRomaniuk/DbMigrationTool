@@ -23,12 +23,8 @@ public class FunctionCategoryLoader extends AbstractLoader {
         if (!functionCategoryContainer.hasName()) {
             functionCategoryContainer.setName(LoaderPrinterName.FUNCTIONS);
         }
-        if (!functionCategoryContainer.getAttributes().containsKey(CustomAttributes.IS_CATEGORY)) {
-            functionCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        }
-        if (!functionCategoryContainer.getAttributes().containsKey(CustomAttributes.CHILD_TYPE)) {
-            functionCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.FUNCTION);
-        }
+        functionCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
+        functionCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.FUNCTION);
         try {
             String query = String.format(MySQLQueries.FUNCTIONLAZY,
                 functionCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));
@@ -42,8 +38,8 @@ public class FunctionCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
         if (functionCategoryContainer.getAttributes().get(CustomAttributes.CHILD_TYPE).equals(LoaderPrinterName.FUNCTION)
             && functionCategoryContainer.hasChildren()) {
-            for (Container function : (List<Container>)functionCategoryContainer.getChildren()) {
-                new FunctionLoader().detailedLoad(function);
+            for (Container function : (List<Container>) functionCategoryContainer.getChildren()) {
+                new FunctionLoader(super.getContext()).detailedLoad(function);
             }
         }
     }
@@ -52,8 +48,8 @@ public class FunctionCategoryLoader extends AbstractLoader {
     public void fullLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
         this.lazyLoad(functionCategoryContainer);
         if (functionCategoryContainer.hasChildren()) {
-            for (Container function : (List<Container>)functionCategoryContainer.getChildren()) {
-                new FunctionLoader().fullLoad(function);
+            for (Container function : (List<Container>) functionCategoryContainer.getChildren()) {
+                new FunctionLoader(super.getContext()).fullLoad(function);
             }
         }
     }

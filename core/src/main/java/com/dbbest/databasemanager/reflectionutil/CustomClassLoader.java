@@ -20,7 +20,7 @@ public class CustomClassLoader extends ClassLoader {
      * @return returns the loaded class.
      * @throws ClassNotFoundException throws exception if loading of the class has not been successfully completed.
      */
-    public Class<?> createClass(File classFile) throws ClassNotFoundException {
+    public Class<?> getClass(File classFile) throws ClassNotFoundException {
         if (!classFile.isFile()) {
             throw new ClassNotFoundException("Class not found " + classFile.getPath());
         }

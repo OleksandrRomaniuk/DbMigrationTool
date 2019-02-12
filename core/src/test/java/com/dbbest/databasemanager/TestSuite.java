@@ -38,7 +38,7 @@ import org.junit.runners.Suite;
     CustomLogerFormaterTest.class, CustomLoggerFilterTest.class, CustomLoggerTest.class,
     IntegrationTest.class, ConnectionPropertiesEditorTest.class, ConnectionPropertiesManagerTest.class,
     SimpleConnectionBuilderTest.class, ConstraintLoaderTest.class, ForeignKeyLoaderTest.class,
-    FunctionLoaderTest.class, IndexLoaderTest.class, ProcedureFunctionParameteresLoaderTest.class,
+    FunctionLoaderTest.class, IndexLoaderTest.class, ProcedureFunctionParametersLoaderTest.class,
     SchemaLoaderTest.class, StoredProcedureLoaderTest.class, TableColumnLoaderTest.class,
     TableLoaderTest.class, TriggerLoaderTest.class, ViewColumnLoaderTest.class, ViewLoaderTest.class,
     ForeignKeyPrinterTest.class, FunctionPrinterTest.class,
