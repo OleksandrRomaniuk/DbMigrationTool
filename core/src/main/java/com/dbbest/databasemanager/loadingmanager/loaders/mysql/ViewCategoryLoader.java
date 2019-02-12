@@ -25,7 +25,7 @@ public class ViewCategoryLoader extends AbstractLoader {
         try {
             String query = String.format(MySQLQueries.VIEWLAZY,
                 viewCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));
-            super.executeLazyLoaderQuery(viewCategoryContainer, query);
+            super.executeLazyLoaderQuery(viewCategoryContainer, query, LoaderPrinterName.VIEW);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }

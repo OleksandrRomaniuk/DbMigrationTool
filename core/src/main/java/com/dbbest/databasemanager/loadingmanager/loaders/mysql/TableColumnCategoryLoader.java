@@ -28,7 +28,8 @@ public class TableColumnCategoryLoader extends AbstractLoader {
             String schemaName = (String) tableColumnCategoryContainer.getParent()
                 .getAttributes().get(TableAttributes.TABLE_SCHEMA);
             String query = String.format(MySQLQueries.COLUMNLAZY, schemaName, tableName);
-            super.executeLazyLoaderQuery(tableColumnCategoryContainer, query);
+            System.out.println(query);
+            super.executeLazyLoaderQuery(tableColumnCategoryContainer, query, LoaderPrinterName.TABLE_COLUMN);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of columns.");
         }

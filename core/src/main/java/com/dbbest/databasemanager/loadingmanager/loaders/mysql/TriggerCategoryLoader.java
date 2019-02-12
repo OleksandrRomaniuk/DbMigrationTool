@@ -27,7 +27,7 @@ public class TriggerCategoryLoader extends AbstractLoader {
             String schemaName = (String) triggerCategoryContainer.getParent()
                 .getAttributes().get(TableAttributes.TABLE_SCHEMA);
             String query = String.format(MySQLQueries.TRIGGERLAZY, schemaName, tableName);
-            super.executeLazyLoaderQuery(triggerCategoryContainer, query);
+            super.executeLazyLoaderQuery(triggerCategoryContainer, query, LoaderPrinterName.TRIGGER);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

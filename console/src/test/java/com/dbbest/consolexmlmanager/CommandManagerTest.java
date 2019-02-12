@@ -188,15 +188,15 @@ public class CommandManagerTest {
         }
         Context context = new Context();
         CommandManager commandManager = new CommandManager(context);
-        String[] commandLine = new String[21];
+        String[] commandLine = new String[9];
         commandLine[0] = "-load";
         commandLine[1] = LoadersPrinterDatabaseTypes.MYSQL;
         commandLine[2] = "sakila";
         commandLine[3] = "root";
         commandLine[4] = "Ilovemylife101088";
         commandLine[5] = "sakila";
-        commandLine[6] = LoadTypes.LAZY;
-
+        commandLine[6] = LoadTypes.FULL;
+/*
         commandLine[7] = "-load";
         commandLine[8] = LoadersPrinterDatabaseTypes.MYSQL;
         commandLine[9] = "sakila";
@@ -212,17 +212,18 @@ public class CommandManagerTest {
         commandLine[18] = "Ilovemylife101088";
         commandLine[19] = "sakila";
         commandLine[20] = LoadTypes.FULL;
+        */
 /*
-
         commandLine[21] = "-print";
         commandLine[22] = LoadersPrinterDatabaseTypes.MYSQL;
-        commandLine[23] = "sakila.tables.actor";
-
-        commandLine[24] = "-write";
-        commandLine[25] = "src/test/resources/treeFile.xml";
+        commandLine[23] = "sakila.Tables.actor";
 */
+        commandLine[7] = "-write";
+        commandLine[8] = "src/test/resources/treeFile.xml";
+
         commandManager.addCommands(commandLine);
         commandManager.execute();
+        System.out.println(context.getPrintedSqlQuery());
 
     }
 }

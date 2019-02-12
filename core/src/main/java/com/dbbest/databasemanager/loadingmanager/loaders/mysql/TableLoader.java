@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
@@ -44,8 +45,9 @@ public class TableLoader extends AbstractLoader {
         try {
             String tableName = (String) tableContainer.getAttributes().get(TableAttributes.TABLE_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String schemaName = (String) tableContainer.getParent().getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.TABLEDETAILED, listRepresentationOfAttributes,
-                tableContainer.getAttributes().get(TableAttributes.TABLE_SCHEMA), tableName);
+                schemaName, tableName);
             super.executeDetailedLoaderQuery(tableContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -56,7 +58,6 @@ public class TableLoader extends AbstractLoader {
     public void fullLoad(Container tableContainer) throws DatabaseException, ContainerException {
         this.lazyLoad(tableContainer);
         this.detailedLoad(tableContainer);
-        System.out.println(tableContainer.hasChildren());
         new TableColumnCategoryLoader(super.getContext()).fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_COLUMNS));
         new IndexCategoryLoader(super.getContext()).fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_INDEXES));
         new ForeignKeyCategoryLoader(super.getContext())

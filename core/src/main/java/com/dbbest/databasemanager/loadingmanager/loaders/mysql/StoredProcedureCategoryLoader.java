@@ -25,7 +25,7 @@ public class StoredProcedureCategoryLoader extends AbstractLoader {
         try {
             String query = String.format(MySQLQueries.STOREDPROCEDURELAZY,
                 storedProcedureCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));
-            super.executeLazyLoaderQuery(storedProcedureCategoryContainer, query);
+            super.executeLazyLoaderQuery(storedProcedureCategoryContainer, query, LoaderPrinterName.STORED_PROCEDURE);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }

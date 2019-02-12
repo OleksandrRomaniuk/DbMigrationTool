@@ -33,9 +33,8 @@ public abstract class AbstractLoader implements Loader {
 
     private Connection connection;
 
-    protected void executeLazyLoaderQuery(Container node, String query) throws SQLException, ContainerException {
-        String loaderName = this.getClass()
-            .getAnnotation(LoaderAnnotation.class).value();
+    protected void executeLazyLoaderQuery(Container node, String query, String loaderName) throws SQLException, ContainerException {
+        //System.out.println(query);
         String attribute = NameAttributes.getNameAttributesMap().get(loaderName);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
@@ -49,8 +48,6 @@ public abstract class AbstractLoader implements Loader {
     }
 
     protected void executeDetailedLoaderQuery(Container node, String query) throws SQLException, DatabaseException {
-        String childName = this.getClass()
-            .getAnnotation(LoaderAnnotation.class).value();
         List<String> attributes = MySQLAttributeFactory.getInstance().getAttributes(this);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();

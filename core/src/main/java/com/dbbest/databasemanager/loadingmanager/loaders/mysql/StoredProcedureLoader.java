@@ -32,7 +32,7 @@ public class StoredProcedureLoader extends AbstractLoader {
                 .getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
             String schemaName = (String) storedProcedureContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
             String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERLAZY, schemaName, procedureName);
-            super.executeLazyLoaderQuery(storedProcedureContainer, query);
+            super.executeLazyLoaderQuery(storedProcedureContainer, query, LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

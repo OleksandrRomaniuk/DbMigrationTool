@@ -25,9 +25,6 @@ public class TreeNavigator {
                     if (checkNode(i, fullPathSplit, container)) {
                         targetContainer = container;
                         containersOfLevel = container.getChildren();
-                        break;
-                    } else {
-                        targetContainer = null;
                     }
                 }
             }

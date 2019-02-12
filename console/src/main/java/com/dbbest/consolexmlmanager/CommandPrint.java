@@ -40,8 +40,8 @@ public class CommandPrint implements Command {
             throw new DatabaseException(Level.SEVERE, "The tree container has not been set.");
         }
         context.setDbType(dbType);
-        HorizontalPassageSearchManager horSearchManager = new HorizontalPassageSearchManager(context.getDbTreeContainer());
         Container targetContainer = new TreeNavigator(context).getTargetContainer(fullPath);
+        //System.out.println(targetContainer.getName());
         PrinterManager printerManager = new PrinterManager(context);
         if (targetContainer != null) {
             context.setPrintedSqlQuery(printerManager.print(targetContainer));

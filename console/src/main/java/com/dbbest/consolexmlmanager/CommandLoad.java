@@ -66,6 +66,7 @@ public class CommandLoad implements Command {
         Connection connection = simpleConnectionBuilder.getConnection(dbType, dbName, userName, password);
         context.setConnection(connection);
         Container targetContainer = new TreeNavigator(context).getTargetContainer(fullPath);
+        System.out.println(targetContainer.getName());
         if ( targetContainer == null) {
             throw new DatabaseException(Level.SEVERE, "Can not find the node with the path: " + fullPath);
         }

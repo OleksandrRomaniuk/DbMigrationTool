@@ -54,7 +54,7 @@ public final class MySQLQueries {
 
     private MySQLQueries() {
     }
-
+/*
     private void addSqlLazyQueries() {
         sqlQueriesLazyLoader.put(LoaderPrinterName.TABLE, TABLELAZY);
         sqlQueriesLazyLoader.put(LoaderPrinterName.FUNCTION, FUNCTIONLAZY);
@@ -83,24 +83,27 @@ public final class MySQLQueries {
         sqlQueriesDetailLoader.put(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER, PROCEDUREFUNCTIONPARAMETERDETAILED);
         sqlQueriesDetailLoader.put(LoaderPrinterName.VIEW_COLUMN, COLUMNDETAILED);
     }
-
+*/
     /**
      * @return returns the map of the mysql queries for lazy load.
      */
+    /*
     public Map<String, String> getSqlQueriesLazyLoader() {
         if (sqlQueriesLazyLoader.isEmpty()) {
             addSqlLazyQueries();
         }
         return sqlQueriesLazyLoader;
     }
-
+*/
     /**
      * @return returns the map of the mysql queries for detailed load.
      */
+    /*
     public Map<String, String> getSqlQueriesDetailLoader() {
         if (sqlQueriesDetailLoader.isEmpty()) {
             addSqlDetailedQueries();
         }
         return sqlQueriesDetailLoader;
     }
+    */
 }

@@ -22,12 +22,10 @@ public class FunctionCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
-        functionCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        functionCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.FUNCTION);
         try {
             String query = String.format(MySQLQueries.FUNCTIONLAZY,
                 functionCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));
-            super.executeLazyLoaderQuery(functionCategoryContainer, query);
+            super.executeLazyLoaderQuery(functionCategoryContainer, query, LoaderPrinterName.FUNCTION);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }

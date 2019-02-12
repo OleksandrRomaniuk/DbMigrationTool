@@ -27,7 +27,7 @@ public class ForeignKeyCategoryLoader extends AbstractLoader {
             String schemaName = (String) foreignKeyCategory.getParent()
                 .getAttributes().get(TableAttributes.TABLE_SCHEMA);
             String query = String.format(MySQLQueries.FOREIGNKEYLAZY, schemaName, tableName);
-            super.executeLazyLoaderQuery(foreignKeyCategory, query);
+            super.executeLazyLoaderQuery(foreignKeyCategory, query, LoaderPrinterName.FOREIGN_KEY);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

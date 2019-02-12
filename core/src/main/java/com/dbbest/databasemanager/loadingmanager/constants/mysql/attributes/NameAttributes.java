@@ -14,18 +14,18 @@ public final class NameAttributes {
 
     public static Map<String, String> getNameAttributesMap() {
         Map<String, String> nameAttributeConstants = new HashMap();
-        nameAttributeConstants.put(LoaderPrinterName.TABLES, TableAttributes.TABLE_NAME);
-        nameAttributeConstants.put(LoaderPrinterName.FUNCTIONS, FunctionAttributes.FUNCTION_PROCEDURE_NAME);
-        nameAttributeConstants.put(LoaderPrinterName.STORED_PROCEDURES, FunctionAttributes.FUNCTION_PROCEDURE_NAME);
-        nameAttributeConstants.put(LoaderPrinterName.VIEWS, ViewAttributes.TABLE_NAME);
-        nameAttributeConstants.put(LoaderPrinterName.TABLE_COLUMNS, TableColumnAttributes.COLUMN_NAME);
-        nameAttributeConstants.put(LoaderPrinterName.TABLE_INDEXES, IndexAttributes.INDEX_NAME);
-        nameAttributeConstants.put(LoaderPrinterName.TABLE_FOREIGN_KEYS, ConstraintAttributes.CONSTRAINT_NAME);
-        nameAttributeConstants.put(LoaderPrinterName.TABLE_TRIGGERS, TriggerAttributes.TRIGGER_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.TABLE, TableAttributes.TABLE_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.FUNCTION, FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.STORED_PROCEDURE, FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.VIEW, ViewAttributes.TABLE_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.TABLE_COLUMN, TableColumnAttributes.COLUMN_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.INDEX, IndexAttributes.INDEX_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.FOREIGN_KEY, ConstraintAttributes.CONSTRAINT_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.TRIGGER, TriggerAttributes.TRIGGER_NAME);
         nameAttributeConstants.put(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER,
             FunctionProcedureParameterAttributes.PROC_FUNC_PARAMETER_NAME);
         nameAttributeConstants.put(LoaderPrinterName.VIEW_COLUMN, TableColumnAttributes.COLUMN_NAME);
-        nameAttributeConstants.put(LoaderPrinterName.TABLE_CONSTRAINTS, ConstraintAttributes.CONSTRAINT_NAME);
+        nameAttributeConstants.put(LoaderPrinterName.CONSTRAINT, ConstraintAttributes.CONSTRAINT_NAME);
         return nameAttributeConstants;
     }
 }

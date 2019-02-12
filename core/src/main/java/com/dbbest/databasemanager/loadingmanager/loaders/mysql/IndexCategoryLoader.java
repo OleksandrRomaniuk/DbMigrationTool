@@ -27,7 +27,7 @@ public class IndexCategoryLoader extends AbstractLoader {
             String schemaName = (String) indexCategoryContainer.getParent()
                 .getAttributes().get(TableAttributes.TABLE_SCHEMA);
             String query = String.format(MySQLQueries.INDEXLAZY, schemaName, tableName);
-            super.executeLazyLoaderQuery(indexCategoryContainer, query);
+            super.executeLazyLoaderQuery(indexCategoryContainer, query, LoaderPrinterName.INDEX);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

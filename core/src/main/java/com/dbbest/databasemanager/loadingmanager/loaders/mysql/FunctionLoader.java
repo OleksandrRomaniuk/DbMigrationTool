@@ -30,7 +30,7 @@ public class FunctionLoader extends AbstractLoader {
                 .getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
             String schemaName = (String) functionContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
             String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERLAZY, schemaName, functionName);
-            super.executeLazyLoaderQuery(functionContainer, query);
+            super.executeLazyLoaderQuery(functionContainer, query, LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -42,7 +42,7 @@ public class FunctionLoader extends AbstractLoader {
             String functionName = (String) functionContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
             String schemaName = (String) functionContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
-            String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERDETAILED, listRepresentationOfAttributes,
+            String query = String.format(MySQLQueries.FUNCTIONDETAILED, listRepresentationOfAttributes,
                 schemaName, functionName);
             this.executeDetailedLoaderQuery(functionContainer, query);
         } catch (SQLException e) {
