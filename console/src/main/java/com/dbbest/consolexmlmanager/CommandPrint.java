@@ -18,7 +18,7 @@ public class CommandPrint implements Command {
 
     private static final Logger logger = Logger.getLogger("Command logger");
 
-    private Context context = Context.getInstance();
+    private Context context;
     private final int priority;
     private final String dbType;
     private final String routineID;
@@ -28,10 +28,11 @@ public class CommandPrint implements Command {
      * @param routineID the identifier of the element to print.
      * @param priority the priority of the command in the list of commands.
      */
-    public CommandPrint(String dbType, String routineID, int priority) {
+    public CommandPrint(String dbType, String routineID, int priority, Context context) {
         this.dbType = dbType;
         this.routineID = routineID;
         this.priority = priority;
+        this.context = context;
     }
 
 

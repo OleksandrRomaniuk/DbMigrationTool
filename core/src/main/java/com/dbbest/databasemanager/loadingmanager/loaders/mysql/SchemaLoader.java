@@ -3,10 +3,10 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
+import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -21,49 +21,33 @@ import java.util.logging.Level;
 @LoaderAnnotation(LoaderPrinterName.SCHEMA)
 public class SchemaLoader extends AbstractLoader {
 
+    private String schemaName = super.getContext().getSchemaName();
+
+    public SchemaLoader(Context context) {
+        super(context);
+    }
+
     @Override
-    public void lazyLoad(Container schemaContainer) throws ContainerException {
+    public void lazyLoad(Container schemaContainer) throws ContainerException, DatabaseException {
         if (!schemaContainer.hasName()) {
             schemaContainer.setName(LoaderPrinterName.SCHEMA);
         }
-
-        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, Context.getInstance().getSchemaName());
-        schemaContainer.addAttribute(CustomAttributes.ROUTINE_ID,
-            LoaderPrinterName.SCHEMA);
-
-        Container tablesCategory = new Container();
-        tablesCategory.setName(LoaderPrinterName.TABLES);
-        tablesCategory.addAttribute(CustomAttributes.ROUTINE_ID,
-            LoaderPrinterName.TABLES);
-        schemaContainer.addChild(tablesCategory);
-
-        Container viewsCategory = new Container();
-        viewsCategory.setName(LoaderPrinterName.VIEWS);
-        viewsCategory.addAttribute(CustomAttributes.ROUTINE_ID,
-            LoaderPrinterName.VIEWS);
-        schemaContainer.addChild(viewsCategory);
-
-        Container functionsCategory = new Container();
-        functionsCategory.setName(LoaderPrinterName.FUNCTIONS);
-        functionsCategory.addAttribute(CustomAttributes.ROUTINE_ID,
-            LoaderPrinterName.FUNCTIONS);
-        schemaContainer.addChild(functionsCategory);
-
-        Container storedProceduresCategory = new Container();
-        storedProceduresCategory.setName(LoaderPrinterName.STORED_PROCEDURES);
-        storedProceduresCategory.addAttribute(CustomAttributes.ROUTINE_ID,
-            LoaderPrinterName.STORED_PROCEDURES);
-        schemaContainer.addChild(storedProceduresCategory);
+        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, schemaName);
+        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.TABLES, new TableCategoryLoader(super.getContext()));
+        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.VIEWS, new ViewCategoryLoader(super.getContext()));
+        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.FUNCTIONS, new FunctionCategoryLoader(super.getContext()));
+        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.STORED_PROCEDURES,
+            new StoredProcedureCategoryLoader(super.getContext()));
     }
 
     @Override
     public void detailedLoad(Container schemaContainer) throws DatabaseException {
-        String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.SCHEMA);
         List<String> attributeNames = MySQLAttributeFactory.getInstance().getAttributes(this);
-        String listOfAttributes = super.getListOfAttributes(attributeNames);
+        String stringRepresentationOfOfAttributes = super.listToString(attributeNames);
 
         try {
-            String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName());
+            String query = String.format(MySQLQueries.SCHEMADETAILED, stringRepresentationOfOfAttributes,
+                schemaContainer.getAttributes().get(SchemaAttributes.SCHEMA_NAME));
             super.executeDetailedLoaderQuery(schemaContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -72,11 +56,20 @@ public class SchemaLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container schemaContainer) throws ContainerException, DatabaseException {
-        lazyLoad(schemaContainer);
-        detailedLoad(schemaContainer);
-        new TableLoader().fullLoad(schemaContainer.getChildByName(LoaderPrinterName.TABLES));
-        new ViewLoader().fullLoad(schemaContainer.getChildByName(LoaderPrinterName.VIEWS));
-        new StoredProcedureLoader().fullLoad(schemaContainer.getChildByName(LoaderPrinterName.STORED_PROCEDURES));
-        new FunctionLoader().fullLoad(schemaContainer.getChildByName(LoaderPrinterName.FUNCTIONS));
+        this.lazyLoad(schemaContainer);
+        this.detailedLoad(schemaContainer);
+        new TableCategoryLoader(super.getContext()).fullLoad(schemaContainer.getChildByName(LoaderPrinterName.TABLES));
+        new ViewCategoryLoader(super.getContext()).fullLoad(schemaContainer.getChildByName(LoaderPrinterName.VIEWS));
+        new StoredProcedureCategoryLoader(super.getContext())
+            .fullLoad(schemaContainer.getChildByName(LoaderPrinterName.STORED_PROCEDURES));
+        new FunctionCategoryLoader(super.getContext()).fullLoad(schemaContainer.getChildByName(LoaderPrinterName.FUNCTIONS));
+    }
+
+    private void lazyLoadCategory(Container schemaContainer, String categoryName, Loader categoryLoader)
+        throws ContainerException, DatabaseException {
+        Container category = new Container();
+        category.setName(categoryName);
+        schemaContainer.addChild(category);
+        categoryLoader.lazyLoad(category);
     }
 }

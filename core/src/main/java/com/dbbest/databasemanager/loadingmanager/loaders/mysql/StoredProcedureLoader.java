@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -19,31 +20,40 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(LoaderPrinterName.STORED_PROCEDURE)
 public class StoredProcedureLoader extends AbstractLoader {
+
+    public StoredProcedureLoader(Context context) {
+        super(context);
+    }
+
     @Override
-    public void lazyLoad(Container storedProceduresCategoryContainer) throws DatabaseException, ContainerException {
+    public void lazyLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
         try {
             String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.STORED_PROCEDURE);
-            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName());
-            super.executeLazyLoaderQuery(storedProceduresCategoryContainer, query);
+            String query = String.format(lazyLoaderQuery,
+                storedProcedureContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_SCHEMA));
+            super.executeLazyLoaderQuery(storedProcedureContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
 
     @Override
-    public void detailedLoad(Container storedProcedure) throws DatabaseException, ContainerException {
+    public void detailedLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
         try {
-            String elementName = (String) storedProcedure.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+            String elementName = (String) storedProcedureContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
             String detailedLoaderQuery = MySQLQueries.getInstance()
                 .getSqlQueriesDetailLoader().get(LoaderPrinterName.STORED_PROCEDURE);
-            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), elementName);
-            super.executeDetailedLoaderQuery(storedProcedure, query);
+            String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String query = String.format(detailedLoaderQuery,
+                listRepresentationOfAttributes, storedProcedureContainer.getParent().getParent()
+                    .getAttributes().get(TableAttributes.TABLE_SCHEMA),
+                elementName);
+            super.executeDetailedLoaderQuery(storedProcedureContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
 
-        new ProcedureFunctionParameteresLoader().fullLoad(storedProcedure);
+        new ProcedureFunctionParameteresLoader(super.getContext()).fullLoad(storedProcedureContainer);
     }
 
     @Override

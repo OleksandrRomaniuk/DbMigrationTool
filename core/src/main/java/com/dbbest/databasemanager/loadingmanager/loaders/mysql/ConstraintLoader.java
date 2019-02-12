@@ -4,7 +4,6 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -16,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -24,44 +22,25 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(LoaderPrinterName.CONSTRAINT)
 public class ConstraintLoader extends AbstractLoader {
-    @Override
-    public void lazyLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
-        try {
-            String tableName = (String) constraintCategoryContainer.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String query = String.format(
-                MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.CONSTRAINT),
-                super.getListOfAttributes(new ConstraintAttributes().getListOfLazyLoadAttributeNames()),
-                Context.getInstance().getSchemaName(),
-                tableName);
+    public ConstraintLoader(Context context) {
+        super(context);
+    }
 
-            Connection connection = super.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                Container childNode = new Container();
-                childNode.setName(LoaderPrinterName.CONSTRAINT);
-                childNode.addAttribute(CustomAttributes.ROUTINE_ID, LoaderPrinterName.CONSTRAINT
-                    + resultSet.getString(ConstraintAttributes.CONSTRAINT_NAME));
-                constraintCategoryContainer.addChild(childNode);
-                for (String attributeName : new ConstraintAttributes().getListOfLazyLoadAttributeNames()) {
-                    childNode.addAttribute(attributeName, resultSet.getString(attributeName));
-                }
-            }
-        } catch (SQLException e) {
-            throw new DatabaseException(Level.SEVERE, e);
-        }
+    @Override
+    public void lazyLoad(Container constraintContainer) throws DatabaseException, ContainerException {
     }
 
     @Override
     public void detailedLoad(Container constraintContainer) throws DatabaseException, ContainerException {
         try {
-            String elementName = (String) constraintContainer.getAttributes().get(ConstraintAttributes.CONSTRAINT_NAME);
+            String constraintName = (String) constraintContainer.getAttributes().get(ConstraintAttributes.CONSTRAINT_NAME);
             String tableName = (String) constraintContainer.getParent()
                 .getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.CONSTRAINT);
-            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes,
-                Context.getInstance().getSchemaName(), tableName, elementName);
+            String schemaName = (String) constraintContainer.getParent().getParent()
+                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String query = String.format(MySQLQueries.TABLECONSTRAINTDETAIED, listRepresentationOfAttributes,
+                schemaName, tableName, constraintName);
             Connection connection = super.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -80,13 +59,8 @@ public class ConstraintLoader extends AbstractLoader {
     }
 
     @Override
-    public void fullLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
-        lazyLoad(constraintCategoryContainer);
-        List<Container> constraintContainers = constraintCategoryContainer.getChildren();
-        if (constraintContainers != null && !constraintContainers.isEmpty()) {
-            for (Container constraint : constraintContainers) {
-                detailedLoad(constraint);
-            }
-        }
+    public void fullLoad(Container constraintContainer) throws DatabaseException, ContainerException {
+        this.lazyLoad(constraintContainer);
+        this.detailedLoad(constraintContainer);
     }
 }

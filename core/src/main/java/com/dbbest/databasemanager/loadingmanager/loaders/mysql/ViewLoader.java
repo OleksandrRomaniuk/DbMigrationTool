@@ -3,8 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ViewAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.*;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -19,15 +18,25 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(LoaderPrinterName.VIEW)
 public class ViewLoader extends AbstractLoader {
+    public ViewLoader(Context context) {
+        super(context);
+    }
+
     @Override
-    public void lazyLoad(Container viewCategoryContainer) throws DatabaseException, ContainerException {
+    public void lazyLoad(Container viewContainer) throws DatabaseException, ContainerException {
+        if (!viewContainer.hasName()) {
+            viewContainer.setName(LoaderPrinterName.VIEW);
+        }
+        viewContainer.addAttribute(CustomAttributes.IS_CATEGORY, false);
+        viewContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.VIEW_COLUMN);
+
         try {
-            String lazyLoaderQuery = MySQLQueries.getInstance()
-                .getSqlQueriesLazyLoader().get(LoaderPrinterName.VIEW);
-            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName());
-            super.executeLazyLoaderQuery(viewCategoryContainer, query);
+            String tableName = (String) viewContainer.getAttributes().get(ViewAttributes.TABLE_NAME);
+            String schemaAName = (String) viewContainer.getAttributes().get(ViewAttributes.TABLE_SCHEMA);
+            String query = String.format(MySQLQueries.VIEWLAZY, schemaAName, tableName);
+            this.executeLazyLoaderQuery(viewContainer, query);
         } catch (SQLException e) {
-            throw new DatabaseException(Level.SEVERE, e);
+            throw new DatabaseException(Level.SEVERE, e, "Can not get the list of columns.");
         }
     }
 
@@ -35,10 +44,9 @@ public class ViewLoader extends AbstractLoader {
     public void detailedLoad(Container viewContainer) throws DatabaseException, ContainerException {
         try {
             String elementName = (String) viewContainer.getAttributes().get(ViewAttributes.TABLE_NAME);
-            String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader()
-                .get(LoaderPrinterName.VIEW);
-            String listOfAttributes = getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), elementName);
+            String listRepresentationOfAttributes = listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String schemaName = (String) viewContainer.getParent().getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME);
+            String query = String.format(MySQLQueries.VIEWDETAILED, listRepresentationOfAttributes, schemaName, elementName);
             super.executeDetailedLoaderQuery(viewContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -46,13 +54,12 @@ public class ViewLoader extends AbstractLoader {
     }
 
     @Override
-    public void fullLoad(Container viewCategoryContainer) throws DatabaseException, ContainerException {
-        lazyLoad(viewCategoryContainer);
-        List<Container> views = viewCategoryContainer.getChildren();
-        if (views != null && !views.isEmpty()) {
-            for (Container view : views) {
-                detailedLoad(view);
-                new ViewColumnLoader().fullLoad(view);
+    public void fullLoad(Container viewContainer) throws DatabaseException, ContainerException {
+        this.lazyLoad(viewContainer);
+        this.detailedLoad(viewContainer);
+        if (viewContainer.hasChildren()) {
+            for (Container viewColumn : (List<Container>) viewContainer.getChildren()) {
+                new ViewColumnLoader(super.getContext()).fullLoad(viewColumn);
             }
         }
     }

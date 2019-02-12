@@ -17,23 +17,11 @@ import java.util.Map;
  */
 public final class PrinterManager {
 
-    private static PrinterManager instance;
-
     private Map<String, Printer> printers;
+    private Context context;
 
-    private PrinterManager() {
-    }
-
-    /**
-     * @return returns the instance of the class.
-     * @throws DatabaseException throws an exception if can not initialize the map with printers.
-     */
-    public static PrinterManager getInstance() throws DatabaseException {
-        if (instance == null) {
-            instance = new PrinterManager();
-            instance.initializePrinters();
-        }
-        return instance;
+    public PrinterManager(Context context) {
+        this.context = context;
     }
 
     public String print(Container container) throws ContainerException {
@@ -42,7 +30,7 @@ public final class PrinterManager {
     }
 
     private void initializePrinters() throws DatabaseException {
-        String connectionType = Context.getInstance().getDbType();
+        String connectionType = context.getDbType();
         String printersCatalog = new PrintersDirectorySearcher().findFolderWithPrinters(connectionType);
         printers = new HashMap();
         for (String printerType : LoaderPrinterName.getInstance().getListOfPrinters()) {

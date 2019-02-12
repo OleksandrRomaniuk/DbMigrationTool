@@ -14,8 +14,12 @@ import java.util.regex.Pattern;
 public class CommandManager {
 
     private Invoker invoker = new Invoker();
-    private Context context = Context.getInstance();
+    private Context context;
     private final String commandPattern = "-(((\\S+\\s+){1,3})|((\\S+\\s+){6}))\\S+\\s*\\z";
+
+    public CommandManager(Context context) {
+        this.context = context;
+    }
 
     /**
      * Adds command lines to work out.
@@ -73,7 +77,7 @@ public class CommandManager {
         String[] singleCommandWords = singleCommand.split("\\s");
 
         invoker.add(Commands.valueOf(singleCommandWords[0].trim().substring(1).toUpperCase())
-            .getCommand(singleCommand.trim()));
+            .getCommand(singleCommand.trim(), context));
     }
 
     public Invoker getInvoker() {

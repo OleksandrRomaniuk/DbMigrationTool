@@ -1,6 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 
-import com.dbbest.databasemanager.loadingmanager.constants.Attributes;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
 
@@ -9,7 +8,7 @@ import java.util.List;
 /**
  * The class with the attributes of the table column node.
  */
-public class TableColumnAttributes implements Attributes {
+public final class TableColumnAttributes {
 
     public static final String COLUMN_NAME = "COLUMN_NAME";
     public static final String EXTRA = "EXTRA";
@@ -21,12 +20,7 @@ public class TableColumnAttributes implements Attributes {
     public static final String COLUMN_TYPE = "COLUMN_TYPE";
     public static final String COLUMN_IS_NULLABLE = "IS_NULLABLE";
 
-    @Override
-    public List<String> getListOfAttributes() {
-        return getListOfTableColumnAttributes();
-    }
-
-    private List<String> getListOfTableColumnAttributes() {
+    public static List<String> getListOfTableColumnAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"TABLE_CATALOG", "TABLE_SCHEMA", "TABLE_NAME", "ORDINAL_POSITION",
             /*"COLUMN_DEFAULT",*/ /*"IS_NULLABLE",*/ "DATA_TYPE", "CHARACTER_MAXIMUM_LENGTH", "CHARACTER_OCTET_LENGTH",

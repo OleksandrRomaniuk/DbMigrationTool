@@ -1,6 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 
-import com.dbbest.databasemanager.loadingmanager.constants.Attributes;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
 
@@ -9,8 +8,10 @@ import java.util.List;
 /**
  * The class with the attributes of the table node.
  */
-public class TableAttributes implements Attributes {
+public final class TableAttributes {
 
+    private TableAttributes() {
+    }
 
     public static final String TABLE_NAME = "TABLE_NAME";
     public static final String AVG_ROW_LENGTH = "AVG_ROW_LENGTH";
@@ -21,15 +22,11 @@ public class TableAttributes implements Attributes {
     public static final String DATA_FREE = "DATA_FREE";
     public static final String AUTO_INCREMENT = "AUTO_INCREMENT";
     public static final String TABLE_COLLATION = "TABLE_COLLATION";
+    public static final String TABLE_SCHEMA = "TABLE_SCHEMA";
 
-    @Override
-    public List<String> getListOfAttributes() {
-        return getListOfTableAttributes();
-    }
-
-    private List<String> getListOfTableAttributes() {
+    public static List<String> getListOfTableAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
-        String[] listOfConstants = {"TABLE_CATALOG", "TABLE_SCHEMA", "TABLE_TYPE"
+        String[] listOfConstants = {"TABLE_CATALOG", /*"TABLE_SCHEMA",*/ "TABLE_TYPE"
             /*, "ENGINE"*/, "VERSION", /*"ROW_FORMAT",*/
             "TABLE_ROWS", /*"AVG_ROW_LENGTH",*/ "DATA_LENGTH",
             "MAX_DATA_LENGTH", "INDEX_LENGTH", /*"DATA_FREE",*/ /*"AUTO_INCREMENT",*/
@@ -45,6 +42,7 @@ public class TableAttributes implements Attributes {
         listOfAttributes.add(DATA_FREE);
         listOfAttributes.add(AUTO_INCREMENT);
         listOfAttributes.add(TABLE_COLLATION);
+        listOfAttributes.add(TABLE_SCHEMA);
 
         return (List<String>) listOfAttributes;
     }

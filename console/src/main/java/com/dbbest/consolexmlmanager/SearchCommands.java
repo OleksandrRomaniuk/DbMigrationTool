@@ -25,8 +25,7 @@ public enum SearchCommands {
         this.searchCommand = searchCommand;
     }
 
-    void executeCommand(String textToSearch) {
-        Context context = Context.getInstance();
+    void executeCommand(String textToSearch, Context context) {
 
         switch (this) {
             case VerticalSearchInNames:
@@ -56,8 +55,7 @@ public enum SearchCommands {
         }
     }
 
-    void executeCommand(String attributeKey, String attributeValue) {
-        Context context = Context.getInstance();
+    void executeCommand(String attributeKey, String attributeValue, Context context) {
 
         switch (this) {
             case VerticalSearchInAttributes:

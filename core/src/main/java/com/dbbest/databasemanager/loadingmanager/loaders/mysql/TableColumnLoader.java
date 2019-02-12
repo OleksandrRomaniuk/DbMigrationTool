@@ -12,7 +12,6 @@ import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -21,17 +20,12 @@ import java.util.logging.Level;
 @LoaderAnnotation(LoaderPrinterName.TABLE_COLUMN)
 public class TableColumnLoader extends AbstractLoader {
 
+    public TableColumnLoader(Context context) {
+        super(context);
+    }
+
     @Override
-    public void lazyLoad(Container categoryColumnsContainer) throws DatabaseException, ContainerException {
-        try {
-            String tableName = (String) categoryColumnsContainer.getParent()
-                .getAttributes().get(TableAttributes.TABLE_NAME);
-            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.TABLE_COLUMN);
-            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName(), tableName);
-            super.executeLazyLoaderQuery(categoryColumnsContainer, query);
-        } catch (SQLException e) {
-            throw new DatabaseException(Level.SEVERE, e, "Can not get the list of columns.");
-        }
+    public void lazyLoad(Container columnContainer) throws DatabaseException, ContainerException {
     }
 
     @Override
@@ -40,10 +34,10 @@ public class TableColumnLoader extends AbstractLoader {
             String elementName = (String) columnContainer.getAttributes().get(TableColumnAttributes.COLUMN_NAME);
             String tableName = (String) columnContainer.getParent().getParent()
                 .getAttributes().get(TableAttributes.TABLE_NAME);
-            String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.TABLE_COLUMN);
-            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes,
-                Context.getInstance().getSchemaName(), tableName, elementName);
+            String detailedLoaderQuery = MySQLQueries.COLUMNDETAILED;
+            String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String query = String.format(detailedLoaderQuery, listRepresentationOfAttributes,
+                columnContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_SCHEMA), tableName, elementName);
             super.executeDetailedLoaderQuery(columnContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -51,13 +45,8 @@ public class TableColumnLoader extends AbstractLoader {
     }
 
     @Override
-    public void fullLoad(Container categoryColumnsContainer) throws DatabaseException, ContainerException {
-        lazyLoad(categoryColumnsContainer);
-        List<Container> columns = categoryColumnsContainer.getChildren();
-        if (columns != null && !columns.isEmpty()) {
-            for (Container column : columns) {
-                detailedLoad(column);
-            }
-        }
+    public void fullLoad(Container columnContainer) throws DatabaseException, ContainerException {
+        this.lazyLoad(columnContainer);
+        this.detailedLoad(columnContainer);
     }
 }

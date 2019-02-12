@@ -1,6 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 
-import com.dbbest.databasemanager.loadingmanager.constants.Attributes;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
 
@@ -9,7 +8,10 @@ import java.util.List;
 /**
  * The class with the attributes of the function node.
  */
-public class FunctionAttributes implements Attributes {
+public final class FunctionAttributes {
+
+    private FunctionAttributes() {
+    }
 
     public static final String FUNCTION_PROCEDURE_NAME = "SPECIFIC_NAME";
     public static final String ROUTINE_SCHEMA = "ROUTINE_SCHEMA";
@@ -22,12 +24,7 @@ public class FunctionAttributes implements Attributes {
     public static final String SQL_DATA_ACCESS = "SQL_DATA_ACCESS";
     public static final String SECURITY_TYPE = "SECURITY_TYPE";
 
-    @Override
-    public List<String> getListOfAttributes() {
-        return getListOfFunctionAttributes();
-    }
-
-    private List<String> getListOfFunctionAttributes() {
+    public static List<String> getListOfFunctionAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"ROUTINE_CATALOG", /*"ROUTINE_SCHEMA",*/ "ROUTINE_NAME",
             "ROUTINE_TYPE", /*"DATA_TYPE",*/ "CHARACTER_MAXIMUM_LENGTH",

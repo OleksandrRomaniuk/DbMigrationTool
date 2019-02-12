@@ -1,6 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 
-import com.dbbest.databasemanager.loadingmanager.constants.Attributes;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
 
@@ -9,7 +8,10 @@ import java.util.List;
 /**
  * The class with the attributes of the fk node.
  */
-public class ForeignKeyAttributes implements Attributes {
+public final class ForeignKeyAttributes {
+
+    private ForeignKeyAttributes() {
+    }
 
     public static final String FUNCTION_PROCEDURE_NAME = "SPECIFIC_NAME";
     public static final String REFERENCED_TABLE_SCHEMA = "REFERENCED_TABLE_SCHEMA";
@@ -19,13 +21,7 @@ public class ForeignKeyAttributes implements Attributes {
     public static final String ORDINAL_POSITION = "ORDINAL_POSITION";
     public static final String FK_COLUMN_NAME = "COLUMN_NAME";
 
-
-    @Override
-    public List<String> getListOfAttributes() {
-        return getListOfFKAttributes();
-    }
-
-    private List<String> getListOfFKAttributes() {
+    public static List<String> getListOfFKAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_CATALOG",
             "TABLE_SCHEMA", "TABLE_NAME", "COLUMN_NAME", "CONSTRAINT_NAME"

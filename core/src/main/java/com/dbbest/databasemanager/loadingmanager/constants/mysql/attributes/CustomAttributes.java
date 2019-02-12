@@ -7,5 +7,6 @@ public final class CustomAttributes {
     private CustomAttributes() {
     }
 
-    public static final String ROUTINE_ID = "routine_ID";
+    public static final String IS_CATEGORY = "IS_CATEGORY";
+    public static final String CHILD_TYPE = "CHILD_TYPE";
 }

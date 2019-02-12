@@ -19,6 +19,10 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(LoaderPrinterName.FUNCTION)
 public class FunctionLoader extends AbstractLoader {
+    public FunctionLoader(Context context) {
+        super(context);
+    }
+
     @Override
     public void lazyLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
         try {
@@ -35,8 +39,8 @@ public class FunctionLoader extends AbstractLoader {
         try {
             String elementName = (String) functionContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
             String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.FUNCTION);
-            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes, Context.getInstance().getSchemaName(), elementName);
+            String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String query = String.format(detailedLoaderQuery, listRepresentationOfAttributes, Context.getInstance().getSchemaName(), elementName);
             this.executeDetailedLoaderQuery(functionContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);

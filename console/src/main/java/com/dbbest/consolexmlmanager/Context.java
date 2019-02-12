@@ -13,7 +13,6 @@ public final class Context {
     private String fileName;
     private Container container;
     private String commandLine;
-    private static Context instance;
     private List<Container> listOfFoundElements;
     private Connection connection;
     private String schemaName;
@@ -21,19 +20,7 @@ public final class Context {
     private String printedSqlQuery;
     //private Container dbTreeContainer;
 
-    private Context() {
-    }
-
-    /**
-     * @return returns the instance of the class.
-     */
-    public static Context getInstance() {
-        if (instance == null) {
-            instance = new Context();
-            return instance;
-        } else {
-            return instance;
-        }
+    public Context() {
     }
 
     public String getFileName() {

@@ -15,7 +15,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -24,32 +23,25 @@ import java.util.logging.Level;
 @LoaderAnnotation(LoaderPrinterName.INDEX)
 public class IndexLoader extends AbstractLoader {
 
+    public IndexLoader(Context context) {
+        super(context);
+    }
+
     @Override
     public void lazyLoad(Container indexCategory) throws DatabaseException, ContainerException {
-        try {
-            String tableName = (String) indexCategory.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.INDEX);
-            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName(), tableName);
-            super.executeLazyLoaderQuery(indexCategory, query);
-            //super.executeLazyLoadTableChildren(indexCategory);
-        } catch (SQLException e) {
-            throw new DatabaseException(Level.SEVERE, e);
-        }
     }
 
     @Override
     public void detailedLoad(Container indexContainer) throws DatabaseException, ContainerException {
         try {
-            String elementName = (String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME);
+            String indexName = (String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME);
             String tableName = (String) indexContainer.getParent().getParent()
                 .getAttributes().get(TableAttributes.TABLE_NAME);
-            String detailedLoaderQuery = MySQLQueries.getInstance()
-                .getSqlQueriesDetailLoader().get(LoaderPrinterName.INDEX);
-            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes,
-                Context.getInstance().getSchemaName(), tableName, elementName);
-            //super.executeDetailedLoaderIndexQuery(indexContainer, query);
-            //super.executeDetailedLoadTableIndexey(indexContainer);
+            String schemaName = (String) indexContainer.getParent().getParent()
+                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String query = String.format(MySQLQueries.INDEXDETAILED, listRepresentationOfAttributes,
+                schemaName, tableName, indexName);
             Connection connection = super.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -67,13 +59,8 @@ public class IndexLoader extends AbstractLoader {
     }
 
     @Override
-    public void fullLoad(Container indexCategory) throws DatabaseException, ContainerException {
-        lazyLoad(indexCategory);
-        List<Container> indexes = indexCategory.getChildren();
-        if (indexes != null && !indexes.isEmpty()) {
-            for (Container index : indexes) {
-                detailedLoad(index);
-            }
-        }
+    public void fullLoad(Container indexContainer) throws DatabaseException, ContainerException {
+        this.lazyLoad(indexContainer);
+        this.detailedLoad(indexContainer);
     }
 }

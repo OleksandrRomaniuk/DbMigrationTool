@@ -1,6 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 
-import com.dbbest.databasemanager.loadingmanager.constants.Attributes;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
 
@@ -9,7 +8,10 @@ import java.util.List;
 /**
  * The class with the attributes of the trigger node.
  */
-public class TriggerAttributes implements Attributes {
+public final class TriggerAttributes {
+
+    private TriggerAttributes() {
+    }
 
     public static final String TRIGGER_NAME = "TRIGGER_NAME";
     public static final String EVENT_OBJECT_SCHEMA = "EVENT_OBJECT_SCHEMA";
@@ -18,12 +20,7 @@ public class TriggerAttributes implements Attributes {
     public static final String EVENT_OBJECT_TABLE = "EVENT_OBJECT_TABLE";
     public static final String ACTION_STATEMENT = "ACTION_STATEMENT";
 
-    @Override
-    public List<String> getListOfAttributes() {
-        return getListOfTriggerAttributes();
-    }
-
-    private List<String> getListOfTriggerAttributes() {
+    public static List<String> getListOfTriggerAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"TRIGGER_CATALOG", "TRIGGER_SCHEMA",
             /*"EVENT_MANIPULATION",*/ "EVENT_OBJECT_CATALOG", /*"EVENT_OBJECT_SCHEMA",*/ /*"EVENT_OBJECT_TABLE",*/

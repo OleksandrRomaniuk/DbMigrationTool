@@ -15,7 +15,7 @@ public class CommandSearch implements Command {
     private String attributeKey;
     private String attributeValue;
     private String searchType;
-    private Context context = Context.getInstance();
+    private Context context;
     private final int priority;
 
     private Predicate<SearchCommands> predicate = new Predicate<SearchCommands>() {
@@ -30,10 +30,11 @@ public class CommandSearch implements Command {
      * @param textToSearch the parameter to search.
      * @param priority priority of the command.
      */
-    public CommandSearch(String searchType, String textToSearch, int priority) {
+    public CommandSearch(String searchType, String textToSearch, int priority, Context context) {
         this.textToSearch = textToSearch;
         this.searchType = searchType;
         this.priority = priority;
+        this.context = context;
     }
 
     /**
@@ -42,11 +43,12 @@ public class CommandSearch implements Command {
      * @param attributeValue the value of the attribute to search.
      * @param priority priority of the command.
      */
-    public CommandSearch(String searchType, String attributeKey, String attributeValue, int priority) {
+    public CommandSearch(String searchType, String attributeKey, String attributeValue, int priority, Context context) {
         this.attributeKey = attributeKey;
         this.attributeValue = attributeValue;
         this.searchType = searchType;
         this.priority = priority;
+        this.context = context;
     }
 
     /**
@@ -56,10 +58,10 @@ public class CommandSearch implements Command {
 
         if (textToSearch != null) {
             Arrays.stream(SearchCommands.values()).filter(predicate)
-                .forEach(p -> p.executeCommand(textToSearch));
+                .forEach(p -> p.executeCommand(textToSearch, context));
         } else if (attributeKey != null && attributeValue != null) {
             Arrays.stream(SearchCommands.values()).filter(predicate)
-                .forEach(p -> p.executeCommand(attributeKey, attributeValue));
+                .forEach(p -> p.executeCommand(attributeKey, attributeValue, context));
         }
     }
 

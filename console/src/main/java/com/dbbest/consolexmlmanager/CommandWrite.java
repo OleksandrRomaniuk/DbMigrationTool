@@ -14,12 +14,13 @@ public class CommandWrite implements Command {
 
     private static final Logger logger = Logger.getLogger("Command logger");
     private String fileName;
-    private Context context = Context.getInstance();
+    private Context context;
     private final int priority;
 
-    public CommandWrite(String fileName, int priority) {
+    public CommandWrite(String fileName, int priority, Context context) {
         this.fileName = fileName;
         this.priority = priority;
+        this.context = context;
     }
 
     @Override

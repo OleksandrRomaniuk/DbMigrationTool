@@ -1,6 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes;
 
-import com.dbbest.databasemanager.loadingmanager.constants.Attributes;
 import com.dbbest.xmlmanager.container.DbList;
 import com.dbbest.xmlmanager.container.ListOfChildren;
 
@@ -9,17 +8,15 @@ import java.util.List;
 /**
  * The class with the attributes of the node of function(procedure) parameters.
  */
-public class FunctionProcedureParameterAttributes implements Attributes {
+public final class FunctionProcedureParameterAttributes {
+
+    private FunctionProcedureParameterAttributes() {
+    }
 
     public static final String PROC_FUNC_PARAMETER_NAME = "PARAMETER_NAME";
     public static final String PARAMETER_MODE = "PARAMETER_MODE";
 
-    @Override
-    public List<String> getListOfAttributes() {
-        return getListOfFunctionProcedureParameterAttributes();
-    }
-
-    private List<String> getListOfFunctionProcedureParameterAttributes() {
+    public static List<String> getListOfFunctionProcedureParameterAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"ORDINAL_POSITION", /*"PARAMETER_MODE", "PARAMETER_NAME",*/
             "SPECIFIC_CATALOG", "SPECIFIC_SCHEMA", "SPECIFIC_NAME", "DATA_TYPE",

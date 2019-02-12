@@ -12,7 +12,6 @@ import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,16 +22,12 @@ import java.util.logging.Logger;
 public class TriggerLoader extends AbstractLoader {
     private static final Logger logger = Logger.getLogger("Database logger");
 
+    public TriggerLoader(Context context) {
+        super(context);
+    }
+
     @Override
-    public void lazyLoad(Container categoryTriggers) throws DatabaseException, ContainerException {
-        try {
-            String tableName = (String) categoryTriggers.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String lazyLoaderQuery = MySQLQueries.getInstance().getSqlQueriesLazyLoader().get(LoaderPrinterName.TRIGGER);
-            String query = String.format(lazyLoaderQuery, Context.getInstance().getSchemaName(), tableName);
-            super.executeLazyLoaderQuery(categoryTriggers, query);
-        } catch (SQLException e) {
-            throw new DatabaseException(Level.SEVERE, e);
-        }
+    public void lazyLoad(Container triggerContainer) throws DatabaseException, ContainerException {
     }
 
     @Override
@@ -40,10 +35,10 @@ public class TriggerLoader extends AbstractLoader {
         try {
             String elementName = (String) triggerContainer.getAttributes().get(TriggerAttributes.TRIGGER_NAME);
             String tableName = (String) triggerContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String detailedLoaderQuery = MySQLQueries.getInstance().getSqlQueriesDetailLoader().get(LoaderPrinterName.TRIGGER);
-            String listOfAttributes = super.getListOfAttributes(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String query = String.format(detailedLoaderQuery, listOfAttributes,
-                Context.getInstance().getSchemaName(), tableName, elementName);
+            String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
+            String schemaName = (String) triggerContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String query = String.format(MySQLQueries.TRIGGERDEATILED, listRepresentationOfAttributes,
+                schemaName, tableName, elementName);
             super.executeDetailedLoaderQuery(triggerContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
@@ -51,13 +46,8 @@ public class TriggerLoader extends AbstractLoader {
     }
 
     @Override
-    public void fullLoad(Container categoryTriggers) throws DatabaseException, ContainerException {
-        lazyLoad(categoryTriggers);
-        List<Container> trigers = categoryTriggers.getChildren();
-        if (trigers != null && !trigers.isEmpty()) {
-            for (Container triger : trigers) {
-                detailedLoad(triger);
-            }
-        }
+    public void fullLoad(Container triggerContainer) throws DatabaseException, ContainerException {
+        this.lazyLoad(triggerContainer);
+        this.detailedLoad(triggerContainer);
     }
 }

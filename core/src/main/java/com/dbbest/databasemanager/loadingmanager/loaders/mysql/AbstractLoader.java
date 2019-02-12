@@ -21,19 +21,27 @@ import java.util.List;
  */
 public abstract class AbstractLoader implements Loader {
 
-    private Connection connection = Context.getInstance().getConnection();
+    private Context context;
+
+    private AbstractLoader() {
+    }
+
+    public AbstractLoader(Context context) {
+        this.context = context;
+    }
+
+    private Connection connection = context.getConnection();
 
     protected void executeLazyLoaderQuery(Container node, String query) throws SQLException, ContainerException {
         String childName = this.getClass()
             .getAnnotation(LoaderAnnotation.class).value();
-        String attribute  = NameAttributes.getInstance().getNameAttributes().get(childName);
+        String attribute = NameAttributes.getNameAttributesMap().get(childName);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             Container childNode = new Container();
             childNode.setName(childName);
             childNode.addAttribute(attribute, resultSet.getString(attribute));
-            childNode.addAttribute(CustomAttributes.ROUTINE_ID, childName + resultSet.getString(attribute));
             node.addChild(childNode);
         }
     }
@@ -51,7 +59,7 @@ public abstract class AbstractLoader implements Loader {
         }
     }
 
-    protected String getListOfAttributes(List<String> attributes) {
+    protected String listToString(List<String> attributes) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String attribute : attributes) {
             stringBuilder.append(attribute + ", ");
@@ -63,5 +71,9 @@ public abstract class AbstractLoader implements Loader {
 
     public Connection getConnection() {
         return connection;
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

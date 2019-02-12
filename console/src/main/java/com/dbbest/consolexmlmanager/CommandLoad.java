@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class CommandLoad implements Command {
     private static final Logger logger = Logger.getLogger("Command logger");
 
-    private Context context = Context.getInstance();
+    private Context context;
     private final int priority;
     private final String dbType;
     private final String dbName;
@@ -40,7 +40,7 @@ public class CommandLoad implements Command {
      * @param priority  priority of the command in the list of commands.
      */
     public CommandLoad(String dbType, String dbName, String userName, String password,
-                       String routineID, String loadType, int priority) {
+                       String routineID, String loadType, int priority, Context context) {
         this.dbType = dbType;
         this.dbName = dbName;
         this.userName = userName;
@@ -48,6 +48,7 @@ public class CommandLoad implements Command {
         this.priority = priority;
         this.routineID = routineID;
         this.loadType = loadType;
+        this.context = context;
     }
 
     @Override
