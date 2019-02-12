@@ -47,7 +47,7 @@ public class LoaderManagerTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -56,7 +56,7 @@ public class LoaderManagerTest {
         Container container = new Container();
         container.setName(LoaderPrinterName.SCHEMA);
 
-        LoaderManager loaderManager = LoaderManager.getInstance();
+        LoaderManager loaderManager = new LoaderManager(context);
         loaderManager.loadDetails(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

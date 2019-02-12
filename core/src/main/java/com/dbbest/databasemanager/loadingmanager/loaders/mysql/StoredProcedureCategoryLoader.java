@@ -22,11 +22,6 @@ public class StoredProcedureCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container storedProcedureCategoryContainer) throws DatabaseException, ContainerException {
-        if (!storedProcedureCategoryContainer.hasName()) {
-            storedProcedureCategoryContainer.setName(LoaderPrinterName.TABLES);
-        }
-        storedProcedureCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        storedProcedureCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.STORED_PROCEDURE);
         try {
             String query = String.format(MySQLQueries.STOREDPROCEDURELAZY,
                 storedProcedureCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));

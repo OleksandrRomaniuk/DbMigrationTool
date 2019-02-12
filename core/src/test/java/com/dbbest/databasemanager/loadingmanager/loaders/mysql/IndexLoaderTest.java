@@ -15,7 +15,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -47,7 +46,7 @@ public class IndexLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -57,7 +56,7 @@ public class IndexLoaderTest {
         parent.addChild(container);
 
 
-        IndexLoader loader = new IndexLoader();
+        IndexLoader loader = new IndexLoader(context);
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -89,7 +88,7 @@ public class IndexLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true).thenReturn(false);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -102,7 +101,7 @@ public class IndexLoaderTest {
         Container container = new Container();
         parent2.addChild(container);
         container.addAttribute("INDEX_NAME", null);
-        IndexLoader loader = new IndexLoader();
+        IndexLoader loader = new IndexLoader(context);
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

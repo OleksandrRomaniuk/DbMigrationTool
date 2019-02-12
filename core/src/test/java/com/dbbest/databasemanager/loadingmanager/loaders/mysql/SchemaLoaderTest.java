@@ -23,8 +23,9 @@ public class SchemaLoaderTest {
 
     @Test
     public void shouldSetSchemaNameAndCreateFourChildren() throws ContainerException, DatabaseException, SQLException {
+        Context context = new Context();
         Container schemaContainer = new Container();
-        SchemaLoader schemaLoader = new SchemaLoader();
+        SchemaLoader schemaLoader = new SchemaLoader(context);
         schemaLoader.lazyLoad(schemaContainer);
 
         Assert.assertEquals("Schema", schemaContainer.getName());
@@ -47,12 +48,12 @@ public class SchemaLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
         Container schemaContainer = new Container();
-        SchemaLoader schemaLoader = new SchemaLoader();
+        SchemaLoader schemaLoader = new SchemaLoader(context);
         schemaLoader.detailedLoad(schemaContainer);
 
         Map<String, String> schemaAttributes = schemaContainer.getAttributes();

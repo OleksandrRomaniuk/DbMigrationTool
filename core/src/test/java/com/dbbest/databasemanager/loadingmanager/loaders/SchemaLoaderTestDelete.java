@@ -28,8 +28,9 @@ public class SchemaLoaderTestDelete {
     public void setUp() throws Exception {
         SimpleConnectionBuilder simpleConnectionBuilder = new SimpleConnectionBuilder();
         connection = simpleConnectionBuilder.getConnection("mysql");
-        Context.getInstance().setConnection(connection);
-        Context.getInstance().setSchemaName("sakila");
+        Context context = new Context();
+        context.setConnection(connection);
+        context.setSchemaName("sakila");
     }
 
     @After

@@ -1,6 +1,7 @@
 package com.dbbest.xmlmanager;
 
 import com.dbbest.consolexmlmanager.CommandManager;
+import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
@@ -23,13 +24,14 @@ public class IntegrationTest {
     @Test
     public void shouldReadXmlFileThenWriteFileAfterComparesTwoFileAndAsksTesterToValidateDifferences() throws ParsingException, SerializingException, IOException, SAXException, CommandException, DatabaseException {
 
+        Context context = new Context();
         String[] commandLine = new String[4];
         commandLine[0] = "-read";
         commandLine[1] = expectedXml;
         commandLine[2] = "-write";
         commandLine[3] = actualXml;
 
-        CommandManager commandManager = new CommandManager();
+        CommandManager commandManager = new CommandManager(context);
         commandManager.addCommands(commandLine);
         commandManager.execute();
 

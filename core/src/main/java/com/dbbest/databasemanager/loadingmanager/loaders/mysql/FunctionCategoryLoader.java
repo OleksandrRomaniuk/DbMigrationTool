@@ -22,9 +22,6 @@ public class FunctionCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
-        if (!functionCategoryContainer.hasName()) {
-            functionCategoryContainer.setName(LoaderPrinterName.FUNCTIONS);
-        }
         functionCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
         functionCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.FUNCTION);
         try {

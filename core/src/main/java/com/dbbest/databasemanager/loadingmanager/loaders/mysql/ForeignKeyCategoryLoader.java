@@ -22,11 +22,6 @@ public class ForeignKeyCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container foreignKeyCategory) throws DatabaseException, ContainerException {
-        if (!foreignKeyCategory.hasName()) {
-            foreignKeyCategory.setName(LoaderPrinterName.TABLE_FOREIGN_KEYS);
-        }
-        foreignKeyCategory.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        foreignKeyCategory.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.FOREIGN_KEY);
         try {
             String tableName = (String) foreignKeyCategory.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
             String schemaName = (String) foreignKeyCategory.getParent()

@@ -47,12 +47,12 @@ public class ViewLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
         Container container = new Container();
-        ViewLoader loader = new ViewLoader();
+        ViewLoader loader = new ViewLoader(context);
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -75,13 +75,13 @@ public class ViewLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
         Container container = new Container();
         container.addAttribute("TABLE_NAME", "tableTest");
-        ViewLoader loader = new ViewLoader();
+        ViewLoader loader = new ViewLoader(context);
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

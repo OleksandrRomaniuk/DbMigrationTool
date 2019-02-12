@@ -24,12 +24,6 @@ public class ViewLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container viewContainer) throws DatabaseException, ContainerException {
-        if (!viewContainer.hasName()) {
-            viewContainer.setName(LoaderPrinterName.VIEW);
-        }
-        viewContainer.addAttribute(CustomAttributes.IS_CATEGORY, false);
-        viewContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.VIEW_COLUMN);
-
         try {
             String tableName = (String) viewContainer.getAttributes().get(ViewAttributes.TABLE_NAME);
             String schemaAName = (String) viewContainer.getAttributes().get(ViewAttributes.TABLE_SCHEMA);

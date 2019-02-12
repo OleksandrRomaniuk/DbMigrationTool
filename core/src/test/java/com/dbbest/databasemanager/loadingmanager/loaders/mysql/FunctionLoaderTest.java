@@ -47,12 +47,12 @@ public class FunctionLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
         Container container = new Container();
-        FunctionLoader loader = new FunctionLoader();
+        FunctionLoader loader = new FunctionLoader(context);
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -85,13 +85,13 @@ public class FunctionLoaderTest {
         when(preparedStatement2.executeQuery()).thenReturn(resultSet2);
         when(resultSet2.next()).thenReturn(false);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
         Container container = new Container();
         container.addAttribute("SPECIFIC_NAME", null);
-        FunctionLoader loader = new FunctionLoader();
+        FunctionLoader loader = new FunctionLoader(context);
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

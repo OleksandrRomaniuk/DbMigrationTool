@@ -47,7 +47,7 @@ public class Invoker {
         try {
             command.execute();
         } catch (ParsingException | ContainerException | SerializingException e) {
-            throw new CommandException(Level.SEVERE, e.getMessage());
+            throw new CommandException(Level.SEVERE, e);
         }
     }
 }

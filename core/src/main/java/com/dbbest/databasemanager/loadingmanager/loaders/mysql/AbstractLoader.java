@@ -28,20 +28,22 @@ public abstract class AbstractLoader implements Loader {
 
     public AbstractLoader(Context context) {
         this.context = context;
+        connection = context.getConnection();
     }
 
-    private Connection connection = context.getConnection();
+    private Connection connection;
 
     protected void executeLazyLoaderQuery(Container node, String query) throws SQLException, ContainerException {
-        String childName = this.getClass()
+        String loaderName = this.getClass()
             .getAnnotation(LoaderAnnotation.class).value();
-        String attribute = NameAttributes.getNameAttributesMap().get(childName);
+        String attribute = NameAttributes.getNameAttributesMap().get(loaderName);
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             Container childNode = new Container();
-            childNode.setName(childName);
+            childNode.setName(loaderName);
             childNode.addAttribute(attribute, resultSet.getString(attribute));
+            childNode.addAttribute(CustomAttributes.IS_CATEGORY, false);
             node.addChild(childNode);
         }
     }

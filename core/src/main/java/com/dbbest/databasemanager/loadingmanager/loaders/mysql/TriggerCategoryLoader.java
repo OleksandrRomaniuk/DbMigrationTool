@@ -22,12 +22,6 @@ public class TriggerCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container triggerCategoryContainer) throws DatabaseException, ContainerException {
-        if (!triggerCategoryContainer.hasName()) {
-            triggerCategoryContainer.setName(LoaderPrinterName.TABLE_TRIGGERS);
-        }
-        triggerCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        triggerCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.TRIGGER);
-
         try {
             String tableName = (String) triggerCategoryContainer.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
             String schemaName = (String) triggerCategoryContainer.getParent()

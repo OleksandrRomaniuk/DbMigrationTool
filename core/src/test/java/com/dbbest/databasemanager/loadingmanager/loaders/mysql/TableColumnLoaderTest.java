@@ -47,7 +47,7 @@ public class TableColumnLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -57,7 +57,7 @@ public class TableColumnLoaderTest {
         parent.addChild(container);
 
 
-        TableColumnLoader loader = new TableColumnLoader();
+        TableColumnLoader loader = new TableColumnLoader(context);
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -80,7 +80,7 @@ public class TableColumnLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -92,7 +92,7 @@ public class TableColumnLoaderTest {
         Container container = new Container();
         parent2.addChild(container);
         container.addAttribute("COLUMN_NAME", null);
-        TableColumnLoader loader = new TableColumnLoader();
+        TableColumnLoader loader = new TableColumnLoader(context);
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

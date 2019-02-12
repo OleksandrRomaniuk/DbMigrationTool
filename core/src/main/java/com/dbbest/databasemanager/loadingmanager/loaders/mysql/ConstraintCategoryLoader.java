@@ -27,13 +27,6 @@ public class ConstraintCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
-
-        if (!constraintCategoryContainer.hasName()) {
-            constraintCategoryContainer.setName(LoaderPrinterName.TABLE_CONSTRAINTS);
-        }
-        constraintCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        constraintCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.CONSTRAINT);
-
         try {
             String tableName = (String) constraintCategoryContainer.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
             String schemaName = (String) constraintCategoryContainer.getParent()
@@ -51,6 +44,7 @@ public class ConstraintCategoryLoader extends AbstractLoader {
                 Container childNode = new Container();
                 childNode.setName(LoaderPrinterName.CONSTRAINT);
                 constraintCategoryContainer.addChild(childNode);
+                childNode.addAttribute(CustomAttributes.IS_CATEGORY, false);
                 for (String attribute : ConstraintAttributes.getListOfLazyLoadAttributeNames()) {
                     childNode.addAttribute(attribute, resultSet.getString(attribute));
                 }

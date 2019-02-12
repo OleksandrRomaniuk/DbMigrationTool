@@ -57,7 +57,7 @@ public class ConstraintLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -67,7 +67,7 @@ public class ConstraintLoaderTest {
         parent.addChild(container);
 
 
-        ConstraintLoader loader = new ConstraintLoader();
+        ConstraintLoader loader = new ConstraintLoader(context);
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -90,7 +90,7 @@ public class ConstraintLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(false);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -102,7 +102,7 @@ public class ConstraintLoaderTest {
         Container container = new Container();
         parent2.addChild(container);
         container.addAttribute("CONSTRAINT_NAME", null);
-        ConstraintLoader loader = new ConstraintLoader();
+        ConstraintLoader loader = new ConstraintLoader(context);
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

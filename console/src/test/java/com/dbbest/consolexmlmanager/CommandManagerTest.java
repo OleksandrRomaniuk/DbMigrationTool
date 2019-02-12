@@ -37,7 +37,8 @@ public class CommandManagerTest {
 
     @Test
     public void shouldReadValidTestFile() throws CommandException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[2];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -49,7 +50,8 @@ public class CommandManagerTest {
 
     @Test
     public void shouldReadAndThenWriteValidFile() throws CommandException, ParsingException, ContainerException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[4];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -67,7 +69,8 @@ public class CommandManagerTest {
 
     @Test
     public void shouldFindElementSearchHorizontalName() throws CommandException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[5];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -82,7 +85,8 @@ public class CommandManagerTest {
 
     @Test
     public void shouldFindElementSearchHorizontalValue() throws CommandException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[5];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -97,7 +101,8 @@ public class CommandManagerTest {
 
     @Test
     public void shouldFindElementSearchHorizontalKeyValue() throws CommandException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[6];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -113,7 +118,8 @@ public class CommandManagerTest {
 
     @Test
     public void shouldFindElementSearchVerticalName() throws CommandException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[5];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -128,7 +134,8 @@ public class CommandManagerTest {
 
     @Test
     public void shouldFindElementSearchVerticalValue() throws CommandException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[5];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -143,7 +150,8 @@ public class CommandManagerTest {
 
     @Test
     public void shouldFindElementSearchVerticalKeyValue() throws CommandException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[6];
         commandLine[0] = "-read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -159,7 +167,8 @@ public class CommandManagerTest {
 
     @Test(expected = CommandException.class)
     public void shouldThrowCommandException() throws CommandException, DatabaseException {
-        CommandManager commandManager = new CommandManager();
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[5];
         commandLine[0] = "read";
         commandLine[1] = "src/test/resources/validFile.xml";
@@ -177,15 +186,15 @@ public class CommandManagerTest {
         if (testFile.exists()) {
             testFile.delete();
         }
-
-        CommandManager commandManager = new CommandManager();
-        String[] commandLine = new String[26];
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
+        String[] commandLine = new String[21];
         commandLine[0] = "-load";
         commandLine[1] = LoadersPrinterDatabaseTypes.MYSQL;
         commandLine[2] = "sakila";
         commandLine[3] = "root";
         commandLine[4] = "Ilovemylife101088";
-        commandLine[5] = LoaderPrinterName.SCHEMA;
+        commandLine[5] = "sakila";
         commandLine[6] = LoadTypes.LAZY;
 
         commandLine[7] = "-load";
@@ -193,7 +202,7 @@ public class CommandManagerTest {
         commandLine[9] = "sakila";
         commandLine[10] = "root";
         commandLine[11] = "Ilovemylife101088";
-        commandLine[12] = LoaderPrinterName.SCHEMA;
+        commandLine[12] = "sakila";
         commandLine[13] = LoadTypes.DETAIL;
 
         commandLine[14] = "-load";
@@ -201,19 +210,19 @@ public class CommandManagerTest {
         commandLine[16] = "sakila";
         commandLine[17] = "root";
         commandLine[18] = "Ilovemylife101088";
-        commandLine[19] = LoaderPrinterName.TABLES;
+        commandLine[19] = "sakila";
         commandLine[20] = LoadTypes.FULL;
+/*
 
         commandLine[21] = "-print";
         commandLine[22] = LoadersPrinterDatabaseTypes.MYSQL;
-        commandLine[23] = "Indexidx_fk_address_id";
+        commandLine[23] = "sakila.tables.actor";
 
         commandLine[24] = "-write";
         commandLine[25] = "src/test/resources/treeFile.xml";
-
+*/
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        System.out.println(Context.getInstance().getPrintedSqlQuery());
 
     }
 }

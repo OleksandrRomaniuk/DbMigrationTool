@@ -47,7 +47,7 @@ public class ViewColumnLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -58,7 +58,7 @@ public class ViewColumnLoaderTest {
         parent.addChild(container);
 
 
-        ViewColumnLoader loader = new ViewColumnLoader();
+        ViewColumnLoader loader = new ViewColumnLoader(context);
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -81,7 +81,7 @@ public class ViewColumnLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -91,7 +91,7 @@ public class ViewColumnLoaderTest {
         Container container = new Container();
         parent1.addChild(container);
         container.addAttribute("COLUMN_NAME", null);
-        ViewColumnLoader loader = new ViewColumnLoader();
+        ViewColumnLoader loader = new ViewColumnLoader(context);
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

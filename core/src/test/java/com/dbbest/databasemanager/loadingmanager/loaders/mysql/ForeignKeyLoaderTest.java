@@ -47,7 +47,7 @@ public class ForeignKeyLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -57,7 +57,7 @@ public class ForeignKeyLoaderTest {
         parent.addChild(container);
 
 
-        ForeignKeyLoader loader = new ForeignKeyLoader();
+        ForeignKeyLoader loader = new ForeignKeyLoader(context);
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -80,7 +80,7 @@ public class ForeignKeyLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(false);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -92,7 +92,7 @@ public class ForeignKeyLoaderTest {
         Container container = new Container();
         parent2.addChild(container);
         container.addAttribute("CONSTRAINT_NAME", null);
-        ForeignKeyLoader loader = new ForeignKeyLoader();
+        ForeignKeyLoader loader = new ForeignKeyLoader(context);
         loader.detailedLoad(container);
 
         /*

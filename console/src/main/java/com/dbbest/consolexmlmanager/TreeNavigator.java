@@ -14,8 +14,8 @@ public class TreeNavigator {
 
     public Container getTargetContainer(String fullPath) {
         Container rootContainer = context.getDbTreeContainer();
-        String[] fullPathSplit = fullPath.split(".");
-        if (fullPathSplit.length == 1 && rootContainer.getAttributes().containsValue(fullPathSplit[0])) {
+        String[] fullPathSplit = fullPath.split("\\.");
+        if (fullPathSplit.length == 1) {
             return rootContainer;
         } else {
             List<Container> containersOfLevel = rootContainer.getChildren();

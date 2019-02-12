@@ -22,11 +22,6 @@ public class TableColumnCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container tableColumnCategoryContainer) throws DatabaseException, ContainerException {
-        if (!tableColumnCategoryContainer.hasName()) {
-            tableColumnCategoryContainer.setName(LoaderPrinterName.TABLE_COLUMNS);
-        }
-        tableColumnCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        tableColumnCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.TABLE_COLUMN);
         try {
             String tableName = (String) tableColumnCategoryContainer.getParent()
                 .getAttributes().get(TableAttributes.TABLE_NAME);

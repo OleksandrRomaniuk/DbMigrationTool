@@ -22,11 +22,6 @@ public class ViewCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container viewCategoryContainer) throws DatabaseException, ContainerException {
-        if (!viewCategoryContainer.hasName()) {
-            viewCategoryContainer.setName(LoaderPrinterName.VIEWS);
-        }
-        viewCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        viewCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.VIEW);
         try {
             String query = String.format(MySQLQueries.VIEWLAZY,
                 viewCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));

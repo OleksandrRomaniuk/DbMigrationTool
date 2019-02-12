@@ -3,6 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -32,12 +33,16 @@ public class SchemaLoader extends AbstractLoader {
         if (!schemaContainer.hasName()) {
             schemaContainer.setName(LoaderPrinterName.SCHEMA);
         }
+        schemaContainer.addAttribute(CustomAttributes.IS_CATEGORY, false);
         schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, schemaName);
-        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.TABLES, new TableCategoryLoader(super.getContext()));
-        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.VIEWS, new ViewCategoryLoader(super.getContext()));
-        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.FUNCTIONS, new FunctionCategoryLoader(super.getContext()));
+        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.TABLES,
+            new TableCategoryLoader(super.getContext()), LoaderPrinterName.TABLE);
+        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.VIEWS,
+            new ViewCategoryLoader(super.getContext()), LoaderPrinterName.VIEW);
+        this.lazyLoadCategory(schemaContainer, LoaderPrinterName.FUNCTIONS,
+            new FunctionCategoryLoader(super.getContext()), LoaderPrinterName.FUNCTION);
         this.lazyLoadCategory(schemaContainer, LoaderPrinterName.STORED_PROCEDURES,
-            new StoredProcedureCategoryLoader(super.getContext()));
+            new StoredProcedureCategoryLoader(super.getContext()), LoaderPrinterName.STORED_PROCEDURE);
     }
 
     @Override
@@ -65,10 +70,12 @@ public class SchemaLoader extends AbstractLoader {
         new FunctionCategoryLoader(super.getContext()).fullLoad(schemaContainer.getChildByName(LoaderPrinterName.FUNCTIONS));
     }
 
-    private void lazyLoadCategory(Container schemaContainer, String categoryName, Loader categoryLoader)
+    private void lazyLoadCategory(Container schemaContainer, String categoryName, Loader categoryLoader, String childType)
         throws ContainerException, DatabaseException {
         Container category = new Container();
         category.setName(categoryName);
+        category.addAttribute(CustomAttributes.IS_CATEGORY, true);
+        category.addAttribute(CustomAttributes.CHILD_TYPE, childType);
         schemaContainer.addChild(category);
         categoryLoader.lazyLoad(category);
     }

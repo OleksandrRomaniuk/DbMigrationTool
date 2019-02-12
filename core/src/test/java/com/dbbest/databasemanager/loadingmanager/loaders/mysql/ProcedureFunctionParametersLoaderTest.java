@@ -46,7 +46,7 @@ public class ProcedureFunctionParametersLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -57,7 +57,7 @@ public class ProcedureFunctionParametersLoaderTest {
         parent.addChild(container);
 
 
-        ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader();
+        ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader(context);
         loader.lazyLoad(container);
 
         Assert.assertEquals(1, container.getChildren().size());
@@ -80,7 +80,7 @@ public class ProcedureFunctionParametersLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = Context.getInstance();
+        Context context = new Context();
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
@@ -93,7 +93,7 @@ public class ProcedureFunctionParametersLoaderTest {
         Container container = new Container();
         parent2.addChild(container);
         container.addAttribute("PARAMETER_NAME", null);
-        ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader();
+        ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader(context);
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

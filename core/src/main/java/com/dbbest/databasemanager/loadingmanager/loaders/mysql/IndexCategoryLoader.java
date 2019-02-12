@@ -22,11 +22,6 @@ public class IndexCategoryLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container indexCategoryContainer) throws DatabaseException, ContainerException {
-        if (!indexCategoryContainer.hasName()) {
-            indexCategoryContainer.setName(LoaderPrinterName.TABLE_INDEXES);
-        }
-        indexCategoryContainer.addAttribute(CustomAttributes.IS_CATEGORY, true);
-        indexCategoryContainer.addAttribute(CustomAttributes.CHILD_TYPE, LoaderPrinterName.INDEX);
         try {
             String tableName = (String) indexCategoryContainer.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
             String schemaName = (String) indexCategoryContainer.getParent()

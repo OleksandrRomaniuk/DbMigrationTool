@@ -9,6 +9,7 @@ import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -19,8 +20,10 @@ import java.util.logging.Level;
 public final class LoaderManager {
 
     private Map<String, Class> loaders;
+    private Context context;
 
     public LoaderManager(Context context) throws DatabaseException {
+        this.context = context;
         loaders = new LoaderClassLoader(context.getDbType()).getLoaders();
     }
 
@@ -33,10 +36,10 @@ public final class LoaderManager {
     public Container loadLazy(Container container) throws DatabaseException, ContainerException {
         Class loaderClass = loaders.get(container.getName());
         try {
-            Loader loader = (Loader)loaderClass.newInstance();
+            Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Context.class}).newInstance(context);
             loader.lazyLoad(container);
             return container;
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
@@ -50,10 +53,10 @@ public final class LoaderManager {
     public Container loadDetails(Container container) throws DatabaseException, ContainerException {
         Class loaderClass = loaders.get(container.getName());
         try {
-            Loader loader = (Loader)loaderClass.newInstance();
+            Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Context.class}).newInstance(context);
             loader.detailedLoad(container);
             return container;
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
@@ -67,10 +70,10 @@ public final class LoaderManager {
     public Container loadFull(Container container) throws DatabaseException, ContainerException {
         Class loaderClass = loaders.get(container.getName());
         try {
-            Loader loader = (Loader)loaderClass.newInstance();
+            Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Context.class}).newInstance(context);
             loader.fullLoad(container);
             return container;
-        } catch (InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }

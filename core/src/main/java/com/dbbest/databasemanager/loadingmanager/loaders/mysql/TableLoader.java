@@ -3,6 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -26,17 +27,16 @@ public class TableLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container tableContainer) throws DatabaseException, ContainerException {
-
-        if (tableContainer.hasChildren()) {
-            this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_COLUMNS,
-                new TableColumnCategoryLoader(super.getContext()));
-            this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_INDEXES, new IndexCategoryLoader(super.getContext()));
-            this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_FOREIGN_KEYS,
-                new ForeignKeyCategoryLoader(super.getContext()));
-            this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_TRIGGERS, new TriggerCategoryLoader(super.getContext()));
-            this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_CONSTRAINTS,
-                new ConstraintCategoryLoader(super.getContext()));
-        }
+        this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_COLUMNS,
+            new TableColumnCategoryLoader(super.getContext()), LoaderPrinterName.TABLE_COLUMN);
+        this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_INDEXES,
+            new IndexCategoryLoader(super.getContext()), LoaderPrinterName.INDEX);
+        this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_FOREIGN_KEYS,
+            new ForeignKeyCategoryLoader(super.getContext()), LoaderPrinterName.FOREIGN_KEY);
+        this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_TRIGGERS,
+            new TriggerCategoryLoader(super.getContext()), LoaderPrinterName.TRIGGER);
+        this.lazyLoadCategory(tableContainer, LoaderPrinterName.TABLE_CONSTRAINTS,
+            new ConstraintCategoryLoader(super.getContext()), LoaderPrinterName.CONSTRAINT);
     }
 
     @Override
@@ -56,6 +56,7 @@ public class TableLoader extends AbstractLoader {
     public void fullLoad(Container tableContainer) throws DatabaseException, ContainerException {
         this.lazyLoad(tableContainer);
         this.detailedLoad(tableContainer);
+        System.out.println(tableContainer.hasChildren());
         new TableColumnCategoryLoader(super.getContext()).fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_COLUMNS));
         new IndexCategoryLoader(super.getContext()).fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_INDEXES));
         new ForeignKeyCategoryLoader(super.getContext())
@@ -64,10 +65,12 @@ public class TableLoader extends AbstractLoader {
         new ConstraintLoader(super.getContext()).fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_CONSTRAINTS));
     }
 
-    private void lazyLoadCategory(Container tableContainer, String categoryName, Loader categoryLoader)
+    private void lazyLoadCategory(Container tableContainer, String categoryName, Loader categoryLoader, String childType)
         throws ContainerException, DatabaseException {
         Container category = new Container();
         category.setName(categoryName);
+        category.addAttribute(CustomAttributes.IS_CATEGORY, true);
+        category.addAttribute(CustomAttributes.CHILD_TYPE, childType);
         tableContainer.addChild(category);
         categoryLoader.lazyLoad(category);
     }
