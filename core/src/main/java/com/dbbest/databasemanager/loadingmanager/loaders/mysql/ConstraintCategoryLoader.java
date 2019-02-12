@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
@@ -17,6 +18,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+@LoaderAnnotation(LoaderPrinterName.TABLE_CONSTRAINTS)
 public class ConstraintCategoryLoader extends AbstractLoader {
 
     public ConstraintCategoryLoader(Context context) {

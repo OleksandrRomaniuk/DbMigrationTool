@@ -1,13 +1,11 @@
 package com.dbbest.consolexmlmanager;
 
 import com.dbbest.databasemanager.loadingmanager.PrinterManager;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 import com.dbbest.xmlmanager.container.HorizontalPassageSearchManager;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,16 +19,16 @@ public class CommandPrint implements Command {
     private Context context;
     private final int priority;
     private final String dbType;
-    private final String routineID;
+    private final String fullPath;
 
     /**
      * @param dbType the type of the database (mysql, mssql etc.).
-     * @param routineID the identifier of the element to print.
+     * @param fullPath the identifier of the element to print.
      * @param priority the priority of the command in the list of commands.
      */
-    public CommandPrint(String dbType, String routineID, int priority, Context context) {
+    public CommandPrint(String dbType, String fullPath, int priority, Context context) {
         this.dbType = dbType;
-        this.routineID = routineID;
+        this.fullPath = fullPath;
         this.priority = priority;
         this.context = context;
     }
@@ -43,12 +41,12 @@ public class CommandPrint implements Command {
         }
         context.setDbType(dbType);
         HorizontalPassageSearchManager horSearchManager = new HorizontalPassageSearchManager(context.getDbTreeContainer());
-        List<Container> targetContainer = horSearchManager.searchInKeyValues(CustomAttributes.ROUTINE_ID, routineID);
+        Container targetContainer = new TreeNavigator(context).getTargetContainer(fullPath);
         PrinterManager printerManager = new PrinterManager(context);
-        if (targetContainer != null && !targetContainer.isEmpty()) {
-            context.setPrintedSqlQuery(printerManager.print(targetContainer.get(0)));
+        if (targetContainer != null) {
+            context.setPrintedSqlQuery(printerManager.print(targetContainer));
         } else {
-            logger.log(Level.INFO, "No elements were found by the routine ID " + routineID);
+            throw new DatabaseException(Level.INFO, "Can not find the node with the path:  " + fullPath);
         }
     }
 
@@ -56,4 +54,6 @@ public class CommandPrint implements Command {
     public int getPriority() {
         return priority;
     }
+
+
 }
