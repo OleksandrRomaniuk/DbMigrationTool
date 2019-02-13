@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the trigger category.
+ */
 @LoaderAnnotation(LoaderPrinterName.TABLE_TRIGGERS)
 public class TriggerCategoryLoader extends AbstractLoader {
     public TriggerCategoryLoader(Context context) {

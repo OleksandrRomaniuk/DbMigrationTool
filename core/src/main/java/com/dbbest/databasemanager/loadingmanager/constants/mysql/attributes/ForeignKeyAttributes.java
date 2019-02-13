@@ -21,6 +21,9 @@ public final class ForeignKeyAttributes {
     public static final String ORDINAL_POSITION = "ORDINAL_POSITION";
     public static final String FK_COLUMN_NAME = "COLUMN_NAME";
 
+    /**
+     * @return returns the list of attributes for the detailed foreign key loader.
+     */
     public static List<String> getListOfFKAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_CATALOG",

@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of the foreign keys.
+ */
 @PrinterAnnotation(LoaderPrinterName.TABLE_FOREIGN_KEYS)
 public class FireignKeyCategoryPrinter implements Printer {
     @Override

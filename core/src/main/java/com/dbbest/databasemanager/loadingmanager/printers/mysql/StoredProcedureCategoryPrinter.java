@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of the stored procedure category.
+ */
 @PrinterAnnotation(LoaderPrinterName.STORED_PROCEDURES)
 public class StoredProcedureCategoryPrinter implements Printer {
     @Override

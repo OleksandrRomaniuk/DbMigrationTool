@@ -16,6 +16,9 @@ public final class FunctionProcedureParameterAttributes {
     public static final String PROC_FUNC_PARAMETER_NAME = "PARAMETER_NAME";
     public static final String PARAMETER_MODE = "PARAMETER_MODE";
 
+    /**
+     * @return returns the list of attributes for the detailed loader of the function/procedure parameters.
+     */
     public static List<String> getListOfFunctionProcedureParameterAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"ORDINAL_POSITION", /*"PARAMETER_MODE", "PARAMETER_NAME",*/

@@ -4,6 +4,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class which searches required node in the tree.
+ */
 public class TreeNavigator {
 
     private Context context;
@@ -12,6 +15,10 @@ public class TreeNavigator {
         this.context = context;
     }
 
+    /**
+     * @param fullPath the full path to the target node.
+     * @return returns the target container.
+     */
     public Container getTargetContainer(String fullPath) {
         Container rootContainer = context.getDbTreeContainer();
         String[] fullPathSplit = fullPath.split("\\.");

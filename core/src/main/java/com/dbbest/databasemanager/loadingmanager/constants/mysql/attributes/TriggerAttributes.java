@@ -20,6 +20,9 @@ public final class TriggerAttributes {
     public static final String EVENT_OBJECT_TABLE = "EVENT_OBJECT_TABLE";
     public static final String ACTION_STATEMENT = "ACTION_STATEMENT";
 
+    /**
+     * @return returns the list of attributes for the detailed trigger loader.
+     */
     public static List<String> getListOfTriggerAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"TRIGGER_CATALOG", "TRIGGER_SCHEMA",

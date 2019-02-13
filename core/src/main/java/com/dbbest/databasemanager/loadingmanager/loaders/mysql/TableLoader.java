@@ -63,7 +63,8 @@ public class TableLoader extends AbstractLoader {
         new ForeignKeyCategoryLoader(super.getContext())
             .fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_FOREIGN_KEYS));
         new TriggerCategoryLoader(super.getContext()).fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_TRIGGERS));
-        new ConstraintCategoryLoader(super.getContext()).fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_CONSTRAINTS));
+        new ConstraintCategoryLoader(super.getContext())
+            .fullLoad(tableContainer.getChildByName(LoaderPrinterName.TABLE_CONSTRAINTS));
     }
 
     private void lazyLoadCategory(Container tableContainer, String categoryName, Loader categoryLoader, String childType)

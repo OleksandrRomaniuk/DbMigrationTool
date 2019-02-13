@@ -14,6 +14,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the view category.
+ */
 @LoaderAnnotation(LoaderPrinterName.VIEWS)
 public class ViewCategoryLoader extends AbstractLoader {
     public ViewCategoryLoader(Context context) {

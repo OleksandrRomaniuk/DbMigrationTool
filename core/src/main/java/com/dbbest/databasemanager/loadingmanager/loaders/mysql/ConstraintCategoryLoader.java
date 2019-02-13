@@ -19,6 +19,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the table constraints.
+ */
 @LoaderAnnotation(LoaderPrinterName.TABLE_CONSTRAINTS)
 public class ConstraintCategoryLoader extends AbstractLoader {
 

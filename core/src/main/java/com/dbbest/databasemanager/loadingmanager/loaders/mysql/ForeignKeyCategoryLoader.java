@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the foreign key category.
+ */
 @LoaderAnnotation(LoaderPrinterName.TABLE_FOREIGN_KEYS)
 public class ForeignKeyCategoryLoader extends AbstractLoader {
     public ForeignKeyCategoryLoader(Context context) {

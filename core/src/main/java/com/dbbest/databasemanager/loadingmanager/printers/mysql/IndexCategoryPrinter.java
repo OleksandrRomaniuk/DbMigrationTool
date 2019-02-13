@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of the index category.
+ */
 @PrinterAnnotation(LoaderPrinterName.TABLE_INDEXES)
 public class IndexCategoryPrinter implements Printer {
     @Override

@@ -24,6 +24,9 @@ public final class FunctionAttributes {
     public static final String SQL_DATA_ACCESS = "SQL_DATA_ACCESS";
     public static final String SECURITY_TYPE = "SECURITY_TYPE";
 
+    /**
+     * @return returns the list of attributes for the detailed function loader.
+     */
     public static List<String> getListOfFunctionAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"ROUTINE_CATALOG", /*"ROUTINE_SCHEMA",*/ "ROUTINE_NAME",

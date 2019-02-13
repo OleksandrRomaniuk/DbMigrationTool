@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of the function category.
+ */
 @PrinterAnnotation(LoaderPrinterName.FUNCTIONS)
 public class FunctionCategoryPrinter implements Printer {
     @Override

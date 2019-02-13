@@ -21,6 +21,9 @@ public final class IndexAttributes {
     public static final String INDEX_COLUMN_NAME = "COLUMN_NAME";
     public static final String SUB_PART = "SUB_PART";
 
+    /**
+     * @return returns the list of attributes for the detailed index loader.
+     */
     public static List<String> getListOfIndexAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"TABLE_CATALOG", /*"TABLE_SCHEMA", "TABLE_NAME", "NON_UNIQUE",*/ "INDEX_SCHEMA",

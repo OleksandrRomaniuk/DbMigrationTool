@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of the trigger category.
+ */
 @PrinterAnnotation(LoaderPrinterName.TABLE_TRIGGERS)
 public class TriggerCategoryPrinter implements Printer {
     @Override

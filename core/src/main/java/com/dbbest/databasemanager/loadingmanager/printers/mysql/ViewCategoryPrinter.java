@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of the view category.
+ */
 @PrinterAnnotation(LoaderPrinterName.VIEWS)
 public class ViewCategoryPrinter implements Printer {
     @Override

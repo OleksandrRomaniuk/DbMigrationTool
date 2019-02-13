@@ -8,6 +8,9 @@ import com.dbbest.xmlmanager.container.Container;
 
 import java.util.List;
 
+/**
+ * The class-printer of the table category.
+ */
 @PrinterAnnotation(LoaderPrinterName.TABLES)
 public class TableCategoryPrinter implements Printer {
     @Override

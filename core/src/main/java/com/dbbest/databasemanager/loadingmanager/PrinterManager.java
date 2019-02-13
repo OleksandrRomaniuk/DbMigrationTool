@@ -24,6 +24,12 @@ public final class PrinterManager {
         printers = new PrinterClassLoader(context.getDbType()).getPrinters();
     }
 
+    /**
+     * @param container the target container to print.
+     * @return returns the priunted sql script.
+     * @throws DatabaseException throws the exception if a problem encountered at work with the database.
+     * @throws ContainerException throws the exception if a problem encountered at work with the container.
+     */
     public String print(Container container) throws DatabaseException, ContainerException {
         Class printerClass = printers.get(container.getName());
         try {

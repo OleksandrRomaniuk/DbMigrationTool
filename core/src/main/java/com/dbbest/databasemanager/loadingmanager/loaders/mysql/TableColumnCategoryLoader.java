@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the table columns category.
+ */
 @LoaderAnnotation(LoaderPrinterName.TABLE_COLUMNS)
 public class TableColumnCategoryLoader extends AbstractLoader {
     public TableColumnCategoryLoader(Context context) {

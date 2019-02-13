@@ -19,6 +19,11 @@ public class CommandRead implements Command {
     private Context context;
     private final int priority;
 
+    /**
+     * @param fileName the file path to the file to read.
+     * @param priority the priority of the command.
+     * @param context the file context.
+     */
     public CommandRead(String fileName, int priority, Context context) {
         this.fileName = fileName;
         this.priority = priority;

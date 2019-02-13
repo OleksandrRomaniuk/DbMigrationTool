@@ -12,6 +12,9 @@ public final class NameAttributes {
     private NameAttributes() {
     }
 
+    /**
+     * @return retuns the map of name attributes for each node.
+     */
     public static Map<String, String> getNameAttributesMap() {
         Map<String, String> nameAttributeConstants = new HashMap();
         nameAttributeConstants.put(LoaderPrinterName.TABLE, TableAttributes.TABLE_NAME);

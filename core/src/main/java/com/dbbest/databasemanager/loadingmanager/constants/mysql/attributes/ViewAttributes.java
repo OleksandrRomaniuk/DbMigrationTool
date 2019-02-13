@@ -17,6 +17,9 @@ public final class ViewAttributes {
     public static final String TABLE_SCHEMA = "TABLE_SCHEMA";
     public static final String VIEW_DEFINITION = "VIEW_DEFINITION";
 
+    /**
+     * @return returns the list of attributes for the detailed view loader.
+     */
     public static List<String> getListOfViewAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"TABLE_CATALOG", /*"TABLE_SCHEMA",*/ "TABLE_NAME", /*"VIEW_DEFINITION",*/

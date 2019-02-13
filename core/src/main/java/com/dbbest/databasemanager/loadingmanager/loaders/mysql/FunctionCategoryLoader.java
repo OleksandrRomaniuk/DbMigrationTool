@@ -14,6 +14,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ *The class-loader of the function category.
+ */
 @LoaderAnnotation(LoaderPrinterName.FUNCTIONS)
 public class FunctionCategoryLoader extends AbstractLoader {
     public FunctionCategoryLoader(Context context) {

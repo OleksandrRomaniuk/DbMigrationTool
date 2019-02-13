@@ -24,6 +24,9 @@ public final class TableAttributes {
     public static final String TABLE_COLLATION = "TABLE_COLLATION";
     public static final String TABLE_SCHEMA = "TABLE_SCHEMA";
 
+    /**
+     * @return returns the list of table attributes for the detailed table loader.
+     */
     public static List<String> getListOfTableAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"TABLE_CATALOG", /*"TABLE_SCHEMA",*/ "TABLE_TYPE"

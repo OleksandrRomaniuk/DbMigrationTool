@@ -19,6 +19,9 @@ public final class ConstraintAttributes {
     public static final String TABLE_SCHEMA = "TABLE_SCHEMA";
     public static final String CONSTRAINT_SCHEMA = "CONSTRAINT_SCHEMA";
 
+    /**
+     * @return returns the list if the constraint attributes for the lazy loader.
+     */
     public static List<String> getListOfLazyLoadAttributeNames() {
         DbList<String> listOfAttributeNames = new ListOfChildren();
         String[] listOfConstants = {"CONSTRAINT_CATALOG", /*"CONSTRAINT_SCHEMA"*/
@@ -33,6 +36,9 @@ public final class ConstraintAttributes {
         return (List<String>) listOfAttributeNames;
     }
 
+    /**
+     * @return returns the list if the constraint attributes for the detailed loader.
+     */
     public static List<String> getListOfDetailedLoadAttributeNames() {
         DbList<String> listOfAttributeNames = new ListOfChildren();
         String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA", "TABLE_CATALOG",

@@ -15,6 +15,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the index category.
+ */
 @LoaderAnnotation(LoaderPrinterName.TABLE_INDEXES)
 public class IndexCategoryLoader extends AbstractLoader {
     public IndexCategoryLoader(Context context) {

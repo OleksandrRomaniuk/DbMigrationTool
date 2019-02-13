@@ -14,6 +14,9 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 
+/**
+ * The class-loader of the stored procedure category.
+ */
 @LoaderAnnotation(LoaderPrinterName.STORED_PROCEDURES)
 public class StoredProcedureCategoryLoader extends AbstractLoader {
     public StoredProcedureCategoryLoader(Context context) {

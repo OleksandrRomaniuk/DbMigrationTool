@@ -10,6 +10,9 @@ import java.util.List;
  */
 public final class TableColumnAttributes {
 
+    private TableColumnAttributes() {
+    }
+
     public static final String COLUMN_NAME = "COLUMN_NAME";
     public static final String EXTRA = "EXTRA";
     public static final String COLUMN_COMMENT = "COLUMN_COMMENT";
@@ -20,6 +23,9 @@ public final class TableColumnAttributes {
     public static final String COLUMN_TYPE = "COLUMN_TYPE";
     public static final String COLUMN_IS_NULLABLE = "IS_NULLABLE";
 
+    /**
+     * @return returns the list of attributes for the detailed table column loader.
+     */
     public static List<String> getListOfTableColumnAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
         String[] listOfConstants = {"TABLE_CATALOG", "TABLE_SCHEMA", "TABLE_NAME", "ORDINAL_POSITION",
