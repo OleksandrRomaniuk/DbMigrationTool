@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -34,10 +35,9 @@ public class ConstraintLoader extends AbstractLoader {
     public void detailedLoad(Container constraintContainer) throws DatabaseException, ContainerException {
         try {
             String constraintName = (String) constraintContainer.getAttributes().get(ConstraintAttributes.CONSTRAINT_NAME);
-            String tableName = (String) constraintContainer.getParent()
-                .getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String schemaName = (String) constraintContainer.getParent().getParent()
-                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String tableName = (String) constraintContainer.getAttributes().get(ConstraintAttributes.TABLE_NAME);
+            String schemaName = (String) constraintContainer.getParent().getParent().getParent()
+                .getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(MySQLQueries.TABLECONSTRAINTDETAIED, listRepresentationOfAttributes,
                 schemaName, tableName, constraintName);

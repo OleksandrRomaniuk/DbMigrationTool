@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -28,7 +29,8 @@ public class FunctionLoader extends AbstractLoader {
         try {
             String functionName = (String) functionContainer
                 .getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
-            String schemaName = (String) functionContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
+            String schemaName = (String) functionContainer.getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERLAZY, schemaName, functionName);
             super.executeLazyLoaderQuery(functionContainer, query, LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
         } catch (SQLException e) {
@@ -41,7 +43,8 @@ public class FunctionLoader extends AbstractLoader {
         try {
             String functionName = (String) functionContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String schemaName = (String) functionContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
+            String schemaName = (String) functionContainer.getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.FUNCTIONDETAILED, listRepresentationOfAttributes,
                 schemaName, functionName);
             this.executeDetailedLoaderQuery(functionContainer, query);

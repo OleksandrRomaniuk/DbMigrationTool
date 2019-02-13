@@ -26,8 +26,8 @@ public class ViewLoader extends AbstractLoader {
     public void lazyLoad(Container viewContainer) throws DatabaseException, ContainerException {
         try {
             String tableName = (String) viewContainer.getAttributes().get(ViewAttributes.TABLE_NAME);
-            String schemaAName = (String) viewContainer.getAttributes().get(ViewAttributes.TABLE_SCHEMA);
-            String query = String.format(MySQLQueries.VIEWLAZY, schemaAName, tableName);
+            String schemaAName = (String) viewContainer.getParent().getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME);
+            String query = String.format(MySQLQueries.COLUMNLAZY, schemaAName, tableName);
             this.executeLazyLoaderQuery(viewContainer, query, LoaderPrinterName.VIEW_COLUMN);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of columns.");

@@ -4,6 +4,7 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -24,8 +25,8 @@ public class TriggerCategoryLoader extends AbstractLoader {
     public void lazyLoad(Container triggerCategoryContainer) throws DatabaseException, ContainerException {
         try {
             String tableName = (String) triggerCategoryContainer.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String schemaName = (String) triggerCategoryContainer.getParent()
-                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String schemaName = (String) triggerCategoryContainer.getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.TRIGGERLAZY, schemaName, tableName);
             super.executeLazyLoaderQuery(triggerCategoryContainer, query, LoaderPrinterName.TRIGGER);
         } catch (SQLException e) {
@@ -44,7 +45,6 @@ public class TriggerCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container triggerCategoryContainer) throws DatabaseException, ContainerException {
-        this.lazyLoad(triggerCategoryContainer);
         if (triggerCategoryContainer.hasChildren()) {
             for (Container trigger : (List<Container>) triggerCategoryContainer.getChildren()) {
                 new TriggerLoader(super.getContext()).fullLoad(trigger);

@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -29,14 +30,10 @@ public class ConstraintCategoryLoader extends AbstractLoader {
     public void lazyLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
         try {
             String tableName = (String) constraintCategoryContainer.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String schemaName = (String) constraintCategoryContainer.getParent()
-                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
-            String query = String.format(
-                MySQLQueries.TABLECONSTRAINTLAZY,
-                super.listToString(ConstraintAttributes.getListOfLazyLoadAttributeNames()),
-                schemaName,
-                tableName);
-
+            String schemaName = (String) constraintCategoryContainer.getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
+            String query = String.format(MySQLQueries.TABLECONSTRAINTLAZY,
+                super.listToString(ConstraintAttributes.getListOfLazyLoadAttributeNames()), schemaName, tableName);
             Connection connection = super.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -65,7 +62,6 @@ public class ConstraintCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
-        this.lazyLoad(constraintCategoryContainer);
         if (constraintCategoryContainer.hasChildren()) {
             for (Container constraint : (List<Container>) constraintCategoryContainer.getChildren()) {
                 new ConstraintLoader(super.getContext()).fullLoad(constraint);

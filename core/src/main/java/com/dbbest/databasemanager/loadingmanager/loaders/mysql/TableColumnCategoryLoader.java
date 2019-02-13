@@ -4,6 +4,7 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -25,10 +26,9 @@ public class TableColumnCategoryLoader extends AbstractLoader {
         try {
             String tableName = (String) tableColumnCategoryContainer.getParent()
                 .getAttributes().get(TableAttributes.TABLE_NAME);
-            String schemaName = (String) tableColumnCategoryContainer.getParent()
-                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String schemaName = (String) tableColumnCategoryContainer.getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.COLUMNLAZY, schemaName, tableName);
-            System.out.println(query);
             super.executeLazyLoaderQuery(tableColumnCategoryContainer, query, LoaderPrinterName.TABLE_COLUMN);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of columns.");
@@ -46,7 +46,6 @@ public class TableColumnCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container tableColumnCategoryContainer) throws DatabaseException, ContainerException {
-        this.lazyLoad(tableColumnCategoryContainer);
         if (tableColumnCategoryContainer.hasChildren()) {
             for (Container tableColumn : (List<Container>) tableColumnCategoryContainer.getChildren()) {
                 new TableColumnLoader(super.getContext()).fullLoad(tableColumn);

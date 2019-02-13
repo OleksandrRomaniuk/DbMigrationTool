@@ -6,6 +6,7 @@ import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.Loa
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionProcedureParameterAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -30,13 +31,15 @@ public class ProcedureFunctionParametersLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container parameterContainer) throws DatabaseException, ContainerException {
         try {
-            String parameterName = (String) parameterContainer.getParent().getAttributes()
+            String parameterName = (String) parameterContainer.getAttributes()
                 .get(FunctionProcedureParameterAttributes.PROC_FUNC_PARAMETER_NAME);
             String procedureFunctionName = (String) parameterContainer.getParent().getAttributes()
                 .get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+            String schemaName = (String) parameterContainer.getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String listOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERDETAILED, listOfAttributes,
-                parameterContainer.getParent().getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA),
+                schemaName,
                 procedureFunctionName, parameterName);
             this.executeDetailedLoaderQuery(parameterContainer, query);
         } catch (SQLException e) {

@@ -17,13 +17,15 @@ public final class ConstraintAttributes {
     public static final String CONSTRAINT_TYPE = "CONSTRAINT_TYPE";
     public static final String TABLE_NAME = "TABLE_NAME";
     public static final String TABLE_SCHEMA = "TABLE_SCHEMA";
+    public static final String CONSTRAINT_SCHEMA = "CONSTRAINT_SCHEMA";
 
     public static List<String> getListOfLazyLoadAttributeNames() {
         DbList<String> listOfAttributeNames = new ListOfChildren();
-        String[] listOfConstants = {"CONSTRAINT_CATALOG", "CONSTRAINT_SCHEMA"
+        String[] listOfConstants = {"CONSTRAINT_CATALOG", /*"CONSTRAINT_SCHEMA"*/
             /*, "TABLE_SCHEMA", "TABLE_NAME"/, "CONSTRAINT_TYPE",
             "CONSTRAINT_NAME"*/};
         listOfAttributeNames.addAll(listOfConstants);
+        listOfAttributeNames.add(CONSTRAINT_SCHEMA);
         listOfAttributeNames.add(TABLE_SCHEMA);
         listOfAttributeNames.add(TABLE_NAME);
         listOfAttributeNames.add(CONSTRAINT_TYPE);

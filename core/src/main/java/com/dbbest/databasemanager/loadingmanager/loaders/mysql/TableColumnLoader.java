@@ -4,6 +4,7 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableColumnAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -34,10 +35,12 @@ public class TableColumnLoader extends AbstractLoader {
             String elementName = (String) columnContainer.getAttributes().get(TableColumnAttributes.COLUMN_NAME);
             String tableName = (String) columnContainer.getParent().getParent()
                 .getAttributes().get(TableAttributes.TABLE_NAME);
+            String schemaName = (String) columnContainer.getParent().getParent().getParent().getParent().getAttributes()
+                .get(SchemaAttributes.SCHEMA_NAME);
             String detailedLoaderQuery = MySQLQueries.COLUMNDETAILED;
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(detailedLoaderQuery, listRepresentationOfAttributes,
-                columnContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_SCHEMA), tableName, elementName);
+                schemaName, tableName, elementName);
             super.executeDetailedLoaderQuery(columnContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);

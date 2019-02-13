@@ -4,6 +4,7 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TriggerAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -36,7 +37,8 @@ public class TriggerLoader extends AbstractLoader {
             String elementName = (String) triggerContainer.getAttributes().get(TriggerAttributes.TRIGGER_NAME);
             String tableName = (String) triggerContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String schemaName = (String) triggerContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String schemaName = (String) triggerContainer.getParent().getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.TRIGGERDEATILED, listRepresentationOfAttributes,
                 schemaName, tableName, elementName);
             super.executeDetailedLoaderQuery(triggerContainer, query);

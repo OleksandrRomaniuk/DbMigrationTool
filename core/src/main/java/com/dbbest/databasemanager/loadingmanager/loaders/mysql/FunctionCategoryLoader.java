@@ -33,8 +33,7 @@ public class FunctionCategoryLoader extends AbstractLoader {
 
     @Override
     public void detailedLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
-        if (functionCategoryContainer.getAttributes().get(CustomAttributes.CHILD_TYPE).equals(LoaderPrinterName.FUNCTION)
-            && functionCategoryContainer.hasChildren()) {
+        if (functionCategoryContainer.hasChildren()) {
             for (Container function : (List<Container>) functionCategoryContainer.getChildren()) {
                 new FunctionLoader(super.getContext()).detailedLoad(function);
             }
@@ -43,7 +42,6 @@ public class FunctionCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
-        this.lazyLoad(functionCategoryContainer);
         if (functionCategoryContainer.hasChildren()) {
             for (Container function : (List<Container>) functionCategoryContainer.getChildren()) {
                 new FunctionLoader(super.getContext()).fullLoad(function);

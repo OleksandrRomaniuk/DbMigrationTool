@@ -42,7 +42,6 @@ public class StoredProcedureCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container storedProcedureCategoryContainer) throws DatabaseException, ContainerException {
-        this.lazyLoad(storedProcedureCategoryContainer);
         if (storedProcedureCategoryContainer.hasChildren()) {
             for (Container storedProcedure : (List<Container>) storedProcedureCategoryContainer.getChildren()) {
                 new StoredProcedureLoader(super.getContext()).fullLoad(storedProcedure);

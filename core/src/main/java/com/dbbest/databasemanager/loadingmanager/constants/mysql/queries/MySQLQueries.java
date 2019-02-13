@@ -1,7 +1,5 @@
 package com.dbbest.databasemanager.loadingmanager.constants.mysql.queries;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,8 +30,12 @@ public final class MySQLQueries {
         + "WHERE TABLE_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
     public static final String INDEXDETAILED = "SELECT %s FROM INFORMATION_SCHEMA.STATISTICS "
         + "WHERE TABLE_SCHEMA = '%s' AND TABLE_NAME = '%s'  AND INDEX_NAME =  '%s' ;";
-    public static final String FOREIGNKEYLAZY = "SELECT DISTINCT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
-        + "WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
+    public static final String FOREIGNKEYLAZY = "SELECT DISTINCT CONSTRAINT_NAME FROM information_schema.TABLE_CONSTRAINTS "
+        + "WHERE information_schema.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'FOREIGN KEY' "
+        + "AND information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA = '%s' "
+        + "AND information_schema.TABLE_CONSTRAINTS.TABLE_NAME = '%s' ;";
+    //"SELECT DISTINCT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
+    //+ "WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' ;";
     public static final String FOREIGNKEYDETAILED = "SELECT %s FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
         + "WHERE CONSTRAINT_SCHEMA = '%s' AND TABLE_NAME = '%s' AND  CONSTRAINT_NAME = '%s' ;";
     public static final String TRIGGERLAZY = "SELECT TRIGGER_NAME  FROM INFORMATION_SCHEMA.TRIGGERS "

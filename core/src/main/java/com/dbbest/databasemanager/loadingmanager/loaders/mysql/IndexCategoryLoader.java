@@ -4,6 +4,7 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -24,8 +25,8 @@ public class IndexCategoryLoader extends AbstractLoader {
     public void lazyLoad(Container indexCategoryContainer) throws DatabaseException, ContainerException {
         try {
             String tableName = (String) indexCategoryContainer.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String schemaName = (String) indexCategoryContainer.getParent()
-                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String schemaName = (String) indexCategoryContainer.getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.INDEXLAZY, schemaName, tableName);
             super.executeLazyLoaderQuery(indexCategoryContainer, query, LoaderPrinterName.INDEX);
         } catch (SQLException e) {
@@ -44,7 +45,6 @@ public class IndexCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container indexCategoryContainer) throws DatabaseException, ContainerException {
-        this.lazyLoad(indexCategoryContainer);
         if (indexCategoryContainer.hasChildren()) {
             for (Container tableIndex : (List<Container>) indexCategoryContainer.getChildren()) {
                 new IndexLoader(super.getContext()).fullLoad(tableIndex);

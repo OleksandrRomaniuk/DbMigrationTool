@@ -4,6 +4,7 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableColumnAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ViewAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -34,7 +35,8 @@ public class ViewColumnLoader extends AbstractLoader {
             String elementName = (String) viewColumnContainer.getAttributes().get(TableColumnAttributes.COLUMN_NAME);
             String tableName = (String) viewColumnContainer.getParent().getAttributes().get(ViewAttributes.TABLE_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
-            String schemaName = (String) viewColumnContainer.getParent().getAttributes().get(ViewAttributes.TABLE_SCHEMA);
+            String schemaName = (String) viewColumnContainer.getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.COLUMNDETAILED, listRepresentationOfAttributes,
                 schemaName, tableName, elementName);
             super.executeDetailedLoaderQuery(viewColumnContainer, query);

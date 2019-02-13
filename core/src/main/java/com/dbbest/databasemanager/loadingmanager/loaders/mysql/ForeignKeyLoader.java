@@ -3,10 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ForeignKeyAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.*;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -39,9 +36,11 @@ public class ForeignKeyLoader extends AbstractLoader {
             String elementName = (String) fkContainer.getAttributes().get(ConstraintAttributes.CONSTRAINT_NAME);
             String tableName = (String) fkContainer.getParent().getParent()
                 .getAttributes().get(TableAttributes.TABLE_NAME);
-            String schemaName = (String) fkContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String schemaName = (String) fkContainer.getParent().getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             List<String> attributes = MySQLAttributeFactory.getInstance().getAttributes(this);
-            String query = String.format(MySQLQueries.FOREIGNKEYDETAILED, super.listToString(attributes), schemaName, tableName, elementName);
+            String query = String.format(MySQLQueries.FOREIGNKEYDETAILED, super.listToString(attributes),
+                schemaName, tableName, elementName);
             Connection connection = super.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();

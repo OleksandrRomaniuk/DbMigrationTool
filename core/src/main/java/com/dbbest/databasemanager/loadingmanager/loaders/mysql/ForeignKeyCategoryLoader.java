@@ -4,6 +4,7 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -24,8 +25,8 @@ public class ForeignKeyCategoryLoader extends AbstractLoader {
     public void lazyLoad(Container foreignKeyCategory) throws DatabaseException, ContainerException {
         try {
             String tableName = (String) foreignKeyCategory.getParent().getAttributes().get(TableAttributes.TABLE_NAME);
-            String schemaName = (String) foreignKeyCategory.getParent()
-                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String schemaName = (String) foreignKeyCategory.getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.FOREIGNKEYLAZY, schemaName, tableName);
             super.executeLazyLoaderQuery(foreignKeyCategory, query, LoaderPrinterName.FOREIGN_KEY);
         } catch (SQLException e) {
@@ -44,7 +45,6 @@ public class ForeignKeyCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container foreignKeyCategory) throws DatabaseException, ContainerException {
-        this.lazyLoad(foreignKeyCategory);
         if (foreignKeyCategory.hasChildren()) {
             for (Container foreignKey : (List<Container>) foreignKeyCategory.getChildren()) {
                 new ForeignKeyLoader(super.getContext()).fullLoad(foreignKey);

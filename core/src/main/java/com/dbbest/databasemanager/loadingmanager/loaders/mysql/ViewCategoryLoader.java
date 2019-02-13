@@ -42,7 +42,6 @@ public class ViewCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container viewCategoryContainer) throws DatabaseException, ContainerException {
-        this.lazyLoad(viewCategoryContainer);
         if (viewCategoryContainer.hasChildren()) {
             for (Container view : (List<Container>) viewCategoryContainer.getChildren()) {
                 new ViewLoader(super.getContext()).fullLoad(view);

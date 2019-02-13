@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -30,7 +31,8 @@ public class StoredProcedureLoader extends AbstractLoader {
         try {
             String procedureName = (String) storedProcedureContainer
                 .getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
-            String schemaName = (String) storedProcedureContainer.getAttributes().get(FunctionAttributes.ROUTINE_SCHEMA);
+            String schemaName = (String) storedProcedureContainer.getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERLAZY, schemaName, procedureName);
             super.executeLazyLoaderQuery(storedProcedureContainer, query, LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
         } catch (SQLException e) {
@@ -41,11 +43,13 @@ public class StoredProcedureLoader extends AbstractLoader {
     @Override
     public void detailedLoad(Container storedProcedureContainer) throws DatabaseException, ContainerException {
         try {
-            String storedProcedureName = (String) storedProcedureContainer.getAttributes().get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+            String storedProcedureName = (String) storedProcedureContainer.getAttributes()
+                .get(FunctionAttributes.FUNCTION_PROCEDURE_NAME);
+            String schemaName = (String) storedProcedureContainer.getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(MySQLQueries.STOREDPROCEDUREDETAILED,
-                listRepresentationOfAttributes, storedProcedureContainer.getParent().getParent()
-                    .getAttributes().get(TableAttributes.TABLE_SCHEMA), storedProcedureName);
+                listRepresentationOfAttributes, schemaName, storedProcedureName);
             super.executeDetailedLoaderQuery(storedProcedureContainer, query);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);

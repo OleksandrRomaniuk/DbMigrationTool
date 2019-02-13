@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.IndexAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -37,8 +38,8 @@ public class IndexLoader extends AbstractLoader {
             String indexName = (String) indexContainer.getAttributes().get(IndexAttributes.INDEX_NAME);
             String tableName = (String) indexContainer.getParent().getParent()
                 .getAttributes().get(TableAttributes.TABLE_NAME);
-            String schemaName = (String) indexContainer.getParent().getParent()
-                .getAttributes().get(TableAttributes.TABLE_SCHEMA);
+            String schemaName = (String) indexContainer.getParent().getParent().getParent().getParent()
+                .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));
             String query = String.format(MySQLQueries.INDEXDETAILED, listRepresentationOfAttributes,
                 schemaName, tableName, indexName);
