@@ -1,6 +1,8 @@
 package com.dbbest.databasemanager.dbmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.FunctionAttributes;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -23,7 +25,8 @@ public class StoredProcedureLoaderTest {
     @Test
     public void shouldExecuteLazyLoadOfStroredProcedures() throws SQLException, DatabaseException, ContainerException {
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT SPECIFIC_NAME  FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_SCHEMA = 'sakila' AND ROUTINE_TYPE = 'PROCEDURE' ;";
+        //String query = "SELECT SPECIFIC_NAME  FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_SCHEMA = 'sakila' AND ROUTINE_TYPE = 'PROCEDURE' ;";
+        String query = "SELECT PARAMETER_NAME FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = 'sakila' AND SPECIFIC_NAME = 'testSP' ;";
 
         Mockery mockery = new Mockery();
         Connection connection = mockery.mock(Connection.class);
@@ -34,23 +37,31 @@ public class StoredProcedureLoaderTest {
         Mockery mockery1 = new Mockery();
         ResultSet resultSet = mockery1.mock(ResultSet.class);
         mockery1.checking(new Expectations(){{
-            oneOf (resultSet).getString("SPECIFIC_NAME"); will(returnValue("testSP"));
+            oneOf (resultSet).getString("PARAMETER_NAME"); will(returnValue("testSP"));
             oneOf (resultSet).next(); will(returnValue(true));
-            oneOf (resultSet).getString("SPECIFIC_NAME"); will(returnValue("testSP"));
+            oneOf (resultSet).getString("PARAMETER_NAME"); will(returnValue("testSP"));
             oneOf (resultSet).next(); will(returnValue(false));
         }});
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = new Context();
 
-        Container container = new Container();
+        Container schema = new Container();
+        schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+
+        Container spCategory = new Container();
+        schema.addChild(spCategory);
+
+        Container spContainer = new Container();
+        spCategory.addChild(spContainer);
+
+        spContainer.addAttribute(FunctionAttributes.FUNCTION_PROCEDURE_NAME, "testSP");
 
         StoredProcedureLoader loader = new StoredProcedureLoader(connection);
-        loader.lazyLoad(container);
+        loader.lazyLoad(spContainer);
 
-        Assert.assertEquals(1, container.getChildren().size());
-        Assert.assertEquals("testSP", ((Container) container.getChildren().get(0)).getAttributes().get("SPECIFIC_NAME"));
+        Assert.assertEquals(1, spContainer.getChildren().size());
+        Assert.assertEquals("testSP", ((Container) spContainer.getChildren().get(0)).getAttributes().get("PARAMETER_NAME"));
     }
 
     @Test
@@ -83,14 +94,23 @@ public class StoredProcedureLoaderTest {
         when(preparedStatement2.executeQuery()).thenReturn(resultSet2);
         when(resultSet2.next()).thenReturn(false);
 
-        Context context = new Context();
 
-        Container container = new Container();
-        container.addAttribute("SPECIFIC_NAME", null);
+        Container schema = new Container();
+        schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+
+        Container spCategory = new Container();
+        schema.addChild(spCategory);
+
+        Container spContainer = new Container();
+        spCategory.addChild(spContainer);
+
+        spContainer.addAttribute(FunctionAttributes.FUNCTION_PROCEDURE_NAME, "testSP");
+
+        spContainer.addAttribute("SPECIFIC_NAME", null);
         StoredProcedureLoader loader = new StoredProcedureLoader(connection);
-        loader.detailedLoad(container);
+        loader.detailedLoad(spContainer);
 
-        Map<String, String> schemaAttributes = container.getAttributes();
+        Map<String, String> schemaAttributes = spContainer.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
             Assert.assertEquals(null, entry.getValue());
         }

@@ -17,7 +17,7 @@ public class PrinterClassLoaderTest {
         PrinterClassLoader printerClassLoader = new PrinterClassLoader(DatabaseTypes.MYSQL);
         Map printers = printerClassLoader.getPrinters();
 
-        Assert.assertEquals(18,
+        Assert.assertEquals(16,
             printers.size());
     }
 }

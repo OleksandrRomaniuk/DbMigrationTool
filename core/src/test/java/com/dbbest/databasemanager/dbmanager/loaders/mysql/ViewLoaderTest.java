@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.dbmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -47,21 +48,22 @@ public class ViewLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = new Context();
+        Container schema = new Container();
+        schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+        Container viewCategory = new Container();
+        schema.addChild(viewCategory);
+        ViewCategoryLoader loader = new ViewCategoryLoader(connection);
+        loader.lazyLoad(viewCategory);
 
-        Container container = new Container();
-        ViewLoader loader = new ViewLoader(connection);
-        loader.lazyLoad(container);
-
-        Assert.assertEquals(1, container.getChildren().size());
-        Assert.assertEquals("testTable", ((Container) container.getChildren().get(0)).getAttributes().get("TABLE_NAME"));
+        Assert.assertEquals(1, viewCategory.getChildren().size());
+        Assert.assertEquals("testTable", ((Container) viewCategory.getChildren().get(0)).getAttributes().get("TABLE_NAME"));
     }
 
     @Test
     public void shouldExecuteDetailLoadOfViews() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_NAME, CHECK_OPTION, IS_UPDATABLE, DEFINER, SECURITY_TYPE, CHARACTER_SET_CLIENT, COLLATION_CONNECTION, VIEW_DEFINITION FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = 'sakila' AND TABLE_NAME = 'tableTest' ;";
+        String query = "SELECT TABLE_CATALOG, TABLE_NAME, CHECK_OPTION, IS_UPDATABLE, DEFINER, SECURITY_TYPE, CHARACTER_SET_CLIENT, COLLATION_CONNECTION, VIEW_DEFINITION, TABLE_SCHEMA FROM INFORMATION_SCHEMA.VIEWS WHERE TABLE_SCHEMA = 'sakila' AND TABLE_NAME = 'tableTest' ;";
 
         Mockery mockery = new Mockery();
         final Connection connection = mockery.mock(Connection.class);
@@ -73,14 +75,17 @@ public class ViewLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = new Context();
-
-        Container container = new Container();
-        container.addAttribute("TABLE_NAME", "tableTest");
+        Container schema = new Container();
+        schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+        Container viewCategory = new Container();
+        schema.addChild(viewCategory);
+        Container view = new Container();
+        viewCategory.addChild(view);
+        view.addAttribute("TABLE_NAME", "tableTest");
         ViewLoader loader = new ViewLoader(connection);
-        loader.detailedLoad(container);
+        loader.detailedLoad(view);
 
-        Map<String, String> schemaAttributes = container.getAttributes();
+        Map<String, String> schemaAttributes = view.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
             Assert.assertEquals(null, entry.getValue());
         }

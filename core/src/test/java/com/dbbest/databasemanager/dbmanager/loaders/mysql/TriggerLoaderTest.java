@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.dbmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -46,26 +47,31 @@ public class TriggerLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = new Context();
+        Container schema = new Container();
+        schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
 
-        Container parent = new Container();
-        parent.addAttribute("TABLE_NAME", "testTable");
-        Container container = new Container();
-        parent.addChild(container);
+        Container tableCategory = new Container();
+        schema.addChild(tableCategory);
+
+        Container table = new Container();
+        tableCategory.addChild(table);
+        table.addAttribute("TABLE_NAME", "testTable");
+        Container triggerCategory = new Container();
+        table.addChild(triggerCategory);
 
 
-        TriggerLoader loader = new TriggerLoader(connection);
-        loader.lazyLoad(container);
+        TriggerCategoryLoader loader = new TriggerCategoryLoader(connection);
+        loader.lazyLoad(triggerCategory);
 
-        Assert.assertEquals(1, container.getChildren().size());
-        Assert.assertEquals("testColumn", ((Container) container.getChildren().get(0)).getAttributes().get("TRIGGER_NAME"));
+        Assert.assertEquals(1, triggerCategory.getChildren().size());
+        Assert.assertEquals("testColumn", ((Container) triggerCategory.getChildren().get(0)).getAttributes().get("TRIGGER_NAME"));
     }
 
     @Test
     public void shouldExecuteDetailLoadOfIndexes() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT TRIGGER_CATALOG, TRIGGER_SCHEMA, EVENT_OBJECT_CATALOG, ACTION_ORDER, ACTION_CONDITION, ACTION_ORIENTATION, ACTION_REFERENCE_OLD_TABLE, ACTION_REFERENCE_NEW_TABLE, ACTION_REFERENCE_OLD_ROW, ACTION_REFERENCE_NEW_ROW, CREATED, SQL_MODE, DEFINER, CHARACTER_SET_CLIENT, COLLATION_CONNECTION, DATABASE_COLLATION, EVENT_OBJECT_SCHEMA, ACTION_TIMING, EVENT_MANIPULATION, EVENT_OBJECT_TABLE, ACTION_STATEMENT FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_SCHEMA = 'sakila' AND EVENT_OBJECT_TABLE = 'testTable' AND  TRIGGER_NAME = 'null' ;";
+        String query = "SELECT TRIGGER_CATALOG, TRIGGER_SCHEMA, EVENT_OBJECT_CATALOG, ACTION_ORDER, ACTION_CONDITION, ACTION_ORIENTATION, ACTION_REFERENCE_OLD_TABLE, ACTION_REFERENCE_NEW_TABLE, ACTION_REFERENCE_OLD_ROW, ACTION_REFERENCE_NEW_ROW, CREATED, SQL_MODE, DEFINER, CHARACTER_SET_CLIENT, COLLATION_CONNECTION, DATABASE_COLLATION, EVENT_OBJECT_SCHEMA, ACTION_TIMING, EVENT_MANIPULATION, EVENT_OBJECT_TABLE, ACTION_STATEMENT FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_SCHEMA = 'sakila' AND EVENT_OBJECT_TABLE = 'testTable' AND  TRIGGER_NAME = 'testTrigger' ;";
 
         Mockery mockery = new Mockery();
         final Connection connection = mockery.mock(Connection.class);
@@ -77,22 +83,28 @@ public class TriggerLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = new Context();
-
-        Container parent1 = new Container();
-        parent1.addAttribute("TABLE_NAME", "testTable");
-        Container parent2 = new Container();
-        parent1.addChild(parent2);
-
-        Container container = new Container();
-        parent2.addChild(container);
-        container.addAttribute("TRIGGER_NAME", null);
+        Container schema = new Container();
+        schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+        Container tableCategory = new Container();
+        schema.addChild(tableCategory);
+        Container table = new Container();
+        tableCategory.addChild(table);
+        table.addAttribute("TABLE_NAME", "testTable");
+        Container triggerCategory = new Container();
+        table.addChild(triggerCategory);
+        Container trigger = new Container();
+        triggerCategory.addChild(trigger);
+        trigger.addAttribute("TRIGGER_NAME", "testTrigger");
         TriggerLoader loader = new TriggerLoader(connection);
-        loader.detailedLoad(container);
+        loader.detailedLoad(trigger);
 
-        Map<String, String> schemaAttributes = container.getAttributes();
+        Map<String, String> schemaAttributes = trigger.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
-            Assert.assertEquals(null, entry.getValue());
+            if(entry.getKey().equals("TRIGGER_NAME")) {
+                Assert.assertEquals("testTrigger", entry.getValue());
+            } else {
+                Assert.assertEquals(null, entry.getValue());
+            }
         }
     }
 

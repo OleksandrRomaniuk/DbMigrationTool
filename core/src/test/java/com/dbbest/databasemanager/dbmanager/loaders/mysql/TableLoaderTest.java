@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.dbmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
@@ -60,7 +61,7 @@ public class TableLoaderTest {
     public void shouldExecuteDetailedLoadingForTables() throws ParsingException, ContainerException, DatabaseException, SQLException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT TABLE_CATALOG, TABLE_SCHEMA, TABLE_TYPE, VERSION, TABLE_ROWS, DATA_LENGTH, MAX_DATA_LENGTH, INDEX_LENGTH, CREATE_TIME, UPDATE_TIME, CHECK_TIME, CREATE_OPTIONS, AVG_ROW_LENGTH, CHECKSUM, TABLE_COMMENT, ENGINE, ROW_FORMAT, DATA_FREE, AUTO_INCREMENT, TABLE_COLLATION FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila' AND table_name = 'testTable' ;";
+        String query = "SELECT TABLE_CATALOG, TABLE_TYPE, VERSION, TABLE_ROWS, DATA_LENGTH, MAX_DATA_LENGTH, INDEX_LENGTH, CREATE_TIME, UPDATE_TIME, CHECK_TIME, CREATE_OPTIONS, AVG_ROW_LENGTH, CHECKSUM, TABLE_COMMENT, ENGINE, ROW_FORMAT, DATA_FREE, AUTO_INCREMENT, TABLE_COLLATION, TABLE_SCHEMA FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila' AND table_name = 'testTable' ;";
 
         Mockery mockery = new Mockery();
         final Connection connection = mockery.mock(Connection.class);
@@ -71,14 +72,18 @@ public class TableLoaderTest {
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
         when(resultSet.next()).thenReturn(true);
 
-        Context context = new Context();
+        Container schemaTable = new Container();
+        schemaTable.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+        Container tableCotegory = new Container();
+        schemaTable.addChild(tableCotegory);
 
-        Container container = new Container();
-        container.addAttribute("TABLE_NAME", "testTable");
+        Container table = new Container();
+        tableCotegory.addChild(table);
+        table.addAttribute("TABLE_NAME", "testTable");
         TableLoader loader = new TableLoader(connection);
-        loader.detailedLoad(container);
+        loader.detailedLoad(table);
 
-        Map<String, String> schemaAttributes = container.getAttributes();
+        Map<String, String> schemaAttributes = table.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
             if(!entry.getKey().equals("TABLE_NAME")) {
                 Assert.assertEquals(null, entry.getValue());
