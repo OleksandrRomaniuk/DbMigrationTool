@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.reflectionutil.printersreflection;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoadersPrinterDatabaseTypes;
+import com.dbbest.databasemanager.dbmanager.constants.DatabaseTypes;
 import com.dbbest.exceptions.DatabaseException;
 import org.junit.Test;
 
@@ -11,7 +11,7 @@ public class PrintersDirectorySearcherTest {
     @Test
     public void shouldReturnFolderWithPrinters() throws DatabaseException {
         PrintersDirectorySearcher printersDirectorySearcher = new PrintersDirectorySearcher();
-        assertEquals("C:\\Users\\Oleksandr Romaniuk\\eclipse-workspace\\DBbest\\core\\target\\classes\\com\\dbbest\\databasemanager\\loadingmanager\\printers\\mysql",
-            printersDirectorySearcher.findFolderWithPrinters(LoadersPrinterDatabaseTypes.MYSQL));
+        assertEquals("C:\\Users\\Oleksandr Romaniuk\\eclipse-workspace\\DBbest\\core\\target\\classes\\com\\dbbest\\databasemanager\\dbmanager\\printers\\mysql",
+            printersDirectorySearcher.findFolderWithPrinters(DatabaseTypes.MYSQL));
     }
 }

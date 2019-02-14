@@ -1,6 +1,6 @@
 package com.dbbest.databasemanager.connectionbuilder.connectionpool;
 
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoadersPrinterDatabaseTypes;
+import com.dbbest.databasemanager.dbmanager.constants.DatabaseTypes;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,10 +36,10 @@ public final class DriverUrlManager {
     }
 
     private void initializeDrivers() {
-        drivers.put(LoadersPrinterDatabaseTypes.MYSQL, "com.mysql.cj.jdbc.Driver");
+        drivers.put(DatabaseTypes.MYSQL, "com.mysql.cj.jdbc.Driver");
     }
 
     private void initializeUrls() {
-        urls.put(LoadersPrinterDatabaseTypes.MYSQL, "jdbc:mysql://localhost:3306/");
+        urls.put(DatabaseTypes.MYSQL, "jdbc:mysql://localhost:3306/");
     }
 }

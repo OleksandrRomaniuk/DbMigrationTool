@@ -1,9 +1,7 @@
 package com.dbbest.databasemanager.reflectionutil.printersreflection;
 
 import com.dbbest.consolexmlmanager.Context;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoadersPrinterDatabaseTypes;
-import com.dbbest.databasemanager.loadingmanager.printers.Printer;
+import com.dbbest.databasemanager.dbmanager.constants.DatabaseTypes;
 import com.dbbest.exceptions.DatabaseException;
 import org.junit.Assert;
 import org.junit.Test;
@@ -16,7 +14,7 @@ public class PrinterClassLoaderTest {
     public void shouldGetSchaemaPrinterObjectAndReturnClassName() throws DatabaseException {
         PrintersDirectorySearcher printersDirectorySearcher = new PrintersDirectorySearcher();
         Context context = new Context();
-        PrinterClassLoader printerClassLoader = new PrinterClassLoader(LoadersPrinterDatabaseTypes.MYSQL);
+        PrinterClassLoader printerClassLoader = new PrinterClassLoader(DatabaseTypes.MYSQL);
         Map printers = printerClassLoader.getPrinters();
 
         Assert.assertEquals(18,

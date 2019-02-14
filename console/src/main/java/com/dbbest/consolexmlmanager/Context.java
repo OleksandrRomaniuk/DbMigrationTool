@@ -14,11 +14,6 @@ public final class Context {
     private Container container;
     private String commandLine;
     private List<Container> listOfFoundElements;
-    private Connection connection;
-    private String schemaName;
-    private String dbType;
-    private String printedSqlQuery;
-    //private Container dbTreeContainer;
 
     public Context() {
     }
@@ -54,40 +49,6 @@ public final class Context {
     public void setListOfFoundElements(List<Container> listOfFoundElements) {
         this.listOfFoundElements = listOfFoundElements;
     }
-
-    public Connection getConnection() {
-        return connection;
-    }
-
-    public void setConnection(Connection connection) {
-        this.connection = connection;
-    }
-
-    public String getSchemaName() {
-        return schemaName;
-    }
-
-    public void setSchemaName(String schemaName) {
-        this.schemaName = schemaName;
-    }
-
-    public String getDbType() {
-        return dbType;
-    }
-
-    public void setDbType(String dbType) {
-        this.dbType = dbType;
-    }
-
-
-    public String getPrintedSqlQuery() {
-        return printedSqlQuery;
-    }
-
-    public void setPrintedSqlQuery(String printedSqlQuery) {
-        this.printedSqlQuery = printedSqlQuery;
-    }
-
 
     public Container getDbTreeContainer() {
         return container;

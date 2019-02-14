@@ -2,17 +2,14 @@ package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.databasemanager.connectionbuilder.connectionpool.SimpleConnectionBuilder;
-import com.dbbest.databasemanager.loadingmanager.LoaderManager;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
+import com.dbbest.databasemanager.dbmanager.LoaderManager;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.annotations.NameConstants;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
-import com.dbbest.xmlmanager.container.HorizontalPassageSearchManager;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,21 +54,18 @@ public class CommandLoad implements Command {
 
         if (context.getDbTreeContainer() == null) {
             Container schemaContainer = new Container();
-            schemaContainer.setName(LoaderPrinterName.SCHEMA);
+            schemaContainer.setName(NameConstants.SCHEMA);
             context.setDbTreeContainer(schemaContainer);
         }
-        context.setDbType(dbType);
-        context.setSchemaName(dbName);
         SimpleConnectionBuilder simpleConnectionBuilder = new SimpleConnectionBuilder();
         Connection connection = simpleConnectionBuilder.getConnection(dbType, dbName, userName, password);
-        context.setConnection(connection);
         Container targetContainer = new TreeNavigator(context).getTargetContainer(fullPath);
         System.out.println(targetContainer.getName());
         if ( targetContainer == null) {
             throw new DatabaseException(Level.SEVERE, "Can not find the node with the path: " + fullPath);
         }
 
-        LoaderManager loaderManager = new LoaderManager(context);
+        LoaderManager loaderManager = new LoaderManager(connection, dbType);
 
         switch (loadType.toLowerCase()) {
             case LoadTypes.LAZY:

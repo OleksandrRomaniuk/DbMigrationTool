@@ -1,8 +1,7 @@
 package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoadersPrinterDatabaseTypes;
+import com.dbbest.databasemanager.dbmanager.constants.DatabaseTypes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
@@ -190,7 +189,7 @@ public class CommandManagerTest {
         CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[12];
         commandLine[0] = "-load";
-        commandLine[1] = LoadersPrinterDatabaseTypes.MYSQL;
+        commandLine[1] = DatabaseTypes.MYSQL;
         commandLine[2] = "sakila";
         commandLine[3] = "root";
         commandLine[4] = "Ilovemylife101088";
@@ -198,7 +197,7 @@ public class CommandManagerTest {
         commandLine[6] = LoadTypes.FULL;
 /*
         commandLine[7] = "-load";
-        commandLine[8] = LoadersPrinterDatabaseTypes.MYSQL;
+        commandLine[8] = DatabaseTypes.MYSQL;
         commandLine[9] = "sakila";
         commandLine[10] = "root";
         commandLine[11] = "Ilovemylife101088";
@@ -206,7 +205,7 @@ public class CommandManagerTest {
         commandLine[13] = LoadTypes.DETAIL;
 
         commandLine[14] = "-load";
-        commandLine[15] = LoadersPrinterDatabaseTypes.MYSQL;
+        commandLine[15] = DatabaseTypes.MYSQL;
         commandLine[16] = "sakila";
         commandLine[17] = "root";
         commandLine[18] = "Ilovemylife101088";
@@ -215,7 +214,7 @@ public class CommandManagerTest {
         */
 
         commandLine[7] = "-print";
-        commandLine[8] = LoadersPrinterDatabaseTypes.MYSQL;
+        commandLine[8] = DatabaseTypes.MYSQL;
         commandLine[9] = "sakila.Tables.customer";
 
         commandLine[10] = "-write";
@@ -223,7 +222,6 @@ public class CommandManagerTest {
 
         commandManager.addCommands(commandLine);
         commandManager.execute();
-        System.out.println(context.getPrintedSqlQuery());
 
     }
 }

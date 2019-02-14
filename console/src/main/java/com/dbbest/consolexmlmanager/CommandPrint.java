@@ -1,10 +1,9 @@
 package com.dbbest.consolexmlmanager;
 
-import com.dbbest.databasemanager.loadingmanager.PrinterManager;
+import com.dbbest.databasemanager.dbmanager.PrinterManager;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
-import com.dbbest.xmlmanager.container.HorizontalPassageSearchManager;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,15 +38,8 @@ public class CommandPrint implements Command {
         if (context.getDbTreeContainer() == null) {
             throw new DatabaseException(Level.SEVERE, "The tree container has not been set.");
         }
-        context.setDbType(dbType);
         Container targetContainer = new TreeNavigator(context).getTargetContainer(fullPath);
-        //System.out.println(targetContainer.getName());
-        PrinterManager printerManager = new PrinterManager(context);
-        if (targetContainer != null) {
-            context.setPrintedSqlQuery(printerManager.print(targetContainer));
-        } else {
-            throw new DatabaseException(Level.INFO, "Can not find the node with the path:  " + fullPath);
-        }
+        PrinterManager printerManager = new PrinterManager(dbType);
     }
 
     @Override
