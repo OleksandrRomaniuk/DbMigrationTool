@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ViewAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -28,7 +29,7 @@ public class ViewCategoryLoader extends AbstractLoader {
         try {
             String query = String.format(MySQLQueries.VIEWLAZY,
                 viewCategoryContainer.getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME));
-            super.executeLazyLoaderQuery(viewCategoryContainer, query, LoaderPrinterName.VIEW);
+            super.executeLazyLoaderQuery(viewCategoryContainer, query, LoaderPrinterName.VIEW, ViewAttributes.TABLE_NAME);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of tables.");
         }

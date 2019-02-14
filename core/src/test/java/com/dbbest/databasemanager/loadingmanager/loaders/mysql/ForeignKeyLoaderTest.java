@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -23,7 +24,7 @@ public class ForeignKeyLoaderTest {
     @Test
     public void shouldExecuteLazyLoadOfForeignKeys() throws SQLException, DatabaseException, ContainerException {
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT DISTINCT CONSTRAINT_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE CONSTRAINT_SCHEMA = 'sakila' AND TABLE_NAME = 'testTable' ;";
+        String query = "SELECT DISTINCT CONSTRAINT_NAME FROM information_schema.TABLE_CONSTRAINTS WHERE information_schema.TABLE_CONSTRAINTS.CONSTRAINT_TYPE = 'FOREIGN KEY' AND information_schema.TABLE_CONSTRAINTS.TABLE_SCHEMA = 'sakila' AND information_schema.TABLE_CONSTRAINTS.TABLE_NAME = 'testTable' ;";
 
         Mockery mockery = new Mockery();
         Connection connection = mockery.mock(Connection.class);
@@ -51,17 +52,29 @@ public class ForeignKeyLoaderTest {
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
-        Container parent = new Container();
-        parent.addAttribute("TABLE_NAME", "testTable");
-        Container container = new Container();
-        parent.addChild(container);
+        Container schemaContainer = new Container();
+        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
 
+        Container tableCategory = new Container();
+        schemaContainer.addChild(tableCategory);
 
-        ForeignKeyLoader loader = new ForeignKeyLoader(context);
-        loader.lazyLoad(container);
+        Container table = new Container();
+        tableCategory.addChild(table);
+        table.addAttribute("TABLE_NAME", "testTable");
 
-        Assert.assertEquals(1, container.getChildren().size());
-        Assert.assertEquals("testColumn", ((Container) container.getChildren().get(0)).getAttributes().get("CONSTRAINT_NAME"));
+        Container fkCategory = new Container();
+        table.addChild(fkCategory);
+
+        //Container fkContainer = new Container();
+        //fkCategory.addChild(fkContainer);
+
+        //fkContainer.addAttribute("CONSTRAINT_NAME", null);
+
+        ForeignKeyCategoryLoader loader = new ForeignKeyCategoryLoader(context);
+        loader.lazyLoad(fkCategory);
+
+        Assert.assertEquals(1, fkCategory.getChildren().size());
+        Assert.assertEquals("testColumn", ((Container) fkCategory.getChildren().get(0)).getAttributes().get("CONSTRAINT_NAME"));
     }
 
     @Test
@@ -84,22 +97,30 @@ public class ForeignKeyLoaderTest {
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
-        Container parent1 = new Container();
-        parent1.addAttribute("TABLE_NAME", "testTable");
-        Container parent2 = new Container();
-        parent1.addChild(parent2);
+        Container schemaContainer = new Container();
+        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
 
-        Container container = new Container();
-        parent2.addChild(container);
-        container.addAttribute("CONSTRAINT_NAME", null);
+        Container tableCategory = new Container();
+        schemaContainer.addChild(tableCategory);
+
+        Container table = new Container();
+        tableCategory.addChild(table);
+        table.addAttribute("TABLE_NAME", "testTable");
+
+        Container fkCategory = new Container();
+        table.addChild(fkCategory);
+
+        Container fkContainer = new Container();
+        fkCategory.addChild(fkContainer);
+
+        fkContainer.addAttribute("CONSTRAINT_NAME", null);
         ForeignKeyLoader loader = new ForeignKeyLoader(context);
-        loader.detailedLoad(container);
+        loader.detailedLoad(fkContainer);
 
-        /*
-        Map<String, String> schemaAttributes = container.getAttributes();
+        Map<String, String> schemaAttributes = fkContainer.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
             Assert.assertEquals(null, entry.getValue());
-        }*/
+        }
     }
 
 }

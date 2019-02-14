@@ -51,62 +51,7 @@ public final class MySQLQueries {
         + "WHERE SPECIFIC_SCHEMA = '%s' AND SPECIFIC_NAME = '%s' ;";
     public static final String PROCEDUREFUNCTIONPARAMETERDETAILED = "SELECT %s FROM INFORMATION_SCHEMA.PARAMETERS "
         + "WHERE SPECIFIC_SCHEMA = '%s' AND SPECIFIC_NAME = '%s' AND PARAMETER_NAME = '%s' ;";
-    private Map<String, String> sqlQueriesLazyLoader = new HashMap();
-    private Map<String, String> sqlQueriesDetailLoader = new HashMap();
-    private static MySQLQueries instance;
 
     private MySQLQueries() {
     }
-/*
-    private void addSqlLazyQueries() {
-        sqlQueriesLazyLoader.put(LoaderPrinterName.TABLE, TABLELAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.FUNCTION, FUNCTIONLAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.STORED_PROCEDURE, STOREDPROCEDURELAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.VIEW, VIEWLAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.TABLE_COLUMN, COLUMNLAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.INDEX, INDEXLAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.FOREIGN_KEY, FOREIGNKEYLAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.TRIGGER, TRIGGERLAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.CONSTRAINT, TABLECONSTRAINTLAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER, PROCEDUREFUNCTIONPARAMETERLAZY);
-        sqlQueriesLazyLoader.put(LoaderPrinterName.VIEW_COLUMN, COLUMNLAZY);
-    }
-
-    private void addSqlDetailedQueries() {
-        sqlQueriesDetailLoader.put(LoaderPrinterName.TABLE, TABLEDETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.FUNCTION, FUNCTIONDETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.STORED_PROCEDURE, STOREDPROCEDUREDETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.SCHEMA, SCHEMADETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.VIEW, VIEWDETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.TABLE_COLUMN, COLUMNDETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.INDEX, INDEXDETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.FOREIGN_KEY, FOREIGNKEYDETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.TRIGGER, TRIGGERDEATILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.CONSTRAINT, TABLECONSTRAINTDETAIED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER, PROCEDUREFUNCTIONPARAMETERDETAILED);
-        sqlQueriesDetailLoader.put(LoaderPrinterName.VIEW_COLUMN, COLUMNDETAILED);
-    }
-*/
-    /**
-     * @return returns the map of the mysql queries for lazy load.
-     */
-    /*
-    public Map<String, String> getSqlQueriesLazyLoader() {
-        if (sqlQueriesLazyLoader.isEmpty()) {
-            addSqlLazyQueries();
-        }
-        return sqlQueriesLazyLoader;
-    }
-*/
-    /**
-     * @return returns the map of the mysql queries for detailed load.
-     */
-    /*
-    public Map<String, String> getSqlQueriesDetailLoader() {
-        if (sqlQueriesDetailLoader.isEmpty()) {
-            addSqlDetailedQueries();
-        }
-        return sqlQueriesDetailLoader;
-    }
-    */
 }

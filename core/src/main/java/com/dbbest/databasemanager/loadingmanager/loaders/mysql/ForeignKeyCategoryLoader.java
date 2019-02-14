@@ -3,6 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ConstraintAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
@@ -31,7 +32,8 @@ public class ForeignKeyCategoryLoader extends AbstractLoader {
             String schemaName = (String) foreignKeyCategory.getParent().getParent().getParent()
                 .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.FOREIGNKEYLAZY, schemaName, tableName);
-            super.executeLazyLoaderQuery(foreignKeyCategory, query, LoaderPrinterName.FOREIGN_KEY);
+            super.executeLazyLoaderQuery(foreignKeyCategory, query, LoaderPrinterName.FOREIGN_KEY,
+                ConstraintAttributes.CONSTRAINT_NAME);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

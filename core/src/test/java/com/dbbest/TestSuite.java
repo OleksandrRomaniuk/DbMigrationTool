@@ -1,5 +1,8 @@
-package com.dbbest.databasemanager;
+package com.dbbest;
 
+import com.dbbest.databasemanager.ConnectionPropertiesEditorTest;
+import com.dbbest.databasemanager.ConnectionPropertiesManagerTest;
+import com.dbbest.databasemanager.SimpleConnectionBuilderTest;
 import com.dbbest.databasemanager.loadingmanager.LoaderManagerTest;
 import com.dbbest.databasemanager.loadingmanager.PrinterManagerTest;
 import com.dbbest.databasemanager.loadingmanager.loaders.mysql.*;

@@ -35,7 +35,7 @@ public class ConstraintLoader extends AbstractLoader {
     public void detailedLoad(Container constraintContainer) throws DatabaseException, ContainerException {
         try {
             String constraintName = (String) constraintContainer.getAttributes().get(ConstraintAttributes.CONSTRAINT_NAME);
-            String tableName = (String) constraintContainer.getAttributes().get(ConstraintAttributes.TABLE_NAME);
+            String tableName = (String) constraintContainer.getParent().getParent().getAttributes().get(TableAttributes.TABLE_NAME);
             String schemaName = (String) constraintContainer.getParent().getParent().getParent()
                 .getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String listRepresentationOfAttributes = super.listToString(MySQLAttributeFactory.getInstance().getAttributes(this));

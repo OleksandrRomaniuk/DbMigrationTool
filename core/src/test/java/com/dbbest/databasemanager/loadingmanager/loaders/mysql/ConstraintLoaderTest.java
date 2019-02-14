@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
@@ -61,17 +62,21 @@ public class ConstraintLoaderTest {
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
-        Container parent = new Container();
-        parent.addAttribute("TABLE_NAME", "testTable");
-        Container container = new Container();
-        parent.addChild(container);
+        Container schemaContainer = new Container();
+        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+        Container tableCategory = new Container();
+        schemaContainer.addChild(tableCategory);
+        Container table = new Container();
+        tableCategory.addChild(table);
+        table.addAttribute("TABLE_NAME", "testTable");
+        Container constraintCategory = new Container();
+        table.addChild(constraintCategory);
 
+        ConstraintCategoryLoader loader = new ConstraintCategoryLoader(context);
+        loader.lazyLoad(constraintCategory);
 
-        ConstraintLoader loader = new ConstraintLoader(context);
-        loader.lazyLoad(container);
-
-        Assert.assertEquals(1, container.getChildren().size());
-        Assert.assertEquals("cName", ((Container) container.getChildren().get(0)).getAttributes().get("CONSTRAINT_NAME"));
+        Assert.assertEquals(1, constraintCategory.getChildren().size());
+        Assert.assertEquals("cName", ((Container) constraintCategory.getChildren().get(0)).getAttributes().get("CONSTRAINT_NAME"));
     }
 
     @Test
@@ -94,18 +99,22 @@ public class ConstraintLoaderTest {
         context.setConnection(connection);
         context.setSchemaName("sakila");
 
-        Container parent1 = new Container();
-        parent1.addAttribute("TABLE_NAME", "testTable");
-        Container parent2 = new Container();
-        parent1.addChild(parent2);
-
-        Container container = new Container();
-        parent2.addChild(container);
-        container.addAttribute("CONSTRAINT_NAME", null);
+        Container schemaContainer = new Container();
+        schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+        Container tableCategory = new Container();
+        schemaContainer.addChild(tableCategory);
+        Container table = new Container();
+        tableCategory.addChild(table);
+        table.addAttribute("TABLE_NAME", "testTable");
+        Container constraintCategory = new Container();
+        table.addChild(constraintCategory);
+        Container constraint = new Container();
+        constraintCategory.addChild(constraint);
+        constraint.addAttribute("CONSTRAINT_NAME", null);
         ConstraintLoader loader = new ConstraintLoader(context);
-        loader.detailedLoad(container);
+        loader.detailedLoad(constraint);
 
-        Map<String, String> schemaAttributes = container.getAttributes();
+        Map<String, String> schemaAttributes = constraint.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
             Assert.assertEquals(null, entry.getValue());
         }

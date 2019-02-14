@@ -6,6 +6,7 @@ import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.Loa
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TriggerAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -31,7 +32,8 @@ public class TriggerCategoryLoader extends AbstractLoader {
             String schemaName = (String) triggerCategoryContainer.getParent().getParent().getParent()
                 .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.TRIGGERLAZY, schemaName, tableName);
-            super.executeLazyLoaderQuery(triggerCategoryContainer, query, LoaderPrinterName.TRIGGER);
+            super.executeLazyLoaderQuery(triggerCategoryContainer, query,
+                LoaderPrinterName.TRIGGER, TriggerAttributes.TRIGGER_NAME);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

@@ -5,6 +5,7 @@ import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotat
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableColumnAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.ViewAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
@@ -30,7 +31,7 @@ public class ViewLoader extends AbstractLoader {
             String tableName = (String) viewContainer.getAttributes().get(ViewAttributes.TABLE_NAME);
             String schemaAName = (String) viewContainer.getParent().getParent().getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.COLUMNLAZY, schemaAName, tableName);
-            this.executeLazyLoaderQuery(viewContainer, query, LoaderPrinterName.VIEW_COLUMN);
+            this.executeLazyLoaderQuery(viewContainer, query, LoaderPrinterName.VIEW_COLUMN, TableColumnAttributes.COLUMN_NAME);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e, "Can not get the list of columns.");
         }

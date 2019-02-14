@@ -4,7 +4,6 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.CustomAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.NameAttributes;
 import com.dbbest.databasemanager.loadingmanager.loaders.Loader;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -33,15 +32,13 @@ public abstract class AbstractLoader implements Loader {
 
     private Connection connection;
 
-    protected void executeLazyLoaderQuery(Container node, String query, String loaderName) throws SQLException, ContainerException {
-        //System.out.println(query);
-        String attribute = NameAttributes.getNameAttributesMap().get(loaderName);
+    protected void executeLazyLoaderQuery(Container node, String query, String loaderName, String nameAttribute) throws SQLException, ContainerException {
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
         while (resultSet.next()) {
             Container childNode = new Container();
             childNode.setName(loaderName);
-            childNode.addAttribute(attribute, resultSet.getString(attribute));
+            childNode.addAttribute(nameAttribute, resultSet.getString(nameAttribute));
             childNode.addAttribute(CustomAttributes.IS_CATEGORY, false);
             node.addChild(childNode);
         }

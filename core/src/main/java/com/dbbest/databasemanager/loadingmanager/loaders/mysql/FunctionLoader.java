@@ -4,6 +4,7 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionProcedureParameterAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
@@ -32,7 +33,8 @@ public class FunctionLoader extends AbstractLoader {
             String schemaName = (String) functionContainer.getParent().getParent()
                 .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERLAZY, schemaName, functionName);
-            super.executeLazyLoaderQuery(functionContainer, query, LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
+            super.executeLazyLoaderQuery(functionContainer, query, LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER,
+                FunctionProcedureParameterAttributes.PROC_FUNC_PARAMETER_NAME);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }

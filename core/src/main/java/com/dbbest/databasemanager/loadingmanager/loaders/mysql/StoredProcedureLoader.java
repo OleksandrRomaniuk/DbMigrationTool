@@ -3,10 +3,7 @@ package com.dbbest.databasemanager.loadingmanager.loaders.mysql;
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.loadingmanager.annotations.mysql.LoaderAnnotation;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.annotations.LoaderPrinterName;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.FunctionAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.MySQLAttributeFactory;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.SchemaAttributes;
-import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.TableAttributes;
+import com.dbbest.databasemanager.loadingmanager.constants.mysql.attributes.*;
 import com.dbbest.databasemanager.loadingmanager.constants.mysql.queries.MySQLQueries;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
@@ -34,7 +31,8 @@ public class StoredProcedureLoader extends AbstractLoader {
             String schemaName = (String) storedProcedureContainer.getParent().getParent()
                 .getAttributes().get(SchemaAttributes.SCHEMA_NAME);
             String query = String.format(MySQLQueries.PROCEDUREFUNCTIONPARAMETERLAZY, schemaName, procedureName);
-            super.executeLazyLoaderQuery(storedProcedureContainer, query, LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER);
+            super.executeLazyLoaderQuery(storedProcedureContainer, query, LoaderPrinterName.PROCEDURE_FUNCTION_PARAMETER,
+                FunctionProcedureParameterAttributes.PROC_FUNC_PARAMETER_NAME);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
