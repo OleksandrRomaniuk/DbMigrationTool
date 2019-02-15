@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.dbmanager.loaders.mysql;
 
 import com.dbbest.databasemanager.dbmanager.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.dbmanager.constants.CustomAttributes;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.annotations.NameConstants;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.IndexAttributes;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.MySQLAttributeFactory;
@@ -48,6 +49,8 @@ public class IndexLoader extends AbstractLoader {
             while (resultSet.next()) {
                 Container index = new Container();
                 index.setName(NameConstants.INDEX);
+                index.addAttribute(NameConstants.INDEX, indexName);
+                index.addAttribute(CustomAttributes.IS_CATEGORY, false);
                 for (String attribute : MySQLAttributeFactory.getInstance().getAttributes(this)) {
                     index.addAttribute(attribute, resultSet.getString(attribute));
                 }

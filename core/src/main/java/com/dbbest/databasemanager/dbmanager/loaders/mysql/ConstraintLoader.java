@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.dbmanager.loaders.mysql;
 
 import com.dbbest.databasemanager.dbmanager.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.dbmanager.constants.CustomAttributes;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.annotations.NameConstants;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.ConstraintAttributes;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.MySQLAttributeFactory;
@@ -47,6 +48,9 @@ public class ConstraintLoader extends AbstractLoader {
                 Container childNode = new Container();
                 childNode.setName((String) constraintContainer.getAttributes()
                     .get(ConstraintAttributes.CONSTRAINT_NAME));
+                childNode.addAttribute(ConstraintAttributes.CONSTRAINT_NAME, (String) constraintContainer.getAttributes()
+                    .get(ConstraintAttributes.CONSTRAINT_NAME));
+                childNode.addAttribute(CustomAttributes.IS_CATEGORY, false);
                 constraintContainer.addChild(childNode);
                 for (String attribute : MySQLAttributeFactory.getInstance().getAttributes(this)) {
                     childNode.addAttribute(attribute, resultSet.getString(attribute));

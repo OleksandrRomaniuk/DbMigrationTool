@@ -22,7 +22,7 @@ public final class ViewAttributes {
      */
     public static List<String> getListOfViewAttributes() {
         DbList<String> listOfAttributes = new ListOfChildren();
-        String[] listOfConstants = {"TABLE_CATALOG", /*"TABLE_SCHEMA",*/ "TABLE_NAME", /*"VIEW_DEFINITION",*/
+        String[] listOfConstants = {"TABLE_CATALOG", /*"TABLE_SCHEMA",*/ /*"TABLE_NAME",*/ /*"VIEW_DEFINITION",*/
             "CHECK_OPTION", "IS_UPDATABLE", "DEFINER", "SECURITY_TYPE", "CHARACTER_SET_CLIENT", "COLLATION_CONNECTION"};
         listOfAttributes.addAll(listOfConstants);
         listOfAttributes.add(VIEW_DEFINITION);

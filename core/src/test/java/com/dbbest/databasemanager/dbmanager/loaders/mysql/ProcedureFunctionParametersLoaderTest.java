@@ -31,11 +31,22 @@ public class ProcedureFunctionParametersLoaderTest {
         mockery.checking(new Expectations() {{
             oneOf(connection).prepareStatement(query);
             will(returnValue(preparedStatement));
+            oneOf(connection).prepareStatement(query);
+            will(returnValue(preparedStatement));
         }});
 
         Mockery mockery1 = new Mockery();
         final ResultSet resultSet = mockery1.mock(ResultSet.class);
         mockery1.checking(new Expectations() {{
+            oneOf(resultSet).getString("PARAMETER_NAME");
+            will(returnValue("testColumn"));
+            oneOf(resultSet).next();
+            will(returnValue(true));
+            oneOf(resultSet).getString("PARAMETER_NAME");
+            will(returnValue("testColumn"));
+            oneOf(resultSet).next();
+            will(returnValue(false));
+
             oneOf(resultSet).getString("PARAMETER_NAME");
             will(returnValue("testColumn"));
             oneOf(resultSet).next();
@@ -81,7 +92,7 @@ public class ProcedureFunctionParametersLoaderTest {
     public void shouldExecuteDetailLoadOfIndexes() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
         final PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        final String query = "SELECT ORDINAL_POSITION, SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, CHARACTER_OCTET_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE, CHARACTER_SET_NAME, COLLATION_NAME, DTD_IDENTIFIER, ROUTINE_TYPE, PARAMETER_MODE FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = 'sakila' AND SPECIFIC_NAME = 'testTable' AND PARAMETER_NAME = 'null' ;";
+        final String query = "SELECT ORDINAL_POSITION, SPECIFIC_CATALOG, SPECIFIC_SCHEMA, SPECIFIC_NAME, DATA_TYPE, CHARACTER_MAXIMUM_LENGTH, CHARACTER_OCTET_LENGTH, NUMERIC_PRECISION, NUMERIC_SCALE, CHARACTER_SET_NAME, COLLATION_NAME, DTD_IDENTIFIER, ROUTINE_TYPE, PARAMETER_MODE FROM INFORMATION_SCHEMA.PARAMETERS WHERE SPECIFIC_SCHEMA = 'sakila' AND SPECIFIC_NAME = 'testTable' AND PARAMETER_NAME = 'test' ;";
 
         Mockery mockery = new Mockery();
         final Connection connection = mockery.mock(Connection.class);
@@ -104,13 +115,18 @@ public class ProcedureFunctionParametersLoaderTest {
 
         Container parameter = new Container();
         function.addChild(parameter);
-        parameter.addAttribute("PARAMETER_NAME", null);
+        parameter.addAttribute("PARAMETER_NAME", "test");
         ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader(connection);
         loader.detailedLoad(parameter);
 
         Map<String, String> schemaAttributes = parameter.getAttributes();
         for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
-            Assert.assertEquals(null, entry.getValue());
+            if (entry.getKey().equals("PARAMETER_NAME")) {
+            Assert.assertEquals("test", entry.getValue());
+            } else {
+                Assert.assertEquals(null, entry.getValue());
+            }
         }
+        Assert.assertEquals(15, parameter.getAttributes().size());
     }
 }

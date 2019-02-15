@@ -1,6 +1,7 @@
 package com.dbbest.databasemanager.dbmanager.loaders.mysql;
 
 import com.dbbest.databasemanager.dbmanager.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.dbmanager.constants.CustomAttributes;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.annotations.NameConstants;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.ConstraintAttributes;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.MySQLAttributeFactory;
@@ -50,6 +51,8 @@ public class ForeignKeyLoader extends AbstractLoader {
                 Container childContainer = new Container();
                 fkContainer.addChild(childContainer);
                 childContainer.setName(elementName);
+                childContainer.addAttribute(ConstraintAttributes.CONSTRAINT_NAME, elementName);
+                childContainer.addAttribute(CustomAttributes.IS_CATEGORY, false);
                 for (String attribute : attributes) {
                     childContainer.addAttribute(attribute, resultSet.getString(attribute));
                 }

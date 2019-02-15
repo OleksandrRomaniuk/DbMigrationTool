@@ -2,6 +2,7 @@ package com.dbbest.databasemanager.dbmanager.loaders.mysql;
 
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.SchemaAttributes;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.TableAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
@@ -22,12 +23,10 @@ import static org.mockito.Mockito.when;
 
 public class TableLoaderTest {
 
-
     @Test
-    public void shouldExecuteLazyLoadOfTwoTables() throws SQLException, DatabaseException, ContainerException {
-
+    public void shouldExecuteDetailedLoadOfTables() throws SQLException, DatabaseException, ContainerException {
         PreparedStatement preparedStatement = mock(PreparedStatement.class);
-        String query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila' ;";
+        String query = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = 'sakila' AND TABLE_TYPE = 'BASE TABLE' ;";
 
         Mockery mockery = new Mockery();
         Connection connection = mockery.mock(Connection.class);
@@ -46,15 +45,16 @@ public class TableLoaderTest {
 
         when(preparedStatement.executeQuery()).thenReturn(resultSet);
 
-        Context context = new Context();
+        Container schema = new Container();
+        schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+        Container tableCategory = new Container();
+        schema.addChild(tableCategory);
 
-        Container container = new Container();
-        TableLoader tableLoader = new TableLoader(connection);
-        tableLoader.lazyLoad(container);
+        TableCategoryLoader tableLoader = new TableCategoryLoader(connection);
+        tableLoader.lazyLoad(tableCategory);
 
-        Assert.assertEquals(1, container.getChildren().size());
-        Assert.assertEquals("testTable", ((Container)container.getChildren().get(0)).getAttributes().get("TABLE_NAME"));
-        Assert.assertEquals(5, ((Container)container.getChildren().get(0)).getChildren().size());
+        Assert.assertEquals(1, tableCategory.getChildren().size());
+        Assert.assertEquals("testTable", ((Container)tableCategory.getChildren().get(0)).getAttributes().get("TABLE_NAME"));
     }
 
     @Test
@@ -91,6 +91,7 @@ public class TableLoaderTest {
                 Assert.assertEquals("testTable", entry.getValue());
             }
         }
+        Assert.assertEquals(21, table.getAttributes().size());
 
     }
 }

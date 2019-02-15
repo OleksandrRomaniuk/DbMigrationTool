@@ -6,7 +6,8 @@ package com.dbbest.databasemanager.dbmanager.constants.mysql.queries;
 public final class MySQLQueries {
 
     public static final String SCHEMADETAILED = "SELECT %s FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '%s' ;";
-    public static final String TABLELAZY = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE table_schema = '%s' ;";
+    public static final String TABLELAZY = "SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES "
+        + "WHERE table_schema = '%s' AND TABLE_TYPE = 'BASE TABLE' ;";
     public static final String TABLEDETAILED = "SELECT %s FROM INFORMATION_SCHEMA.TABLES "
         + "WHERE table_schema = '%s' AND table_name = '%s' ;";
     public static final String FUNCTIONLAZY = "SELECT SPECIFIC_NAME FROM INFORMATION_SCHEMA.ROUTINES "

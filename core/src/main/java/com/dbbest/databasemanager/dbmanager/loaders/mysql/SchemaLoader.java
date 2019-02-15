@@ -32,7 +32,7 @@ public class SchemaLoader extends AbstractLoader {
             schemaContainer.setName(NameConstants.SCHEMA);
         }
         try {
-            String schemaName = super.getConnection().getSchema();
+            String schemaName = super.getConnection().getCatalog();
             schemaContainer.addAttribute(CustomAttributes.IS_CATEGORY, false);
             schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, schemaName);
             this.lazyLoadCategory(schemaContainer, NameConstants.TABLES,
