@@ -52,8 +52,8 @@ public class TriggerLoaderTest {
         TriggerLoader loader = new TriggerLoader(connection);
         loader.detailedLoad(trigger);
 
-        Map<String, String> schemaAttributes = trigger.getAttributes();
-        for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
+        Map<String, String> attributes = trigger.getAttributes();
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
             if(entry.getKey().equals("TRIGGER_NAME")) {
                 Assert.assertEquals("testTrigger", entry.getValue());
             } else {

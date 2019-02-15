@@ -119,8 +119,8 @@ public class ProcedureFunctionParametersLoaderTest {
         ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader(connection);
         loader.detailedLoad(parameter);
 
-        Map<String, String> schemaAttributes = parameter.getAttributes();
-        for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
+        Map<String, String> attributes = parameter.getAttributes();
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
             if (entry.getKey().equals("PARAMETER_NAME")) {
             Assert.assertEquals("test", entry.getValue());
             } else {

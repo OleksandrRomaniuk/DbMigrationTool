@@ -67,8 +67,8 @@ public class StoredProcedureLoaderTest {
         StoredProcedureLoader loader = new StoredProcedureLoader(connection);
         loader.detailedLoad(spContainer);
 
-        Map<String, String> schemaAttributes = spContainer.getAttributes();
-        for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
+        Map<String, String> attributes = spContainer.getAttributes();
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
             if (entry.getKey().equals("SPECIFIC_NAME")) {
                 Assert.assertEquals("test", entry.getValue());
             } else {

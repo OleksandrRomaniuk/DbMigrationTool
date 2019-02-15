@@ -59,8 +59,8 @@ public class FunctionLoaderTest {
         FunctionLoader loader = new FunctionLoader(connection);
         loader.detailedLoad(functionContainer);
 
-        Map<String, String> schemaAttributes = functionContainer.getAttributes();
-        for (Map.Entry<String, String> entry : schemaAttributes.entrySet()) {
+        Map<String, String> attributes = functionContainer.getAttributes();
+        for (Map.Entry<String, String> entry : attributes.entrySet()) {
             if (entry.getKey().equals("SPECIFIC_NAME")) {
             Assert.assertEquals("test", entry.getValue());
             } else {
