@@ -1,6 +1,5 @@
 
 import com.dbbest.consolexmlmanager.CommandManager;
-import com.dbbest.consolexmlmanager.Commands;
 import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.exceptions.DatabaseException;

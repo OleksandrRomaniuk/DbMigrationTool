@@ -178,7 +178,7 @@ public class CommandManagerTest {
         commandManager.execute();
         List<Container> listOfFoundElements = commandManager.getContext().getListOfFoundElements();
     }
-/*
+
     @Test
     public void shouldLoadSchema() throws CommandException, DatabaseException {
         File testFile = new File("src/test/resources/treeFile.xml");
@@ -187,12 +187,12 @@ public class CommandManagerTest {
         }
         Context context = new Context();
         CommandManager commandManager = new CommandManager(context);
-        String[] commandLine = new String[12];
+        String[] commandLine = new String[21];
         commandLine[0] = "-load";
         commandLine[1] = DatabaseTypes.MYSQL;
         commandLine[2] = "sakila";
         commandLine[3] = "root";
-        commandLine[4] = "Ilovemylife101088";
+        commandLine[4] = "root";
         commandLine[5] = "sakila";
         commandLine[6] = LoadTypes.FULL;
 
@@ -200,7 +200,7 @@ public class CommandManagerTest {
         commandLine[8] = DatabaseTypes.MYSQL;
         commandLine[9] = "sakila";
         commandLine[10] = "root";
-        commandLine[11] = "Ilovemylife101088";
+        commandLine[11] = "root";
         commandLine[12] = "sakila";
         commandLine[13] = LoadTypes.DETAIL;
 
@@ -208,7 +208,7 @@ public class CommandManagerTest {
         commandLine[15] = DatabaseTypes.MYSQL;
         commandLine[16] = "sakila";
         commandLine[17] = "root";
-        commandLine[18] = "Ilovemylife101088";
+        commandLine[18] = "root";
         commandLine[19] = "sakila";
         commandLine[20] = LoadTypes.FULL;
 
@@ -223,5 +223,5 @@ public class CommandManagerTest {
         commandManager.addCommands(commandLine);
         commandManager.execute();
 
-    }*/
+    }
 }

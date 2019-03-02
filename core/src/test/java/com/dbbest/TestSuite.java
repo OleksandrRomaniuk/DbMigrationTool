@@ -51,7 +51,7 @@ import org.junit.runners.Suite;
     SimpleConnectionBuilderTest.class, PrintersDirectorySearcherTest.class, PrinterClassLoaderTest.class,
     PrinterManagerTest.class, TableColumnCategoryLoaderTest.class,
     TableColumnCategoryLoaderTest.class, IndexCategoryLoaderTest.class, ForeignKeyCategoryLoaderTest.class, TriggerCategoryLoaderTest.class,
-    ConstraintCategoryLoaderTest.class, FunctionCategoryLoaderTest.class, StoredProcedureCategoryLoaderTest.class, ViewCategoryLoaderTest.class})
+    ConstraintCategoryLoaderTest.class, FunctionCategoryLoaderTest.class, StoredProcedureCategoryLoaderTest.class, ViewCategoryLoaderTest.class,})
 public class TestSuite {
 
     @Before

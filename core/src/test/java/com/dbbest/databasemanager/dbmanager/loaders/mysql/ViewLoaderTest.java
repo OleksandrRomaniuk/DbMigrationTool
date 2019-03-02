@@ -21,6 +21,51 @@ import static org.mockito.Mockito.when;
 public class ViewLoaderTest {
 
     @Test
+    public void shouldExecuteLazyLoadOfViewColumns() throws SQLException, DatabaseException, ContainerException {
+        PreparedStatement preparedStatement = mock(PreparedStatement.class);
+        String query = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_SCHEMA= 'sakila' AND TABLE_NAME = 'testTable' ;";
+
+        Mockery mockery = new Mockery();
+        Connection connection = mockery.mock(Connection.class);
+        mockery.checking(new Expectations() {{
+            oneOf(connection).prepareStatement(query);
+            will(returnValue(preparedStatement));
+        }});
+
+        Mockery mockery1 = new Mockery();
+        ResultSet resultSet = mockery1.mock(ResultSet.class);
+        mockery1.checking(new Expectations() {{
+            oneOf(resultSet).getString("COLUMN_NAME");
+            will(returnValue("testColumn"));
+            oneOf(resultSet).next();
+            will(returnValue(true));
+            oneOf(resultSet).getString("COLUMN_NAME");
+            will(returnValue("testColumn"));
+            oneOf(resultSet).next();
+            will(returnValue(false));
+        }});
+
+        when(preparedStatement.executeQuery()).thenReturn(resultSet);
+
+        Container schema = new Container();
+        schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
+
+        Container viewCategory = new Container();
+        schema.addChild(viewCategory);
+
+        Container view = new Container();
+        viewCategory.addChild(view);
+        view.addAttribute("TABLE_NAME", "testTable");
+
+
+        ViewLoader loader = new ViewLoader(connection);
+        loader.lazyLoad(view);
+
+        Assert.assertEquals(1, view.getChildren().size());
+        Assert.assertEquals("testColumn", ((Container) view.getChildren().get(0)).getAttributes().get("COLUMN_NAME"));
+    }
+
+    @Test
     public void shouldExecuteDetailLoadOfViews() throws SQLException, DatabaseException, ContainerException {
         ResultSet resultSet = mock(ResultSet.class);
         PreparedStatement preparedStatement = mock(PreparedStatement.class);

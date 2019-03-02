@@ -16,11 +16,11 @@ public class ConnectionPropertiesManagerTest {
         ConnectionPropertiesManager connectionPropertiesManager = new ConnectionPropertiesManager();
         Map<String, String> connectionPropertiesMap = connectionPropertiesManager
             .getConnectionUrlDriverUserAndPass("src\\test\\resources\\ConnectionPropertiesConManTest.xml", "mysqlDb1");
-        Assert.assertEquals("jdbc:mysql://localhost:3306/sourceit?allowPublicKeyRetrieval=true&useSSL=false",
+        Assert.assertEquals("jdbc:mysql://localhost:3306/sakila?allowPublicKeyRetrieval=true&useSSL=false",
             connectionPropertiesMap.get("url"));
         Assert.assertEquals("com.mysql.cj.jdbc.Driver",
             connectionPropertiesMap.get("driver"));
-        Assert.assertEquals("Ilovemylife101088",
+        Assert.assertEquals("root",
             connectionPropertiesMap.get("password"));
         Assert.assertEquals("root",
             connectionPropertiesMap.get("username"));

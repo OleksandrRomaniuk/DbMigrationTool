@@ -11,7 +11,7 @@ public class PrintersDirectorySearcherTest {
     @Test
     public void shouldReturnFolderWithPrinters() throws DatabaseException {
         PrintersDirectorySearcher printersDirectorySearcher = new PrintersDirectorySearcher();
-        assertEquals("C:\\Users\\Oleksandr Romaniuk\\eclipse-workspace\\DBbest\\core\\target\\classes\\com\\dbbest\\databasemanager\\dbmanager\\printers\\mysql",
+        assertEquals("C:\\Users\\admin\\IdeaProjects\\romaniukProject\\core\\target\\classes\\com\\dbbest\\databasemanager\\dbmanager\\printers\\mysql",
             printersDirectorySearcher.findFolderWithPrinters(DatabaseTypes.MYSQL));
     }
 }

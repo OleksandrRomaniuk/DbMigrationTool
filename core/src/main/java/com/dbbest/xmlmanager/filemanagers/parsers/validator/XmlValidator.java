@@ -41,7 +41,7 @@ public class XmlValidator implements Validator {
     }
 
     private boolean checkExtension(String url) throws FileNotFoundException {
-        String path = "src/main/resources/XmlExtensions.json";
+        String path = "../src/main/resources/XmlExtensions.json";
         BufferedReader bufferedReader = null;
         bufferedReader = new BufferedReader(new FileReader(path));
         Gson gson = new Gson();
