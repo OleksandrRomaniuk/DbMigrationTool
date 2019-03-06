@@ -1,7 +1,8 @@
 package com.dbbest.services;
 
-import com.dbbest.models.TreeNode;
+import com.dbbest.consolexmlmanager.exceptions.CommandException;
+import com.dbbest.xmlmanager.container.Container;
 
 public interface TreeNodeService {
-    TreeNode checkTree(TreeNode root);
+    Container checkTree(Container root) throws CommandException;
 }

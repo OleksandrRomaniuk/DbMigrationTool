@@ -1,39 +1,35 @@
 package com.dbbest.services;
 
-import com.dbbest.models.TreeNode;
+import com.dbbest.consolexmlmanager.CommandManager;
+import com.dbbest.consolexmlmanager.Context;
+import com.dbbest.consolexmlmanager.LoadTypes;
+import com.dbbest.consolexmlmanager.exceptions.CommandException;
+import com.dbbest.databasemanager.dbmanager.constants.DatabaseTypes;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.SchemaAttributes;
+import com.dbbest.exceptions.DatabaseException;
+import com.dbbest.xmlmanager.container.Container;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 
 @Service
 public class TestTreeBuilderImpl implements TestTreeBuilder {
 
     @Override
-    public TreeNode build() {
-        TreeNode root = new TreeNode();
-        root.setLabel("root");
-        root.setValue("/root");
+    public Container build() throws CommandException, DatabaseException {
+        Context context = new Context();
+        CommandManager commandManager = new CommandManager(context);
+        String[] commandLine = new String[7];
+        commandLine[0] = "-load";
+        commandLine[1] = DatabaseTypes.MYSQL;
+        commandLine[2] = "sakila";
+        commandLine[3] = "root";
+        commandLine[4] = "root";
+        commandLine[5] = "sakila";
+        commandLine[6] = LoadTypes.LAZY;
+        commandManager.addCommands(commandLine);
+        commandManager.execute();
+        Container root = context.getBuiltContainer();
 
-        TreeNode child1 = new TreeNode();
-        TreeNode child2 = new TreeNode();
-
-        child1.setLabel("child1");
-        child1.setValue("/root/child1");
-        child2.setLabel("child2");
-        child2.setValue("/root/child2");
-        root.setChildren(new ArrayList<>(Arrays.asList(child1, child2)));
-
-        TreeNode child3 = new TreeNode();
-        child3.setLabel("child3");
-        child3.setValue("/root/child2/child3");
-        child3.setChildren(null);
-
-        child2.setChildren(new ArrayList<>(Collections.singletonList(child3)));
-        child1.setChildren(null);
-
-
+        System.out.println(root.getAttributes().get(SchemaAttributes.SCHEMA_NAME));
         return root;
     }
 }

@@ -2,6 +2,7 @@ package com.dbbest.consolexmlmanager;
 
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.databasemanager.dbmanager.constants.DatabaseTypes;
+import com.dbbest.databasemanager.dbmanager.constants.mysql.attributes.SchemaAttributes;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
@@ -187,15 +188,15 @@ public class CommandManagerTest {
         }
         Context context = new Context();
         CommandManager commandManager = new CommandManager(context);
-        String[] commandLine = new String[21];
+        String[] commandLine = new String[7];
         commandLine[0] = "-load";
         commandLine[1] = DatabaseTypes.MYSQL;
         commandLine[2] = "sakila";
         commandLine[3] = "root";
         commandLine[4] = "root";
         commandLine[5] = "sakila";
-        commandLine[6] = LoadTypes.FULL;
-
+        commandLine[6] = LoadTypes.LAZY;
+/*
         commandLine[7] = "-load";
         commandLine[8] = DatabaseTypes.MYSQL;
         commandLine[9] = "sakila";
@@ -219,9 +220,11 @@ public class CommandManagerTest {
 
         commandLine[10] = "-write";
         commandLine[11] = "src/test/resources/treeFile.xml";
-
+*/
         commandManager.addCommands(commandLine);
         commandManager.execute();
+        Container root = context.getBuiltContainer();
 
+        System.out.println(root.getAttributes().get(SchemaAttributes.SCHEMA_NAME));
     }
 }

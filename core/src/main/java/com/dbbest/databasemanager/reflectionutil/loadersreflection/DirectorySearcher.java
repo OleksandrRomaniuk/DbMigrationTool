@@ -40,15 +40,26 @@ public class DirectorySearcher {
     private void checkFile(File root, String databaseTypesEnum) throws DatabaseException {
         File[] listOfFiles = root.listFiles();
         for (File item : listOfFiles) {
-
             if (item.isDirectory()) {
                 checkFile(item, databaseTypesEnum);
             } else if (item.getName().toLowerCase().equals("package-info.class")) {
                 try {
-                    Package pkg = new CustomClassLoader().getClass(item).getPackage();
-                    Annotation annotation = pkg.getAnnotation(LoadersPackageAnnotation.class);
+                    String path = item.getPath();
+                    path = path.replace("\\", ".");
+                    String regex = ".target.classes.";
+                    String[] pathArr = path.split(regex);
+                    Annotation annotation = null;
+                    if(pathArr.length == 2) {
+                        String classPath = pathArr[1];
+                        classPath = classPath.replace(".class", "");
+                        Class clazz = Class.forName(classPath);
+                        Package pkg = clazz.getPackage();
+                        annotation = pkg.getAnnotation(LoadersPackageAnnotation.class);
+                    }
+                    //Package pkg = new CustomClassLoader().getClass(item).getPackage();
+
                     if (annotation != null
-                        && ((LoadersPackageAnnotation) annotation).value().toString().equals(databaseTypesEnum)) {
+                        && ((LoadersPackageAnnotation) annotation).value().equals(databaseTypesEnum)) {
                         folderWithLoader = item.getCanonicalPath().replace("\\package-info.class", "");
                     }
 
