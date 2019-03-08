@@ -70,7 +70,8 @@ public class ConstraintCategoryLoaderTest {
         Container constraintCategory = new Container();
         table.addChild(constraintCategory);
 
-        ConstraintCategoryLoader loader = new ConstraintCategoryLoader(connection);
+        ConstraintCategoryLoader loader = new ConstraintCategoryLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(constraintCategory);
 
         Assert.assertEquals(1, constraintCategory.getChildren().size());

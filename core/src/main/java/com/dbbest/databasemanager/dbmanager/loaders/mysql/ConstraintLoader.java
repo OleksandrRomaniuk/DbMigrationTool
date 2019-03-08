@@ -23,8 +23,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.CONSTRAINT)
 public class ConstraintLoader extends AbstractLoader {
-    public ConstraintLoader(Connection connection) {
+    /*public ConstraintLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override

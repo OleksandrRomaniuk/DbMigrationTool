@@ -60,7 +60,8 @@ public class TriggerCategoryLoaderTest {
         table.addChild(triggerCategory);
 
 
-        TriggerCategoryLoader loader = new TriggerCategoryLoader(connection);
+        TriggerCategoryLoader loader = new TriggerCategoryLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(triggerCategory);
 
         Assert.assertEquals(1, triggerCategory.getChildren().size());

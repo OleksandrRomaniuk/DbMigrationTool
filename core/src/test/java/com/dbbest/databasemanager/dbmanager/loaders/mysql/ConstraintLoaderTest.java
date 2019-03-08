@@ -49,7 +49,8 @@ public class ConstraintLoaderTest {
         Container constraint = new Container();
         constraintCategory.addChild(constraint);
         constraint.addAttribute("CONSTRAINT_NAME", "test");
-        ConstraintLoader loader = new ConstraintLoader(connection);
+        ConstraintLoader loader = new ConstraintLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(constraint);
 
         Map<String, String> attributes = constraint.getAttributes();

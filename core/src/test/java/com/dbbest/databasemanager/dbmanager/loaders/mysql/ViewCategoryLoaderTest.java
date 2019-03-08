@@ -51,7 +51,8 @@ public class ViewCategoryLoaderTest {
         schema.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
         Container viewCategory = new Container();
         schema.addChild(viewCategory);
-        ViewCategoryLoader loader = new ViewCategoryLoader(connection);
+        ViewCategoryLoader loader = new ViewCategoryLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(viewCategory);
 
         Assert.assertEquals(1, viewCategory.getChildren().size());

@@ -21,8 +21,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.VIEW)
 public class ViewLoader extends AbstractLoader {
-    public ViewLoader(Connection connection) {
+    /*public ViewLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -56,7 +60,9 @@ public class ViewLoader extends AbstractLoader {
         this.detailedLoad(viewContainer);
         if (viewContainer.hasChildren()) {
             for (Container viewColumn : (List<Container>) viewContainer.getChildren()) {
-                new ViewColumnLoader(super.getConnection()).fullLoad(viewColumn);
+                ViewColumnLoader viewColumnLoader = new ViewColumnLoader();
+                viewColumnLoader.setConnection(super.getConnection());
+                viewColumnLoader.fullLoad(viewColumn);
             }
         }
     }

@@ -20,8 +20,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.TABLE_COLUMNS)
 public class TableColumnCategoryLoader extends AbstractLoader {
-    public TableColumnCategoryLoader(Connection connection) {
+    /*public TableColumnCategoryLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -43,7 +47,9 @@ public class TableColumnCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container tableColumnCategoryContainer) throws DatabaseException, ContainerException {
         if (tableColumnCategoryContainer.hasChildren()) {
             for (Container tableColumn : (List<Container>) tableColumnCategoryContainer.getChildren()) {
-                new TableColumnLoader(super.getConnection()).detailedLoad(tableColumn);
+                TableColumnLoader tableColumnLoader = new TableColumnLoader();
+                tableColumnLoader.setConnection(super.getConnection());
+                tableColumnLoader.detailedLoad(tableColumn);
             }
         }
     }
@@ -52,7 +58,9 @@ public class TableColumnCategoryLoader extends AbstractLoader {
     public void fullLoad(Container tableColumnCategoryContainer) throws DatabaseException, ContainerException {
         if (tableColumnCategoryContainer.hasChildren()) {
             for (Container tableColumn : (List<Container>) tableColumnCategoryContainer.getChildren()) {
-                new TableColumnLoader(super.getConnection()).fullLoad(tableColumn);
+                TableColumnLoader tableColumnLoader = new TableColumnLoader();
+                tableColumnLoader.setConnection(super.getConnection());
+                tableColumnLoader.fullLoad(tableColumn);
             }
         }
     }

@@ -6,7 +6,6 @@ import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.xmlmanager.container.Container;
 
-import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
 import java.util.Map;
 import java.util.logging.Level;
@@ -33,10 +32,12 @@ public final class LoaderManager {
     public Container loadLazy(Container container) throws DatabaseException, ContainerException {
         Class loaderClass = loaders.get(container.getName());
         try {
-            Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Connection.class}).newInstance(connection);
+            //Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Connection.class}).newInstance(connection);
+            Loader loader = (Loader)loaderClass.newInstance();
+            loader.setConnection(connection);
             loader.lazyLoad(container);
             return container;
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
@@ -50,10 +51,12 @@ public final class LoaderManager {
     public Container loadDetails(Container container) throws DatabaseException, ContainerException {
         Class loaderClass = loaders.get(container.getName());
         try {
-            Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Connection.class}).newInstance(connection);
+            //Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Connection.class}).newInstance(connection);
+            Loader loader = (Loader)loaderClass.newInstance();
+            loader.setConnection(connection);
             loader.detailedLoad(container);
             return container;
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }
@@ -67,10 +70,12 @@ public final class LoaderManager {
     public Container loadFull(Container container) throws DatabaseException, ContainerException {
         Class loaderClass = loaders.get(container.getName());
         try {
-            Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Connection.class}).newInstance(connection);
+            //Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Connection.class}).newInstance(connection);
+            Loader loader = (Loader)loaderClass.newInstance();
+            loader.setConnection(connection);
             loader.fullLoad(container);
             return container;
-        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
     }

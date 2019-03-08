@@ -20,8 +20,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.PROCEDURE_FUNCTION_PARAMETER)
 public class ProcedureFunctionParametersLoader extends AbstractLoader {
-    public ProcedureFunctionParametersLoader(Connection connection) {
+    /*public ProcedureFunctionParametersLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override

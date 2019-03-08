@@ -49,7 +49,8 @@ public class TriggerLoaderTest {
         Container trigger = new Container();
         triggerCategory.addChild(trigger);
         trigger.addAttribute("TRIGGER_NAME", "testTrigger");
-        TriggerLoader loader = new TriggerLoader(connection);
+        TriggerLoader loader = new TriggerLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(trigger);
 
         Map<String, String> attributes = trigger.getAttributes();

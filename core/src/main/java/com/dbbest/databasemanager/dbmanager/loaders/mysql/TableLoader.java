@@ -22,22 +22,41 @@ import java.util.logging.Level;
 @LoaderAnnotation(NameConstants.TABLE)
 public class TableLoader extends AbstractLoader {
 
-    public TableLoader(Connection connection) {
+    /*public TableLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
     public void lazyLoad(Container tableContainer) throws DatabaseException, ContainerException {
+
+        TableColumnCategoryLoader tableColumnCategoryLoader = new TableColumnCategoryLoader();
+        tableColumnCategoryLoader.setConnection(super.getConnection());
         this.lazyLoadCategory(tableContainer, NameConstants.TABLE_COLUMNS,
-            new TableColumnCategoryLoader(super.getConnection()), NameConstants.TABLE_COLUMN);
+            tableColumnCategoryLoader, NameConstants.TABLE_COLUMN);
+
+        IndexCategoryLoader indexCategoryLoader = new IndexCategoryLoader();
+        indexCategoryLoader.setConnection(super.getConnection());
         this.lazyLoadCategory(tableContainer, NameConstants.TABLE_INDEXES,
-            new IndexCategoryLoader(super.getConnection()), NameConstants.INDEX);
+                indexCategoryLoader, NameConstants.INDEX);
+
+        ForeignKeyCategoryLoader foreignKeyCategoryLoader = new ForeignKeyCategoryLoader();
+        foreignKeyCategoryLoader.setConnection(super.getConnection());
         this.lazyLoadCategory(tableContainer, NameConstants.TABLE_FOREIGN_KEYS,
-            new ForeignKeyCategoryLoader(super.getConnection()), NameConstants.FOREIGN_KEY);
+                foreignKeyCategoryLoader, NameConstants.FOREIGN_KEY);
+
+        TriggerCategoryLoader triggerCategoryLoader = new TriggerCategoryLoader();
+        triggerCategoryLoader.setConnection(super.getConnection());
         this.lazyLoadCategory(tableContainer, NameConstants.TABLE_TRIGGERS,
-            new TriggerCategoryLoader(super.getConnection()), NameConstants.TRIGGER);
+                triggerCategoryLoader, NameConstants.TRIGGER);
+
+        ConstraintCategoryLoader constraintCategoryLoader = new ConstraintCategoryLoader();
+        constraintCategoryLoader.setConnection(super.getConnection());
         this.lazyLoadCategory(tableContainer, NameConstants.TABLE_CONSTRAINTS,
-            new ConstraintCategoryLoader(super.getConnection()), NameConstants.CONSTRAINT);
+                constraintCategoryLoader, NameConstants.CONSTRAINT);
     }
 
     @Override
@@ -58,12 +77,27 @@ public class TableLoader extends AbstractLoader {
     public void fullLoad(Container tableContainer) throws DatabaseException, ContainerException {
         this.lazyLoad(tableContainer);
         this.detailedLoad(tableContainer);
-        new TableColumnCategoryLoader(super.getConnection()).fullLoad(tableContainer.getChildByName(NameConstants.TABLE_COLUMNS));
-        new IndexCategoryLoader(super.getConnection()).fullLoad(tableContainer.getChildByName(NameConstants.TABLE_INDEXES));
-        new ForeignKeyCategoryLoader(super.getConnection())
+
+        TableColumnCategoryLoader tableColumnCategoryLoader = new TableColumnCategoryLoader();
+        tableColumnCategoryLoader.setConnection(super.getConnection());
+        tableColumnCategoryLoader.fullLoad(tableContainer.getChildByName(NameConstants.TABLE_COLUMNS));
+
+        IndexCategoryLoader indexCategoryLoader = new IndexCategoryLoader();
+        indexCategoryLoader.setConnection(super.getConnection());
+        indexCategoryLoader.fullLoad(tableContainer.getChildByName(NameConstants.TABLE_INDEXES));
+
+        ForeignKeyCategoryLoader foreignKeyCategoryLoader = new ForeignKeyCategoryLoader();
+        foreignKeyCategoryLoader.setConnection(super.getConnection());
+        foreignKeyCategoryLoader
             .fullLoad(tableContainer.getChildByName(NameConstants.TABLE_FOREIGN_KEYS));
-        new TriggerCategoryLoader(super.getConnection()).fullLoad(tableContainer.getChildByName(NameConstants.TABLE_TRIGGERS));
-        new ConstraintCategoryLoader(super.getConnection())
+
+        TriggerCategoryLoader triggerCategoryLoader = new TriggerCategoryLoader();
+        triggerCategoryLoader.setConnection(super.getConnection());
+        triggerCategoryLoader.fullLoad(tableContainer.getChildByName(NameConstants.TABLE_TRIGGERS));
+
+        ConstraintCategoryLoader constraintCategoryLoader = new ConstraintCategoryLoader();
+        constraintCategoryLoader.setConnection(super.getConnection());
+        constraintCategoryLoader
             .fullLoad(tableContainer.getChildByName(NameConstants.TABLE_CONSTRAINTS));
     }
 

@@ -54,7 +54,8 @@ public class ForeignKeyLoaderTest {
         fkCategory.addChild(fkContainer);
 
         fkContainer.addAttribute("CONSTRAINT_NAME", "test");
-        ForeignKeyLoader loader = new ForeignKeyLoader(connection);
+        ForeignKeyLoader loader = new ForeignKeyLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(fkContainer);
 
         Map<String, String> attributes = fkContainer.getAttributes();

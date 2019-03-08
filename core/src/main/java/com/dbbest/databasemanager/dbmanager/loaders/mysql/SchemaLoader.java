@@ -22,8 +22,12 @@ import java.util.logging.Level;
 @LoaderAnnotation(NameConstants.SCHEMA)
 public class SchemaLoader extends AbstractLoader {
 
-    public SchemaLoader(Connection connection) {
+    /*public SchemaLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -35,14 +39,26 @@ public class SchemaLoader extends AbstractLoader {
             String schemaName = super.getConnection().getCatalog();
             schemaContainer.addAttribute(CustomAttributes.IS_CATEGORY, false);
             schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, schemaName);
+
+            TableCategoryLoader tableCategoryLoader = new TableCategoryLoader();
+            tableCategoryLoader.setConnection(super.getConnection());
             this.lazyLoadCategory(schemaContainer, NameConstants.TABLES,
-                new TableCategoryLoader(super.getConnection()), NameConstants.TABLE);
+                    tableCategoryLoader, NameConstants.TABLE);
+
+            ViewCategoryLoader viewCategoryLoader = new ViewCategoryLoader();
+            viewCategoryLoader.setConnection(super.getConnection());
             this.lazyLoadCategory(schemaContainer, NameConstants.VIEWS,
-                new ViewCategoryLoader(super.getConnection()), NameConstants.VIEW);
+                    viewCategoryLoader, NameConstants.VIEW);
+
+            FunctionCategoryLoader functionCategoryLoader = new FunctionCategoryLoader();
+            functionCategoryLoader.setConnection(super.getConnection());
             this.lazyLoadCategory(schemaContainer, NameConstants.FUNCTIONS,
-                new FunctionCategoryLoader(super.getConnection()), NameConstants.FUNCTION);
+                    functionCategoryLoader, NameConstants.FUNCTION);
+
+            StoredProcedureCategoryLoader storedProcedureCategoryLoader = new StoredProcedureCategoryLoader();
+            storedProcedureCategoryLoader.setConnection(super.getConnection());
             this.lazyLoadCategory(schemaContainer, NameConstants.STORED_PROCEDURES,
-                new StoredProcedureCategoryLoader(super.getConnection()), NameConstants.STORED_PROCEDURE);
+                    storedProcedureCategoryLoader, NameConstants.STORED_PROCEDURE);
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
         }
@@ -66,11 +82,23 @@ public class SchemaLoader extends AbstractLoader {
     public void fullLoad(Container schemaContainer) throws ContainerException, DatabaseException {
         this.lazyLoad(schemaContainer);
         this.detailedLoad(schemaContainer);
-        new TableCategoryLoader(super.getConnection()).fullLoad(schemaContainer.getChildByName(NameConstants.TABLES));
-        new ViewCategoryLoader(super.getConnection()).fullLoad(schemaContainer.getChildByName(NameConstants.VIEWS));
-        new StoredProcedureCategoryLoader(super.getConnection())
+
+        TableCategoryLoader tableCategoryLoader = new TableCategoryLoader();
+        tableCategoryLoader.setConnection(super.getConnection());
+        tableCategoryLoader.fullLoad(schemaContainer.getChildByName(NameConstants.TABLES));
+
+        ViewCategoryLoader viewCategoryLoader = new ViewCategoryLoader();
+        viewCategoryLoader.setConnection(super.getConnection());
+        viewCategoryLoader.fullLoad(schemaContainer.getChildByName(NameConstants.VIEWS));
+
+        StoredProcedureCategoryLoader storedProcedureCategoryLoader = new StoredProcedureCategoryLoader();
+        storedProcedureCategoryLoader.setConnection(super.getConnection());
+        storedProcedureCategoryLoader
             .fullLoad(schemaContainer.getChildByName(NameConstants.STORED_PROCEDURES));
-        new FunctionCategoryLoader(super.getConnection()).fullLoad(schemaContainer.getChildByName(NameConstants.FUNCTIONS));
+
+        FunctionCategoryLoader functionCategoryLoader = new FunctionCategoryLoader();
+        functionCategoryLoader.setConnection(super.getConnection());
+        functionCategoryLoader.fullLoad(schemaContainer.getChildByName(NameConstants.FUNCTIONS));
     }
 
     private void lazyLoadCategory(Container schemaContainer, String categoryName, Loader categoryLoader, String childType)

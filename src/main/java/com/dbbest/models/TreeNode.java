@@ -1,7 +1,9 @@
 package com.dbbest.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TreeNode {
     private String label;
@@ -10,9 +12,11 @@ public class TreeNode {
     private boolean expanded;
     private List<TreeNode> children;
     private int checkedState;
+    private Map<String, Object> attributes;
 
     public TreeNode() {
         children = new ArrayList<>();
+        attributes = new HashMap<>();
     }
 
     public TreeNode(String label, String value, boolean checked, boolean expanded, List<TreeNode> children, int checkedState) {
@@ -22,6 +26,14 @@ public class TreeNode {
         this.expanded = expanded;
         this.children = children;
         this.checkedState = checkedState;
+    }
+
+    public Map<String, Object> getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
 
     public String getLabel() {

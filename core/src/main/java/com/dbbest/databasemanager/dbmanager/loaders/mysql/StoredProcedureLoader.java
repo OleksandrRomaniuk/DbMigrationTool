@@ -22,8 +22,12 @@ import java.util.logging.Level;
 @LoaderAnnotation(NameConstants.STORED_PROCEDURE)
 public class StoredProcedureLoader extends AbstractLoader {
 
-    public StoredProcedureLoader(Connection connection) {
+    /*public StoredProcedureLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -64,7 +68,9 @@ public class StoredProcedureLoader extends AbstractLoader {
         if (storedProcedureContainer.hasChildren()) {
             List<Container> storedProcedureParameters = storedProcedureContainer.getChildren();
             for (Container storedProcedureParameter : storedProcedureParameters) {
-                new ProcedureFunctionParametersLoader(super.getConnection()).fullLoad(storedProcedureParameter);
+                ProcedureFunctionParametersLoader procedureFunctionParametersLoader = new ProcedureFunctionParametersLoader();
+                procedureFunctionParametersLoader.setConnection(super.getConnection());
+                procedureFunctionParametersLoader.fullLoad(storedProcedureParameter);
             }
         }
     }

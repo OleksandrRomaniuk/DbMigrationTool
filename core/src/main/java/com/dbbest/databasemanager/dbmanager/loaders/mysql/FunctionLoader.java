@@ -21,8 +21,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.FUNCTION)
 public class FunctionLoader extends AbstractLoader {
-    public FunctionLoader(Connection connection) {
+    /*public FunctionLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -62,7 +66,9 @@ public class FunctionLoader extends AbstractLoader {
         if (functionsCategoryContainer.hasChildren()) {
             List<Container> functionParameters = functionsCategoryContainer.getChildren();
             for (Container functionParameter : functionParameters) {
-                new ProcedureFunctionParametersLoader(super.getConnection()).fullLoad(functionParameter);
+                ProcedureFunctionParametersLoader procedureFunctionParametersLoader = new ProcedureFunctionParametersLoader();
+                procedureFunctionParametersLoader.setConnection(super.getConnection());
+                procedureFunctionParametersLoader.fullLoad(functionParameter);
             }
         }
     }

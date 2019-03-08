@@ -21,8 +21,12 @@ import java.util.logging.Level;
 @LoaderAnnotation(NameConstants.VIEW_COLUMN)
 public class ViewColumnLoader extends AbstractLoader {
 
-    public ViewColumnLoader(Connection connection) {
+    /*public ViewColumnLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override

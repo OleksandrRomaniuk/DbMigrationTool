@@ -54,7 +54,8 @@ public class TableColumnLoaderTest {
         Container column = new Container();
         columnCategory.addChild(column);
         column.addAttribute("COLUMN_NAME", null);
-        TableColumnLoader loader = new TableColumnLoader(connection);
+        TableColumnLoader loader = new TableColumnLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(column);
 
         Map<String, String> schemaAttributes = column.getAttributes();

@@ -56,7 +56,8 @@ public class FunctionLoaderTest {
         Container functionContainer = new Container();
         functionCategory.addChild(functionContainer);
         functionContainer.addAttribute("SPECIFIC_NAME", "test");
-        FunctionLoader loader = new FunctionLoader(connection);
+        FunctionLoader loader = new FunctionLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(functionContainer);
 
         Map<String, String> attributes = functionContainer.getAttributes();

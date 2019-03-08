@@ -56,7 +56,8 @@ public class StoredProcedureCategoryLoaderTest {
 
         spContainer.addAttribute(FunctionAttributes.FUNCTION_PROCEDURE_NAME, "testSP");
 
-        StoredProcedureLoader loader = new StoredProcedureLoader(connection);
+        StoredProcedureLoader loader = new StoredProcedureLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(spContainer);
 
         Assert.assertEquals(1, spContainer.getChildren().size());

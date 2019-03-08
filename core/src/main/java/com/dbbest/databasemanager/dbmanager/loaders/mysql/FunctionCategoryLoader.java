@@ -19,8 +19,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.FUNCTIONS)
 public class FunctionCategoryLoader extends AbstractLoader {
-    public FunctionCategoryLoader(Connection connection) {
+    /*public FunctionCategoryLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -39,7 +43,9 @@ public class FunctionCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
         if (functionCategoryContainer.hasChildren()) {
             for (Container function : (List<Container>) functionCategoryContainer.getChildren()) {
-                new FunctionLoader(super.getConnection()).detailedLoad(function);
+                FunctionLoader functionLoader = new FunctionLoader();
+                functionLoader.setConnection(super.getConnection());
+                functionLoader.detailedLoad(function);
             }
         }
     }
@@ -48,7 +54,9 @@ public class FunctionCategoryLoader extends AbstractLoader {
     public void fullLoad(Container functionCategoryContainer) throws DatabaseException, ContainerException {
         if (functionCategoryContainer.hasChildren()) {
             for (Container function : (List<Container>) functionCategoryContainer.getChildren()) {
-                new FunctionLoader(super.getConnection()).fullLoad(function);
+                FunctionLoader functionLoader = new FunctionLoader();
+                functionLoader.setConnection(super.getConnection());
+                functionLoader.fullLoad(function);
             }
         }
     }

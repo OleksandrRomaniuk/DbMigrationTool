@@ -18,10 +18,14 @@ import java.util.List;
  */
 public abstract class AbstractLoader implements Loader {
 
-    private AbstractLoader() {
+    public AbstractLoader() {
     }
 
-    public AbstractLoader(Connection connection) {
+    /*public AbstractLoader(Connection connection) {
+        this.connection = connection;
+    }*/
+
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 

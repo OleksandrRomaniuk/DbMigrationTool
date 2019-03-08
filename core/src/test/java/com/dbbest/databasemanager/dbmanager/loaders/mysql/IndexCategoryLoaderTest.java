@@ -62,7 +62,8 @@ public class IndexCategoryLoaderTest {
         table.addChild(indexCategory);
 
 
-        IndexCategoryLoader loader = new IndexCategoryLoader(connection);
+        IndexCategoryLoader loader = new IndexCategoryLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(indexCategory);
 
         Assert.assertEquals(1, indexCategory.getChildren().size());

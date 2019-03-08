@@ -24,9 +24,9 @@ import java.util.logging.Level;
 @LoaderAnnotation(NameConstants.INDEX)
 public class IndexLoader extends AbstractLoader {
 
-    public IndexLoader(Connection connection) {
+    /*public IndexLoader(Connection connection) {
         super(connection);
-    }
+    }*/
 
     @Override
     public void lazyLoad(Container indexCategory) throws DatabaseException, ContainerException {

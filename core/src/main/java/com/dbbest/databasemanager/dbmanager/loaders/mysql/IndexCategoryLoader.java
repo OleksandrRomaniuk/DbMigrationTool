@@ -20,8 +20,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.TABLE_INDEXES)
 public class IndexCategoryLoader extends AbstractLoader {
-    public IndexCategoryLoader(Connection connection) {
+    /*public IndexCategoryLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -41,7 +45,9 @@ public class IndexCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container indexCategoryContainer) throws DatabaseException, ContainerException {
         if (indexCategoryContainer.hasChildren()) {
             for (Container tableColumn : (List<Container>) indexCategoryContainer.getChildren()) {
-                new IndexLoader(super.getConnection()).detailedLoad(tableColumn);
+                IndexLoader indexLoader = new IndexLoader();
+                indexLoader.setConnection(super.getConnection());
+                indexLoader.detailedLoad(tableColumn);
             }
         }
     }
@@ -50,7 +56,9 @@ public class IndexCategoryLoader extends AbstractLoader {
     public void fullLoad(Container indexCategoryContainer) throws DatabaseException, ContainerException {
         if (indexCategoryContainer.hasChildren()) {
             for (Container tableIndex : (List<Container>) indexCategoryContainer.getChildren()) {
-                new IndexLoader(super.getConnection()).fullLoad(tableIndex);
+                IndexLoader indexLoader = new IndexLoader();
+                indexLoader.setConnection(super.getConnection());
+                indexLoader.fullLoad(tableIndex);
             }
         }
     }

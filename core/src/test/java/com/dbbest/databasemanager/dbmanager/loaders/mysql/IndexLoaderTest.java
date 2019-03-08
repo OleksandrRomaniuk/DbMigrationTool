@@ -62,7 +62,8 @@ public class IndexLoaderTest {
         Container index = new Container();
         indeCategory.addChild(index);
         index.addAttribute("INDEX_NAME", null);
-        IndexLoader loader = new IndexLoader(connection);
+        IndexLoader loader = new IndexLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(index);
 
         Map<String, String> schemaAttributes = index.getAttributes();

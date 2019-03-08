@@ -52,7 +52,8 @@ public class ViewColumnLoaderTest {
         Container container = new Container();
         view.addChild(container);
         container.addAttribute("COLUMN_NAME", null);
-        ViewColumnLoader loader = new ViewColumnLoader(connection);
+        ViewColumnLoader loader = new ViewColumnLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(container);
 
         Map<String, String> schemaAttributes = container.getAttributes();

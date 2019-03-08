@@ -51,7 +51,8 @@ public class FunctionCategoryLoaderTest {
         Container functionCategory = new Container();
         schemaContainer.addChild(functionCategory);
 
-        FunctionCategoryLoader loader = new FunctionCategoryLoader(connection);
+        FunctionCategoryLoader loader = new FunctionCategoryLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(functionCategory);
 
         Assert.assertEquals(1, functionCategory.getChildren().size());

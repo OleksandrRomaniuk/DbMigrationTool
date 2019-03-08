@@ -20,8 +20,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.TABLE_TRIGGERS)
 public class TriggerCategoryLoader extends AbstractLoader {
-    public TriggerCategoryLoader(Connection connection) {
+    /*public TriggerCategoryLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -42,7 +46,9 @@ public class TriggerCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container triggerCategoryContainer) throws DatabaseException, ContainerException {
         if (triggerCategoryContainer.hasChildren()) {
             for (Container trigger : (List<Container>) triggerCategoryContainer.getChildren()) {
-                new TriggerLoader(super.getConnection()).detailedLoad(trigger);
+                TriggerLoader triggerLoader = new TriggerLoader();
+                triggerLoader.setConnection(super.getConnection());
+                triggerLoader.detailedLoad(trigger);
             }
         }
     }
@@ -51,7 +57,9 @@ public class TriggerCategoryLoader extends AbstractLoader {
     public void fullLoad(Container triggerCategoryContainer) throws DatabaseException, ContainerException {
         if (triggerCategoryContainer.hasChildren()) {
             for (Container trigger : (List<Container>) triggerCategoryContainer.getChildren()) {
-                new TriggerLoader(super.getConnection()).fullLoad(trigger);
+                TriggerLoader triggerLoader = new TriggerLoader();
+                triggerLoader.setConnection(super.getConnection());
+                triggerLoader.fullLoad(trigger);
             }
         }
     }

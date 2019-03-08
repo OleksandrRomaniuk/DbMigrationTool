@@ -58,7 +58,8 @@ public class ViewLoaderTest {
         view.addAttribute("TABLE_NAME", "testTable");
 
 
-        ViewLoader loader = new ViewLoader(connection);
+        ViewLoader loader = new ViewLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(view);
 
         Assert.assertEquals(1, view.getChildren().size());
@@ -88,7 +89,8 @@ public class ViewLoaderTest {
         Container view = new Container();
         viewCategory.addChild(view);
         view.addAttribute("TABLE_NAME", "tableTest");
-        ViewLoader loader = new ViewLoader(connection);
+        ViewLoader loader = new ViewLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(view);
 
         Map<String, String> attributes = view.getAttributes();

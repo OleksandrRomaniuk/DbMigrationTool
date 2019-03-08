@@ -19,8 +19,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.STORED_PROCEDURES)
 public class StoredProcedureCategoryLoader extends AbstractLoader {
-    public StoredProcedureCategoryLoader(Connection connection) {
+    /*public StoredProcedureCategoryLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -39,7 +43,9 @@ public class StoredProcedureCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container storedProcedureCategoryContainer) throws DatabaseException, ContainerException {
         if (storedProcedureCategoryContainer.hasChildren()) {
             for (Container table : (List<Container>) storedProcedureCategoryContainer.getChildren()) {
-                new StoredProcedureLoader(super.getConnection()).detailedLoad(table);
+                StoredProcedureLoader storedProcedureLoader = new StoredProcedureLoader();
+                storedProcedureLoader.setConnection(super.getConnection());
+                storedProcedureLoader.detailedLoad(table);
             }
         }
     }
@@ -48,7 +54,9 @@ public class StoredProcedureCategoryLoader extends AbstractLoader {
     public void fullLoad(Container storedProcedureCategoryContainer) throws DatabaseException, ContainerException {
         if (storedProcedureCategoryContainer.hasChildren()) {
             for (Container storedProcedure : (List<Container>) storedProcedureCategoryContainer.getChildren()) {
-                new StoredProcedureLoader(super.getConnection()).fullLoad(storedProcedure);
+                StoredProcedureLoader storedProcedureLoader = new StoredProcedureLoader();
+                storedProcedureLoader.setConnection(super.getConnection());
+                storedProcedureLoader.fullLoad(storedProcedure);
             }
         }
     }

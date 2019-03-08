@@ -50,7 +50,8 @@ public class TableLoaderTest {
         Container tableCategory = new Container();
         schema.addChild(tableCategory);
 
-        TableCategoryLoader tableLoader = new TableCategoryLoader(connection);
+        TableCategoryLoader tableLoader = new TableCategoryLoader();
+        tableLoader.setConnection(connection);
         tableLoader.lazyLoad(tableCategory);
 
         Assert.assertEquals(1, tableCategory.getChildren().size());
@@ -80,7 +81,8 @@ public class TableLoaderTest {
         Container table = new Container();
         tableCotegory.addChild(table);
         table.addAttribute("TABLE_NAME", "testTable");
-        TableLoader loader = new TableLoader(connection);
+        TableLoader loader = new TableLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(table);
 
         Map<String, String> attributes = table.getAttributes();

@@ -1,10 +1,12 @@
 package com.dbbest.databasemanager.reflectionutil.loadersreflection;
 
 import com.dbbest.databasemanager.dbmanager.annotations.LoaderAnnotation;
+import com.dbbest.databasemanager.dbmanager.annotations.LoadersPackageAnnotation;
 import com.dbbest.databasemanager.reflectionutil.CustomClassLoader;
 import com.dbbest.exceptions.DatabaseException;
 
 import java.io.File;
+import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -37,7 +39,18 @@ public class LoaderClassLoader {
         for (File item : listOfFiles) {
             if (!item.isDirectory() && item.getName().toLowerCase().endsWith(".class")) {
                 try {
-                    Class loaderClass = new CustomClassLoader().getClass(item);
+                    String path = item.getPath();
+                    path = path.replace("\\", ".");
+                    String regex = ".target.classes.";
+                    String[] pathArr = path.split(regex);
+                    Class loaderClass = null;
+                    if(pathArr.length == 2) {
+                        String classPath = pathArr[1];
+                        classPath = classPath.replace(".class", "");
+                        loaderClass = Class.forName(classPath);
+                    }
+
+                    //Class loaderClass = new CustomClassLoader().getClass(item);
                     if (loaderClass.isAnnotationPresent(LoaderAnnotation.class)) {
                         LoaderAnnotation annotation = (LoaderAnnotation)loaderClass.getAnnotation(LoaderAnnotation.class);
                         loaders.put(annotation.value(), loaderClass);

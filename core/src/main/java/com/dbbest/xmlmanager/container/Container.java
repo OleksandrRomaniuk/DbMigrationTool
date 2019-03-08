@@ -1,7 +1,12 @@
 package com.dbbest.xmlmanager.container;
 
 import com.dbbest.exceptions.ContainerException;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,31 +21,47 @@ import java.util.logging.Level;
  *
  * @param <V> the type of the object's value
  */
+@Entity
 public class Container<V> {
 
+    @JsonManagedReference
     private List<Container<V>> children;
     private String name;
+    private String label;
+    @Id
     private V value;
     private Map<String, Object> attributes;
+    private boolean checked;
+    private boolean expanded;
+    private int checkedState;
+
+    @JsonBackReference
     private Container<V> parent;
 
+
     public Container() {
+        children = new ArrayList<>();
     }
 
+
     public Container(String name) {
+        this();
         this.name = name;
     }
 
+/*
     public Container(String name, V value) {
         this(name);
         this.value = value;
     }
+
 
     public Container(String name, V value, Map<String, Object> attributes) {
         this(name, value);
         this.attributes = attributes;
     }
 
+*/
     /**
      * @param name       the name of the element. The name is of the type String.
      * @param value      the value of the element, the value is parametrized by V1.
@@ -48,12 +69,25 @@ public class Container<V> {
      *                   The value is parametrized by V2.
      * @param children   represents the list of child elements of the type Container.
      */
+    /*
     public Container(String name, V value, Map<String, Object> attributes, List<Container<V>> children) {
         this(name, value, attributes);
         this.children = children;
         this.value = value;
         this.attributes = attributes;
     }
+*/
+    public Container(String name, V value, Map<String, Object> attributes, List<Container<V>> children, boolean checked, boolean expanded, int checkedState) {
+        //this(name, value, attributes, children);
+        this.children = children;
+        this.name = name;
+        this.value = value;
+        this.attributes = attributes;
+        this.checked = checked;
+        this.expanded = expanded;
+        this.checkedState = checkedState;
+    }
+
 
     /**
      * The method checks out if the element has attributes.
@@ -64,6 +98,7 @@ public class Container<V> {
         return attributes != null && !attributes.isEmpty();
     }
 
+
     /**
      * The method checks out if the element has children.
      *
@@ -72,6 +107,7 @@ public class Container<V> {
     public boolean hasChildren() {
         return children != null && !children.isEmpty();
     }
+
 
     /**
      * The method checks out if the element has a value.
@@ -82,6 +118,7 @@ public class Container<V> {
         return value != null && !value.equals("");
     }
 
+
     /**
      * The method checks out if the element has a name.
      *
@@ -91,9 +128,12 @@ public class Container<V> {
         return name != null && !name.equals("");
     }
 
+
     public String getName() {
         return name;
     }
+
+
 
     /**
      * @param name the name to be set bto the container.
@@ -107,9 +147,11 @@ public class Container<V> {
         }
     }
 
+
     public V getValue() {
         return value;
     }
+
 
     /**
      * @param value the value to be set to the container.
@@ -123,9 +165,11 @@ public class Container<V> {
         }
     }
 
+
     public Map<String, Object> getAttributes() {
         return attributes;
     }
+
 
     /**
      * @param attributes the attributes to be set.
@@ -143,6 +187,8 @@ public class Container<V> {
         return children;
     }
 
+
+
     /**
      * @param childName the name of the child to be found.
      * @return returns the child with defined name.
@@ -157,27 +203,32 @@ public class Container<V> {
         throw new ContainerException(Level.SEVERE, "Can not find the container with the name " + childName);
     }
 
+
+
     /**
      * @param children the list of children to be set.
      * @throws ContainerException the exception to be thrown if the list of children is not null.
      */
-
     public void setChildren(List<Container<V>> children) throws ContainerException {
-        if (this.children != null) {
-            throw new ContainerException(Level.SEVERE, "The list of children is not null.");
-        } else {
+        //if (this.children != null) {
+          //  throw new ContainerException(Level.SEVERE, "The list of children is not null.");
+        //} else {
             for (Container child: children) {
                 if (child.getParent() == null) {
                     child.setParent(this);
                 }
             }
             this.children = children;
-        }
+        //}
     }
+
+
 
     public Container<V> getParent() {
         return parent;
     }
+
+
 
     /**
      * @param parent the parent to be set to the container.
@@ -190,6 +241,8 @@ public class Container<V> {
             this.parent = parent;
         }
     }
+
+
 
     /**
      * Adds a new child for the current element of the tree.
@@ -210,12 +263,14 @@ public class Container<V> {
         children.add(container);
     }
 
+
     /**
      * @return returns true if the current element has a parent.
      */
     public boolean hasParent() {
         return (parent != null);
     }
+
 
     /**
      * Adds a new attribute for the current tree element.
@@ -230,28 +285,67 @@ public class Container<V> {
         attributes.put(key, value);
     }
 
+
     public List<Container> searchInTreeHorizontalSearchInNames(String textToSearch) {
         return new HorizontalPassageSearchManager(this).searchInNames(textToSearch);
     }
+
 
     public List<Container> searchInTreeHorizontalSearchInValues(String textToSearch) {
         return new HorizontalPassageSearchManager(this).searchInValues(textToSearch);
     }
 
+
     public List<Container> searchInTreeHorizontalSearchInKeyValues(String attributeKey, String attributeValue) {
         return new HorizontalPassageSearchManager(this).searchInKeyValues(attributeKey, attributeValue);
     }
+
 
     public List<Container> searchInTreeVerticalSearchInNames(String textToSearch) {
         return new VerticalPassageSearchManager(this).searchInNames(textToSearch);
     }
 
+
     public List<Container> searchInTreeVerticalSearchInValues(String textToSearch) {
         return new VerticalPassageSearchManager(this).searchInValues(textToSearch);
     }
 
+
     public List<Container> searchInTreeVerticalSearchInKeyValues(String attributeKey, String attributeValue) {
         return new VerticalPassageSearchManager(this).searchInKeyValues(attributeKey, attributeValue);
+    }
+
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public boolean isExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public int getCheckedState() {
+        return checkedState;
+    }
+
+    public void setCheckedState(int checkedState) {
+        this.checkedState = checkedState;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }
 

@@ -24,8 +24,13 @@ import java.util.logging.Level;
 @LoaderAnnotation(NameConstants.TABLE_CONSTRAINTS)
 public class ConstraintCategoryLoader extends AbstractLoader {
 
-    public ConstraintCategoryLoader(Connection connection) {
+    /*public ConstraintCategoryLoader(Connection connection) {
         super(connection);
+    }*/
+
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -57,7 +62,9 @@ public class ConstraintCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
         if (constraintCategoryContainer.hasChildren()) {
             for (Container tableConstraint : (List<Container>) constraintCategoryContainer.getChildren()) {
-                new ConstraintLoader(super.getConnection()).detailedLoad(tableConstraint);
+                ConstraintLoader constraintLoader = new ConstraintLoader();
+                constraintLoader.setConnection(super.getConnection());
+                constraintLoader.detailedLoad(tableConstraint);
             }
         }
     }
@@ -66,7 +73,9 @@ public class ConstraintCategoryLoader extends AbstractLoader {
     public void fullLoad(Container constraintCategoryContainer) throws DatabaseException, ContainerException {
         if (constraintCategoryContainer.hasChildren()) {
             for (Container constraint : (List<Container>) constraintCategoryContainer.getChildren()) {
-                new ConstraintLoader(super.getConnection()).fullLoad(constraint);
+                ConstraintLoader constraintLoader = new ConstraintLoader();
+                constraintLoader.setConnection(super.getConnection());
+                constraintLoader.fullLoad(constraint);
             }
         }
     }

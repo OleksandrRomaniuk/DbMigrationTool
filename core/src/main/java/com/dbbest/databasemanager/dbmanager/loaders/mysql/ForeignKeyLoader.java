@@ -25,8 +25,12 @@ import java.util.logging.Level;
 @LoaderAnnotation(NameConstants.FOREIGN_KEY)
 public class ForeignKeyLoader extends AbstractLoader {
 
-    public ForeignKeyLoader(Connection connection) {
+    /*public ForeignKeyLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override

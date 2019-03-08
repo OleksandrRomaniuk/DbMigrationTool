@@ -5,6 +5,8 @@ import com.dbbest.consolexmlmanager.Context;
 import com.dbbest.consolexmlmanager.LoadTypes;
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.databasemanager.dbmanager.constants.DatabaseTypes;
+import com.dbbest.exceptions.ContainerException;
+import com.dbbest.utils.TreeNodeBuilder;
 import com.dbbest.xmlmanager.container.Container;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class TreeNodeServiceImpl implements TreeNodeService {
 
     @Override
-    public Container checkTree(Container root) throws CommandException {
+    public Container checkTree(Container root) throws CommandException, ContainerException {
         Context context = new Context();
         CommandManager commandManager = new CommandManager(context);
         String[] commandLine = new String[7];
@@ -24,6 +26,6 @@ public class TreeNodeServiceImpl implements TreeNodeService {
         commandLine[5] = "sakila";
         commandLine[6] = LoadTypes.DETAIL;
         commandManager.addCommands(commandLine);
-        return context.getDbTreeContainer();
+        return new TreeNodeBuilder().getTreeNode(context.getDbTreeContainer());
     }
 }

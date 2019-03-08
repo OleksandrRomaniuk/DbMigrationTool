@@ -23,7 +23,8 @@ public class GeneralManualTest {
         Connection connection = simpleConnectionBuilder.getConnection("mysql");
 
 
-        SchemaLoader schemaLoader = new SchemaLoader(connection);
+        SchemaLoader schemaLoader = new SchemaLoader();
+        schemaLoader.setConnection(connection);
         Container schemaContainer = new Container();
 
         schemaLoader.fullLoad(schemaContainer);

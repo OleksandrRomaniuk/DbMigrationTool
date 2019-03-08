@@ -63,7 +63,9 @@ public class ForeignKeyCategoryLoaderTest {
         Container fkCategory = new Container();
         table.addChild(fkCategory);
 
-        ForeignKeyCategoryLoader loader = new ForeignKeyCategoryLoader(connection);
+        ForeignKeyCategoryLoader loader = new ForeignKeyCategoryLoader();
+        loader.setConnection(connection);
+
         loader.lazyLoad(fkCategory);
 
         Assert.assertEquals(1, fkCategory.getChildren().size());

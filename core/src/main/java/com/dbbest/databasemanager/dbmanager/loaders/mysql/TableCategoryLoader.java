@@ -19,8 +19,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.TABLES)
 public class TableCategoryLoader extends AbstractLoader {
-    public TableCategoryLoader(Connection connection) {
+    /*public TableCategoryLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -38,7 +42,9 @@ public class TableCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container tableCategory) throws DatabaseException, ContainerException {
         if (tableCategory.hasChildren()) {
             for (Container table : (List<Container>) tableCategory.getChildren()) {
-                new TableLoader(super.getConnection()).detailedLoad(table);
+                TableLoader tableLoader = new TableLoader();
+                tableLoader.setConnection(super.getConnection());
+                tableLoader.detailedLoad(table);
             }
         }
     }
@@ -47,7 +53,9 @@ public class TableCategoryLoader extends AbstractLoader {
     public void fullLoad(Container tableCategory) throws DatabaseException, ContainerException {
         if (tableCategory.hasChildren()) {
             for (Container table : (List<Container>) tableCategory.getChildren()) {
-                new TableLoader(super.getConnection()).fullLoad(table);
+                TableLoader tableLoader = new TableLoader();
+                tableLoader.setConnection(super.getConnection());
+                tableLoader.fullLoad(table);
             }
         }
     }

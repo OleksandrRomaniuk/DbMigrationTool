@@ -67,7 +67,8 @@ public class ProcedureFunctionParametersLoaderTest {
         functionCategory.addChild(function);
         function.addAttribute(FunctionAttributes.FUNCTION_PROCEDURE_NAME, "procParam");
 
-        FunctionLoader loader = new FunctionLoader(connection);
+        FunctionLoader loader = new FunctionLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(function);
 
         Container schemaContainer2 = new Container();
@@ -78,7 +79,8 @@ public class ProcedureFunctionParametersLoaderTest {
         functionCategory.addChild(function2);
         function2.addAttribute(FunctionAttributes.FUNCTION_PROCEDURE_NAME, "procParam");
 
-        StoredProcedureLoader loader2 = new StoredProcedureLoader(connection);
+        StoredProcedureLoader loader2 = new StoredProcedureLoader();
+        loader2.setConnection(connection);
         loader2.lazyLoad(function2);
 
         Assert.assertEquals(1, function.getChildren().size());
@@ -116,7 +118,8 @@ public class ProcedureFunctionParametersLoaderTest {
         Container parameter = new Container();
         function.addChild(parameter);
         parameter.addAttribute("PARAMETER_NAME", "test");
-        ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader(connection);
+        ProcedureFunctionParametersLoader loader = new ProcedureFunctionParametersLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(parameter);
 
         Map<String, String> attributes = parameter.getAttributes();

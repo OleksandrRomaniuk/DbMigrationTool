@@ -42,7 +42,8 @@ public class SchemaLoaderTest {
 
         Container schemaContainer = new Container();
         schemaContainer.addAttribute(SchemaAttributes.SCHEMA_NAME, "sakila");
-        SchemaLoader schemaLoader = new SchemaLoader(connection);
+        SchemaLoader schemaLoader = new SchemaLoader();
+        schemaLoader.setConnection(connection);
         schemaLoader.detailedLoad(schemaContainer);
 
         Map<String, String> schemaAttributes = schemaContainer.getAttributes();

@@ -20,8 +20,12 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.TABLE_FOREIGN_KEYS)
 public class ForeignKeyCategoryLoader extends AbstractLoader {
-    public ForeignKeyCategoryLoader(Connection connection) {
+    /*public ForeignKeyCategoryLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
@@ -42,7 +46,9 @@ public class ForeignKeyCategoryLoader extends AbstractLoader {
     public void detailedLoad(Container foreignKeyCategory) throws DatabaseException, ContainerException {
         if (foreignKeyCategory.hasChildren()) {
             for (Container foreignKey : (List<Container>) foreignKeyCategory.getChildren()) {
-                new ForeignKeyLoader(super.getConnection()).detailedLoad(foreignKey);
+                ForeignKeyLoader foreignKeyLoader = new ForeignKeyLoader();
+                foreignKeyLoader.setConnection(super.getConnection());
+                foreignKeyLoader.detailedLoad(foreignKey);
             }
         }
     }
@@ -51,7 +57,9 @@ public class ForeignKeyCategoryLoader extends AbstractLoader {
     public void fullLoad(Container foreignKeyCategory) throws DatabaseException, ContainerException {
         if (foreignKeyCategory.hasChildren()) {
             for (Container foreignKey : (List<Container>) foreignKeyCategory.getChildren()) {
-                new ForeignKeyLoader(super.getConnection()).fullLoad(foreignKey);
+                ForeignKeyLoader foreignKeyLoader = new ForeignKeyLoader();
+                foreignKeyLoader.setConnection(super.getConnection());
+                foreignKeyLoader.fullLoad(foreignKey);
             }
         }
     }

@@ -21,8 +21,12 @@ import java.util.logging.Level;
 @LoaderAnnotation(NameConstants.TABLE_COLUMN)
 public class TableColumnLoader extends AbstractLoader {
 
-    public TableColumnLoader(Connection connection) {
+    /*public TableColumnLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override

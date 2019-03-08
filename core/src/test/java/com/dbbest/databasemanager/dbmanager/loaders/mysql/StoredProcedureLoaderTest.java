@@ -64,7 +64,8 @@ public class StoredProcedureLoaderTest {
         spContainer.addAttribute(FunctionAttributes.FUNCTION_PROCEDURE_NAME, "testSP");
 
         spContainer.addAttribute("SPECIFIC_NAME", "test");
-        StoredProcedureLoader loader = new StoredProcedureLoader(connection);
+        StoredProcedureLoader loader = new StoredProcedureLoader();
+        loader.setConnection(connection);
         loader.detailedLoad(spContainer);
 
         Map<String, String> attributes = spContainer.getAttributes();

@@ -57,7 +57,8 @@ public class TableColumnCategoryLoaderTest {
         Container columnCategory = new Container();
         table.addChild(columnCategory);
 
-        TableColumnCategoryLoader loader = new TableColumnCategoryLoader(connection);
+        TableColumnCategoryLoader loader = new TableColumnCategoryLoader();
+        loader.setConnection(connection);
         loader.lazyLoad(columnCategory);
 
         Assert.assertEquals(1, columnCategory.getChildren().size());

@@ -23,8 +23,12 @@ import java.util.logging.Logger;
 public class TriggerLoader extends AbstractLoader {
     private static final Logger logger = Logger.getLogger("Database logger");
 
-    public TriggerLoader(Connection connection) {
+    /*public TriggerLoader(Connection connection) {
         super(connection);
+    }*/
+    @Override
+    public void setConnection(Connection connection) {
+        super.setConnection(connection);
     }
 
     @Override
