@@ -7,5 +7,5 @@ import com.dbbest.models.TreeNode;
 import com.dbbest.xmlmanager.container.Container;
 
 public interface TestTreeBuilder {
-    Container build() throws CommandException, DatabaseException, ContainerException;
+    Container build(String dbType, String sbName, String login, String password) throws CommandException, DatabaseException, ContainerException;
 }

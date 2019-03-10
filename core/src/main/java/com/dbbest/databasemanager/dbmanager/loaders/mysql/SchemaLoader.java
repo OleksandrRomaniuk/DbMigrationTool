@@ -32,7 +32,7 @@ public class SchemaLoader extends AbstractLoader {
 
     @Override
     public void lazyLoad(Container schemaContainer) throws ContainerException, DatabaseException {
-        if (!schemaContainer.hasName()) {
+        if (!schemaContainer.hasLabel()) {
             schemaContainer.setName(NameConstants.SCHEMA);
         }
         try {

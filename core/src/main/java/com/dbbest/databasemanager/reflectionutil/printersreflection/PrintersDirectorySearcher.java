@@ -47,7 +47,7 @@ public class PrintersDirectorySearcher {
                     Package pkg = new CustomClassLoader().getClass(item).getPackage();
                     Annotation annotation = pkg.getAnnotation(PrintersPackageAnnotation.class);
                     if (annotation != null
-                        && ((PrintersPackageAnnotation) annotation).value().toString().equals(loadersPrinterDatabaseTypesEnum)) {
+                        && ((PrintersPackageAnnotation) annotation).value().equals(loadersPrinterDatabaseTypesEnum)) {
                         folderWithLoader = item.getCanonicalPath().replace("\\package-info.class", "");
                     }
 

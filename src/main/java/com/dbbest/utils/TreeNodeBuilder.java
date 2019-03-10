@@ -13,39 +13,47 @@ import java.util.Map;
 
 public class TreeNodeBuilder {
 
-    public Container getTreeNode(Container container) throws ContainerException {
-        String label = this.getLabel(container);
+    public Container getTreeNode(Container root) throws ContainerException {
+        String label = this.getLabel(root);
         String value = "/" + label;
-        this.buildCurrentNode(container, label, value);
-        return container;
+        this.buildCurrentNode(root, label, value);
+        return root;
     }
 
     private void buildCurrentNode(Container container, String label, String value) throws ContainerException {
         container.setChecked(false);
         container.setExpanded(true);
         container.setLabel(label);
+        //container.addAttribute(CustomAttributes.CATEGORY, container.getName());
         container.setValue(value);
         this.buildChildren(container, value);
     }
 
     private void buildChildren(Container container, String value) throws ContainerException {
 
-        if(container.hasChildren()) {
+        if (container.hasChildren()) {
             List<Container> containerChildren = container.getChildren();
             for (int i = 0; i < containerChildren.size(); i++) {
                 String label = this.getLabel(containerChildren.get(i));
                 String childValue = value + "/" + label;
                 this.buildCurrentNode(containerChildren.get(i), label, childValue);
             }
+        } else {
+            container.setChildren(new ArrayList<>(0));
         }
     }
 
-    private String getLabel(com.dbbest.xmlmanager.container.Container container) {
-        if ((boolean)container.getAttributes().get(CustomAttributes.IS_CATEGORY)) {
-            return container.getName();
+    private String getLabel(Container container) {
+
+        if (container.hasAttributes()) {
+            if ((boolean) container.getAttributes().get(CustomAttributes.IS_CATEGORY)) {
+                return container.getName();
+            } else {
+                String nameAttribute = this.getNameAttribute(container.getName());
+                return (String) container.getAttributes().get(nameAttribute);
+            }
         } else {
-            String nameAttribute = this.getNameAttribute(container.getName());
-            return  (String) container.getAttributes().get(nameAttribute);
+            return "Schemas";
         }
     }
 

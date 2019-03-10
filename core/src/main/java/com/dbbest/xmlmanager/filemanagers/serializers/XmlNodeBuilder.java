@@ -57,16 +57,16 @@ public class XmlNodeBuilder {
     }
 
     private boolean isElementNode(Container<String> container) {
-        return container.hasName();
+        return container.hasLabel();
     }
 
     private boolean isTextNode(Container<String> container) {
-        return !container.hasName() && !meetCdataRegex(container.getValue())
+        return !container.hasLabel() && !meetCdataRegex(container.getValue())
             && !container.hasAttributes() && !container.hasChildren();
     }
 
     private boolean isCdataNode(Container<String> container) {
-        return !container.hasName() && meetCdataRegex(container.getValue())
+        return !container.hasLabel() && meetCdataRegex(container.getValue())
             && !container.hasAttributes() && !container.hasChildren();
     }
 

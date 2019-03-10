@@ -14,6 +14,7 @@ public final class Context {
     private Container container;
     private String commandLine;
     private List<Container> listOfFoundElements;
+    private String sqlQuery;
 
     public Context() {
     }
@@ -57,5 +58,14 @@ public final class Context {
     public void setDbTreeContainer(Container dbTreeContainer) {
         this.container = dbTreeContainer;
     }
+
+    public String getSqlQuery() {
+        return sqlQuery;
+    }
+
+    public void setSqlQuery(String sqlQuery) {
+        this.sqlQuery = sqlQuery;
+    }
+
 }
 

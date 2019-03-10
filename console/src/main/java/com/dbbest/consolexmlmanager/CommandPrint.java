@@ -40,6 +40,7 @@ public class CommandPrint implements Command {
         }
         Container targetContainer = new TreeNavigator(context).getTargetContainer(fullPath);
         PrinterManager printerManager = new PrinterManager(dbType);
+        context.setSqlQuery(printerManager.print(targetContainer));
     }
 
     @Override

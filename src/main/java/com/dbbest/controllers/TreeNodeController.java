@@ -3,7 +3,7 @@ package com.dbbest.controllers;
 import com.dbbest.consolexmlmanager.exceptions.CommandException;
 import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
-import com.dbbest.models.TreeNode;
+import com.dbbest.models.LoadQueryWrapper;
 import com.dbbest.services.TestTreeBuilder;
 import com.dbbest.services.TreeNodeService;
 import com.dbbest.xmlmanager.container.Container;
@@ -12,11 +12,10 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
 
 
 @RestController
+@SessionAttributes({"login", "password", "dbName", "dbType"})
 public class TreeNodeController {
 
     @Autowired
@@ -26,36 +25,25 @@ public class TreeNodeController {
     private TreeNodeService service;
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping(value = "/testTree")
-    private Container getTestTree(HttpServletRequest request, HttpServletResponse response) throws CommandException, DatabaseException, ContainerException {
-
-        HttpSession session = request.getSession();
-        return builder.build();
+    @PostMapping(value = "/tree")
+    private Container getTestTree(@RequestBody LoadQueryWrapper loadQueryWrapper,
+                                  HttpServletRequest request, HttpServletResponse response) throws CommandException,
+            DatabaseException, ContainerException {
+        String dbType = loadQueryWrapper.getDbType();
+        String sbName = loadQueryWrapper.getSchemaName();
+        String login = loadQueryWrapper.getLogin();
+        String password = loadQueryWrapper.getPassword();
+        return builder.build(dbType, sbName, login, password);
     }
 
     @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = "/check")
-    private String checkTree(@RequestBody String root, HttpServletRequest request, HttpServletResponse response) throws CommandException, ContainerException {
-        HttpSession session = request.getSession();
+    private Container checkTree(@RequestBody LoadQueryWrapper loadQueryWrapper,
+                                HttpServletRequest request, HttpServletResponse response) throws CommandException, ContainerException, DatabaseException {
 
-        Enumeration<String> attributeNames = session.getAttributeNames();
-        while (attributeNames.hasMoreElements()) {
-            String attributeName = attributeNames.nextElement();
-            System.out.println(attributeName + " = " + session.getAttribute(attributeName));
-        }
-
-        String attribute = "rootContainer";
-        Container root1 = new Container();
-        root1.setName("test");
-        session.putValue("one", "two");
-
-        if (root.equals("\"hi\"")) {
-            return "{\"phrase\":\"hello yeeeeeeeeees\"}";
-        } else {
-            return "{\"phrase\":\"hi\"}";
-        }
-
-        //return service.checkTree(root);
+        return service.checkTree(loadQueryWrapper.getDbType(), loadQueryWrapper.getSchemaName(),
+                loadQueryWrapper.getLogin(), loadQueryWrapper.getPassword(), loadQueryWrapper.getFullPath(),
+                loadQueryWrapper.getLoadType(), loadQueryWrapper.getContainer());
     }
 
 

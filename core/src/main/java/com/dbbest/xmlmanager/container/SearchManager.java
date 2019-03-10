@@ -21,7 +21,7 @@ public abstract class SearchManager {
     private Predicate<Container> predicateByName = new Predicate<Container>() {
         @Override
         public boolean test(Container container) {
-            if (!container.hasName()) {
+            if (!container.hasLabel()) {
                 return false;
             } else {
                 return (String.valueOf(container.getName()).toLowerCase().contains(enteredText.toLowerCase()));
@@ -29,7 +29,7 @@ public abstract class SearchManager {
         }
     };
 
-    //container -> container.hasName()&& container.getName().toLowerCase().contains(enteredText.toLowerCase());
+    //container -> container.hasLabel()&& container.getName().toLowerCase().contains(enteredText.toLowerCase());
 
     private Predicate<Container> predicateByValue = new Predicate<Container>() {
         @Override

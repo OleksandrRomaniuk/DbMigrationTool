@@ -18,39 +18,20 @@ import java.util.Enumeration;
 import java.util.List;
 
 @RestController
-@SessionAttributes({"login", "password", "dbName", "dbType"})
 public class LoginController {
 
     @Autowired
     LoginService loginService;
 
     @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping(value = "/login")
-    private String getTestTree(HttpServletRequest request, HttpServletResponse response) {
-
-        HttpSession session = request.getSession();
-
-        return "login";
-    }
-
-    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping(value = "/login")
-    private boolean checkTree(@RequestBody LoginCredentials loginCredentials, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+    private boolean checkTree(@RequestBody LoginCredentials loginCredentials, HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpSession httpSession) {
         boolean check = loginService.checkLoginAndPassword(
                 loginCredentials.getLogin(),
                 loginCredentials.getPassword(),
                 loginCredentials.getDbName(),
                 loginCredentials.getDbType()
         );
-        if (!check) {
-            model.addAttribute("errorMessage", "Invalid Credentials");
-        } else {
-            model.addAttribute("login", loginCredentials.getLogin());
-            model.addAttribute("password", loginCredentials.getPassword());
-            model.addAttribute("dbName", loginCredentials.getDbName());
-            model.addAttribute("dbType", loginCredentials.getDbType());
-        }
-        System.out.println(check);
         return check;
     }
 }

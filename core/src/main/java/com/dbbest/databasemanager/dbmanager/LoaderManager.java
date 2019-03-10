@@ -31,6 +31,7 @@ public final class LoaderManager {
      */
     public Container loadLazy(Container container) throws DatabaseException, ContainerException {
         Class loaderClass = loaders.get(container.getName());
+        System.out.println(container.getName());
         try {
             //Loader loader = (Loader)loaderClass.getDeclaredConstructor(new Class[] {Connection.class}).newInstance(connection);
             Loader loader = (Loader)loaderClass.newInstance();

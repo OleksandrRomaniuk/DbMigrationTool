@@ -9,4 +9,5 @@ public final class CustomAttributes {
 
     public static final String IS_CATEGORY = "IS_CATEGORY";
     public static final String CHILD_TYPE = "CHILD_TYPE";
+    public static final String CATEGORY = "CATEGORY";
 }

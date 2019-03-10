@@ -10,9 +10,13 @@ import java.util.List;
 public class TreeNavigator {
 
     private Context context;
+    private Container root;
 
     public TreeNavigator(Context context) {
         this.context = context;
+    }
+    public TreeNavigator(Container container) {
+        this.root = container;
     }
 
     /**
@@ -20,7 +24,13 @@ public class TreeNavigator {
      * @return returns the target container.
      */
     public Container getTargetContainer(String fullPath) {
-        Container rootContainer = context.getDbTreeContainer();
+        Container rootContainer = null;
+        if (context != null) {
+            rootContainer = context.getDbTreeContainer();
+        } else if (root != null) {
+            rootContainer = root;
+        }
+
         String[] fullPathSplit = fullPath.split("\\.");
         if (fullPathSplit.length == 1) {
             return rootContainer;

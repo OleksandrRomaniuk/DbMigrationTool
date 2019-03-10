@@ -30,9 +30,9 @@ public class ConnectionPool {
         try {
             Class.forName(jdbcDriver);
             connectionPool = new GenericObjectPool();
-            connectionPool.setMaxActive(1000000);
-            connectionPool.setMaxIdle(1000000);
-            connectionPool.setMaxWait(100000);
+            connectionPool.setMaxActive(100000000);
+            connectionPool.setMaxIdle(100000000);
+            connectionPool.setMaxWait(10000000);
             ConnectionFactory cf = new DriverManagerConnectionFactory(dbUrl, userName, password);
             PoolableConnectionFactory pcf = new PoolableConnectionFactory(cf, connectionPool, null, null, false, true);
             return new PoolingDataSource(connectionPool);

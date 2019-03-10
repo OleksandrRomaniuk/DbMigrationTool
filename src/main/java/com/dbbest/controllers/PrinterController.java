@@ -1,0 +1,35 @@
+package com.dbbest.controllers;
+
+import com.dbbest.exceptions.ContainerException;
+import com.dbbest.exceptions.DatabaseException;
+import com.dbbest.models.LoadQueryWrapper;
+import com.dbbest.services.PrintService;
+import com.dbbest.xmlmanager.container.Container;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@RestController
+public class PrinterController {
+
+    @Autowired
+    PrintService printService;
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @PostMapping(value = "/print")
+    private String checkTree(@RequestBody LoadQueryWrapper loadQueryWrapper, HttpServletRequest request, HttpServletResponse response, ModelMap model, HttpSession httpSession) {
+
+        String sqlQuery = "";
+        try {
+            sqlQuery = printService.print((Container) loadQueryWrapper.getContainer().getChildren().get(0),
+                    loadQueryWrapper.getDbType(), loadQueryWrapper.getFullPath());
+        } catch (DatabaseException | ContainerException e) {
+            e.printStackTrace();
+        }
+        return sqlQuery;
+    }
+}

@@ -28,9 +28,12 @@ public class Container<V> {
     private List<Container<V>> children;
     private String name;
     private String label;
+
+    //private String name;
     @Id
     private V value;
     private Map<String, Object> attributes;
+
     private boolean checked;
     private boolean expanded;
     private int checkedState;
@@ -49,45 +52,17 @@ public class Container<V> {
         this.name = name;
     }
 
-/*
-    public Container(String name, V value) {
-        this(name);
-        this.value = value;
-    }
-
-
-    public Container(String name, V value, Map<String, Object> attributes) {
-        this(name, value);
-        this.attributes = attributes;
-    }
-
-*/
-    /**
-     * @param name       the name of the element. The name is of the type String.
-     * @param value      the value of the element, the value is parametrized by V1.
-     * @param attributes the map which contains attributes which consist of name-value pairs. The name is of the type String.
-     *                   The value is parametrized by V2.
-     * @param children   represents the list of child elements of the type Container.
-     */
-    /*
-    public Container(String name, V value, Map<String, Object> attributes, List<Container<V>> children) {
-        this(name, value, attributes);
-        this.children = children;
-        this.value = value;
-        this.attributes = attributes;
-    }
-*/
-    public Container(String name, V value, Map<String, Object> attributes, List<Container<V>> children, boolean checked, boolean expanded, int checkedState) {
-        //this(name, value, attributes, children);
+    public Container(List<Container<V>> children, String name, String label, V value, Map<String, Object> attributes, boolean checked, boolean expanded, int checkedState, Container<V> parent) {
         this.children = children;
         this.name = name;
+        this.label = label;
         this.value = value;
         this.attributes = attributes;
         this.checked = checked;
         this.expanded = expanded;
         this.checkedState = checkedState;
+        this.parent = parent;
     }
-
 
     /**
      * The method checks out if the element has attributes.
@@ -124,7 +99,7 @@ public class Container<V> {
      *
      * @return true if the current element has a name.
      */
-    public boolean hasName() {
+    public boolean hasLabel() {
         return name != null && !name.equals("");
     }
 
@@ -158,11 +133,11 @@ public class Container<V> {
      * @throws ContainerException the exception to be thrown if the value is not null.
      */
     public void setValue(V value) throws ContainerException {
-        if (this.value != null) {
+        /*if (this.value != null) {
             throw new ContainerException(Level.SEVERE, "The value is not null.");
-        } else {
+        } else {*/
             this.value = value;
-        }
+        //}
     }
 
 
