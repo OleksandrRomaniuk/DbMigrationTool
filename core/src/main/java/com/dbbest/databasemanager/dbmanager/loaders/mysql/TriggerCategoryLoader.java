@@ -20,9 +20,7 @@ import java.util.logging.Level;
  */
 @LoaderAnnotation(NameConstants.TABLE_TRIGGERS)
 public class TriggerCategoryLoader extends AbstractLoader {
-    /*public TriggerCategoryLoader(Connection connection) {
-        super(connection);
-    }*/
+
     @Override
     public void setConnection(Connection connection) {
         super.setConnection(connection);

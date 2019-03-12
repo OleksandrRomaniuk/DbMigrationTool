@@ -5,10 +5,14 @@ import com.dbbest.exceptions.ContainerException;
 import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.exceptions.ParsingException;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import com.mysql.cj.util.StringUtils;
 import org.apache.commons.dbcp.PoolingDataSource;
 import org.apache.commons.pool.impl.GenericObjectPool;
 
@@ -17,7 +21,6 @@ import org.apache.commons.pool.impl.GenericObjectPool;
  * The class which returns the needed connection from the pool or creates a new pool if the required pool does not exist.
  */
 public class SimpleConnectionBuilder implements ConnectionBuilder {
-
     private static HashMap<String, GenericObjectPool> connectionPools = new HashMap();
 
     public Connection getConnection(String connectionName) throws DatabaseException, ContainerException, ParsingException {
@@ -55,7 +58,22 @@ public class SimpleConnectionBuilder implements ConnectionBuilder {
      * @throws DatabaseException trows the connection exception if connection did not succeed.
      */
     public Connection getConnection(String dbType, String dbName, String userName, String password) throws DatabaseException {
+
         try {
+            String driver = DriverUrlManager.getInstance().getDriver(dbType);
+            String url = DriverUrlManager.getInstance().getUrl(dbType, dbName);
+            if(StringUtils.isNullOrEmpty(driver)) {
+                throw new DatabaseException(Level.SEVERE, "Can not find the respective driver for the db type: " + dbName);
+            } else if(StringUtils.isNullOrEmpty(url)) {
+                throw new DatabaseException(Level.SEVERE, "Can not find the respective url for the db type: " + dbName);
+            }
+            Class.forName(driver);
+            return DriverManager.getConnection(url, userName, password);
+        } catch (ClassNotFoundException | SQLException e) {
+            throw new DatabaseException(Level.SEVERE, e);
+        }
+
+        /*try {
             if (exists(dbName)) {
                 return new PoolingDataSource(connectionPools.get(dbName)).getConnection();
             } else {
@@ -64,7 +82,7 @@ public class SimpleConnectionBuilder implements ConnectionBuilder {
             }
         } catch (SQLException e) {
             throw new DatabaseException(Level.SEVERE, e);
-        }
+        }*/
     }
 
     private boolean exists(String connectionName) {

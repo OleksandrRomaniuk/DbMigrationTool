@@ -1,12 +1,8 @@
 package com.dbbest.controllers;
 
 
-import com.dbbest.consolexmlmanager.exceptions.CommandException;
-import com.dbbest.exceptions.ContainerException;
-import com.dbbest.exceptions.DatabaseException;
 import com.dbbest.models.LoginCredentials;
 import com.dbbest.services.LoginService;
-import com.dbbest.xmlmanager.container.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -14,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.Enumeration;
-import java.util.List;
 
 @RestController
 public class LoginController {

@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @RestController
 public class PrinterController {
+    private static final Logger logger = Logger.getLogger("UI logger");
 
     @Autowired
     PrintService printService;
@@ -28,7 +31,7 @@ public class PrinterController {
             sqlQuery = printService.print((Container) loadQueryWrapper.getContainer().getChildren().get(0),
                     loadQueryWrapper.getDbType(), loadQueryWrapper.getFullPath());
         } catch (DatabaseException | ContainerException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, e.getMessage());
         }
         return sqlQuery;
     }

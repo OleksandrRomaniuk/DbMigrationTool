@@ -36,7 +36,18 @@ public class PrinterClassLoader {
         for (File item : listOfFiles) {
             if (!item.isDirectory() && item.getName().toLowerCase().endsWith(".class")) {
                 try {
-                    Class printerClass = new CustomClassLoader().getClass(item);
+
+                    String path = item.getPath();
+                    path = path.replace("\\", ".");
+                    String regex = ".target.classes.";
+                    String[] pathArr = path.split(regex);
+                    Class printerClass = null;
+                    if(pathArr.length == 2) {
+                        String classPath = pathArr[1];
+                        classPath = classPath.replace(".class", "");
+                        printerClass = Class.forName(classPath);
+                    }
+                    //Class printerClass = new CustomClassLoader().getClass(item);
                     if (printerClass.isAnnotationPresent(PrinterAnnotation.class)) {
                         PrinterAnnotation annotation = (PrinterAnnotation) printerClass.getAnnotation(PrinterAnnotation.class);
                         printers.put(annotation.value(), printerClass);

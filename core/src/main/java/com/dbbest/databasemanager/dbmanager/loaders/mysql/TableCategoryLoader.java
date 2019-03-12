@@ -51,6 +51,7 @@ public class TableCategoryLoader extends AbstractLoader {
 
     @Override
     public void fullLoad(Container tableCategory) throws DatabaseException, ContainerException {
+        this.lazyLoad(tableCategory);
         if (tableCategory.hasChildren()) {
             for (Container table : (List<Container>) tableCategory.getChildren()) {
                 TableLoader tableLoader = new TableLoader();

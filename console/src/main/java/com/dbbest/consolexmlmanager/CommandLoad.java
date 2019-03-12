@@ -57,11 +57,13 @@ public class CommandLoad implements Command {
             schemaContainer.setName(NameConstants.SCHEMA);
             context.setDbTreeContainer(schemaContainer);
         }
+
         SimpleConnectionBuilder simpleConnectionBuilder = new SimpleConnectionBuilder();
+
         Connection connection = simpleConnectionBuilder.getConnection(dbType, dbName, userName, password);
+
         Container targetContainer = new TreeNavigator(context).getTargetContainer(fullPath);
-        System.out.println(targetContainer.getName());
-        if ( targetContainer == null) {
+        if (targetContainer == null) {
             throw new DatabaseException(Level.SEVERE, "Can not find the node with the path: " + fullPath);
         }
 
@@ -79,12 +81,6 @@ public class CommandLoad implements Command {
                 break;
             default:
                 throw new CommandException(Level.SEVERE, "The type of loading " + loadType + " has not been recognized.");
-        }
-
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            throw new DatabaseException(Level.SEVERE, e);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.dbbest.databasemanager.reflectionutil.printersreflection;
 
+import com.dbbest.databasemanager.dbmanager.annotations.LoadersPackageAnnotation;
 import com.dbbest.databasemanager.dbmanager.annotations.PrintersPackageAnnotation;
 import com.dbbest.databasemanager.reflectionutil.CustomClassLoader;
 import com.dbbest.exceptions.DatabaseException;
@@ -39,13 +40,26 @@ public class PrintersDirectorySearcher {
     private void checkFile(File root, String loadersPrinterDatabaseTypesEnum) throws DatabaseException {
         File[] listOfFiles = root.listFiles();
         for (File item : listOfFiles) {
-
             if (item.isDirectory()) {
                 checkFile(item, loadersPrinterDatabaseTypesEnum);
             } else if (item.getName().toLowerCase().equals("package-info.class")) {
                 try {
-                    Package pkg = new CustomClassLoader().getClass(item).getPackage();
-                    Annotation annotation = pkg.getAnnotation(PrintersPackageAnnotation.class);
+                    //Package pkg = new CustomClassLoader().getClass(item).getPackage();
+                    //Annotation annotation = pkg.getAnnotation(PrintersPackageAnnotation.class);
+                    String path = item.getPath();
+                    path = path.replace("\\", ".");
+                    String regex = ".target.classes.";
+                    String[] pathArr = path.split(regex);
+                    Annotation annotation = null;
+
+                    if(pathArr.length == 2) {
+                        String classPath = pathArr[1];
+                        classPath = classPath.replace(".class", "");
+                        Class clazz = Class.forName(classPath);
+                        Package pkg = clazz.getPackage();
+                        annotation = pkg.getAnnotation(PrintersPackageAnnotation.class);
+                    }
+
                     if (annotation != null
                         && ((PrintersPackageAnnotation) annotation).value().equals(loadersPrinterDatabaseTypesEnum)) {
                         folderWithLoader = item.getCanonicalPath().replace("\\package-info.class", "");

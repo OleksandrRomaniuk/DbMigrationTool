@@ -21,24 +21,19 @@ public class LoginServiceImpl implements LoginService {
            return false;
         }
 
-        boolean credentialsAreGood = false;
-
-        try {
+        try  {
             String queryString = " SELECT user FROM  mysql.user;";
             Connection connection = new SimpleConnectionBuilder().getConnection(dbType, dbName, login, password);
             PreparedStatement ps = connection.prepareStatement(queryString);
             ResultSet results = ps.executeQuery();
             while (results.next()) {
                 if (results.getString(1).equals(login)) {
-                    credentialsAreGood = true;
+                    return true;
                 }
             }
         } catch (DatabaseException | SQLException e) {
             logger.log(Level.SEVERE, e.getMessage());
         }
-
-        return credentialsAreGood;
+        return false;
     }
-
-
 }
